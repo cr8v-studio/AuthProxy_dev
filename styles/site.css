@@ -364,6 +364,27 @@ a {
   -webkit-backdrop-filter: blur(var(--hero-metrics-wrap-blur));
 }
 
+.hero-section__metrics-wrap.is-carousel::before,
+.hero-section__metrics-wrap.is-carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(1.5rem, 4vw, 3rem);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-section__metrics-wrap.is-carousel::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--color-surface-canvas) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.hero-section__metrics-wrap.is-carousel::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--color-surface-canvas) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
 .hero-section__metrics {
   display: flex;
   width: max-content;
@@ -372,10 +393,16 @@ a {
   will-change: transform;
 }
 
+.hero-section__metrics.is-carousel-track {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 .hero-metric {
   flex: 0 0 auto;
   padding: var(--hero-metric-padding-y) var(--hero-metric-padding-x);
   text-align: center;
+  background: var(--color-surface-canvas);
 }
 
 .hero-metric:not(:last-child) {
