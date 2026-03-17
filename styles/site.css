@@ -181,7 +181,7 @@ a {
 .site-header-shell.is-scrolled::after,
 .site-header-shell.is-open::before,
 .site-header-shell.is-open::after {
-  opacity: 0.32;
+  opacity: 0;
 }
 
 .site-header__inner {
