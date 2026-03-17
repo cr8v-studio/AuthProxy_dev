@@ -345,7 +345,7 @@ function initHeroMetricsCarousel() {
 
     tween = gsap.to(metricsTrack, {
       x: -(cardWidth * originalCards.length),
-      duration: isCompactViewport ? 28 : 22,
+      duration: isCompactViewport ? 36 : 30,
       ease: 'none',
       repeat: -1
     });
