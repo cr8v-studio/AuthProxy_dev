@@ -173,7 +173,7 @@ function initHeroTimeline() {
   const visual = heroSection.querySelector('.hero-section__visual');
   const metrics = heroSection.querySelectorAll('.hero-metric');
   const leadBands = heroSection.querySelectorAll('.hero-section__lead-band');
-  const visualRevealDistance = isMobileViewport ? 36 : 64;
+  const visualRevealDistance = isMobileViewport ? 44 : 72;
 
   const timeline = gsap.timeline({
     defaults: {
@@ -243,24 +243,14 @@ function initHeroTimeline() {
 
   if (visualWrap && visual) {
     timeline.from(
-      visualWrap,
+      visual,
       {
         autoAlpha: 0,
         y: visualRevealDistance,
-        duration: 0.78,
-        ease: 'power3.out'
+        duration: 0.74,
+        ease: MOTION.ease
       },
-      '-=0.4'
-    );
-
-    timeline.from(
-      visual,
-      {
-        y: visualRevealDistance * 0.9,
-        duration: 0.82,
-        ease: 'power3.out'
-      },
-      '<'
+      '-=0.34'
     );
   }
 
