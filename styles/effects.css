@@ -1,0 +1,12 @@
+:where(.paint-gradient-1, .surface-soft-radial) {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.paint-gradient-1 {
+  background-image: var(--figma-paint-gradient-1);
+}
+
+.surface-soft-radial {
+  background-image: var(--paint-surface-soft-radial);
+}
