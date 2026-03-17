@@ -297,19 +297,16 @@ a {
     var(--hero-panel-padding-x)
     var(--hero-panel-padding-bottom);
   background-color: var(--color-surface-canvas);
-  border-top: 1px solid var(--site-section-border);
-}
-
-.hero-section__panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  background-image: var(--hero-panel-background-image-fallback);
   background-image: var(--hero-panel-background-image);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  border-top: 1px solid var(--site-section-border);
+}
+
+.hero-section__panel::before {
+  content: none;
 }
 
 .hero-section__content {
@@ -944,4 +941,3 @@ a {
   outline: 2px solid var(--figma-color-dark-base);
   outline-offset: 2px;
 }
-
