@@ -6,7 +6,7 @@ import Lenis from 'https://cdn.jsdelivr.net/npm/lenis@1.3.11/+esm';
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+const isMobileViewport = false;
 
 const MOTION = {
   duration: isMobileViewport ? 0.5 : 0.65,
@@ -325,8 +325,7 @@ function initHeroMetricsCarousel() {
   let tween = null;
 
   const applyMarqueeLayout = () => {
-    const isCompactViewport = window.matchMedia('(max-width: 760px)').matches;
-    const visibleCards = isCompactViewport ? 2 : 4;
+    const visibleCards = 4;
     const cardWidth = metricsWrap.clientWidth / visibleCards;
     const groups = Array.from(metricsTrack.querySelectorAll('.hero-section__metrics-group'));
     const allCards = Array.from(metricsTrack.querySelectorAll('.hero-metric'));
@@ -345,7 +344,7 @@ function initHeroMetricsCarousel() {
 
     tween = gsap.to(metricsTrack, {
       x: -(cardWidth * originalCards.length),
-      duration: isCompactViewport ? 52 : 44,
+      duration: 44,
       ease: 'none',
       repeat: -1
     });
