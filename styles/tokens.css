@@ -100,11 +100,43 @@
   --color-surface-overlay-strong: var(--figma-color-off-white-alpha-1);
   --color-surface-overlay-soft: var(--figma-color-off-white-alpha-5);
   --color-surface-overlay-faint: var(--figma-color-off-white-alpha-9);
+  --color-grid-line-strong: rgba(31, 31, 31, 0.08);
+  --color-grid-line-soft: rgba(31, 31, 31, 0.04);
+  --color-surface-canvas: var(--figma-color-white-base);
+  --color-surface-glass-strong: rgba(244, 244, 244, 0.92);
+  --color-surface-glass-medium: rgba(244, 244, 244, 0.55);
+  --color-surface-glass-light: rgba(244, 244, 244, 0.44);
   --color-border-soft: var(--figma-color-dark-tint-9);
   --color-border-muted: var(--figma-color-dark-tint-7);
   --color-border-strong: var(--figma-color-dark-tint-5);
   --color-accent-cool: var(--figma-color-extra-0);
   --color-accent-moss: var(--figma-color-extra-1);
+
+  /* Semantic surface gradients */
+  --surface-gradient-panel-primary:
+    linear-gradient(304deg, rgba(255, 255, 255, 0) 0%, var(--figma-color-white-base) 66.488%),
+    linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
+  --surface-gradient-panel-secondary:
+    linear-gradient(297deg, rgba(255, 255, 255, 0) 0%, var(--figma-color-white-base) 57.065%),
+    linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
+
+  /* Semantic effect tokens */
+  --effect-blur-header-base: 2.5px;
+  --effect-blur-panel-md: 8px;
+  --effect-blur-glass-strip: 5px;
+  --effect-blur-progressive-xl: 50px;
+  --effect-blur-progressive-lg: 36px;
+  --effect-blur-progressive-md: 24px;
+  --effect-blur-progressive-sm: 14px;
+  --effect-blur-progressive-xs: 5px;
+  --effect-shadow-panel-xs: 0 2px 4px rgba(0, 0, 0, 0.03);
+  --effect-shadow-panel-md: 0 12px 28px rgba(31, 31, 31, 0.05);
+  --effect-shadow-panel-lg: 0 10px 30px rgba(31, 31, 31, 0.045);
+  --effect-shadow-panel-xl: 0 14px 36px rgba(31, 31, 31, 0.045);
+  --effect-shadow-glass-inset:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(31, 31, 31, 0.06);
+  --radius-device-frame: 5.989px;
 
   /* Size tokens synced from Figma */
   --figma-size-apg-br0: 1;
