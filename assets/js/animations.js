@@ -280,79 +280,8 @@ function initHeroTimeline() {
 }
 
 function initHeroMetricsCarousel() {
-  const metricsWrap = heroSection?.querySelector('.hero-section__metrics-wrap');
-  const sourceTrack = metricsWrap?.querySelector('.hero-section__metrics');
-
-  if (!metricsWrap || !sourceTrack || prefersReducedMotion) {
-    return;
-  }
-
-  const originalCards = Array.from(sourceTrack.children);
-
-  if (originalCards.length === 0) {
-    return;
-  }
-
-  metricsWrap.classList.add('is-carousel');
-  let metricsTrack = metricsWrap.querySelector('.hero-section__metrics-carousel-track');
-
-  if (!metricsTrack) {
-    metricsTrack = document.createElement('div');
-    metricsTrack.className = 'hero-section__metrics-carousel-track';
-
-    const createGroup = (isClone = false) => {
-      const group = document.createElement('div');
-      group.className = 'hero-section__metrics hero-section__metrics-group';
-
-      originalCards.forEach((card) => {
-        const nextCard = card.cloneNode(true);
-
-        if (isClone) {
-          nextCard.setAttribute('aria-hidden', 'true');
-          nextCard.dataset.marqueeClone = 'true';
-        }
-
-        group.append(nextCard);
-      });
-
-      return group;
-    };
-
-    metricsTrack.append(createGroup(false), createGroup(true));
-    sourceTrack.replaceWith(metricsTrack);
-  }
-
-  let tween = null;
-
-  const applyMarqueeLayout = () => {
-    const isCompactViewport = window.matchMedia('(max-width: 760px)').matches;
-    const visibleCards = isCompactViewport ? 2 : 4;
-    const cardWidth = metricsWrap.clientWidth / visibleCards;
-    const groups = Array.from(metricsTrack.querySelectorAll('.hero-section__metrics-group'));
-    const allCards = Array.from(metricsTrack.querySelectorAll('.hero-metric'));
-
-    allCards.forEach((card) => {
-      card.style.flexBasis = `${cardWidth}px`;
-      card.style.width = `${cardWidth}px`;
-    });
-
-    groups.forEach((group) => {
-      group.style.width = `${cardWidth * originalCards.length}px`;
-    });
-
-    tween?.kill();
-    gsap.set(metricsTrack, { x: 0 });
-
-    tween = gsap.to(metricsTrack, {
-      x: -(cardWidth * originalCards.length),
-      duration: isCompactViewport ? 52 : 44,
-      ease: 'none',
-      repeat: -1
-    });
-  };
-
-  applyMarqueeLayout();
-  window.addEventListener('resize', applyMarqueeLayout);
+  // Disabled for pixel-perfect parity with static Figma metrics row (node 130:9065).
+  return;
 }
 
 // Section-specific card motion stays lightweight: stagger on reveal, restrained hover on intent.
