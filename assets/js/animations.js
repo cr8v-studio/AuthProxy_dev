@@ -520,6 +520,13 @@ function initInteractiveHoverStates() {
       willChange: 'transform'
     });
 
+    if (scrambleTarget) {
+      // Keep a stable button footprint so scramble glyph widths don't shift nearby controls.
+      const stableWidth = Math.ceil(element.getBoundingClientRect().width);
+      element.style.width = `${stableWidth}px`;
+      element.style.minWidth = `${stableWidth}px`;
+    }
+
     const pointerEnter = () => {
       if ('disabled' in element && element.disabled) {
         return;
