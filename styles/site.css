@@ -1212,6 +1212,53 @@ a {
   }
 }
 
+@media (max-width: 1512px) and (min-width: 901px) and (max-height: 860px) {
+  :root {
+    --hero-panel-gap: 20px;
+    --hero-panel-padding-x: 20px;
+    --hero-panel-padding-top: 14px;
+    --hero-panel-padding-bottom: 14px;
+    --hero-lead-strip-padding: 16px;
+    --hero-cta-padding: 16px;
+    --hero-cta-gap: 16px;
+    --hero-visual-width: 260px;
+    --hero-visual-height: 362px;
+    --hero-metric-padding-x: 14px;
+    --hero-metric-padding-y: 10px;
+    --hero-metric-value-size: 52px;
+    --hero-metric-value-line: 52px;
+  }
+
+  .hero-section {
+    --hero-viewport-padding-top: 8px;
+    --hero-viewport-padding-bottom: 12px;
+  }
+
+  .hero-section__title {
+    font-size: clamp(2.35rem, 4.1vw, 3.45rem);
+    line-height: clamp(2.35rem, 4.1vw, 3.45rem);
+  }
+
+  .hero-section__lead {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .hero-metric__label {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 1.5px;
+  }
+
+  .hero-section__cta-row .site-header-button-v1,
+  .hero-section__cta-row .site-header-button-v2 {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.8px;
+  }
+}
+
 @media (max-width: 760px) {
   .hero-section__panel,
   .hero-section__lead-strip,
