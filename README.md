@@ -1,41 +1,54 @@
 # AuthProxy_dev
 
-Static marketing site for AuthProxy, built with HTML, CSS, and vanilla JavaScript.
+Статический лендинг AuthProxy на HTML, CSS и JavaScript, готовый к публикации на GitHub Pages.
 
-## Overview
+## Структура
 
-This repository contains a single-page website that presents AuthProxy as a production-grade authentication and edge routing platform. The project has no build step and can be deployed directly as static files.
+- `index.html` — основная страница
+- `styles/` — стили, токены, типографика и page-level layout
+- `scripts/` — интерактивность сайта
+- `assets/` — изображения, иконки и motion-скрипт
+- `docs/` — служебная документация по компонентам
+- `.github/workflows/deploy-pages.yml` — автодеплой в GitHub Pages
 
-## Project Structure
+## Локальный запуск
 
-```text
-.
-├── assets/          # Brand assets, illustrations, icons, and motion script
-├── docs/            # Design-system and component inventory notes
-├── scripts/         # Site interaction and component registry scripts
-├── styles/          # Tokens, typography, components, and page styles
-└── index.html       # Main entry point
-```
+### Вариант 1: открыть напрямую
+Откройте `index.html` в браузере.
 
-## Local Run
-
-No package installation is required.
-
+### Вариант 2: через локальный сервер
 ```bash
 python3 -m http.server 8080
 ```
 
-Then open `http://localhost:8080`.
+Откройте: `http://localhost:8080`
 
-## Deployment Notes
+## Публикация на GitHub
 
-- Deploy as a static site to GitHub Pages, Netlify, Vercel static hosting, Cloudflare Pages, or any standard web server.
-- Keep the repository root structure unchanged so the relative asset paths remain valid.
-- The site loads the `Lexend` font from Google Fonts.
-- Scroll and reveal animations are loaded from jsDelivr ESM endpoints inside `assets/js/animations.js`, so production hosting must allow outbound browser requests to those CDNs.
+Репозиторий уже подключён:
 
-## Audit Notes
+```bash
+git remote -v
+```
 
-- HTML, CSS, and JavaScript references are relative and static-hosting friendly.
-- The landing page uses `.webp` assets for the main design illustrations in `assets/figma/`.
-- The `scripts/components.js` and `scripts/icons.js` files are kept as implementation support files referenced by the design inventory, even though the live page renders from static HTML.
+Push изменений:
+
+```bash
+git add .
+git commit -m "Update landing"
+git push origin main
+```
+
+## GitHub Pages
+
+1. Откройте репозиторий на GitHub.
+2. Перейдите в `Settings -> Pages`.
+3. В `Build and deployment` выберите `Source: GitHub Actions`.
+4. После push в `main` workflow `deploy-pages.yml` опубликует сайт автоматически.
+
+## Примечания
+
+- Проект без сборки и зависимостей.
+- Все проверенные HTML/CSS/JS-ссылки и пути к ассетам валидны.
+- Основные иллюстрации подключены в формате `.webp`.
+- Сайт использует Google Fonts и ESM-зависимости с jsDelivr для анимаций.
