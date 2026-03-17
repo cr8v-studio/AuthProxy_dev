@@ -298,6 +298,7 @@ a {
     var(--hero-panel-padding-x)
     var(--hero-panel-padding-bottom);
   background-color: var(--color-surface-canvas);
+  border-top: 1px solid var(--site-section-border);
 }
 
 .hero-section__panel::before {
@@ -316,9 +317,10 @@ a {
   position: relative;
   z-index: 2;
   display: flex;
-  align-items: center;
-  align-self: center;
+  align-items: flex-end;
+  align-self: stretch;
   justify-self: start;
+  justify-content: flex-end;
   isolation: isolate;
 }
 
@@ -948,8 +950,8 @@ a {
   :root {
     --hero-panel-gap: 32px;
     --hero-panel-padding-x: 32px;
-    --hero-panel-padding-top: 96px;
-    --hero-panel-padding-bottom: 32px;
+    --hero-panel-padding-top: 36px;
+    --hero-panel-padding-bottom: 36px;
     --hero-lead-strip-padding: 32px;
     --hero-cta-padding: 32px;
     --hero-cta-gap: 32px;
@@ -976,7 +978,7 @@ a {
 
 @media (max-width: 960px) {
   :root {
-    --hero-panel-padding-top: 72px;
+    --hero-panel-padding-top: 24px;
     --hero-panel-padding-x: 24px;
     --hero-panel-padding-bottom: 24px;
     --hero-panel-gap: 24px;
