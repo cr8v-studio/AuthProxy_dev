@@ -294,6 +294,59 @@ function initHeroTimeline() {
   }
 }
 
+function initHeroMetricsMarquee() {
+  const metricsWrap = heroSection?.querySelector('.hero-section__metrics-wrap');
+  const metricsTrack = metricsWrap?.querySelector('.hero-section__metrics');
+
+  if (!metricsWrap || !metricsTrack || prefersReducedMotion) {
+    return;
+  }
+
+  const originalCards = Array.from(metricsTrack.children);
+
+  if (originalCards.length === 0) {
+    return;
+  }
+
+  if (!metricsTrack.dataset.marqueeReady) {
+    originalCards.forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.dataset.marqueeClone = 'true';
+      clone.setAttribute('aria-hidden', 'true');
+      metricsTrack.append(clone);
+    });
+
+    metricsTrack.dataset.marqueeReady = 'true';
+  }
+
+  let tween = null;
+
+  const applyMarqueeLayout = () => {
+    const isCompactViewport = window.matchMedia('(max-width: 760px)').matches;
+    const visibleCards = isCompactViewport ? 2 : 4;
+    const cardWidth = metricsWrap.clientWidth / visibleCards;
+    const allCards = Array.from(metricsTrack.children);
+
+    allCards.forEach((card) => {
+      card.style.flexBasis = `${cardWidth}px`;
+      card.style.width = `${cardWidth}px`;
+    });
+
+    tween?.kill();
+    gsap.set(metricsTrack, { x: 0 });
+
+    tween = gsap.to(metricsTrack, {
+      x: -(cardWidth * originalCards.length),
+      duration: isCompactViewport ? 28 : 22,
+      ease: 'none',
+      repeat: -1
+    });
+  };
+
+  applyMarqueeLayout();
+  window.addEventListener('resize', applyMarqueeLayout);
+}
+
 // Section-specific card motion stays lightweight: stagger on reveal, restrained hover on intent.
 function initFeatureCards() {
   const section = document.querySelector('.capability-list');
@@ -567,6 +620,7 @@ function initMotionSystem() {
 
   initNavbarMotion(lenis);
   initHeroTimeline();
+  initHeroMetricsMarquee();
   createRevealSystem();
   initFeatureCards();
   initInteractiveHoverStates();
