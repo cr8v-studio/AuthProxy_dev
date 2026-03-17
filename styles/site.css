@@ -171,9 +171,9 @@ a {
 .site-header-shell.is-scrolled,
 .site-header-shell.is-open {
   border-bottom-color: var(--site-section-border);
-  backdrop-filter: blur(var(--effect-blur-panel-md));
-  -webkit-backdrop-filter: blur(var(--effect-blur-panel-md));
-  background: var(--color-surface-glass-strong);
+  backdrop-filter: blur(var(--effect-blur-header-base));
+  -webkit-backdrop-filter: blur(var(--effect-blur-header-base));
+  background: var(--color-surface-overlay-strong);
   box-shadow: none;
 }
 
