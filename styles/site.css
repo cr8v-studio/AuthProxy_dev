@@ -174,7 +174,7 @@ a {
   backdrop-filter: blur(var(--effect-blur-panel-md));
   -webkit-backdrop-filter: blur(var(--effect-blur-panel-md));
   background: var(--color-surface-glass-strong);
-  box-shadow: var(--effect-shadow-panel-lg);
+  box-shadow: none;
 }
 
 .site-header-shell.is-scrolled::before,
