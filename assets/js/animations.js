@@ -2,22 +2,23 @@ import gsap from 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/+esm';
 import ScrollTrigger from 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/ScrollTrigger/+esm';
 import Lenis from 'https://cdn.jsdelivr.net/npm/lenis@1.3.11/+esm';
 
-// Base motion stack: GSAP + ScrollTrigger + Lenis, with optional Lottie support.
+// Base motion stack: GSAP + ScrollTrigger + Lenis.
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isMobileViewport = false;
+const mobileViewport = window.matchMedia('(max-width: 767px)');
+const isMobileViewport = () => mobileViewport.matches;
 
-const MOTION = {
-  duration: isMobileViewport ? 0.5 : 0.65,
+const getMotion = () => ({
+  duration: isMobileViewport() ? 0.5 : 0.65,
   hoverDuration: 0.52,
-  distance: isMobileViewport ? 18 : 28,
-  scaleStart: isMobileViewport ? 0.985 : 0.965,
-  buttonScale: isMobileViewport ? 1.01 : 1.018,
-  cardLift: isMobileViewport ? -4 : -8,
+  distance: isMobileViewport() ? 18 : 28,
+  scaleStart: isMobileViewport() ? 0.985 : 0.965,
+  buttonScale: isMobileViewport() ? 1.01 : 1.018,
+  cardLift: isMobileViewport() ? -4 : -8,
   ease: 'power3.out',
   easeSoft: 'power2.out'
-};
+});
 
 const heroSection = document.querySelector('.hero-section');
 const header = document.querySelector('.site-header-shell');
@@ -69,7 +70,7 @@ function initLenis() {
   }
 
   const lenis = new Lenis({
-    duration: isMobileViewport ? 0.85 : 1,
+    duration: isMobileViewport() ? 0.85 : 1,
     smoothWheel: true,
     syncTouch: false,
     wheelMultiplier: 0.95,
@@ -102,7 +103,7 @@ function initLenis() {
       event.preventDefault();
       lenis.scrollTo(target, {
         offset: -24,
-        duration: isMobileViewport ? 0.9 : 1.05,
+        duration: isMobileViewport() ? 0.9 : 1.05,
         easing: (value) => 1 - Math.pow(1 - value, 3)
       });
     });
@@ -141,10 +142,11 @@ function initNavbarMotion(lenis) {
 
 // Shared utility reveal presets used across non-hero sections.
 function createRevealSystem() {
+  const motion = getMotion();
   const revealMap = new Map([
-    ['fade-up', { autoAlpha: 0, y: MOTION.distance }],
+    ['fade-up', { autoAlpha: 0, y: motion.distance }],
     ['fade-in', { autoAlpha: 0 }],
-    ['scale-in', { autoAlpha: 0, y: MOTION.distance * 0.35, scale: MOTION.scaleStart }]
+    ['scale-in', { autoAlpha: 0, y: motion.distance * 0.35, scale: motion.scaleStart }]
   ]);
 
   revealMap.forEach((fromVars, className) => {
@@ -155,8 +157,8 @@ function createRevealSystem() {
 
       gsap.from(element, {
         ...fromVars,
-        duration: MOTION.duration,
-        ease: MOTION.ease,
+        duration: motion.duration,
+        ease: motion.ease,
         force3D: true,
         scrollTrigger: {
           trigger: element,
@@ -173,45 +175,30 @@ function initHeroTimeline() {
   if (!heroSection) {
     return;
   }
+  const motion = getMotion();
 
-  const badge =
-    heroSection.querySelector('.hero-section__badge') ||
-    heroSection.querySelector('.hero-badge') ||
-    heroSection.querySelector('.hero-section__eyebrow');
   const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
   const visualWrap = heroSection.querySelector('.hero-section__visual-wrap');
   const visual = heroSection.querySelector('.hero-section__visual');
-  const leadBands = heroSection.querySelectorAll('.hero-section__lead-band');
-  const visualRevealDistance = isMobileViewport ? 44 : 72;
+  const visualRevealDistance = isMobileViewport() ? 44 : 72;
 
   const timeline = gsap.timeline({
     defaults: {
-      duration: MOTION.duration,
-      ease: MOTION.ease
+      duration: motion.duration,
+      ease: motion.ease
     }
   });
-
-  if (badge) {
-    timeline.from(
-      badge,
-      {
-        autoAlpha: 0,
-        y: MOTION.distance * 0.5
-      },
-      0
-    );
-  }
 
   if (title) {
     timeline.from(
       title,
       {
         autoAlpha: 0,
-        y: MOTION.distance
+        y: motion.distance
       },
-      badge ? '-=0.22' : 0
+      0
     );
   }
 
@@ -220,23 +207,9 @@ function initHeroTimeline() {
       subtitle,
       {
         autoAlpha: 0,
-        y: MOTION.distance * 0.8
+        y: motion.distance * 0.8
       },
       '-=0.3'
-    );
-  }
-
-  if (leadBands.length) {
-    timeline.from(
-      leadBands,
-      {
-        autoAlpha: 0,
-        scaleY: 0.94,
-        stagger: 0.04,
-        duration: 0.5,
-        transformOrigin: '50% 0%'
-      },
-      '<'
     );
   }
 
@@ -245,7 +218,7 @@ function initHeroTimeline() {
       ctaButtons,
       {
         autoAlpha: 0,
-        y: MOTION.distance * 0.75,
+        y: motion.distance * 0.75,
         stagger: 0.08
       },
       '-=0.26'
@@ -259,7 +232,7 @@ function initHeroTimeline() {
         autoAlpha: 0,
         y: visualRevealDistance,
         duration: 0.74,
-        ease: MOTION.ease
+        ease: motion.ease
       },
       '-=0.34'
     );
@@ -267,7 +240,7 @@ function initHeroTimeline() {
 
   if (visual) {
     gsap.to(visual, {
-      yPercent: isMobileViewport ? -2 : -5,
+      yPercent: isMobileViewport() ? -2 : -5,
       ease: 'none',
       scrollTrigger: {
         trigger: heroSection,
@@ -323,6 +296,7 @@ function initHeroMetricsCarousel() {
   }
 
   let tween = null;
+  let resizeFrame = 0;
 
   const applyMarqueeLayout = () => {
     const visibleCards = 4;
@@ -351,11 +325,19 @@ function initHeroMetricsCarousel() {
   };
 
   applyMarqueeLayout();
-  window.addEventListener('resize', applyMarqueeLayout);
+  window.addEventListener(
+    'resize',
+    () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(applyMarqueeLayout);
+    },
+    { passive: true }
+  );
 }
 
 // Section-specific card motion stays lightweight: stagger on reveal, restrained hover on intent.
 function initFeatureCards() {
+  const motion = getMotion();
   const section = document.querySelector('.capability-list');
   const cards = gsap.utils.toArray('.capability-card');
 
@@ -365,10 +347,10 @@ function initFeatureCards() {
 
   gsap.from(cards, {
     autoAlpha: 0,
-    y: MOTION.distance,
-    duration: MOTION.duration,
-    ease: MOTION.ease,
-    stagger: isMobileViewport ? 0.07 : 0.1,
+    y: motion.distance,
+    duration: motion.duration,
+    ease: motion.ease,
+    stagger: isMobileViewport() ? 0.07 : 0.1,
     force3D: true,
     scrollTrigger: {
       trigger: section,
@@ -382,24 +364,30 @@ function initFeatureCards() {
   }
 
   cards.forEach((card) => {
+    const cardStyles = getComputedStyle(card);
+    const shadowRest = cardStyles.getPropertyValue('--effect-shadow-card-rest').trim();
+    const shadowHover = cardStyles.getPropertyValue('--effect-shadow-card-hover').trim();
+
     card.addEventListener('mouseenter', () => {
+      const nextMotion = getMotion();
       gsap.to(card, {
-        y: MOTION.cardLift,
-        scale: isMobileViewport ? 1.01 : 1.015,
-        boxShadow: '0 22px 44px rgba(31, 31, 31, 0.08)',
-        duration: MOTION.hoverDuration,
-        ease: MOTION.easeSoft,
+        y: nextMotion.cardLift,
+        scale: isMobileViewport() ? 1.01 : 1.015,
+        boxShadow: shadowHover,
+        duration: nextMotion.hoverDuration,
+        ease: nextMotion.easeSoft,
         overwrite: 'auto'
       });
     });
 
     card.addEventListener('mouseleave', () => {
+      const nextMotion = getMotion();
       gsap.to(card, {
         y: 0,
         scale: 1,
-        boxShadow: '0 0 0 rgba(31, 31, 31, 0)',
-        duration: MOTION.hoverDuration,
-        ease: MOTION.easeSoft,
+        boxShadow: shadowRest,
+        duration: nextMotion.hoverDuration,
+        ease: nextMotion.easeSoft,
         overwrite: 'auto'
       });
     });
@@ -505,13 +493,14 @@ function initInteractiveHoverStates() {
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
     const scrambleTarget = isBuildButton ? buildLabel : isButtonV1 ? element : null;
     const originalScrambleText = scrambleTarget ? (scrambleTarget.textContent || '').trim() : '';
+    const motion = getMotion();
     const scaleTo = gsap.quickTo(element, 'scale', {
-      duration: MOTION.hoverDuration,
-      ease: MOTION.ease
+      duration: motion.hoverDuration,
+      ease: motion.ease
     });
     const yTo = gsap.quickTo(element, 'y', {
-      duration: MOTION.hoverDuration,
-      ease: MOTION.ease
+      duration: motion.hoverDuration,
+      ease: motion.ease
     });
 
     gsap.set(element, {
@@ -527,28 +516,29 @@ function initInteractiveHoverStates() {
     }
 
     const pointerEnter = () => {
+      const nextMotion = getMotion();
       if ('disabled' in element && element.disabled) {
         return;
       }
 
       const targetScale = isBuildButton
-        ? isMobileViewport
+        ? isMobileViewport()
           ? 1.008
           : 1.012
         : isDropdownTrigger
-          ? isMobileViewport
+          ? isMobileViewport()
             ? 1.004
             : 1.008
           : isPageButton
-            ? isMobileViewport
+            ? isMobileViewport()
               ? 1.01
               : 1.014
-            : MOTION.buttonScale;
+            : nextMotion.buttonScale;
       const targetY = isBuildButton || isButtonV1 || isButtonV2
         ? 0
         : isDropdownTrigger
           ? -0.5
-          : isMobileViewport
+          : isMobileViewport()
             ? -0.75
             : -1.5;
 
@@ -576,55 +566,6 @@ function initInteractiveHoverStates() {
   });
 }
 
-// Optional animated asset support. Only initializes when Lottie or dotLottie nodes exist.
-async function initLottieSupport() {
-  const dotLottieNodes = Array.from(document.querySelectorAll('[data-dotlottie-src]'));
-  const lottieNodes = Array.from(document.querySelectorAll('[data-lottie-src]'));
-
-  if (dotLottieNodes.length) {
-    const { DotLottie } = await import(
-      'https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web@0.41.0/+esm'
-    );
-
-    dotLottieNodes.forEach((node) => {
-      const src = node.dataset.dotlottieSrc;
-
-      if (!src) {
-        return;
-      }
-
-      new DotLottie({
-        autoplay: node.dataset.autoplay !== 'false',
-        canvas: node,
-        loop: node.dataset.loop !== 'false',
-        src
-      });
-    });
-  }
-
-  if (lottieNodes.length) {
-    const { default: lottie } = await import(
-      'https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/+esm'
-    );
-
-    lottieNodes.forEach((node) => {
-      const path = node.dataset.lottieSrc;
-
-      if (!path) {
-        return;
-      }
-
-      lottie.loadAnimation({
-        container: node,
-        renderer: 'svg',
-        loop: node.dataset.loop !== 'false',
-        autoplay: node.dataset.autoplay !== 'false',
-        path
-      });
-    });
-  }
-}
-
 // One base motion system for the whole page.
 function initMotionSystem() {
   mapRevealUtilities();
@@ -647,9 +588,6 @@ function initMotionSystem() {
   createRevealSystem();
   initFeatureCards();
   initInteractiveHoverStates();
-  initLottieSupport().catch((error) => {
-    console.warn('Optional Lottie setup failed', error);
-  });
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
   ScrollTrigger.refresh();

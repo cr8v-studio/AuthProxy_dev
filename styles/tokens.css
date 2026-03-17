@@ -6,6 +6,10 @@
   /* Foundation motion */
   --motion-duration-fast: 160ms;
   --motion-ease-standard: ease;
+  --motion-duration-control: 340ms;
+  --motion-duration-control-emphasis: 360ms;
+  --motion-duration-shell: 420ms;
+  --motion-ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Foundation borders */
   --border-width-none: 0;
@@ -16,14 +20,22 @@
   --space-inline-sm: 5px;
   --space-inline-md: 6px;
   --space-inline-lg: 8px;
+  --space-inline-xl: 0.375rem;
+  --space-stack-xs: 10px;
   --space-stack-sm: 12px;
+  --space-stack-md: 16px;
   --space-stack-lg: 20px;
   --space-stack-xl: 24px;
+  --space-stack-2xl: 1.5rem;
+  --space-stack-3xl: 32px;
+  --space-stack-4xl: 40px;
 
   /* Foundation sizes */
   --size-control-md: 44px;
   --size-control-lg: 48px;
   --size-icon-sm: 20px;
+  --size-icon-xs: 18px;
+  --size-icon-frame-lg: 5rem;
   --size-corner-width: 15px;
   --size-corner-height: 12px;
 
@@ -31,6 +43,10 @@
   --layout-page-max: 1440px;
   --layout-shell-max: 1200px;
   --layout-auth-padding: 120px;
+  --layout-header-padding-inline: 44px;
+  --layout-dropdown-panel-min: 14rem;
+  --layout-problem-visual-max: 534px;
+  --layout-auth-device-max: 544px;
 
   /* Foundation section spacing */
   --section-space-2xl: 120px;
@@ -59,9 +75,6 @@
     0 81px 49px rgba(0, 0, 0, 0.05),
     0 36px 36px rgba(0, 0, 0, 0.09),
     0 9px 20px rgba(0, 0, 0, 0.1);
-
-  /* Foundation offsets */
-  --offset-subpixel: 0.1px;
 
   /* Color tokens synced from Figma */
   --figma-color-black-base: #000000;
@@ -100,22 +113,13 @@
   --color-surface-overlay-strong: var(--figma-color-off-white-alpha-1);
   --color-surface-overlay-soft: var(--figma-color-off-white-alpha-5);
   --color-surface-overlay-faint: var(--figma-color-off-white-alpha-9);
-  --color-grid-line-strong: rgba(31, 31, 31, 0.08);
   --color-grid-line-soft: rgba(31, 31, 31, 0.04);
   --color-surface-canvas: var(--figma-color-white-base);
   --color-surface-glass-strong: rgba(244, 244, 244, 0.92);
   --color-surface-glass-medium: rgba(244, 244, 244, 0.55);
-  --color-surface-glass-light: rgba(244, 244, 244, 0.44);
   --color-border-soft: var(--figma-color-dark-tint-9);
-  --color-border-muted: var(--figma-color-dark-tint-7);
-  --color-border-strong: var(--figma-color-dark-tint-5);
-  --color-accent-cool: var(--figma-color-extra-0);
-  --color-accent-moss: var(--figma-color-extra-1);
 
   /* Semantic surface gradients */
-  --surface-gradient-panel-primary:
-    linear-gradient(304deg, rgba(255, 255, 255, 0) 0%, var(--figma-color-white-base) 66.488%),
-    linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
   --surface-gradient-panel-secondary:
     linear-gradient(297deg, rgba(255, 255, 255, 0) 0%, var(--figma-color-white-base) 57.065%),
     linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
@@ -157,19 +161,14 @@
       rgba(0, 0, 0, 0.92) 100%
     );
   --effect-blur-panel-md: 8px;
-  --effect-shadow-panel-xs: 0 2px 4px rgba(0, 0, 0, 0.03);
   --effect-shadow-panel-md: 0 12px 28px rgba(31, 31, 31, 0.05);
-  --effect-shadow-panel-lg: 0 10px 30px rgba(31, 31, 31, 0.045);
-  --effect-shadow-panel-xl: 0 14px 36px rgba(31, 31, 31, 0.045);
-  --effect-shadow-glass-inset:
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -1px 0 rgba(31, 31, 31, 0.06);
+  --effect-shadow-card-rest: 0 0 0 rgba(31, 31, 31, 0);
+  --effect-shadow-card-hover: 0 22px 44px rgba(31, 31, 31, 0.08);
   --radius-device-frame: 5.989px;
 
   /* Hero source tokens */
   --hero-panel-columns: minmax(0, 2fr) minmax(0, 1fr);
   --hero-panel-row-height: 330px;
-  --hero-panel-min-height: auto;
   --hero-panel-gap: 44px;
   --hero-panel-padding-x: 44px;
   --hero-panel-padding-top: 44px;
@@ -179,16 +178,6 @@
   --hero-visual-width: 356px;
   --hero-visual-height: 496px;
   --hero-lead-strip-background: var(--figma-color-off-white-base);
-  --hero-lead-strip-blur: 0px;
-  --hero-lead-strip-progressive-end: 50px;
-  --hero-lead-strip-overlay-base: rgba(244, 244, 244, 0.38);
-  --hero-lead-strip-overlay-progressive:
-    linear-gradient(
-      180deg,
-      rgba(244, 244, 244, 0.01) 0%,
-      rgba(244, 244, 244, 0.12) 46%,
-      rgba(244, 244, 244, 0.22) 100%
-    );
   --hero-lead-strip-padding: 44px;
   --hero-lead-strip-color: var(--figma-color-dark-tint-2);
   --hero-metrics-wrap-blur: 2.5px;
@@ -204,39 +193,18 @@
   --hero-cta-button-gap: 12px;
   --hero-cta-corner-offset: 24px;
 
-  /* Size tokens synced from Figma */
-  --figma-size-apg-br0: 1;
-  --figma-size-apg-br1: 0;
+  /* Landing page structural tokens */
+  --landing-toggle-gap: var(--space-inline-xs);
+  --landing-section-label-min-height: 3.1875rem;
+  --landing-problem-visual-min-height: 33.4375rem;
+  --landing-capability-card-padding-block: var(--space-stack-3xl);
+  --landing-capability-card-padding-inline: var(--section-space-lg);
+  --landing-how-visual-min-height: 52.5rem;
+  --landing-auth-card-gap: var(--space-stack-4xl);
 
-  /*
-   * Semantic aliases are intentionally conservative here.
-   * Figma exposes raw token values, but this node does not define
-   * usage semantics beyond the BR0/BR1 naming.
-   */
-  --size-flag-br0: var(--figma-size-apg-br0);
-  --size-flag-br1: var(--figma-size-apg-br1);
-
-  /* Paint styles synced from Figma */
-  --figma-paint-gradient-1-stop-1: rgba(255, 255, 255, 0);
-  --figma-paint-gradient-1-stop-2: rgb(215, 215, 215);
-  --figma-paint-gradient-1:
-    radial-gradient(
-      72.448% 104.47% at 50% 50%,
-      var(--figma-paint-gradient-1-stop-1) 37.5%,
-      var(--figma-paint-gradient-1-stop-2) 100%
-    );
-
-  /* Semantic paint aliases */
-  --paint-surface-soft-radial: var(--figma-paint-gradient-1);
-
-  /* Pattern assets synced from Figma */
-  --pattern-default-src: url("../assets/pattern-default.svg");
-  --pattern-default-size: 270px 270px;
   --hero-cta-shell-corner-tr: url("../assets/header-button-v1-corner-tr-default.svg");
   --hero-cta-shell-corner-br: url("../assets/header-button-v1-corner-br-default.svg");
-
-  /* Semantic pattern aliases */
-  --pattern-frame-corners: var(--pattern-default-src);
+  --problem-item-corner-asset: url("../assets/header-social-corner-tr-default.svg");
 
   /* Semantic control typography */
   --type-control-body-size: var(--type-body-lg-highlight-size);
@@ -267,7 +235,6 @@
   /* Component tokens: header logo */
   --header-logo-width: 113.112px;
   --header-logo-height: var(--size-control-lg);
-  --header-logo-src: url("../assets/logo-authproxy-dark.svg");
 
   /* Component tokens: header link */
   --header-link-height: var(--size-control-md);
@@ -357,20 +324,6 @@
   --header-button-v2-letter-spacing: var(--type-control-caps-track);
   --header-button-v2-icon-size: var(--size-icon-sm);
   --header-button-v2-icon-shift-hover: var(--space-inline-md);
-
-  /* Component tokens: header social */
-  --header-social-height: var(--size-control-md);
-  --header-social-padding-x: var(--space-stack-lg);
-  --header-social-icon-width: 20.099px;
-  --header-social-icon-height: 17.17px;
-  --header-social-corner-width: var(--size-corner-width);
-  --header-social-corner-height: var(--size-corner-height);
-  --header-social-corner-inset: var(--space-inline-sm);
-  --header-social-corner-right-offset: var(--offset-subpixel);
-  --header-social-corner-tr-default: url("../assets/header-social-corner-tr-default.svg");
-  --header-social-corner-bl-default: url("../assets/header-social-corner-bl-default.svg");
-  --header-social-corner-tr-hover: url("../assets/header-social-corner-tr-hover.svg");
-  --header-social-corner-bl-hover: url("../assets/header-social-corner-bl-hover.svg");
 
   /* Figma source tracking values normalized for CSS */
   --tracking-none: 0;
