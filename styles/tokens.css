@@ -178,8 +178,8 @@
   --hero-panel-background-image: -webkit-image-set(url("../assets/figma/hero-panel-bg.webp") 1x);
   --hero-visual-width: 356px;
   --hero-visual-height: 496px;
-  --hero-lead-strip-background: var(--figma-color-off-white-alpha-1);
-  --hero-lead-strip-blur: 5px;
+  --hero-lead-strip-background: var(--figma-color-off-white-base);
+  --hero-lead-strip-blur: 0px;
   --hero-lead-strip-progressive-end: 50px;
   --hero-lead-strip-overlay-base: rgba(244, 244, 244, 0.38);
   --hero-lead-strip-overlay-progressive:
