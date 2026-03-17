@@ -345,6 +345,9 @@ a {
 .hero-section__lead-strip {
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--hero-lead-strip-padding);
   background: var(--hero-lead-strip-background);
   backdrop-filter: blur(var(--hero-lead-strip-blur));
   -webkit-backdrop-filter: blur(var(--hero-lead-strip-blur));
@@ -354,7 +357,8 @@ a {
   margin: 0;
   width: 100%;
   max-width: none;
-  color: var(--site-text-body);
+  color: var(--hero-lead-strip-color);
+  text-wrap: wrap;
 }
 
 .hero-section__metrics-wrap {

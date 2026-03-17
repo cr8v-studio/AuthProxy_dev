@@ -178,6 +178,8 @@
   --hero-visual-height: 496px;
   --hero-lead-strip-background: var(--figma-color-off-white-alpha-1);
   --hero-lead-strip-blur: 25px;
+  --hero-lead-strip-padding: 44px;
+  --hero-lead-strip-color: var(--figma-color-dark-tint-2);
   --hero-metrics-wrap-blur: 2.5px;
   --hero-metric-padding-x: 44px;
   --hero-metric-padding-y: 24px;
