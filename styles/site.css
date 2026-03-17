@@ -305,6 +305,15 @@ a {
   border-inline: 0;
 }
 
+.hero-section__container-1 {
+  overflow: visible;
+}
+
+.hero-section__container-2 {
+  overflow: hidden;
+  overflow: clip;
+}
+
 .hero-section__panel::before {
   content: none;
 }
