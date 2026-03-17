@@ -324,7 +324,11 @@ a {
     var(--hero-panel-padding-top)
     var(--hero-panel-padding-x)
     var(--hero-panel-padding-bottom);
-  background: var(--surface-gradient-panel-primary);
+  background-color: var(--color-surface-canvas);
+  background-image: var(--hero-panel-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .hero-section__content {
