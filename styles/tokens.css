@@ -180,12 +180,22 @@
   --hero-visual-height: 496px;
   --hero-lead-strip-background: var(--figma-color-off-white-alpha-1);
   --hero-lead-strip-blur: 5px;
-  --hero-lead-strip-progressive-start: 50px;
-  --hero-lead-strip-progressive-mid: 18px;
-  --hero-lead-strip-overlay-top: var(--effect-header-overlay-top);
-  --hero-lead-strip-overlay-bottom: var(--effect-header-overlay-bottom);
-  --hero-lead-strip-mask-top: var(--effect-header-mask-top);
-  --hero-lead-strip-mask-bottom: var(--effect-header-mask-bottom);
+  --hero-lead-strip-progressive-end: 50px;
+  --hero-lead-strip-overlay-progressive:
+    linear-gradient(
+      180deg,
+      rgba(244, 244, 244, 0.02) 0%,
+      rgba(244, 244, 244, 0.11) 56%,
+      rgba(244, 244, 244, 0.2) 100%
+    );
+  --hero-lead-strip-mask-progressive:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.16) 32%,
+      rgba(0, 0, 0, 0.52) 68%,
+      rgba(0, 0, 0, 1) 100%
+    );
   --hero-lead-strip-padding: 44px;
   --hero-lead-strip-color: var(--figma-color-dark-tint-2);
   --hero-metrics-wrap-blur: 2.5px;

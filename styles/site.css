@@ -390,31 +390,21 @@ a {
   -webkit-backdrop-filter: blur(var(--hero-lead-strip-blur));
 }
 
-.hero-section__lead-strip::before,
-.hero-section__lead-strip::after {
+.hero-section__lead-strip::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-}
-
-.hero-section__lead-strip::before {
-  inset: -18px 0 -8px;
-  backdrop-filter: blur(var(--hero-lead-strip-progressive-start));
-  -webkit-backdrop-filter: blur(var(--hero-lead-strip-progressive-start));
-  background: var(--hero-lead-strip-overlay-top);
-  mask-image: var(--hero-lead-strip-mask-top);
-  -webkit-mask-image: var(--hero-lead-strip-mask-top);
-}
-
-.hero-section__lead-strip::after {
-  inset: 0 0 -12px;
-  backdrop-filter: blur(var(--hero-lead-strip-progressive-mid));
-  -webkit-backdrop-filter: blur(var(--hero-lead-strip-progressive-mid));
-  background: var(--hero-lead-strip-overlay-bottom);
-  mask-image: var(--hero-lead-strip-mask-bottom);
-  -webkit-mask-image: var(--hero-lead-strip-mask-bottom);
+  backdrop-filter: blur(var(--hero-lead-strip-progressive-end));
+  -webkit-backdrop-filter: blur(var(--hero-lead-strip-progressive-end));
+  background: var(--hero-lead-strip-overlay-progressive);
+  mask-image: var(--hero-lead-strip-mask-progressive);
+  -webkit-mask-image: var(--hero-lead-strip-mask-progressive);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
 }
 
 .hero-section__lead {
