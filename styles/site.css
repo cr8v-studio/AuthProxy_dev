@@ -249,7 +249,6 @@ a {
 
 .hero-section {
   padding-top: 0;
-  min-height: 100vh;
 }
 
 .hero-section__panel,
@@ -269,8 +268,8 @@ a {
   position: relative;
   display: grid;
   grid-template-columns: var(--hero-panel-columns);
-  grid-template-rows: var(--hero-panel-row-height);
-  min-height: var(--hero-panel-min-height);
+  grid-template-rows: minmax(var(--hero-panel-row-height), 1fr);
+  height: var(--hero-panel-min-height);
   gap: var(--hero-panel-gap);
   align-items: stretch;
   padding:
@@ -297,7 +296,7 @@ a {
   z-index: 2;
   display: flex;
   align-items: flex-end;
-  align-self: center;
+  align-self: stretch;
   justify-self: start;
   isolation: isolate;
 }
@@ -314,7 +313,7 @@ a {
   align-self: start;
   justify-self: stretch;
   width: 100%;
-  min-height: calc(var(--hero-visual-height) + 11rem);
+  min-height: 100%;
   overflow: visible;
 }
 
