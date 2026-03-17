@@ -1,0 +1,13 @@
+:where(.pattern-frame-corners, .pattern-frame-corners--cover) {
+  background-image: var(--pattern-frame-corners);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.pattern-frame-corners {
+  background-size: var(--pattern-default-size);
+}
+
+.pattern-frame-corners--cover {
+  background-size: cover;
+}

@@ -1,0 +1,484 @@
+:root {
+  /* Typeface */
+  --font-family-sans: "Lexend", sans-serif;
+  --font-weight-regular: 400;
+
+  /* Foundation motion */
+  --motion-duration-fast: 160ms;
+  --motion-ease-standard: ease;
+
+  /* Foundation borders */
+  --border-width-none: 0;
+  --border-width-thin: 1px;
+
+  /* Foundation spacing */
+  --space-inline-xs: 4px;
+  --space-inline-sm: 5px;
+  --space-inline-md: 6px;
+  --space-inline-lg: 8px;
+  --space-stack-sm: 12px;
+  --space-stack-lg: 20px;
+  --space-stack-xl: 24px;
+
+  /* Foundation sizes */
+  --size-control-md: 44px;
+  --size-control-lg: 48px;
+  --size-icon-sm: 20px;
+  --size-corner-width: 15px;
+  --size-corner-height: 12px;
+
+  /* Foundation layout */
+  --layout-page-max: 1440px;
+  --layout-shell-max: 1200px;
+  --layout-auth-padding: 120px;
+
+  /* Foundation section spacing */
+  --section-space-2xl: 120px;
+  --section-space-xl: 80px;
+  --section-space-lg: 44px;
+  --section-space-md: 24px;
+  --section-space-sm: 20px;
+
+  /* Foundation radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+
+  /* Foundation shadows */
+  --shadow-hero-visual:
+    0 168px 67px rgba(0, 0, 0, 0.04),
+    0 95px 57px rgba(0, 0, 0, 0.13),
+    0 42px 42px rgba(0, 0, 0, 0.22),
+    0 11px 23px rgba(0, 0, 0, 0.25);
+  --shadow-stack-visual:
+    0 155px 62px rgba(0, 0, 0, 0.01),
+    0 87px 52px rgba(0, 0, 0, 0.05),
+    0 39px 39px rgba(0, 0, 0, 0.09),
+    0 10px 21px rgba(0, 0, 0, 0.1);
+  --shadow-device-soft:
+    0 144px 58px rgba(0, 0, 0, 0.01),
+    0 81px 49px rgba(0, 0, 0, 0.05),
+    0 36px 36px rgba(0, 0, 0, 0.09),
+    0 9px 20px rgba(0, 0, 0, 0.1);
+
+  /* Foundation offsets */
+  --offset-subpixel: 0.1px;
+
+  /* Color tokens synced from Figma */
+  --figma-color-black-base: #000000;
+  --figma-color-white-base: #ffffff;
+  --figma-color-dark-base: #1f1f1f;
+  --figma-color-dark-tint-1: #414141;
+  --figma-color-dark-tint-2: #595959;
+  --figma-color-dark-tint-3: #6d6d6d;
+  --figma-color-dark-tint-4: #7b7b7b;
+  --figma-color-dark-tint-5: #868686;
+  --figma-color-dark-tint-6: #939393;
+  --figma-color-dark-tint-7: #a3a3a3;
+  --figma-color-dark-tint-8: #bababa;
+  --figma-color-dark-tint-9: #d7d7d7;
+  --figma-color-extra-0: #778f99;
+  --figma-color-extra-1: #7b9d89;
+  --figma-color-off-white-base: #f4f4f4;
+  --figma-color-off-white-alpha-1: rgba(244, 244, 244, 0.85);
+  --figma-color-off-white-alpha-2: rgba(244, 244, 244, 0.74);
+  --figma-color-off-white-alpha-3: rgba(244, 244, 244, 0.65);
+  --figma-color-off-white-alpha-4: rgba(244, 244, 244, 0.59);
+  --figma-color-off-white-alpha-5: rgba(244, 244, 244, 0.54);
+  --figma-color-off-white-alpha-6: rgba(244, 244, 244, 0.48);
+  --figma-color-off-white-alpha-7: rgba(244, 244, 244, 0.41);
+  --figma-color-off-white-alpha-8: rgba(244, 244, 244, 0.31);
+  --figma-color-off-white-alpha-9: rgba(244, 244, 244, 0.18);
+
+  /* Semantic color aliases */
+  --color-text-primary: var(--figma-color-black-base);
+  --color-text-strong: var(--figma-color-dark-base);
+  --color-text-muted: var(--figma-color-dark-tint-4);
+  --color-text-subtle: var(--figma-color-dark-tint-6);
+  --color-text-inverse: var(--figma-color-white-base);
+  --color-surface-page: var(--figma-color-white-base);
+  --color-surface-raised: var(--figma-color-off-white-base);
+  --color-surface-overlay-strong: var(--figma-color-off-white-alpha-1);
+  --color-surface-overlay-soft: var(--figma-color-off-white-alpha-5);
+  --color-surface-overlay-faint: var(--figma-color-off-white-alpha-9);
+  --color-border-soft: var(--figma-color-dark-tint-9);
+  --color-border-muted: var(--figma-color-dark-tint-7);
+  --color-border-strong: var(--figma-color-dark-tint-5);
+  --color-accent-cool: var(--figma-color-extra-0);
+  --color-accent-moss: var(--figma-color-extra-1);
+
+  /* Size tokens synced from Figma */
+  --figma-size-apg-br0: 1;
+  --figma-size-apg-br1: 0;
+
+  /*
+   * Semantic aliases are intentionally conservative here.
+   * Figma exposes raw token values, but this node does not define
+   * usage semantics beyond the BR0/BR1 naming.
+   */
+  --size-flag-br0: var(--figma-size-apg-br0);
+  --size-flag-br1: var(--figma-size-apg-br1);
+
+  /* Paint styles synced from Figma */
+  --figma-paint-gradient-1-stop-1: rgba(255, 255, 255, 0);
+  --figma-paint-gradient-1-stop-2: rgb(215, 215, 215);
+  --figma-paint-gradient-1:
+    radial-gradient(
+      72.448% 104.47% at 50% 50%,
+      var(--figma-paint-gradient-1-stop-1) 37.5%,
+      var(--figma-paint-gradient-1-stop-2) 100%
+    );
+
+  /* Semantic paint aliases */
+  --paint-surface-soft-radial: var(--figma-paint-gradient-1);
+
+  /* Pattern assets synced from Figma */
+  --pattern-default-src: url("../assets/pattern-default.svg");
+  --pattern-default-size: 270px 270px;
+  --hero-cta-shell-corner-tr: url("../assets/header-button-v1-corner-tr-default.svg");
+  --hero-cta-shell-corner-br: url("../assets/header-button-v1-corner-br-default.svg");
+
+  /* Semantic pattern aliases */
+  --pattern-frame-corners: var(--pattern-default-src);
+
+  /* Semantic control typography */
+  --type-control-body-size: var(--type-body-lg-highlight-size);
+  --type-control-body-line: var(--type-body-lg-highlight-line);
+  --type-control-body-track: var(--type-body-lg-highlight-track);
+  --type-control-caps-size: var(--type-heading-xs-caps-size);
+  --type-control-caps-line: var(--type-heading-xs-caps-line);
+  --type-control-caps-track: var(--type-heading-xs-caps-track);
+
+  /* Semantic control colors */
+  --color-control-dark-bg: var(--figma-color-dark-base);
+  --color-control-dark-fg: var(--figma-color-off-white-alpha-1);
+  --color-control-dark-fg-strong: var(--figma-color-off-white-base);
+
+  /* Component tokens: page numbering button */
+  --button-page-numbering-size: var(--size-control-md);
+  --button-page-numbering-padding-x: var(--space-stack-xl);
+  --button-page-numbering-padding-y: var(--space-stack-sm);
+  --button-page-numbering-icon-size: var(--size-icon-sm);
+  --button-page-numbering-border-width: var(--border-width-thin);
+  --button-page-numbering-bg: var(--figma-color-white-base);
+  --button-page-numbering-border-color: var(--figma-color-dark-tint-9);
+  --button-page-numbering-color: var(--figma-color-dark-base);
+  --button-page-numbering-hover-bg: var(--figma-color-dark-base);
+  --button-page-numbering-hover-border-color: var(--figma-color-dark-base);
+  --button-page-numbering-hover-color: var(--figma-color-white-base);
+
+  /* Component tokens: header logo */
+  --header-logo-width: 113.112px;
+  --header-logo-height: var(--size-control-lg);
+  --header-logo-src: url("../assets/logo-authproxy-dark.svg");
+
+  /* Component tokens: header link */
+  --header-link-height: var(--size-control-md);
+  --header-link-padding-x: var(--space-stack-lg);
+  --header-link-color: var(--figma-color-dark-base);
+  --header-link-font-size: var(--type-control-body-size);
+  --header-link-line-height: var(--type-control-body-line);
+  --header-link-letter-spacing: var(--type-control-body-track);
+  --header-link-corner-width: var(--size-corner-width);
+  --header-link-corner-height: var(--size-corner-height);
+  --header-link-corner-inset: var(--space-inline-sm);
+  --header-link-corner-bl-default: url("../assets/header-link-corner-bl-default.svg");
+  --header-link-corner-tr-default: url("../assets/header-link-corner-tr-default.svg");
+  --header-link-corner-bl-hover: url("../assets/header-link-corner-bl-hover.svg");
+  --header-link-corner-tr-hover: url("../assets/header-link-corner-tr-hover.svg");
+
+  /* Component tokens: header link m2 */
+  --header-link-m2-height: var(--size-control-md);
+  --header-link-m2-gap: var(--space-inline-md);
+  --header-link-m2-padding-x: var(--space-stack-lg);
+  --header-link-m2-color: var(--figma-color-dark-base);
+  --header-link-m2-font-size: var(--type-control-caps-size);
+  --header-link-m2-line-height: var(--type-control-caps-line);
+  --header-link-m2-letter-spacing: var(--type-control-caps-track);
+  --header-link-m2-corner-width: var(--size-corner-width);
+  --header-link-m2-corner-height: var(--size-corner-height);
+  --header-link-m2-corner-inset: var(--space-inline-sm);
+  --header-link-m2-corner-br-default: url("../assets/header-link-m2-corner-br-default.svg");
+  --header-link-m2-corner-bl-default: url("../assets/header-link-m2-corner-bl-default.svg");
+  --header-link-m2-corner-tr-default: url("../assets/header-link-m2-corner-tr-default.svg");
+  --header-link-m2-corner-tl-default: url("../assets/header-link-m2-corner-tl-default.svg");
+  --header-link-m2-corner-br-hover: url("../assets/header-link-m2-corner-br-hover.svg");
+  --header-link-m2-corner-bl-hover: url("../assets/header-link-m2-corner-bl-hover.svg");
+  --header-link-m2-corner-tr-hover: url("../assets/header-link-m2-corner-tr-hover.svg");
+  --header-link-m2-corner-tl-hover: url("../assets/header-link-m2-corner-tl-hover.svg");
+
+  /* Component tokens: header dropdown link */
+  --header-dropdown-height: var(--size-control-md);
+  --header-dropdown-gap: var(--space-inline-md);
+  --header-dropdown-padding-x: var(--space-stack-lg);
+  --header-dropdown-color: var(--figma-color-dark-base);
+  --header-dropdown-font-size: var(--type-control-body-size);
+  --header-dropdown-line-height: var(--type-control-body-line);
+  --header-dropdown-letter-spacing: var(--type-control-body-track);
+  --header-dropdown-icon-size: var(--size-icon-sm);
+  --header-dropdown-icon-width: 16.6667px;
+  --header-dropdown-icon-height: 11.1298px;
+  --header-dropdown-corner-width: var(--size-corner-width);
+  --header-dropdown-corner-height: var(--size-corner-height);
+  --header-dropdown-corner-inset: var(--space-inline-sm);
+  --header-dropdown-corner-tr-default: url("../assets/header-dropdown-corner-tr-default.svg");
+  --header-dropdown-corner-bl-default: url("../assets/header-dropdown-corner-bl-default.svg");
+  --header-dropdown-corner-tr-hover: url("../assets/header-dropdown-corner-tr-hover.svg");
+  --header-dropdown-corner-bl-hover: url("../assets/header-dropdown-corner-bl-hover.svg");
+
+  /* Component tokens: header button v1 */
+  --header-button-v1-height: var(--size-control-md);
+  --header-button-v1-gap: var(--space-inline-md);
+  --header-button-v1-padding-x: var(--space-stack-lg);
+  --header-button-v1-bg: var(--color-control-dark-bg);
+  --header-button-v1-color: var(--color-control-dark-fg);
+  --header-button-v1-hover-color: var(--color-control-dark-fg-strong);
+  --header-button-v1-font-size: var(--type-control-caps-size);
+  --header-button-v1-line-height: var(--type-control-caps-line);
+  --header-button-v1-letter-spacing: var(--type-control-caps-track);
+  --header-button-v1-corner-width: var(--size-corner-width);
+  --header-button-v1-corner-height: var(--size-corner-height);
+  --header-button-v1-corner-inset: var(--space-inline-sm);
+  --header-button-v1-corner-br-default: url("../assets/header-button-v1-corner-br-default.svg");
+  --header-button-v1-corner-bl-default: url("../assets/header-button-v1-corner-bl-default.svg");
+  --header-button-v1-corner-tr-default: url("../assets/header-button-v1-corner-tr-default.svg");
+  --header-button-v1-corner-tl-default: url("../assets/header-button-v1-corner-tl-default.svg");
+  --header-button-v1-corner-br-hover: url("../assets/header-button-v1-corner-br-hover.svg");
+  --header-button-v1-corner-bl-hover: url("../assets/header-button-v1-corner-bl-hover.svg");
+  --header-button-v1-corner-tr-hover: url("../assets/header-button-v1-corner-tr-hover.svg");
+  --header-button-v1-corner-tl-hover: url("../assets/header-button-v1-corner-tl-hover.svg");
+
+  /* Component tokens: header button v2 */
+  --header-button-v2-height: var(--size-control-md);
+  --header-button-v2-gap: var(--space-inline-xs);
+  --header-button-v2-padding-x: var(--space-stack-lg);
+  --header-button-v2-bg: var(--color-control-dark-bg);
+  --header-button-v2-color: var(--color-control-dark-fg);
+  --header-button-v2-hover-color: var(--color-control-dark-fg-strong);
+  --header-button-v2-font-size: var(--type-control-caps-size);
+  --header-button-v2-line-height: var(--type-control-caps-line);
+  --header-button-v2-letter-spacing: var(--type-control-caps-track);
+  --header-button-v2-icon-size: var(--size-icon-sm);
+  --header-button-v2-icon-shift-hover: var(--space-inline-md);
+
+  /* Component tokens: header social */
+  --header-social-height: var(--size-control-md);
+  --header-social-padding-x: var(--space-stack-lg);
+  --header-social-icon-width: 20.099px;
+  --header-social-icon-height: 17.17px;
+  --header-social-corner-width: var(--size-corner-width);
+  --header-social-corner-height: var(--size-corner-height);
+  --header-social-corner-inset: var(--space-inline-sm);
+  --header-social-corner-right-offset: var(--offset-subpixel);
+  --header-social-corner-tr-default: url("../assets/header-social-corner-tr-default.svg");
+  --header-social-corner-bl-default: url("../assets/header-social-corner-bl-default.svg");
+  --header-social-corner-tr-hover: url("../assets/header-social-corner-tr-hover.svg");
+  --header-social-corner-bl-hover: url("../assets/header-social-corner-bl-hover.svg");
+
+  /* Figma source tracking values normalized for CSS */
+  --tracking-none: 0;
+  --tracking-tight-display: 0.14px;
+  --tracking-tight-body: 0.18px;
+  --tracking-wide: 1px;
+  --tracking-wider: 1.32px;
+  --tracking-widest: 2px;
+  --tracking-display: 3.34px;
+
+  /* Source typography tokens: BR0 = 0-500, BR1 = 501+ */
+  --figma-type-br0-h1-size: 3.375rem;
+  --figma-type-br0-h1-line: 2.9375rem;
+  --figma-type-br0-h1-track: var(--tracking-none);
+  --figma-type-br0-h1-zero-height-size: 3.375rem;
+  --figma-type-br0-h1-zero-height-line: 2.375rem;
+  --figma-type-br0-h1-zero-height-track: var(--tracking-none);
+  --figma-type-br0-h2-size: 2.5625rem;
+  --figma-type-br0-h2-line: 2.5625rem;
+  --figma-type-br0-h2-track: var(--tracking-none);
+  --figma-type-br0-h3-size: 1.8125rem;
+  --figma-type-br0-h3-line: 1.8125rem;
+  --figma-type-br0-h3-track: var(--tracking-none);
+  --figma-type-br0-h3-extra-size: 1.8125rem;
+  --figma-type-br0-h3-extra-line: 1.8125rem;
+  --figma-type-br0-h3-extra-track: var(--tracking-none);
+  --figma-type-br0-h4-size: 1.4375rem;
+  --figma-type-br0-h4-line: 1.5625rem;
+  --figma-type-br0-h4-track: var(--tracking-none);
+  --figma-type-br0-h4-numbers-size: 1.4375rem;
+  --figma-type-br0-h4-numbers-line: 1.5625rem;
+  --figma-type-br0-h4-numbers-track: var(--tracking-none);
+  --figma-type-br0-h5-size: 1.125rem;
+  --figma-type-br0-h5-line: 1.375rem;
+  --figma-type-br0-h5-track: var(--tracking-none);
+  --figma-type-br0-h6-size: 1rem;
+  --figma-type-br0-h6-line: 1.1875rem;
+  --figma-type-br0-h6-track: var(--tracking-none);
+  --figma-type-br0-h7-size: 0.75rem;
+  --figma-type-br0-h7-line: 0.875rem;
+  --figma-type-br0-h7-track: var(--tracking-display);
+  --figma-type-br0-h8-size: 0.75rem;
+  --figma-type-br0-h8-line: 0.875rem;
+  --figma-type-br0-h8-track: var(--tracking-wider);
+  --figma-type-br0-t1-size: 1rem;
+  --figma-type-br0-t1-line: 1.5rem;
+  --figma-type-br0-t1-track: var(--tracking-none);
+  --figma-type-br0-t1-highlight-size: 1rem;
+  --figma-type-br0-t1-highlight-line: 1.5rem;
+  --figma-type-br0-t1-highlight-track: var(--tracking-none);
+  --figma-type-br0-t2-size: 0.75rem;
+  --figma-type-br0-t2-line: 0.875rem;
+  --figma-type-br0-t2-track: var(--tracking-none);
+  --figma-type-br0-t2-highlight-size: 0.75rem;
+  --figma-type-br0-t2-highlight-line: 0.875rem;
+  --figma-type-br0-t2-highlight-track: var(--tracking-none);
+
+  --figma-type-br1-h1-size: 5rem;
+  --figma-type-br1-h1-line: 5rem;
+  --figma-type-br1-h1-track: var(--tracking-none);
+  --figma-type-br1-h1-zero-height-size: 5rem;
+  --figma-type-br1-h1-zero-height-line: 3.5rem;
+  --figma-type-br1-h1-zero-height-track: var(--tracking-none);
+  --figma-type-br1-h2-size: 3.6875rem;
+  --figma-type-br1-h2-line: 3.6875rem;
+  --figma-type-br1-h2-track: var(--tracking-none);
+  --figma-type-br1-h3-size: 2.4375rem;
+  --figma-type-br1-h3-line: 2.4375rem;
+  --figma-type-br1-h3-track: var(--tracking-none);
+  --figma-type-br1-h3-extra-size: 2.4375rem;
+  --figma-type-br1-h3-extra-line: 2.4375rem;
+  --figma-type-br1-h3-extra-track: var(--tracking-none);
+  --figma-type-br1-h4-size: 1.75rem;
+  --figma-type-br1-h4-line: 1.9375rem;
+  --figma-type-br1-h4-track: var(--tracking-none);
+  --figma-type-br1-h4-numbers-size: 1.75rem;
+  --figma-type-br1-h4-numbers-line: 1.9375rem;
+  --figma-type-br1-h4-numbers-track: var(--tracking-none);
+  --figma-type-br1-h5-size: 1.25rem;
+  --figma-type-br1-h5-line: 1.5rem;
+  --figma-type-br1-h5-track: var(--tracking-none);
+  --figma-type-br1-h6-size: 1.125rem;
+  --figma-type-br1-h6-line: 1.625rem;
+  --figma-type-br1-h6-track: var(--tracking-none);
+  --figma-type-br1-h6-uppercase-size: 1.125rem;
+  --figma-type-br1-h6-uppercase-line: 1.625rem;
+  --figma-type-br1-h6-uppercase-track: var(--tracking-wide);
+  --figma-type-br1-h7-size: 0.875rem;
+  --figma-type-br1-h7-line: 1.0625rem;
+  --figma-type-br1-h7-track: var(--tracking-widest);
+  --figma-type-br1-h8-size: 0.75rem;
+  --figma-type-br1-h8-line: 0.875rem;
+  --figma-type-br1-h8-track: var(--tracking-wider);
+  --figma-type-br1-t1-size: 1.125rem;
+  --figma-type-br1-t1-line: 1.6875rem;
+  --figma-type-br1-t1-track: var(--tracking-tight-body);
+  --figma-type-br1-t1-highlight-size: 1.125rem;
+  --figma-type-br1-t1-highlight-line: 1.6875rem;
+  --figma-type-br1-t1-highlight-track: var(--tracking-none);
+  --figma-type-br1-t2-size: 0.875rem;
+  --figma-type-br1-t2-line: 1.3125rem;
+  --figma-type-br1-t2-track: var(--tracking-tight-display);
+  --figma-type-br1-t2-highlight-size: 0.875rem;
+  --figma-type-br1-t2-highlight-line: 1.0625rem;
+  --figma-type-br1-t2-highlight-track: var(--tracking-wide);
+
+  /* Semantic aliases default to BR0 */
+  --type-heading-hero-size: var(--figma-type-br0-h1-size);
+  --type-heading-hero-line: var(--figma-type-br0-h1-line);
+  --type-heading-hero-track: var(--figma-type-br0-h1-track);
+  --type-heading-hero-tight-size: var(--figma-type-br0-h1-zero-height-size);
+  --type-heading-hero-tight-line: var(--figma-type-br0-h1-zero-height-line);
+  --type-heading-hero-tight-track: var(--figma-type-br0-h1-zero-height-track);
+  --type-heading-xl-size: var(--figma-type-br0-h2-size);
+  --type-heading-xl-line: var(--figma-type-br0-h2-line);
+  --type-heading-xl-track: var(--figma-type-br0-h2-track);
+  --type-heading-lg-size: var(--figma-type-br0-h3-size);
+  --type-heading-lg-line: var(--figma-type-br0-h3-line);
+  --type-heading-lg-track: var(--figma-type-br0-h3-track);
+  --type-heading-lg-alt-size: var(--figma-type-br0-h3-extra-size);
+  --type-heading-lg-alt-line: var(--figma-type-br0-h3-extra-line);
+  --type-heading-lg-alt-track: var(--figma-type-br0-h3-extra-track);
+  --type-heading-md-size: var(--figma-type-br0-h4-size);
+  --type-heading-md-line: var(--figma-type-br0-h4-line);
+  --type-heading-md-track: var(--figma-type-br0-h4-track);
+  --type-heading-md-numeric-size: var(--figma-type-br0-h4-numbers-size);
+  --type-heading-md-numeric-line: var(--figma-type-br0-h4-numbers-line);
+  --type-heading-md-numeric-track: var(--figma-type-br0-h4-numbers-track);
+  --type-heading-sm-size: var(--figma-type-br0-h5-size);
+  --type-heading-sm-line: var(--figma-type-br0-h5-line);
+  --type-heading-sm-track: var(--figma-type-br0-h5-track);
+  --type-heading-xs-size: var(--figma-type-br0-h6-size);
+  --type-heading-xs-line: var(--figma-type-br0-h6-line);
+  --type-heading-xs-track: var(--figma-type-br0-h6-track);
+  --type-heading-xs-caps-size: var(--figma-type-br0-h6-size);
+  --type-heading-xs-caps-line: var(--figma-type-br0-h6-line);
+  --type-heading-xs-caps-track: var(--figma-type-br0-h6-track);
+  --type-eyebrow-size: var(--figma-type-br0-h7-size);
+  --type-eyebrow-line: var(--figma-type-br0-h7-line);
+  --type-eyebrow-track: var(--figma-type-br0-h7-track);
+  --type-overline-size: var(--figma-type-br0-h8-size);
+  --type-overline-line: var(--figma-type-br0-h8-line);
+  --type-overline-track: var(--figma-type-br0-h8-track);
+  --type-body-lg-size: var(--figma-type-br0-t1-size);
+  --type-body-lg-line: var(--figma-type-br0-t1-line);
+  --type-body-lg-track: var(--figma-type-br0-t1-track);
+  --type-body-lg-highlight-size: var(--figma-type-br0-t1-highlight-size);
+  --type-body-lg-highlight-line: var(--figma-type-br0-t1-highlight-line);
+  --type-body-lg-highlight-track: var(--figma-type-br0-t1-highlight-track);
+  --type-body-sm-size: var(--figma-type-br0-t2-size);
+  --type-body-sm-line: var(--figma-type-br0-t2-line);
+  --type-body-sm-track: var(--figma-type-br0-t2-track);
+  --type-body-sm-highlight-size: var(--figma-type-br0-t2-highlight-size);
+  --type-body-sm-highlight-line: var(--figma-type-br0-t2-highlight-line);
+  --type-body-sm-highlight-track: var(--figma-type-br0-t2-highlight-track);
+}
+
+@media (min-width: 501px) {
+  :root {
+    --type-heading-hero-size: var(--figma-type-br1-h1-size);
+    --type-heading-hero-line: var(--figma-type-br1-h1-line);
+    --type-heading-hero-track: var(--figma-type-br1-h1-track);
+    --type-heading-hero-tight-size: var(--figma-type-br1-h1-zero-height-size);
+    --type-heading-hero-tight-line: var(--figma-type-br1-h1-zero-height-line);
+    --type-heading-hero-tight-track: var(--figma-type-br1-h1-zero-height-track);
+    --type-heading-xl-size: var(--figma-type-br1-h2-size);
+    --type-heading-xl-line: var(--figma-type-br1-h2-line);
+    --type-heading-xl-track: var(--figma-type-br1-h2-track);
+    --type-heading-lg-size: var(--figma-type-br1-h3-size);
+    --type-heading-lg-line: var(--figma-type-br1-h3-line);
+    --type-heading-lg-track: var(--figma-type-br1-h3-track);
+    --type-heading-lg-alt-size: var(--figma-type-br1-h3-extra-size);
+    --type-heading-lg-alt-line: var(--figma-type-br1-h3-extra-line);
+    --type-heading-lg-alt-track: var(--figma-type-br1-h3-extra-track);
+    --type-heading-md-size: var(--figma-type-br1-h4-size);
+    --type-heading-md-line: var(--figma-type-br1-h4-line);
+    --type-heading-md-track: var(--figma-type-br1-h4-track);
+    --type-heading-md-numeric-size: var(--figma-type-br1-h4-numbers-size);
+    --type-heading-md-numeric-line: var(--figma-type-br1-h4-numbers-line);
+    --type-heading-md-numeric-track: var(--figma-type-br1-h4-numbers-track);
+    --type-heading-sm-size: var(--figma-type-br1-h5-size);
+    --type-heading-sm-line: var(--figma-type-br1-h5-line);
+    --type-heading-sm-track: var(--figma-type-br1-h5-track);
+    --type-heading-xs-size: var(--figma-type-br1-h6-size);
+    --type-heading-xs-line: var(--figma-type-br1-h6-line);
+    --type-heading-xs-track: var(--figma-type-br1-h6-track);
+    --type-heading-xs-caps-size: var(--figma-type-br1-h6-uppercase-size);
+    --type-heading-xs-caps-line: var(--figma-type-br1-h6-uppercase-line);
+    --type-heading-xs-caps-track: var(--figma-type-br1-h6-uppercase-track);
+    --type-eyebrow-size: var(--figma-type-br1-h7-size);
+    --type-eyebrow-line: var(--figma-type-br1-h7-line);
+    --type-eyebrow-track: var(--figma-type-br1-h7-track);
+    --type-overline-size: var(--figma-type-br1-h8-size);
+    --type-overline-line: var(--figma-type-br1-h8-line);
+    --type-overline-track: var(--figma-type-br1-h8-track);
+    --type-body-lg-size: var(--figma-type-br1-t1-size);
+    --type-body-lg-line: var(--figma-type-br1-t1-line);
+    --type-body-lg-track: var(--figma-type-br1-t1-track);
+    --type-body-lg-highlight-size: var(--figma-type-br1-t1-highlight-size);
+    --type-body-lg-highlight-line: var(--figma-type-br1-t1-highlight-line);
+    --type-body-lg-highlight-track: var(--figma-type-br1-t1-highlight-track);
+    --type-body-sm-size: var(--figma-type-br1-t2-size);
+    --type-body-sm-line: var(--figma-type-br1-t2-line);
+    --type-body-sm-track: var(--figma-type-br1-t2-track);
+    --type-body-sm-highlight-size: var(--figma-type-br1-t2-highlight-size);
+    --type-body-sm-highlight-line: var(--figma-type-br1-t2-highlight-line);
+    --type-body-sm-highlight-track: var(--figma-type-br1-t2-highlight-track);
+  }
+}

@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuthProxy</title>
+    <meta
+      name="description"
+      content="Authentication, routing, files and notifications in one production-grade module."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/site.css" />
+  </head>
+  <body class="site-page">
+    <div class="site-grid-overlay" aria-hidden="true"></div>
+
+    <header class="site-header-shell" id="page-top">
+      <div class="site-header__inner">
+        <a class="site-header-logo" href="#page-top" aria-label="AuthProxy home">
+          <img src="./assets/logo-authproxy-dark.svg" alt="AuthProxy" width="113.112" height="48" />
+        </a>
+
+        <button
+          class="site-header__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-navigation"
+        >
+          <span class="site-header__toggle-line"></span>
+          <span class="site-header__toggle-line"></span>
+          <span class="site-header__toggle-line"></span>
+          <span class="sr-only">Open navigation</span>
+        </button>
+
+        <div class="site-header__menu" id="site-navigation">
+          <nav class="site-header__nav" aria-label="Primary">
+            <a class="site-header-link" href="#problem">Problem</a>
+            <a class="site-header-link" href="#how">How it Works</a>
+            <a class="site-header-link" href="#auth">Auth</a>
+
+            <div class="site-header__dropdown-group" data-dropdown>
+              <button
+                class="site-header-dropdown"
+                type="button"
+                aria-expanded="false"
+                aria-controls="platform-menu"
+              >
+                <span>Platform</span>
+                <img
+                  class="icon site-header-dropdown__icon"
+                  src="./assets/icons/arrow-down.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="16.6667"
+                  height="11.1298"
+                />
+              </button>
+              <div class="site-header__dropdown-panel" id="platform-menu">
+                <a class="site-header__dropdown-link" href="#how">Five Capabilities</a>
+                <a class="site-header__dropdown-link" href="#auth-crypto">Cryptographic Auth</a>
+                <a class="site-header__dropdown-link" href="#auth-social">Social / OAuth</a>
+              </div>
+            </div>
+
+            <a class="site-header-link" href="#auth">Security</a>
+
+            <div class="site-header__dropdown-group" data-dropdown>
+              <button
+                class="site-header-dropdown"
+                type="button"
+                aria-expanded="false"
+                aria-controls="developers-menu"
+              >
+                <span>Developers</span>
+                <img
+                  class="icon site-header-dropdown__icon"
+                  src="./assets/icons/arrow-down.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="16.6667"
+                  height="11.1298"
+                />
+              </button>
+              <div class="site-header__dropdown-panel" id="developers-menu">
+                <a class="site-header__dropdown-link" href="#auth-machine">AI / Machine</a>
+                <a class="site-header__dropdown-link" href="#hero-cta">Start Building</a>
+              </div>
+            </div>
+
+            <a class="site-header-link" href="#auth">Pricing</a>
+            <a class="site-header-link" href="#problem">FAQ</a>
+          </nav>
+
+          <div class="site-header__controls">
+            <a class="site-header-link-m2" href="#hero-cta"><span class="site-header-link-m2__label">Build</span></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="landing-page">
+      <section class="hero-section" id="top">
+        <div class="site-container hero-section__panel">
+          <div class="hero-section__content">
+            <h1 class="hero-section__title heading-hero">
+              Authentication, Routing &amp; Files - One Module, Zero Dependencies
+            </h1>
+          </div>
+          <div class="hero-section__visual-wrap">
+            <img
+              class="hero-section__visual"
+              src="./assets/figma/hero-visual.webp"
+              alt="AuthProxy mobile authentication interface"
+              width="356"
+              height="496"
+            />
+          </div>
+        </div>
+
+        <div class="site-container hero-section__lead-strip">
+          <div class="hero-section__lead-fx" aria-hidden="true">
+            <span class="hero-section__lead-band hero-section__lead-band--xl"></span>
+            <span class="hero-section__lead-band hero-section__lead-band--lg"></span>
+            <span class="hero-section__lead-band hero-section__lead-band--md"></span>
+            <span class="hero-section__lead-band hero-section__lead-band--sm"></span>
+            <span class="hero-section__lead-band hero-section__lead-band--xs"></span>
+          </div>
+          <p class="text-body-lg hero-section__lead">
+            AuthProxy is a production-grade web server that handles authentication, reverse proxy,
+            file management, and real-time notifications for PWA applications. 11 auth methods,
+            in-memory sessions, rate limiting - all embedded in a single process.
+          </p>
+        </div>
+
+        <div class="site-wide hero-section__metrics-wrap">
+          <div class="hero-section__metrics">
+            <article class="hero-metric">
+              <strong class="hero-metric__value">11</strong>
+              <span class="hero-metric__label">Auth Methods</span>
+            </article>
+            <article class="hero-metric">
+              <strong class="hero-metric__value">13</strong>
+              <span class="hero-metric__label">Admin Pages</span>
+            </article>
+            <article class="hero-metric">
+              <strong class="hero-metric__value">221</strong>
+              <span class="hero-metric__label">Unit Tests</span>
+            </article>
+            <article class="hero-metric">
+              <strong class="hero-metric__value">3 kb</strong>
+              <span class="hero-metric__label">First Load</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="site-container hero-section__cta-bar" id="hero-cta">
+          <div class="hero-section__cta-row">
+            <a class="site-header-button-v1" href="#auth">Start Building</a>
+            <a class="site-header-button-v2" href="#auth">
+              <span>View Admin Demo</span>
+              <span class="site-header-button-v2__icon-wrap">
+                <img
+                  class="icon site-header-button-v2__icon"
+                  src="./assets/icons/arrow-right-offwhite.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="20"
+                  height="20"
+                />
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="problem">
+        <div class="site-wide section-label-bar">
+          <div class="section-label">
+            <span class="section-label__chevrons" aria-hidden="true">
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+            </span>
+            <span class="heading-md">The Problem</span>
+          </div>
+        </div>
+
+        <div class="site-container section-intro section-intro--tinted">
+          <h2 class="heading-md section-intro__title">
+            You're Assembling Auth Infrastructure From 5 Different Services
+          </h2>
+          <p class="eyebrow section-intro__kicker">Building a modern web application? You need:</p>
+        </div>
+
+        <div class="site-container problem-grid">
+          <div class="problem-grid__visual-wrap">
+            <img
+              class="problem-grid__visual"
+              src="./assets/figma/problem-cube.webp"
+              alt="AuthProxy infrastructure cube illustration"
+              width="534"
+              height="381"
+            />
+          </div>
+          <div class="problem-list">
+            <article class="problem-item">
+              <span class="problem-item__number">01</span>
+              <div class="problem-item__copy">
+                <p class="text-body-lg">An identity provider</p>
+                <p class="heading-xs-caps">Auth0, Keycloak, Firebase</p>
+              </div>
+            </article>
+            <article class="problem-item">
+              <span class="problem-item__number">02</span>
+              <div class="problem-item__copy">
+                <p class="text-body-lg">A reverse proxy</p>
+                <p class="heading-xs-caps">nginx, Traefik</p>
+              </div>
+            </article>
+            <article class="problem-item">
+              <span class="problem-item__number">03</span>
+              <div class="problem-item__copy">
+                <p class="text-body-lg">A file storage service</p>
+                <p class="heading-xs-caps">S3, MinIO</p>
+              </div>
+            </article>
+            <article class="problem-item">
+              <span class="problem-item__number">04</span>
+              <div class="problem-item__copy">
+                <p class="text-body-lg">A notification system</p>
+                <p class="heading-xs-caps">Firebase, OneSignal</p>
+              </div>
+            </article>
+            <article class="problem-item">
+              <span class="problem-item__number">05</span>
+              <div class="problem-item__copy">
+                <p class="text-body-lg">An admin panel</p>
+                <p class="heading-xs-caps">Custom build or Retool</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="site-container problem-statement">
+          <p class="eyebrow problem-statement__eyebrow">
+            That's 5 vendors, 5 failure points, 5 learning curves, and weeks of integration work.
+          </p>
+          <p class="problem-statement__quote heading-xl">
+            <span class="text-highlight">AuthProxy</span>
+            replaces all five. Single ASP.NET process. No external dependencies. Production-ready
+            from day one.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section" id="how">
+        <div class="site-wide section-label-bar">
+          <div class="section-label">
+            <span class="section-label__chevrons" aria-hidden="true">
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+            </span>
+            <span class="heading-md">How it Works</span>
+          </div>
+        </div>
+
+        <div class="site-container section-intro section-intro--tinted">
+          <h2 class="section-intro__headline text-highlight">One Process. Five Capabilities.</h2>
+          <p class="eyebrow section-intro__kicker">Internet - AuthProxy (port 443)</p>
+        </div>
+
+        <div class="site-container how-grid">
+          <div class="capability-list">
+            <article class="capability-card">
+              <span class="capability-card__icon-frame">
+                <img src="./assets/icons/vector-2.svg" alt="" width="40" height="40" />
+              </span>
+              <div>
+                <h3 class="heading-lg-alt capability-card__title">Authentication</h3>
+                <p class="heading-xs-caps capability-card__meta">11 methods</p>
+              </div>
+            </article>
+            <article class="capability-card">
+              <span class="capability-card__icon-frame">
+                <img src="./assets/icons/vector-3.svg" alt="" width="40" height="39.997" />
+              </span>
+              <div>
+                <h3 class="heading-lg-alt capability-card__title">Reverse Proxy</h3>
+                <p class="heading-xs-caps capability-card__meta">Dynamic routing</p>
+              </div>
+            </article>
+            <article class="capability-card">
+              <span class="capability-card__icon-frame">
+                <img src="./assets/icons/vector-4.svg" alt="" width="40" height="40" />
+              </span>
+              <div>
+                <h3 class="heading-lg-alt capability-card__title">File Service</h3>
+                <p class="heading-xs-caps capability-card__meta">Upload/Download/Images</p>
+              </div>
+            </article>
+            <article class="capability-card">
+              <span class="capability-card__icon-frame">
+                <img src="./assets/icons/vector-5.svg" alt="" width="40" height="40" />
+              </span>
+              <div>
+                <h3 class="heading-lg-alt capability-card__title">Notifications</h3>
+                <p class="heading-xs-caps capability-card__meta">SSE, Webhooks, Push</p>
+              </div>
+            </article>
+            <article class="capability-card">
+              <span class="capability-card__icon-frame">
+                <img src="./assets/icons/vector-6.svg" alt="" width="40" height="40" />
+              </span>
+              <div>
+                <h3 class="heading-lg-alt capability-card__title">Admin Panel</h3>
+                <p class="heading-xs-caps capability-card__meta">13 pages</p>
+              </div>
+            </article>
+
+            <div class="how-grid__core">
+              <p class="eyebrow">Backend Services</p>
+              <p class="text-highlight how-grid__core-text heading-xl">Your Core, TrexWallet, Chat, CRM</p>
+            </div>
+          </div>
+
+          <div class="how-grid__visual-wrap">
+            <img
+              class="how-grid__visual"
+              src="./assets/figma/how-stack.webp"
+              alt="Exploded AuthProxy capabilities stack"
+              width="222"
+              height="594"
+            />
+          </div>
+        </div>
+
+        <div class="site-container how-note">
+          <img src="./assets/icons/figure-2.svg" alt="" width="24" height="24" />
+          <p class="text-body-lg how-note__text">
+            AuthProxy sits at the edge of your application. Every request passes through it.
+            Authentication is verified, headers are injected (X-Crm, X-Scopes, X-Project), and
+            requests are forwarded to your backend services. Your services never see
+            unauthenticated traffic.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section auth-section" id="auth">
+        <div class="site-wide section-label-bar">
+          <div class="section-label">
+            <span class="section-label__chevrons" aria-hidden="true">
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+            </span>
+            <span class="heading-md">Authentication</span>
+          </div>
+        </div>
+
+        <div class="site-container section-intro section-intro--tinted auth-section__intro">
+          <h2 class="heading-xl auth-section__title">Every Auth Method Your Users Need. Already Built.</h2>
+        </div>
+
+        <div class="auth-slider site-wide" data-slider>
+          <div class="auth-slider__viewport">
+            <div class="auth-slider__track">
+              <article class="auth-card" id="auth-crypto" data-slide>
+                <div class="auth-card__header">
+                  <img src="./assets/icons/figure-2.svg" alt="" width="24" height="24" />
+                  <p class="heading-xs-caps">Cryptographic (Strongest)</p>
+                </div>
+                <div class="auth-card__table">
+                  <div class="auth-card__row auth-card__row--head">
+                    <span>Method</span>
+                    <span>How It Works</span>
+                    <span>Best For</span>
+                  </div>
+                  <div class="auth-card__row">
+                    <span>PassKey</span>
+                    <span>Ed25519 challenge-response, SHA256(phone+password+domain)</span>
+                    <span>Default login for most users</span>
+                  </div>
+                  <div class="auth-card__row">
+                    <span>FIDO2/WebAuthn</span>
+                    <span>Hardware keys with sign-count anti-cloning</span>
+                    <span>Enterprise, high-security accounts</span>
+                  </div>
+                  <div class="auth-card__row">
+                    <span>UserKey</span>
+                    <span>Imported Ed25519 hex private key</span>
+                    <span>Automation, power users</span>
+                  </div>
+                </div>
+                <div class="auth-card__visual auth-card__visual--wide">
+                  <img src="./assets/figma/auth-crypto-flow.svg" alt="" aria-hidden="true" />
+                </div>
+              </article>
+
+              <article class="auth-card auth-card--otp" id="auth-otp" data-slide>
+                <div class="auth-card__header">
+                  <img src="./assets/icons/figure-2.svg" alt="" width="24" height="24" />
+                  <p class="heading-xs-caps">One-Time Passwords</p>
+                </div>
+                <div class="auth-card__table">
+                  <div class="auth-card__row auth-card__row--head">
+                    <span>Method</span>
+                    <span>How It Works</span>
+                    <span>Best For</span>
+                  </div>
+                  <div class="auth-card__row auth-card__row--tall">
+                    <span>Phone OTP</span>
+                    <span>SMS/Messenger delivery, optional account creation</span>
+                    <span>Mobile-first onboarding</span>
+                  </div>
+                  <div class="auth-card__row">
+                    <span>Email OTP</span>
+                    <span>Email with MX validation + Magic Link option</span>
+                    <span>Desktop users, enterprise</span>
+                  </div>
+                </div>
+                <div class="auth-card__media auth-card__media--split">
+                  <img
+                    class="auth-card__device"
+                    src="./assets/figma/auth-otp-device.webp"
+                    alt="AuthProxy one-time password device illustration"
+                    width="544"
+                    height="320"
+                  />
+                  <img src="./assets/figma/auth-otp-flow.svg" alt="" aria-hidden="true" />
+                </div>
+              </article>
+
+              <article class="auth-card" id="auth-social" data-slide>
+                <div class="auth-card__header">
+                  <img src="./assets/icons/figure-2.svg" alt="" width="24" height="24" />
+                  <p class="heading-xs-caps">Social / OAuth</p>
+                </div>
+                <div class="auth-card__table">
+                  <div class="auth-card__row auth-card__row--head">
+                    <span>Method</span>
+                    <span>How It Works</span>
+                    <span>Best For</span>
+                  </div>
+                  <div class="auth-card__row"><span>Google</span><span>JWT validation with ID tokens</span><span>Global audience</span></div>
+                  <div class="auth-card__row"><span>Telegram</span><span>HMAC-SHA256 bot-based login</span><span>CIS/crypto communities</span></div>
+                  <div class="auth-card__row"><span>Discord</span><span>Code exchange + account linking</span><span>Gaming, communities</span></div>
+                  <div class="auth-card__row"><span>Facebook</span><span>Graph API v21.0</span><span>Consumer apps</span></div>
+                  <div class="auth-card__row"><span>GitHub</span><span>Code exchange</span><span>Developer tools</span></div>
+                  <div class="auth-card__row"><span>VK</span><span>JWT validation</span><span>Russian market</span></div>
+                  <div class="auth-card__row"><span>Apple</span><span>JWT + nonce verification</span><span>iOS requirement</span></div>
+                </div>
+              </article>
+
+              <article class="auth-card" id="auth-machine" data-slide>
+                <div class="auth-card__header">
+                  <img src="./assets/icons/figure-2.svg" alt="" width="24" height="24" />
+                  <p class="heading-xs-caps">AI / Machine</p>
+                </div>
+                <div class="auth-card__table">
+                  <div class="auth-card__row auth-card__row--head">
+                    <span>Method</span>
+                    <span>How It Works</span>
+                    <span>Best For</span>
+                  </div>
+                  <div class="auth-card__row"><span>MCP Basic</span><span>Public key headers, read-only</span><span>AI monitoring agents</span></div>
+                  <div class="auth-card__row"><span>MCP Verified</span><span>Ed25519 timestamp signing</span><span>AI trading bots, automation</span></div>
+                  <div class="auth-card__row"><span>MCP App</span><span>Delegated third-party access</span><span>Third-party AI integrations</span></div>
+                </div>
+                <div class="auth-card__visual auth-card__visual--wide auth-card__visual--center">
+                  <img src="./assets/figma/auth-ai-flow.svg" alt="" aria-hidden="true" />
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="auth-slider__footer">
+            <div class="auth-slider__status" aria-live="polite">
+              <span data-slider-current>01</span>
+              <span>/</span>
+              <span data-slider-total>04</span>
+            </div>
+            <div class="auth-slider__controls">
+              <button class="button-page-numbering auth-slider__button auth-slider__button--prev" type="button" data-slider-prev aria-label="Previous slide">
+                <img src="./assets/icons/arrow-right.svg" alt="" aria-hidden="true" width="20" height="20" />
+              </button>
+              <button class="button-page-numbering" type="button" data-slider-next aria-label="Next slide">
+                <img src="./assets/icons/arrow-right.svg" alt="" aria-hidden="true" width="20" height="20" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./scripts/site.js"></script>
+    <script type="module" src="./assets/js/animations.js"></script>
+  </body>
+</html>
