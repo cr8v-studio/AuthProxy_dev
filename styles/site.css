@@ -314,7 +314,6 @@ a {
 .hero-section__container-2 {
   position: relative;
   overflow: hidden;
-  overflow: clip;
 }
 
 .hero-section__panel::before {
@@ -365,6 +364,9 @@ a {
   width: min(100%, var(--hero-visual-width));
   height: auto;
   object-fit: contain;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, filter;
   -webkit-filter: var(--shadow-hero-visual);
   filter: var(--shadow-hero-visual);
 }
@@ -386,25 +388,29 @@ a {
   isolation: isolate;
   padding: var(--hero-lead-strip-padding);
   background: var(--hero-lead-strip-background);
-  backdrop-filter: blur(var(--hero-lead-strip-blur));
-  -webkit-backdrop-filter: blur(var(--hero-lead-strip-blur));
+  backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
+  -webkit-backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
 }
 
-.hero-section__lead-strip::before {
+.hero-section__lead-strip::before,
+.hero-section__lead-strip::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  backdrop-filter: blur(var(--hero-lead-strip-progressive-end));
-  -webkit-backdrop-filter: blur(var(--hero-lead-strip-progressive-end));
+}
+
+.hero-section__lead-strip::before {
+  backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
+  -webkit-backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
+  background: var(--hero-lead-strip-overlay-base);
+}
+
+.hero-section__lead-strip::after {
+  backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-progressive-end));
+  -webkit-backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-progressive-end));
   background: var(--hero-lead-strip-overlay-progressive);
-  mask-image: var(--hero-lead-strip-mask-progressive);
-  -webkit-mask-image: var(--hero-lead-strip-mask-progressive);
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-  mask-size: 100% 100%;
-  -webkit-mask-size: 100% 100%;
 }
 
 .hero-section__lead {

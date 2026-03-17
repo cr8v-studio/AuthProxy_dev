@@ -181,20 +181,13 @@
   --hero-lead-strip-background: var(--figma-color-off-white-alpha-1);
   --hero-lead-strip-blur: 5px;
   --hero-lead-strip-progressive-end: 50px;
+  --hero-lead-strip-overlay-base: rgba(244, 244, 244, 0.38);
   --hero-lead-strip-overlay-progressive:
     linear-gradient(
       180deg,
-      rgba(244, 244, 244, 0.02) 0%,
-      rgba(244, 244, 244, 0.11) 56%,
-      rgba(244, 244, 244, 0.2) 100%
-    );
-  --hero-lead-strip-mask-progressive:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.16) 32%,
-      rgba(0, 0, 0, 0.52) 68%,
-      rgba(0, 0, 0, 1) 100%
+      rgba(244, 244, 244, 0.01) 0%,
+      rgba(244, 244, 244, 0.12) 46%,
+      rgba(244, 244, 244, 0.22) 100%
     );
   --hero-lead-strip-padding: 44px;
   --hero-lead-strip-color: var(--figma-color-dark-tint-2);
