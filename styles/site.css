@@ -306,10 +306,13 @@ a {
 }
 
 .hero-section__container-1 {
-  overflow: visible;
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
 }
 
 .hero-section__container-2 {
+  position: relative;
   overflow: hidden;
   overflow: clip;
 }
