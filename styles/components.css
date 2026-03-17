@@ -27,6 +27,15 @@
     background-position var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
+.site-header-link,
+.site-header-link-m2,
+.site-header-dropdown,
+.site-header-button-v1,
+.site-header-button-v2,
+.site-header-social {
+  color: var(--control-color, currentColor);
+}
+
 :where(.site-header-dropdown, .site-header-button-v1, .site-header-button-v2, .site-header-social) {
   border: var(--border-width-none) solid transparent;
   background-color: transparent;
