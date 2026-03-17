@@ -270,6 +270,7 @@ a {
   display: grid;
   grid-template-columns: var(--hero-panel-columns);
   grid-template-rows: var(--hero-panel-row-height);
+  min-height: var(--hero-panel-min-height);
   gap: var(--hero-panel-gap);
   align-items: stretch;
   padding:
@@ -522,8 +523,8 @@ a {
 }
 
 .hero-section__cta-row .site-header-button-v2__icon {
-  width: 11.1298px;
-  height: 16.6667px;
+  width: var(--header-button-v2-icon-size);
+  height: var(--header-button-v2-icon-size);
   object-fit: contain;
   display: block;
   transition:

@@ -169,6 +169,7 @@
   /* Hero source tokens */
   --hero-panel-columns: minmax(0, 2fr) minmax(0, 1fr);
   --hero-panel-row-height: 330px;
+  --hero-panel-min-height: 100vh;
   --hero-panel-gap: 44px;
   --hero-panel-padding-x: 44px;
   --hero-panel-padding-top: 120px;
