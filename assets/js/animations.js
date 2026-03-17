@@ -360,7 +360,7 @@ function initInteractiveHoverStates() {
     }
 
     const state = { progress: 0 };
-    const revealDelay = 0.1;
+    const revealDelay = 0.08;
     const totalFrames = Math.max(1, finalText.length);
 
     const renderFrame = () => {
@@ -391,7 +391,7 @@ function initInteractiveHoverStates() {
 
     const tween = gsap.to(state, {
       progress: 1,
-      duration: 0.8,
+      duration: 0.58,
       ease: 'power1.out',
       overwrite: 'auto',
       onUpdate: renderFrame,
