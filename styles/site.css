@@ -249,8 +249,6 @@ a {
 
 .hero-section {
   padding-top: 0;
-  overflow-x: clip;
-  overflow-y: visible;
 }
 
 .hero-section__panel,
@@ -308,21 +306,21 @@ a {
   white-space: nowrap;
 }
 
-.hero-section__visual-wrap {
+.hero-section__visual-stage {
   position: relative;
   z-index: 1;
   align-self: start;
   justify-self: stretch;
   width: 100%;
+  min-height: calc(var(--hero-visual-height) + 11rem);
+  overflow: hidden;
+}
+
+.hero-section__visual-wrap {
+  position: relative;
+  width: 100%;
   height: var(--hero-visual-height);
   min-height: var(--hero-visual-height);
-  isolation: isolate;
-  -webkit-filter: var(--shadow-hero-visual);
-  filter: var(--shadow-hero-visual);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: filter;
 }
 
 .hero-section__visual {
@@ -331,6 +329,8 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  -webkit-filter: var(--shadow-hero-visual);
+  filter: var(--shadow-hero-visual);
 }
 
 .hero-section__lead-strip,
@@ -957,9 +957,22 @@ a {
     order: 1;
   }
 
-  .hero-section__visual-wrap {
+  .hero-section__visual-stage {
     order: 0;
     min-height: auto;
+    overflow: visible;
+  }
+
+  .hero-section__visual-wrap {
+    min-height: auto;
+    height: auto;
+    width: min(100%, var(--hero-visual-width));
+    margin-inline: auto;
+  }
+
+  .hero-section__visual {
+    position: static;
+    width: 100%;
     height: auto;
   }
 
@@ -1031,7 +1044,6 @@ a {
   }
 
   .hero-section__visual {
-    position: static;
     width: min(100%, var(--hero-visual-width));
     height: auto;
     margin-inline: auto;
