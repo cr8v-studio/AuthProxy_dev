@@ -186,6 +186,12 @@
   --hero-metric-value-size: 80px;
   --hero-metric-value-line: 80px;
   --hero-metric-label-gap: 6px;
+  --hero-cta-columns: minmax(0, 2fr) minmax(0, 1fr);
+  --hero-cta-row-height: 44px;
+  --hero-cta-gap: 44px;
+  --hero-cta-padding: 44px;
+  --hero-cta-button-gap: 12px;
+  --hero-cta-corner-offset: 24px;
 
   /* Size tokens synced from Figma */
   --figma-size-apg-br0: 1;
