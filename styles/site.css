@@ -339,7 +339,8 @@ a {
 }
 
 .hero-section__container-197 > .hero-section__metrics-wrap {
-  width: 100%;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
 }
 
 .hero-section__container-197 > .hero-section__cta-bar {
