@@ -249,6 +249,8 @@ a {
 
 .hero-section {
   padding-top: 0;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .hero-section__panel,
@@ -276,7 +278,6 @@ a {
     var(--hero-panel-padding-x)
     var(--hero-panel-padding-bottom);
   background-color: var(--color-surface-canvas);
-  clip-path: inset(0 0 -18rem 0);
 }
 
 .hero-section__panel::before {
@@ -316,7 +317,10 @@ a {
   height: var(--hero-visual-height);
   min-height: var(--hero-visual-height);
   isolation: isolate;
+  -webkit-filter: var(--shadow-hero-visual);
   filter: var(--shadow-hero-visual);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   transform: translateZ(0);
   will-change: filter;
 }
