@@ -174,8 +174,8 @@
   --hero-panel-padding-x: 44px;
   --hero-panel-padding-top: 44px;
   --hero-panel-padding-bottom: 44px;
-  --hero-panel-background-image-fallback: url("../assets/figma/hero-panel-bg.png");
-  --hero-panel-background-image: -webkit-image-set(url("../assets/figma/hero-panel-bg.png") 1x);
+  --hero-panel-background-image-fallback: url("../assets/figma/hero-panel-bg.webp");
+  --hero-panel-background-image: -webkit-image-set(url("../assets/figma/hero-panel-bg.webp") 1x);
   --hero-visual-width: 356px;
   --hero-visual-height: 496px;
   --hero-lead-strip-background: var(--figma-color-off-white-alpha-1);
