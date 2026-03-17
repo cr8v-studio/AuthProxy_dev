@@ -183,7 +183,6 @@ function initHeroTimeline() {
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
   const visualWrap = heroSection.querySelector('.hero-section__visual-wrap');
   const visual = heroSection.querySelector('.hero-section__visual');
-  const metrics = heroSection.querySelectorAll('.hero-metric');
   const leadBands = heroSection.querySelectorAll('.hero-section__lead-band');
   const visualRevealDistance = isMobileViewport ? 44 : 72;
 
@@ -266,20 +265,6 @@ function initHeroTimeline() {
     );
   }
 
-  if (metrics.length) {
-    timeline.from(
-      metrics,
-      {
-        autoAlpha: 0,
-        y: MOTION.distance * 0.6,
-        stagger: 0.06,
-        duration: 0.5,
-        ease: MOTION.easeSoft
-      },
-      '-=0.25'
-    );
-  }
-
   if (visual) {
     gsap.to(visual, {
       yPercent: isMobileViewport ? -2 : -5,
@@ -296,30 +281,45 @@ function initHeroTimeline() {
 
 function initHeroMetricsCarousel() {
   const metricsWrap = heroSection?.querySelector('.hero-section__metrics-wrap');
-  const metricsTrack = metricsWrap?.querySelector('.hero-section__metrics');
+  const sourceTrack = metricsWrap?.querySelector('.hero-section__metrics');
 
-  if (!metricsWrap || !metricsTrack || prefersReducedMotion) {
+  if (!metricsWrap || !sourceTrack || prefersReducedMotion) {
     return;
   }
 
-  const originalCards = Array.from(metricsTrack.children);
+  const originalCards = Array.from(sourceTrack.children);
 
   if (originalCards.length === 0) {
     return;
   }
 
   metricsWrap.classList.add('is-carousel');
-  metricsTrack.classList.add('is-carousel-track');
+  let metricsTrack = metricsWrap.querySelector('.hero-section__metrics-carousel-track');
 
-  if (!metricsTrack.dataset.marqueeReady) {
-    originalCards.forEach((card) => {
-      const clone = card.cloneNode(true);
-      clone.dataset.marqueeClone = 'true';
-      clone.setAttribute('aria-hidden', 'true');
-      metricsTrack.append(clone);
-    });
+  if (!metricsTrack) {
+    metricsTrack = document.createElement('div');
+    metricsTrack.className = 'hero-section__metrics-carousel-track';
 
-    metricsTrack.dataset.marqueeReady = 'true';
+    const createGroup = (isClone = false) => {
+      const group = document.createElement('div');
+      group.className = 'hero-section__metrics hero-section__metrics-group';
+
+      originalCards.forEach((card) => {
+        const nextCard = card.cloneNode(true);
+
+        if (isClone) {
+          nextCard.setAttribute('aria-hidden', 'true');
+          nextCard.dataset.marqueeClone = 'true';
+        }
+
+        group.append(nextCard);
+      });
+
+      return group;
+    };
+
+    metricsTrack.append(createGroup(false), createGroup(true));
+    sourceTrack.replaceWith(metricsTrack);
   }
 
   let tween = null;
@@ -328,11 +328,16 @@ function initHeroMetricsCarousel() {
     const isCompactViewport = window.matchMedia('(max-width: 760px)').matches;
     const visibleCards = isCompactViewport ? 2 : 4;
     const cardWidth = metricsWrap.clientWidth / visibleCards;
-    const allCards = Array.from(metricsTrack.children);
+    const groups = Array.from(metricsTrack.querySelectorAll('.hero-section__metrics-group'));
+    const allCards = Array.from(metricsTrack.querySelectorAll('.hero-metric'));
 
     allCards.forEach((card) => {
       card.style.flexBasis = `${cardWidth}px`;
       card.style.width = `${cardWidth}px`;
+    });
+
+    groups.forEach((group) => {
+      group.style.width = `${cardWidth * originalCards.length}px`;
     });
 
     tween?.kill();
