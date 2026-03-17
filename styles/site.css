@@ -342,7 +342,7 @@ a {
 
 .hero-section__content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   align-items: flex-end;
   align-self: center;
@@ -385,6 +385,8 @@ a {
 }
 
 .hero-section__lead-strip {
+  position: relative;
+  z-index: 2;
   background: var(--hero-lead-strip-background);
   backdrop-filter: blur(var(--hero-lead-strip-blur));
   -webkit-backdrop-filter: blur(var(--hero-lead-strip-blur));
@@ -398,6 +400,8 @@ a {
 }
 
 .hero-section__metrics-wrap {
+  position: relative;
+  z-index: 2;
   width: 100%;
   backdrop-filter: blur(var(--hero-metrics-wrap-blur));
   -webkit-backdrop-filter: blur(var(--hero-metrics-wrap-blur));
@@ -439,6 +443,7 @@ a {
 
 .hero-section__cta-bar {
   position: relative;
+  z-index: 2;
   padding: var(--section-space-lg);
   background: var(--color-control-dark-bg);
 }
