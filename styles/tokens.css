@@ -45,10 +45,10 @@
 
   /* Foundation shadows */
   --shadow-hero-visual:
-    drop-shadow(0 168px 67px rgba(0, 0, 0, 0.02))
-    drop-shadow(0 95px 57px rgba(0, 0, 0, 0.07))
-    drop-shadow(0 42px 42px rgba(0, 0, 0, 0.11))
-    drop-shadow(0 11px 23px rgba(0, 0, 0, 0.12));
+    drop-shadow(0 168px 67px rgba(0, 0, 0, 0.03))
+    drop-shadow(0 95px 57px rgba(0, 0, 0, 0.1))
+    drop-shadow(0 42px 42px rgba(0, 0, 0, 0.16))
+    drop-shadow(0 11px 23px rgba(0, 0, 0, 0.18));
   --shadow-stack-visual:
     drop-shadow(0 155px 62px rgba(0, 0, 0, 0.01))
     drop-shadow(0 87px 52px rgba(0, 0, 0, 0.05))
