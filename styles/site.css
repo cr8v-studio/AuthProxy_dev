@@ -409,6 +409,10 @@ a {
   background: var(--color-surface-canvas);
 }
 
+.hero-section__metrics-group + .hero-section__metrics-group .hero-metric:first-child {
+  border-left: 1px solid var(--site-section-border);
+}
+
 .hero-section__metrics.is-carousel-track {
   transform: translateZ(0);
   backface-visibility: hidden;
