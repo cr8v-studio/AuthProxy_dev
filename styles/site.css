@@ -388,29 +388,13 @@ a {
   isolation: isolate;
   padding: var(--hero-lead-strip-padding);
   background: var(--hero-lead-strip-background);
-  backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
-  -webkit-backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .hero-section__lead-strip::before,
 .hero-section__lead-strip::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-section__lead-strip::before {
-  backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
-  -webkit-backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-blur));
-  background: var(--hero-lead-strip-overlay-base);
-}
-
-.hero-section__lead-strip::after {
-  backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-progressive-end));
-  -webkit-backdrop-filter: saturate(108%) blur(var(--hero-lead-strip-progressive-end));
-  background: var(--hero-lead-strip-overlay-progressive);
+  content: none;
 }
 
 .hero-section__lead {
