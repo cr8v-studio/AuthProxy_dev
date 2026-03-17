@@ -294,7 +294,7 @@ function initHeroTimeline() {
   }
 }
 
-function initHeroMetricsMarquee() {
+function initHeroMetricsCarousel() {
   const metricsWrap = heroSection?.querySelector('.hero-section__metrics-wrap');
   const metricsTrack = metricsWrap?.querySelector('.hero-section__metrics');
 
@@ -307,6 +307,9 @@ function initHeroMetricsMarquee() {
   if (originalCards.length === 0) {
     return;
   }
+
+  metricsWrap.classList.add('is-carousel');
+  metricsTrack.classList.add('is-carousel-track');
 
   if (!metricsTrack.dataset.marqueeReady) {
     originalCards.forEach((card) => {
@@ -620,7 +623,7 @@ function initMotionSystem() {
 
   initNavbarMotion(lenis);
   initHeroTimeline();
-  initHeroMetricsMarquee();
+  initHeroMetricsCarousel();
   createRevealSystem();
   initFeatureCards();
   initInteractiveHoverStates();
