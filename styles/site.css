@@ -365,6 +365,7 @@ a {
   width: 100%;
   height: var(--hero-visual-height);
   min-height: var(--hero-visual-height);
+  overflow: hidden;
 }
 
 .hero-section__visual {
