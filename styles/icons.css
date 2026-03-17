@@ -4,17 +4,3 @@
   vertical-align: middle;
   object-fit: contain;
 }
-
-:where(.icon-button, [data-icon]) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon-button {
-  gap: var(--space-inline-lg);
-}
-
-[data-icon] {
-  line-height: 0;
-}

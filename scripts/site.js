@@ -82,19 +82,6 @@ function initAuthSlider() {
     return;
   }
 
-  slides.forEach((slide) => {
-    slide.querySelectorAll('.auth-card__row').forEach((row) => {
-      const cells = row.querySelectorAll('span');
-      if (cells.length !== 3) {
-        return;
-      }
-
-      cells[0].dataset.label = 'Method';
-      cells[1].dataset.label = 'How It Works';
-      cells[2].dataset.label = 'Best For';
-    });
-  });
-
   const formatIndex = (value) => String(value + 1).padStart(2, '0');
 
   const render = () => {
