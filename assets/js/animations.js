@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobileViewport = false;
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 const MOTION = {
   duration: isMobileViewport ? 0.5 : 0.65,
@@ -265,7 +266,7 @@ function initHeroTimeline() {
     );
   }
 
-  if (visual) {
+  if (visual && !isSafari) {
     gsap.to(visual, {
       yPercent: isMobileViewport ? -2 : -5,
       ease: 'none',
