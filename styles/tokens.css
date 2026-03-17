@@ -139,6 +139,7 @@
   --hero-panel-padding-x: 44px;
   --hero-panel-padding-top: 120px;
   --hero-panel-padding-bottom: 40px;
+  --hero-panel-background-image: url("../assets/figma/hero-panel-bg.png");
   --hero-visual-width: 356px;
   --hero-visual-height: 496px;
   --hero-lead-strip-blur: 25px;
