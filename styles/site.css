@@ -276,6 +276,7 @@ a {
     var(--hero-panel-padding-x)
     var(--hero-panel-padding-bottom);
   background-color: var(--color-surface-canvas);
+  clip-path: inset(0 0 -18rem 0);
 }
 
 .hero-section__panel::before {
@@ -314,7 +315,10 @@ a {
   width: 100%;
   height: var(--hero-visual-height);
   min-height: var(--hero-visual-height);
+  isolation: isolate;
   filter: var(--shadow-hero-visual);
+  transform: translateZ(0);
+  will-change: filter;
 }
 
 .hero-section__visual {
