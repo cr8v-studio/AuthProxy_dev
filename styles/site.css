@@ -398,15 +398,17 @@ a {
 }
 
 .hero-section__metrics-wrap {
-  border-top: 1px solid var(--site-section-border);
+  width: 100%;
+  backdrop-filter: blur(var(--hero-metrics-wrap-blur));
+  -webkit-backdrop-filter: blur(var(--hero-metrics-wrap-blur));
 }
 
 .hero-section__metrics {
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   background: var(--color-surface-canvas);
   border: 1px solid var(--site-section-border);
-  border-top: 0;
 }
 
 .hero-metric {
