@@ -452,23 +452,7 @@ a {
 
 .hero-section__metrics-wrap.is-carousel::before,
 .hero-section__metrics-wrap.is-carousel::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: clamp(1.5rem, 4vw, 3rem);
-  z-index: 2;
-  pointer-events: none;
-}
-
-.hero-section__metrics-wrap.is-carousel::before {
-  left: 0;
-  background: linear-gradient(90deg, var(--color-surface-canvas) 0%, rgba(255, 255, 255, 0) 100%);
-}
-
-.hero-section__metrics-wrap.is-carousel::after {
-  right: 0;
-  background: linear-gradient(270deg, var(--color-surface-canvas) 0%, rgba(255, 255, 255, 0) 100%);
+  content: none;
 }
 
 .hero-section__metrics {
