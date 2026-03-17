@@ -52,7 +52,7 @@ document.addEventListener('click', (event) => {
     dropdownGroups.forEach((group) => toggleDropdown(group, false));
   }
 
-  if (!event.target.closest('.site-header-shell') && window.innerWidth <= 960) {
+  if (!event.target.closest('.site-header-shell')) {
     closeMenu();
   }
 });
