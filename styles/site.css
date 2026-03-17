@@ -251,6 +251,14 @@ a {
   padding-top: 0;
 }
 
+.hero-section__viewport {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .hero-section__panel,
 .hero-section__lead-strip,
 .hero-section__cta-bar,
@@ -268,10 +276,9 @@ a {
   position: relative;
   display: grid;
   grid-template-columns: var(--hero-panel-columns);
-  grid-template-rows: minmax(var(--hero-panel-row-height), 1fr);
-  height: var(--hero-panel-min-height);
+  grid-template-rows: var(--hero-panel-row-height);
+  height: auto;
   gap: var(--hero-panel-gap);
-  align-content: center;
   align-items: stretch;
   padding:
     var(--hero-panel-padding-top)
@@ -320,16 +327,18 @@ a {
 
 .hero-section__visual-wrap {
   position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
   width: 100%;
-  height: var(--hero-visual-height);
   min-height: var(--hero-visual-height);
 }
 
 .hero-section__visual {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: relative;
+  inset: auto;
+  width: min(100%, var(--hero-visual-width));
+  height: auto;
   object-fit: contain;
   -webkit-filter: var(--shadow-hero-visual);
   filter: var(--shadow-hero-visual);
