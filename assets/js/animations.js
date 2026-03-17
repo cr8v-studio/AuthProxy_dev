@@ -169,9 +169,11 @@ function initHeroTimeline() {
   const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
-  const visual = heroSection.querySelector('.hero-section__visual-wrap');
+  const visualWrap = heroSection.querySelector('.hero-section__visual-wrap');
+  const visual = heroSection.querySelector('.hero-section__visual');
   const metrics = heroSection.querySelectorAll('.hero-metric');
   const leadBands = heroSection.querySelectorAll('.hero-section__lead-band');
+  const visualRevealDistance = isMobileViewport ? 36 : 64;
 
   const timeline = gsap.timeline({
     defaults: {
@@ -239,15 +241,26 @@ function initHeroTimeline() {
     );
   }
 
-  if (visual) {
+  if (visualWrap && visual) {
+    timeline.from(
+      visualWrap,
+      {
+        autoAlpha: 0,
+        y: visualRevealDistance,
+        duration: 0.78,
+        ease: 'power3.out'
+      },
+      '-=0.4'
+    );
+
     timeline.from(
       visual,
       {
-        autoAlpha: 0,
-        y: MOTION.distance,
-        scale: MOTION.scaleStart
+        y: visualRevealDistance * 0.9,
+        duration: 0.82,
+        ease: 'power3.out'
       },
-      '-=0.4'
+      '<'
     );
   }
 
@@ -265,10 +278,8 @@ function initHeroTimeline() {
     );
   }
 
-  const heroVisual = heroSection.querySelector('.hero-section__visual');
-
-  if (heroVisual) {
-    gsap.to(heroVisual, {
+  if (visual) {
+    gsap.to(visual, {
       yPercent: isMobileViewport ? -2 : -5,
       ease: 'none',
       scrollTrigger: {
