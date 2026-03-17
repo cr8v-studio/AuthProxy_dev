@@ -249,14 +249,24 @@ a {
 
 .hero-section {
   padding-top: 0;
-}
-
-.hero-section__viewport {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.hero-section__stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section__viewport {
+  width: 100%;
+  min-height: 0;
 }
 
 .hero-section__panel,
