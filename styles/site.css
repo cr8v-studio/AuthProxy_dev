@@ -1013,21 +1013,15 @@ a {
 
 @media (min-width: 1280px) {
   .hero-section {
-    display: block;
-    min-height: auto;
-    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
+    height: 100dvh;
     padding-block: 0;
   }
 
   .hero-section__stack {
-    justify-content: flex-start;
-  }
-
-  .hero-section__viewport {
-    min-height: calc(100svh - var(--site-header-height));
-    height: calc(100dvh - var(--site-header-height));
-    display: flex;
-    align-items: center;
     justify-content: center;
   }
 }
