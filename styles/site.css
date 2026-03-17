@@ -393,6 +393,22 @@ a {
   will-change: transform;
 }
 
+.hero-section__metrics-carousel-track {
+  display: flex;
+  width: max-content;
+  min-width: max-content;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.hero-section__metrics-group {
+  display: flex;
+  width: max-content;
+  min-width: max-content;
+  background: var(--color-surface-canvas);
+}
+
 .hero-section__metrics.is-carousel-track {
   transform: translateZ(0);
   backface-visibility: hidden;
