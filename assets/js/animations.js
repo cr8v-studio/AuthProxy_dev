@@ -337,60 +337,83 @@ function initInteractiveHoverStates() {
     return;
   }
 
-  const scrambleMap = new WeakMap();
-  const scrambleGlyphs = ['■', '▪', '▌', '▐', '▬'];
+  const scrambleStateMap = new WeakMap();
+  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-  const playScramble = (label, finalText) => {
+  const randomScrambleChar = () =>
+    scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+
+  const playBuildScramble = (label, finalText) => {
     if (!label || !finalText) {
       return;
     }
 
-    scrambleMap.get(label)?.kill();
+    const previousState = scrambleStateMap.get(label);
 
-    const state = { frame: 0 };
-    const randomGlyph = () => scrambleGlyphs[Math.floor(Math.random() * scrambleGlyphs.length)];
+    if (previousState) {
+      if (previousState.tween) {
+        previousState.tween.kill();
+      }
+      if (previousState.delayTween) {
+        previousState.delayTween.kill();
+      }
+    }
+
+    const state = { progress: 0 };
+    const revealDelay = 0.1;
+    const totalFrames = Math.max(1, finalText.length);
+
+    const renderFrame = () => {
+      const normalized = gsap.utils.clamp(0, 1, state.progress);
+      const revealProgress =
+        normalized <= revealDelay ? 0 : (normalized - revealDelay) / (1 - revealDelay);
+      const revealCount = Math.floor(revealProgress * totalFrames);
+
+      const nextText = finalText
+        .split('')
+        .map((character, index) => {
+          if (character === ' ') {
+            return ' ';
+          }
+
+          if (index < revealCount) {
+            return character;
+          }
+
+          return randomScrambleChar();
+        })
+        .join('');
+
+      label.textContent = nextText;
+    };
+
+    renderFrame();
 
     const tween = gsap.to(state, {
-      frame: finalText.length + 5,
-      duration: 0.64,
-      ease: 'power2.out',
+      progress: 1,
+      duration: 0.8,
+      ease: 'power1.out',
       overwrite: 'auto',
-      onUpdate: () => {
-        const frame = Math.floor(state.frame);
-        let nextText = '';
-
-        for (let index = 0; index < finalText.length; index += 1) {
-          const character = finalText[index];
-
-          if (character === ' ') {
-            nextText += ' ';
-            continue;
-          }
-
-          if (frame > index + 4) {
-            nextText += character;
-            continue;
-          }
-
-          nextText += randomGlyph();
-        }
-
-        label.textContent = nextText;
-      },
+      onUpdate: renderFrame,
       onComplete: () => {
         label.textContent = finalText;
       }
     });
 
-    scrambleMap.set(label, tween);
+    scrambleStateMap.set(label, { tween, delayTween: null });
   };
 
-  const resetScramble = (label, finalText) => {
+  const resetBuildScramble = (label, finalText) => {
     if (!label) {
       return;
     }
 
-    scrambleMap.get(label)?.kill();
+    const state = scrambleStateMap.get(label);
+
+    if (state?.tween) {
+      state.tween.kill();
+    }
+
     label.textContent = finalText || 'BUILD';
   };
 
@@ -442,7 +465,7 @@ function initInteractiveHoverStates() {
       yTo(targetY);
 
       if (isBuildButton) {
-        playScramble(buildLabel, originalBuildText);
+        playBuildScramble(buildLabel, originalBuildText);
       }
     };
 
@@ -451,7 +474,7 @@ function initInteractiveHoverStates() {
       yTo(0);
 
       if (isBuildButton) {
-        resetScramble(buildLabel, originalBuildText);
+        resetBuildScramble(buildLabel, originalBuildText);
       }
     };
 
