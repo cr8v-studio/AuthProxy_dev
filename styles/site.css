@@ -313,7 +313,7 @@ a {
   justify-self: stretch;
   width: 100%;
   min-height: calc(var(--hero-visual-height) + 11rem);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-section__visual-wrap {
