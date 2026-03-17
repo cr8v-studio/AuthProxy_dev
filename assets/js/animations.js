@@ -535,7 +535,13 @@ function initInteractiveHoverStates() {
               ? 1.01
               : 1.014
             : MOTION.buttonScale;
-      const targetY = isDropdownTrigger ? -0.5 : isMobileViewport ? -0.75 : -1.5;
+      const targetY = isBuildButton
+        ? 0
+        : isDropdownTrigger
+          ? -0.5
+          : isMobileViewport
+            ? -0.75
+            : -1.5;
 
       scaleTo(targetScale);
       yTo(targetY);
