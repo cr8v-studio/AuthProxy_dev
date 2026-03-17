@@ -2,6 +2,7 @@ import gsap from 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/+esm';
 import ScrollTrigger from 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/ScrollTrigger/+esm';
 import Lenis from 'https://cdn.jsdelivr.net/npm/lenis@1.3.11/+esm';
 
+// Base motion stack: GSAP + ScrollTrigger + Lenis, with optional Lottie support.
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -20,6 +21,19 @@ const MOTION = {
 
 const heroSection = document.querySelector('.hero-section');
 const header = document.querySelector('.site-header-shell');
+const REVEAL_ASSIGNMENTS = [
+  ['.section-label', 'fade-in'],
+  ['.section-intro > *', 'fade-up'],
+  ['.problem-grid__visual-wrap', 'scale-in'],
+  ['.problem-item', 'fade-up'],
+  ['.problem-statement > *', 'fade-up'],
+  ['.how-grid__visual-wrap', 'scale-in'],
+  ['.how-grid__core > *', 'fade-up'],
+  ['.how-note > *', 'fade-up'],
+  ['.auth-section__intro > *', 'fade-up'],
+  ['.auth-slider__viewport', 'fade-up'],
+  ['.auth-slider__footer', 'fade-in']
+];
 
 document.documentElement.style.scrollBehavior = 'auto';
 
@@ -29,6 +43,7 @@ function addClass(selector, className) {
   });
 }
 
+// Keep reduced-motion users on the same visual hierarchy without transitional movement.
 function setReducedMotionState() {
   document
     .querySelectorAll('.fade-up, .fade-in, .scale-in, .capability-card, .hero-section__visual, .hero-metric')
@@ -42,19 +57,12 @@ function setReducedMotionState() {
 }
 
 function mapRevealUtilities() {
-  addClass('.section-label', 'fade-in');
-  addClass('.section-intro > *', 'fade-up');
-  addClass('.problem-grid__visual-wrap', 'scale-in');
-  addClass('.problem-item', 'fade-up');
-  addClass('.problem-statement > *', 'fade-up');
-  addClass('.how-grid__visual-wrap', 'scale-in');
-  addClass('.how-grid__core > *', 'fade-up');
-  addClass('.how-note > *', 'fade-up');
-  addClass('.auth-section__intro > *', 'fade-up');
-  addClass('.auth-slider__viewport', 'fade-up');
-  addClass('.auth-slider__footer', 'fade-in');
+  REVEAL_ASSIGNMENTS.forEach(([selector, className]) => {
+    addClass(selector, className);
+  });
 }
 
+// Lenis owns scroll interpolation while GSAP stays synced through the shared RAF loop.
 function initLenis() {
   if (prefersReducedMotion) {
     return null;
@@ -69,6 +77,7 @@ function initLenis() {
   });
 
   lenis.on('scroll', ScrollTrigger.update);
+  ScrollTrigger.addEventListener('refresh', () => lenis.resize());
 
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
@@ -102,6 +111,7 @@ function initLenis() {
   return lenis;
 }
 
+// Header scroll-state stays centralized here so the rest of the motion system can stay declarative.
 function initNavbarMotion(lenis) {
   if (!header) {
     return;
@@ -129,6 +139,7 @@ function initNavbarMotion(lenis) {
   );
 }
 
+// Shared utility reveal presets used across non-hero sections.
 function createRevealSystem() {
   const revealMap = new Map([
     ['fade-up', { autoAlpha: 0, y: MOTION.distance }],
@@ -157,6 +168,7 @@ function createRevealSystem() {
   });
 }
 
+// Hero intro stays timeline-driven so load order is intentional and premium.
 function initHeroTimeline() {
   if (!heroSection) {
     return;
@@ -282,6 +294,7 @@ function initHeroTimeline() {
   }
 }
 
+// Section-specific card motion stays lightweight: stagger on reveal, restrained hover on intent.
 function initFeatureCards() {
   const section = document.querySelector('.capability-list');
   const cards = gsap.utils.toArray('.capability-card');
@@ -333,6 +346,7 @@ function initFeatureCards() {
   });
 }
 
+// Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
 function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
     return;
@@ -486,6 +500,7 @@ function initInteractiveHoverStates() {
   });
 }
 
+// Optional animated asset support. Only initializes when Lottie or dotLottie nodes exist.
 async function initLottieSupport() {
   const dotLottieNodes = Array.from(document.querySelectorAll('[data-dotlottie-src]'));
   const lottieNodes = Array.from(document.querySelectorAll('[data-lottie-src]'));
@@ -534,6 +549,7 @@ async function initLottieSupport() {
   }
 }
 
+// One base motion system for the whole page.
 function initMotionSystem() {
   mapRevealUtilities();
 
@@ -558,6 +574,7 @@ function initMotionSystem() {
     console.warn('Optional Lottie setup failed', error);
   });
 
+  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
   ScrollTrigger.refresh();
 }
 
