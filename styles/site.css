@@ -346,7 +346,7 @@ a {
   position: relative;
   display: flex;
   justify-content: flex-end;
-  align-items: flex-start;
+  align-items: flex-end;
   width: 100%;
   min-height: var(--hero-visual-height);
 }
@@ -1174,6 +1174,41 @@ a {
 
   .hero-section__visual {
     width: min(100%, 420px);
+  }
+}
+
+@media (max-width: 1512px) and (min-width: 901px) and (max-height: 980px) {
+  :root {
+    --hero-panel-gap: 28px;
+    --hero-panel-padding-x: 28px;
+    --hero-panel-padding-top: 24px;
+    --hero-panel-padding-bottom: 24px;
+    --hero-lead-strip-padding: 24px;
+    --hero-cta-padding: 24px;
+    --hero-cta-gap: 24px;
+    --hero-visual-width: 300px;
+    --hero-visual-height: 418px;
+    --hero-metric-padding-x: 18px;
+    --hero-metric-padding-y: 16px;
+    --hero-metric-value-size: 64px;
+    --hero-metric-value-line: 64px;
+  }
+
+  .hero-section {
+    min-height: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+    --hero-viewport-padding-top: 12px;
+    --hero-viewport-padding-bottom: 16px;
+  }
+
+  .hero-section__stack {
+    justify-content: flex-start;
+  }
+
+  .hero-section__title {
+    font-size: clamp(3rem, 4.8vw, 4.25rem);
+    line-height: clamp(3rem, 4.8vw, 4.25rem);
   }
 }
 
