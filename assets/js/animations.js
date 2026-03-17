@@ -504,7 +504,8 @@ function initInteractiveHoverStates() {
     const isDropdownTrigger = element.classList.contains('site-header-dropdown');
     const isPageButton = element.classList.contains('button-page-numbering');
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
-    const originalBuildText = isBuildButton && buildLabel ? (buildLabel.textContent || '').trim().toUpperCase() : '';
+    const scrambleTarget = isBuildButton ? buildLabel : isButtonV1 ? element : null;
+    const originalScrambleText = scrambleTarget ? (scrambleTarget.textContent || '').trim() : '';
     const scaleTo = gsap.quickTo(element, 'scale', {
       duration: MOTION.hoverDuration,
       ease: MOTION.ease
@@ -548,8 +549,8 @@ function initInteractiveHoverStates() {
       scaleTo(targetScale);
       yTo(targetY);
 
-      if (isBuildButton) {
-        playBuildScramble(buildLabel, originalBuildText);
+      if (scrambleTarget) {
+        playBuildScramble(scrambleTarget, originalScrambleText);
       }
     };
 
@@ -557,8 +558,8 @@ function initInteractiveHoverStates() {
       scaleTo(1);
       yTo(0);
 
-      if (isBuildButton) {
-        resetBuildScramble(buildLabel, originalBuildText);
+      if (scrambleTarget) {
+        resetBuildScramble(scrambleTarget, originalScrambleText);
       }
     };
 
