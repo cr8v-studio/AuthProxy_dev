@@ -725,10 +725,21 @@ a {
   background: var(--color-surface-canvas);
   border: 1px solid var(--site-section-border);
   border-bottom: 0;
+  box-shadow: var(--effect-shadow-card-rest);
+  transform: translateY(0) scale(1);
+  transition:
+    transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized),
+    box-shadow var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
 }
 
 .capability-card:last-of-type {
   border-bottom: 1px solid var(--site-section-border);
+}
+
+.capability-card:hover,
+.capability-card:focus-within {
+  transform: translateY(var(--motion-hover-lift-card)) scale(var(--motion-hover-scale-card));
+  box-shadow: var(--effect-shadow-card-hover);
 }
 
 .capability-card__icon-frame {
