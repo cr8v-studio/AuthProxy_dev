@@ -499,6 +499,7 @@ function initInteractiveHoverStates() {
 
   interactiveElements.forEach((element) => {
     const isBuildButton = element.classList.contains('site-header-link-m2');
+    const isButtonV1 = element.classList.contains('site-header-button-v1');
     const isDropdownTrigger = element.classList.contains('site-header-dropdown');
     const isPageButton = element.classList.contains('button-page-numbering');
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
@@ -535,7 +536,7 @@ function initInteractiveHoverStates() {
               ? 1.01
               : 1.014
             : MOTION.buttonScale;
-      const targetY = isBuildButton
+      const targetY = isBuildButton || isButtonV1
         ? 0
         : isDropdownTrigger
           ? -0.5
