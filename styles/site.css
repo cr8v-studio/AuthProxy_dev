@@ -364,7 +364,7 @@ a {
   width: 100%;
   height: var(--hero-visual-height);
   min-height: var(--hero-visual-height);
-  box-shadow: var(--shadow-hero-visual);
+  filter: var(--shadow-hero-visual);
 }
 
 .hero-section__visual {
