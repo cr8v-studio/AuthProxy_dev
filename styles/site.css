@@ -330,8 +330,8 @@ a {
   margin: 0;
   max-width: none;
   white-space: nowrap;
-  font-size: clamp(3.25rem, 5.6vw, var(--type-heading-hero-size));
-  line-height: clamp(3.25rem, 5.6vw, var(--type-heading-hero-line));
+  font-size: var(--type-heading-hero-size);
+  line-height: var(--type-heading-hero-line);
 }
 
 .hero-section__visual-stage {
