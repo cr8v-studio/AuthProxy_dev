@@ -123,12 +123,6 @@
   /* Semantic effect tokens */
   --effect-blur-header-base: 2.5px;
   --effect-blur-panel-md: 8px;
-  --effect-blur-glass-strip: 5px;
-  --effect-blur-progressive-xl: 50px;
-  --effect-blur-progressive-lg: 36px;
-  --effect-blur-progressive-md: 24px;
-  --effect-blur-progressive-sm: 14px;
-  --effect-blur-progressive-xs: 5px;
   --effect-shadow-panel-xs: 0 2px 4px rgba(0, 0, 0, 0.03);
   --effect-shadow-panel-md: 0 12px 28px rgba(31, 31, 31, 0.05);
   --effect-shadow-panel-lg: 0 10px 30px rgba(31, 31, 31, 0.045);
@@ -137,6 +131,22 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.7),
     inset 0 -1px 0 rgba(31, 31, 31, 0.06);
   --radius-device-frame: 5.989px;
+
+  /* Hero source tokens */
+  --hero-panel-columns: minmax(0, 2fr) minmax(0, 1fr);
+  --hero-panel-row-height: 330px;
+  --hero-panel-gap: 44px;
+  --hero-panel-padding-x: 44px;
+  --hero-panel-padding-top: 120px;
+  --hero-panel-padding-bottom: 40px;
+  --hero-visual-width: 356px;
+  --hero-visual-height: 496px;
+  --hero-lead-strip-blur: 25px;
+  --hero-metric-padding-x: 44px;
+  --hero-metric-padding-y: 24px;
+  --hero-metric-value-size: 80px;
+  --hero-metric-value-line: 80px;
+  --hero-metric-label-gap: 6px;
 
   /* Size tokens synced from Figma */
   --figma-size-apg-br0: 1;
