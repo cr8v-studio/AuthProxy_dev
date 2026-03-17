@@ -500,6 +500,16 @@ a {
 .hero-section__cta-row .site-header-button-v1,
 .hero-section__cta-row .site-header-button-v2 {
   color: var(--figma-color-off-white-alpha-1);
+  font-size: var(--type-control-caps-size);
+  line-height: var(--type-control-caps-line);
+  letter-spacing: var(--type-control-caps-track);
+  text-transform: uppercase;
+}
+
+.hero-section__cta-row .site-header-button-v1__label,
+.hero-section__cta-row .site-header-button-v2__label {
+  display: block;
+  color: inherit;
 }
 
 .hero-section__cta-row .site-header-button-v1:hover,
@@ -515,6 +525,7 @@ a {
   width: 11.1298px;
   height: 16.6667px;
   object-fit: contain;
+  display: block;
   transition:
     left 360ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
