@@ -121,7 +121,41 @@
     linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
 
   /* Semantic effect tokens */
-  --effect-blur-header-base: 2.5px;
+  --effect-blur-header-base: 5px;
+  --effect-blur-header-progressive-start: 50px;
+  --effect-blur-header-progressive-mid: 18px;
+  --effect-header-overlay-top:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(255, 255, 255, 0.34) 32%,
+      rgba(255, 255, 255, 0.12) 68%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  --effect-header-overlay-bottom:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.12) 56%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
+  --effect-header-mask-top:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.92) 16%,
+      rgba(0, 0, 0, 0.48) 58%,
+      rgba(0, 0, 0, 0.1) 88%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  --effect-header-mask-bottom:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.12) 34%,
+      rgba(0, 0, 0, 0.52) 76%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
   --effect-blur-panel-md: 8px;
   --effect-shadow-panel-xs: 0 2px 4px rgba(0, 0, 0, 0.03);
   --effect-shadow-panel-md: 0 12px 28px rgba(31, 31, 31, 0.05);
