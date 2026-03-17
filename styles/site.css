@@ -3,6 +3,7 @@
   --site-header-height: 80px;
   --hero-viewport-padding-top: 0;
   --hero-viewport-padding-bottom: 0;
+  --hero-stack-row-gap: 0px;
   --site-grid-size: 7.5rem;
   --site-line-color: var(--color-grid-line-strong);
   --site-line-soft: var(--color-grid-line-soft);
@@ -265,6 +266,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  row-gap: var(--hero-stack-row-gap);
 }
 
 .hero-section__viewport {
@@ -1186,12 +1188,16 @@ a {
     --hero-lead-strip-padding: 24px;
     --hero-cta-padding: 24px;
     --hero-cta-gap: 24px;
-    --hero-visual-width: 300px;
-    --hero-visual-height: 418px;
+    --hero-visual-width: 270px;
+    --hero-visual-height: 376px;
     --hero-metric-padding-x: 18px;
     --hero-metric-padding-y: 16px;
     --hero-metric-value-size: 64px;
     --hero-metric-value-line: 64px;
+    --hero-stack-row-gap: 6px;
+    --effect-blur-header-base: 4px;
+    --effect-blur-header-progressive-start: 34px;
+    --effect-blur-header-progressive-mid: 12px;
   }
 
   .hero-section {
@@ -1207,8 +1213,16 @@ a {
   }
 
   .hero-section__title {
-    font-size: clamp(3rem, 4.8vw, 4.25rem);
-    line-height: clamp(3rem, 4.8vw, 4.25rem);
+    font-size: clamp(2.85rem, 4.5vw, 3.95rem);
+    line-height: clamp(2.85rem, 4.5vw, 3.95rem);
+  }
+
+  .site-header-shell::before {
+    opacity: 0.7;
+  }
+
+  .site-header-shell::after {
+    opacity: 0.56;
   }
 }
 
@@ -1221,12 +1235,13 @@ a {
     --hero-lead-strip-padding: 16px;
     --hero-cta-padding: 16px;
     --hero-cta-gap: 16px;
-    --hero-visual-width: 260px;
-    --hero-visual-height: 362px;
+    --hero-visual-width: 234px;
+    --hero-visual-height: 326px;
     --hero-metric-padding-x: 14px;
     --hero-metric-padding-y: 10px;
     --hero-metric-value-size: 52px;
     --hero-metric-value-line: 52px;
+    --hero-stack-row-gap: 4px;
   }
 
   .hero-section {
@@ -1235,8 +1250,8 @@ a {
   }
 
   .hero-section__title {
-    font-size: clamp(2.35rem, 4.1vw, 3.45rem);
-    line-height: clamp(2.35rem, 4.1vw, 3.45rem);
+    font-size: clamp(2.2rem, 3.9vw, 3.15rem);
+    line-height: clamp(2.2rem, 3.9vw, 3.15rem);
   }
 
   .hero-section__lead {
