@@ -10,14 +10,6 @@
   --motion-duration-control-emphasis: 360ms;
   --motion-duration-shell: 420ms;
   --motion-ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
-  --motion-hover-scale-control: 1.018;
-  --motion-hover-scale-build: 1.012;
-  --motion-hover-scale-dropdown: 1.008;
-  --motion-hover-scale-page-button: 1.014;
-  --motion-hover-scale-card: 1.015;
-  --motion-hover-lift-dropdown: -0.5px;
-  --motion-hover-lift-page-button: -1.5px;
-  --motion-hover-lift-card: -8px;
 
   /* Foundation borders */
   --border-width-none: 0;
@@ -487,16 +479,4 @@
   --type-body-sm-highlight-size: var(--figma-type-br1-t2-highlight-size);
   --type-body-sm-highlight-line: var(--figma-type-br1-t2-highlight-line);
   --type-body-sm-highlight-track: var(--figma-type-br1-t2-highlight-track);
-}
-
-@media (max-width: 767px) {
-  :root {
-    --motion-hover-scale-control: 1.01;
-    --motion-hover-scale-build: 1.008;
-    --motion-hover-scale-dropdown: 1.004;
-    --motion-hover-scale-page-button: 1.01;
-    --motion-hover-scale-card: 1.01;
-    --motion-hover-lift-page-button: -0.75px;
-    --motion-hover-lift-card: -4px;
-  }
 }

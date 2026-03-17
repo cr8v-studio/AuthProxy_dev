@@ -11,9 +11,13 @@ const isMobileViewport = () => mobileViewport.matches;
 
 const getMotion = () => ({
   duration: isMobileViewport() ? 0.5 : 0.65,
+  hoverDuration: 0.52,
   distance: isMobileViewport() ? 18 : 28,
   scaleStart: isMobileViewport() ? 0.985 : 0.965,
-  ease: 'power3.out'
+  buttonScale: isMobileViewport() ? 1.01 : 1.018,
+  cardLift: isMobileViewport() ? -4 : -8,
+  ease: 'power3.out',
+  easeSoft: 'power2.out'
 });
 
 const heroSection = document.querySelector('.hero-section');
@@ -331,7 +335,7 @@ function initHeroMetricsCarousel() {
   );
 }
 
-// Section-specific card motion stays lightweight: reveal stays in JS, hover lives in CSS.
+// Section-specific card motion stays lightweight: stagger on reveal, restrained hover on intent.
 function initFeatureCards() {
   const motion = getMotion();
   const section = document.querySelector('.capability-list');
@@ -354,10 +358,44 @@ function initFeatureCards() {
       once: true
     }
   });
+
+  if (prefersReducedMotion) {
+    return;
+  }
+
+  cards.forEach((card) => {
+    const cardStyles = getComputedStyle(card);
+    const shadowRest = cardStyles.getPropertyValue('--effect-shadow-card-rest').trim();
+    const shadowHover = cardStyles.getPropertyValue('--effect-shadow-card-hover').trim();
+
+    card.addEventListener('mouseenter', () => {
+      const nextMotion = getMotion();
+      gsap.to(card, {
+        y: nextMotion.cardLift,
+        scale: isMobileViewport() ? 1.01 : 1.015,
+        boxShadow: shadowHover,
+        duration: nextMotion.hoverDuration,
+        ease: nextMotion.easeSoft,
+        overwrite: 'auto'
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      const nextMotion = getMotion();
+      gsap.to(card, {
+        y: 0,
+        scale: 1,
+        boxShadow: shadowRest,
+        duration: nextMotion.hoverDuration,
+        ease: nextMotion.easeSoft,
+        overwrite: 'auto'
+      });
+    });
+  });
 }
 
-// The BUILD control keeps its scramble treatment in JS; the rest of hover motion now lives in CSS.
-function initBuildScramble() {
+// Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
+function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
     return;
   }
@@ -442,25 +480,83 @@ function initBuildScramble() {
     label.textContent = finalText || 'BUILD';
   };
 
-  document.querySelectorAll('.site-header-link-m2').forEach((element) => {
-    const label = element.querySelector('.site-header-link-m2__label');
-    const originalText = label ? (label.textContent || '').trim() : '';
+  const interactiveElements = document.querySelectorAll(
+    '.site-header-button-v1, .site-header-button-v2, .site-header-link-m2, .site-header-dropdown, .button-page-numbering'
+  );
 
-    if (!label || !originalText) {
-      return;
+  interactiveElements.forEach((element) => {
+    const isBuildButton = element.classList.contains('site-header-link-m2');
+    const isButtonV1 = element.classList.contains('site-header-button-v1');
+    const isButtonV2 = element.classList.contains('site-header-button-v2');
+    const isDropdownTrigger = element.classList.contains('site-header-dropdown');
+    const isPageButton = element.classList.contains('button-page-numbering');
+    const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
+    const scrambleTarget = isBuildButton ? buildLabel : isButtonV1 ? element : null;
+    const originalScrambleText = scrambleTarget ? (scrambleTarget.textContent || '').trim() : '';
+    const motion = getMotion();
+    const scaleTo = gsap.quickTo(element, 'scale', {
+      duration: motion.hoverDuration,
+      ease: motion.ease
+    });
+    const yTo = gsap.quickTo(element, 'y', {
+      duration: motion.hoverDuration,
+      ease: motion.ease
+    });
+
+    gsap.set(element, {
+      transformOrigin: '50% 50%',
+      willChange: 'transform'
+    });
+
+    if (scrambleTarget) {
+      // Keep a stable button footprint so scramble glyph widths don't shift nearby controls.
+      const stableWidth = Math.ceil(element.getBoundingClientRect().width);
+      element.style.width = `${stableWidth}px`;
+      element.style.minWidth = `${stableWidth}px`;
     }
 
-    // Keep a stable button footprint so scramble glyph widths don't shift nearby controls.
-    const stableWidth = Math.ceil(element.getBoundingClientRect().width);
-    element.style.width = `${stableWidth}px`;
-    element.style.minWidth = `${stableWidth}px`;
-
     const pointerEnter = () => {
-      playBuildScramble(label, originalText);
+      const nextMotion = getMotion();
+      if ('disabled' in element && element.disabled) {
+        return;
+      }
+
+      const targetScale = isBuildButton
+        ? isMobileViewport()
+          ? 1.008
+          : 1.012
+        : isDropdownTrigger
+          ? isMobileViewport()
+            ? 1.004
+            : 1.008
+          : isPageButton
+            ? isMobileViewport()
+              ? 1.01
+              : 1.014
+            : nextMotion.buttonScale;
+      const targetY = isBuildButton || isButtonV1 || isButtonV2
+        ? 0
+        : isDropdownTrigger
+          ? -0.5
+          : isMobileViewport()
+            ? -0.75
+            : -1.5;
+
+      scaleTo(targetScale);
+      yTo(targetY);
+
+      if (scrambleTarget) {
+        playBuildScramble(scrambleTarget, originalScrambleText);
+      }
     };
 
     const pointerLeave = () => {
-      resetBuildScramble(label, originalText);
+      scaleTo(1);
+      yTo(0);
+
+      if (scrambleTarget) {
+        resetBuildScramble(scrambleTarget, originalScrambleText);
+      }
     };
 
     element.addEventListener('mouseenter', pointerEnter);
@@ -491,7 +587,7 @@ function initMotionSystem() {
   initHeroMetricsCarousel();
   createRevealSystem();
   initFeatureCards();
-  initBuildScramble();
+  initInteractiveHoverStates();
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
   ScrollTrigger.refresh();
