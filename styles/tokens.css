@@ -45,15 +45,15 @@
 
   /* Foundation shadows */
   --shadow-hero-visual:
-    0 168px 67px rgba(0, 0, 0, 0.04),
-    0 95px 57px rgba(0, 0, 0, 0.13),
-    0 42px 42px rgba(0, 0, 0, 0.22),
-    0 11px 23px rgba(0, 0, 0, 0.25);
+    drop-shadow(0 168px 67px rgba(0, 0, 0, 0.04))
+    drop-shadow(0 95px 57px rgba(0, 0, 0, 0.13))
+    drop-shadow(0 42px 42px rgba(0, 0, 0, 0.22))
+    drop-shadow(0 11px 23px rgba(0, 0, 0, 0.25));
   --shadow-stack-visual:
-    0 155px 62px rgba(0, 0, 0, 0.01),
-    0 87px 52px rgba(0, 0, 0, 0.05),
-    0 39px 39px rgba(0, 0, 0, 0.09),
-    0 10px 21px rgba(0, 0, 0, 0.1);
+    drop-shadow(0 155px 62px rgba(0, 0, 0, 0.01))
+    drop-shadow(0 87px 52px rgba(0, 0, 0, 0.05))
+    drop-shadow(0 39px 39px rgba(0, 0, 0, 0.09))
+    drop-shadow(0 10px 21px rgba(0, 0, 0, 0.1));
   --shadow-device-soft:
     0 144px 58px rgba(0, 0, 0, 0.01),
     0 81px 49px rgba(0, 0, 0, 0.05),

@@ -373,7 +373,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(var(--shadow-hero-visual));
+  filter: var(--shadow-hero-visual);
 }
 
 .hero-section__lead-strip,
@@ -680,7 +680,7 @@ a {
 
 .how-grid__visual {
   width: min(100%, 222px);
-  filter: drop-shadow(var(--shadow-stack-visual));
+  filter: var(--shadow-stack-visual);
 }
 
 .how-note {
