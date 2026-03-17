@@ -47,6 +47,7 @@
   background-position: center;
   background-size: 100% 100%;
   pointer-events: none;
+  will-change: transform, opacity, left, right, top, bottom;
 }
 
 :where(.site-header-link, .site-header-dropdown, .site-header-social)::before {
@@ -183,11 +184,11 @@
 .site-header-link::after {
   opacity: 0;
   transition:
-    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    left 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    right 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    top 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    bottom 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    left 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    right 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    top 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    bottom 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .site-header-link::before {
@@ -256,8 +257,8 @@
     var(--header-link-m2-corner-tr-default);
   opacity: 1;
   transition:
-    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    background-position 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-position 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .site-header-link-m2:hover::before,
@@ -292,11 +293,11 @@
 .site-header-dropdown::after {
   opacity: 0;
   transition:
-    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    left 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    right 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    top 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    bottom 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    left 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    right 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    top 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    bottom 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .site-header-dropdown::before {
@@ -328,7 +329,8 @@
   width: var(--header-dropdown-icon-width);
   height: var(--header-dropdown-icon-height);
   transform-origin: 50% 50%;
-  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .site-header-dropdown:hover .site-header-dropdown__icon,
@@ -376,8 +378,8 @@
     var(--header-button-v1-corner-tl-default);
   opacity: 1;
   transition:
-    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    background-position 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-position 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .site-header-button-v1:hover,
@@ -422,8 +424,9 @@
   height: var(--header-button-v2-icon-size);
   transform: translateY(-50%);
   transition:
-    left var(--motion-duration-fast) var(--motion-ease-standard),
-    transform var(--motion-duration-fast) var(--motion-ease-standard);
+    left 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, left;
 }
 
 .site-header-button-v2:hover,
