@@ -297,6 +297,22 @@ function initHeroMetricsCarousel() {
 
   let tween = null;
   let resizeFrame = 0;
+  let hoverTween = null;
+  let isHovered = false;
+
+  const updateMarqueePlayback = (targetScale) => {
+    if (!tween) {
+      return;
+    }
+
+    hoverTween?.kill();
+    hoverTween = gsap.to(tween, {
+      timeScale: targetScale,
+      duration: targetScale === 0 ? 0.45 : 0.55,
+      ease: 'power2.out',
+      overwrite: true
+    });
+  };
 
   const applyMarqueeLayout = () => {
     const visibleCards = 4;
@@ -322,9 +338,22 @@ function initHeroMetricsCarousel() {
       ease: 'none',
       repeat: -1
     });
+
+    tween.timeScale(isHovered ? 0 : 1);
   };
 
   applyMarqueeLayout();
+
+  metricsWrap.addEventListener('mouseenter', () => {
+    isHovered = true;
+    updateMarqueePlayback(0);
+  });
+
+  metricsWrap.addEventListener('mouseleave', () => {
+    isHovered = false;
+    updateMarqueePlayback(1);
+  });
+
   window.addEventListener(
     'resize',
     () => {
