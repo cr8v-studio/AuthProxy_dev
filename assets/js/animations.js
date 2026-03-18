@@ -297,22 +297,21 @@ function initHeroMetricsCarousel() {
 
   let tween = null;
   let resizeFrame = 0;
-  let hoverTween = null;
   let isHovered = false;
+  const playbackState = { value: 1 };
+  const setPlayback = gsap.quickTo(playbackState, 'value', {
+    duration: 1.2,
+    ease: 'power3.out',
+    overwrite: true,
+    onUpdate: () => {
+      if (!tween) {
+        return;
+      }
 
-  const updateMarqueePlayback = (targetScale) => {
-    if (!tween) {
-      return;
+      const nextScale = playbackState.value < 0.001 ? 0 : playbackState.value;
+      tween.timeScale(nextScale);
     }
-
-    hoverTween?.kill();
-    hoverTween = gsap.to(tween, {
-      timeScale: targetScale,
-      duration: targetScale === 0 ? 0.45 : 0.55,
-      ease: 'power2.out',
-      overwrite: true
-    });
-  };
+  });
 
   const applyMarqueeLayout = () => {
     const visibleCards = 4;
@@ -339,19 +338,20 @@ function initHeroMetricsCarousel() {
       repeat: -1
     });
 
-    tween.timeScale(isHovered ? 0 : 1);
+    playbackState.value = isHovered ? 0 : 1;
+    tween.timeScale(playbackState.value);
   };
 
   applyMarqueeLayout();
 
   metricsWrap.addEventListener('mouseenter', () => {
     isHovered = true;
-    updateMarqueePlayback(0);
+    setPlayback(0);
   });
 
   metricsWrap.addEventListener('mouseleave', () => {
     isHovered = false;
-    updateMarqueePlayback(1);
+    setPlayback(1);
   });
 
   window.addEventListener(
