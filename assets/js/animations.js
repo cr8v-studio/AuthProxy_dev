@@ -188,10 +188,10 @@ function initSectionLabelChevronMotion() {
     gsap.from(chevrons, {
       autoAlpha: 0,
       x: isMobileViewport() ? -20 : -28,
-      duration: isMobileViewport() ? 0.52 : 0.62,
+      duration: isMobileViewport() ? 0.62 : 0.78,
       ease: 'power3.out',
-      delay: isMobileViewport() ? 0.08 : 0.12,
-      stagger: 0.11,
+      delay: isMobileViewport() ? 0.12 : 0.18,
+      stagger: 0.16,
       force3D: true,
       scrollTrigger: {
         trigger: label,
