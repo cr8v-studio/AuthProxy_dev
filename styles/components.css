@@ -16,7 +16,7 @@
   font-size: var(--control-font-size, inherit);
   line-height: var(--control-line-height, normal);
   letter-spacing: var(--control-letter-spacing, normal);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--control-font-weight, var(--font-weight-regular));
   text-decoration: none;
   white-space: nowrap;
   transition:
@@ -225,6 +225,7 @@
   --control-font-size: var(--header-link-m2-font-size);
   --control-line-height: var(--header-link-m2-line-height);
   --control-letter-spacing: var(--header-link-m2-letter-spacing);
+  --control-font-weight: var(--header-link-m2-font-weight);
   --corner-width: var(--header-link-m2-corner-width);
   --corner-height: var(--header-link-m2-corner-height);
   --corner-inset: var(--header-link-m2-corner-inset);
@@ -338,6 +339,7 @@
   --control-font-size: var(--header-button-v1-font-size);
   --control-line-height: var(--header-button-v1-line-height);
   --control-letter-spacing: var(--header-button-v1-letter-spacing);
+  --control-font-weight: var(--header-button-v1-font-weight);
   --corner-width: var(--header-button-v1-corner-width);
   --corner-height: var(--header-button-v1-corner-height);
   --corner-inset: var(--header-button-v1-corner-inset);
@@ -398,6 +400,7 @@
   --control-font-size: var(--header-button-v2-font-size);
   --control-line-height: var(--header-button-v2-line-height);
   --control-letter-spacing: var(--header-button-v2-letter-spacing);
+  --control-font-weight: var(--header-button-v2-font-weight);
   text-transform: uppercase;
   background-color: var(--header-button-v2-bg);
 }

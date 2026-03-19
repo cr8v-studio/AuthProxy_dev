@@ -1,6 +1,7 @@
 :root {
   /* Typeface */
   --font-family-sans: "Lexend", sans-serif;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
 
   /* Foundation motion */
@@ -213,6 +214,7 @@
   --type-control-caps-size: var(--type-heading-xs-caps-size);
   --type-control-caps-line: var(--type-heading-xs-caps-line);
   --type-control-caps-track: var(--type-heading-xs-caps-track);
+  --type-control-caps-weight: var(--type-heading-xs-caps-weight);
 
   /* Semantic control colors */
   --color-control-dark-bg: var(--figma-color-dark-base);
@@ -259,6 +261,7 @@
   --header-link-m2-font-size: var(--type-control-caps-size);
   --header-link-m2-line-height: var(--type-control-caps-line);
   --header-link-m2-letter-spacing: var(--type-control-caps-track);
+  --header-link-m2-font-weight: var(--type-control-caps-weight);
   --header-link-m2-corner-width: var(--size-corner-width);
   --header-link-m2-corner-height: var(--size-corner-height);
   --header-link-m2-corner-inset: var(--space-inline-sm);
@@ -300,6 +303,7 @@
   --header-button-v1-font-size: var(--type-control-caps-size);
   --header-button-v1-line-height: var(--type-control-caps-line);
   --header-button-v1-letter-spacing: var(--type-control-caps-track);
+  --header-button-v1-font-weight: var(--type-control-caps-weight);
   --header-button-v1-corner-width: var(--size-corner-width);
   --header-button-v1-corner-height: var(--size-corner-height);
   --header-button-v1-corner-inset: var(--space-inline-sm);
@@ -322,6 +326,7 @@
   --header-button-v2-font-size: var(--type-control-caps-size);
   --header-button-v2-line-height: var(--type-control-caps-line);
   --header-button-v2-letter-spacing: var(--type-control-caps-track);
+  --header-button-v2-font-weight: var(--type-control-caps-weight);
   --header-button-v2-icon-size: var(--size-icon-sm);
   --header-button-v2-icon-shift-hover: var(--space-inline-md);
 
@@ -411,6 +416,7 @@
   --figma-type-br1-h6-uppercase-size: 1.125rem;
   --figma-type-br1-h6-uppercase-line: 1.625rem;
   --figma-type-br1-h6-uppercase-track: var(--tracking-wide);
+  --figma-type-br1-h6-uppercase-weight: var(--font-weight-light);
   --figma-type-br1-h7-size: 0.875rem;
   --figma-type-br1-h7-line: 1.0625rem;
   --figma-type-br1-h7-track: var(--tracking-widest);
@@ -461,6 +467,7 @@
   --type-heading-xs-caps-size: var(--figma-type-br1-h6-uppercase-size);
   --type-heading-xs-caps-line: var(--figma-type-br1-h6-uppercase-line);
   --type-heading-xs-caps-track: var(--figma-type-br1-h6-uppercase-track);
+  --type-heading-xs-caps-weight: var(--figma-type-br1-h6-uppercase-weight);
   --type-eyebrow-size: var(--figma-type-br1-h7-size);
   --type-eyebrow-line: var(--figma-type-br1-h7-line);
   --type-eyebrow-track: var(--figma-type-br1-h7-track);
