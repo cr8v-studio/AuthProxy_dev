@@ -675,8 +675,7 @@ a {
 }
 
 .problem-item::before {
-  top: var(--space-stack-sm);
-  background-image: var(--problem-item-corner-asset);
+  content: none;
 }
 
 .problem-item::after {
