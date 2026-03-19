@@ -481,10 +481,6 @@ a {
   border-right: 1px solid var(--site-section-border);
 }
 
-.hero-metric:last-child {
-  border-right: 0;
-}
-
 .hero-section__metrics-group .hero-metric {
   border-right: 1px solid var(--site-section-border);
 }
