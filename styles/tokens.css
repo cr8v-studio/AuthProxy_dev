@@ -85,7 +85,7 @@
   --layout-page-max: var(--container-desktop);
   --layout-shell-max: calc(var(--container-desktop) - (var(--container-padding-desktop) * 2));
   --layout-auth-padding: var(--space-120);
-  --layout-header-padding-inline: var(--container-padding-desktop);
+  --layout-header-padding-inline: var(--space-48);
   --layout-dropdown-panel-min: 14rem;
   --layout-problem-visual-max: 534px;
   --layout-auth-device-max: 544px;
@@ -167,7 +167,7 @@
     linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
 
   /* Semantic effect tokens */
-  --effect-blur-header-base: 5px;
+  --effect-blur-header-base: 2.5px;
   --effect-blur-header-progressive-start: 50px;
   --effect-blur-header-progressive-mid: 18px;
   --effect-header-overlay-top:
@@ -276,8 +276,9 @@
   --button-page-numbering-hover-color: var(--figma-color-white-base);
 
   /* Component tokens: header logo */
-  --header-logo-width: 113.112px;
+  --header-logo-width: 114px;
   --header-logo-height: var(--size-control-lg);
+  --header-nav-gap: var(--space-20);
 
   /* Component tokens: header link */
   --header-link-height: var(--size-control-md);
