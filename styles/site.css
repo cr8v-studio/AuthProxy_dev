@@ -265,7 +265,7 @@ a {
 }
 
 .hero-section__frame {
-  width: min(100%, var(--layout-container-max));
+  width: min(var(--hero-shell-max), calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
   display: flex;
   flex-direction: column;
@@ -273,7 +273,7 @@ a {
 }
 
 .hero-section__content-shell {
-  width: min(var(--hero-shell-max), calc(100% - (var(--page-inline) * 2)));
+  width: 100%;
   margin-inline: auto;
   display: flex;
   flex-direction: column;
@@ -326,7 +326,7 @@ a {
 }
 
 .hero-section__frame > .hero-section__cta-bar {
-  width: min(var(--hero-shell-max), calc(100% - (var(--page-inline) * 2)));
+  width: 100%;
   margin-inline: auto;
 }
 
@@ -445,7 +445,7 @@ a {
 
 .hero-section__metrics {
   display: flex;
-  width: max-content;
+  width: 100%;
   min-width: 100%;
   background: var(--color-surface-canvas);
   will-change: transform;
@@ -473,10 +473,16 @@ a {
 }
 
 .hero-metric {
-  flex: 0 0 auto;
+  flex: 1 1 25%;
+  min-width: 0;
   padding: var(--hero-metric-padding-y) var(--hero-metric-padding-x);
   text-align: center;
   background: var(--color-surface-canvas);
+  border-right: 1px solid var(--site-section-border);
+}
+
+.hero-metric:last-child {
+  border-right: 0;
 }
 
 .hero-section__metrics-group .hero-metric {
