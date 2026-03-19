@@ -93,6 +93,7 @@ body {
   font-size: var(--type-heading-xs-caps-size);
   line-height: var(--type-heading-xs-caps-line);
   letter-spacing: var(--type-heading-xs-caps-track);
+  font-weight: var(--type-heading-xs-caps-weight);
   text-transform: uppercase;
 }
 
