@@ -729,7 +729,8 @@ function initInteractiveHoverStates() {
     const isDropdownTrigger = element.classList.contains('site-header-dropdown');
     const isPageButton = element.classList.contains('button-page-numbering');
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
-    const scrambleTarget = isBuildButton ? buildLabel : isButtonV1 ? element : null;
+    const buttonV1Label = isButtonV1 ? element.querySelector('.site-header-button-v1__label') : null;
+    const scrambleTarget = isBuildButton ? buildLabel : buttonV1Label;
     const originalScrambleText = scrambleTarget ? (scrambleTarget.textContent || '').trim() : '';
     const motion = getMotion();
     const scaleTo = gsap.quickTo(element, 'scale', {
