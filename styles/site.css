@@ -74,10 +74,6 @@ body.site-page.is-preloading {
   pointer-events: auto;
 }
 
-.ap-preload-shown .site-preloader {
-  display: none;
-}
-
 .site-preloader__counter {
   position: absolute;
   left: 50%;
