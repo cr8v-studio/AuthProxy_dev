@@ -8,7 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobileViewport = window.matchMedia('(max-width: 767px)');
 const isMobileViewport = () => mobileViewport.matches;
-const PRELOAD_SESSION_KEY = 'apgPreloadShown';
 
 const getMotion = () => ({
   duration: isMobileViewport() ? 0.5 : 0.65,
@@ -137,21 +136,12 @@ function runInitialPreloader(lenis) {
     return Promise.resolve();
   }
 
-  if (sessionStorage.getItem(PRELOAD_SESSION_KEY) === 'true') {
-    document.body.classList.remove('is-preloading');
-    preloader.setAttribute('hidden', '');
-    return Promise.resolve();
-  }
-
   if (prefersReducedMotion) {
-    sessionStorage.setItem(PRELOAD_SESSION_KEY, 'true');
-    document.documentElement.classList.add('ap-preload-shown');
     document.body.classList.remove('is-preloading');
     preloader.setAttribute('hidden', '');
     return Promise.resolve();
   }
 
-  sessionStorage.setItem(PRELOAD_SESSION_KEY, 'true');
   preloader.removeAttribute('hidden');
   document.body.classList.add('is-preloading');
   lenis?.stop();
@@ -164,7 +154,6 @@ function runInitialPreloader(lenis) {
       defaults: { ease: 'power3.out' },
       onComplete: () => {
         preloader.setAttribute('hidden', '');
-        document.documentElement.classList.add('ap-preload-shown');
         document.body.classList.remove('is-preloading');
         lenis?.start();
         resolve();
