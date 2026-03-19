@@ -250,9 +250,9 @@
   --problem-item-corner-asset: url("../assets/header-social-corner-tr-default.svg");
 
   /* Semantic control typography */
-  --type-control-body-size: var(--type-body-lg-highlight-size);
-  --type-control-body-line: var(--type-body-lg-highlight-line);
-  --type-control-body-track: var(--type-body-lg-highlight-track);
+  --type-control-body-size: var(--type-body-sm-size);
+  --type-control-body-line: var(--type-body-sm-line);
+  --type-control-body-track: var(--type-body-sm-track);
   --type-control-caps-size: var(--type-heading-xs-caps-size);
   --type-control-caps-line: var(--type-heading-xs-caps-line);
   --type-control-caps-track: var(--type-heading-xs-caps-track);
@@ -279,10 +279,11 @@
   /* Component tokens: header logo */
   --header-logo-width: 114px;
   --header-logo-height: var(--size-control-lg);
-  --header-nav-gap: var(--space-20);
+  --header-inner-max: 1200px;
+  --header-nav-gap: var(--space-4);
 
   /* Component tokens: header link */
-  --header-link-height: var(--size-control-md);
+  --header-link-height: 41px;
   --header-link-padding-x: var(--space-stack-lg);
   --header-link-color: var(--figma-color-dark-tint-1);
   --header-link-font-size: var(--type-control-body-size);
