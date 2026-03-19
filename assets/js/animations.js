@@ -170,6 +170,37 @@ function createRevealSystem() {
   });
 }
 
+// Section label chevrons enter from left one-by-one on first viewport entry.
+function initSectionLabelChevronMotion() {
+  const labels = gsap.utils.toArray('.section-label');
+
+  if (!labels.length) {
+    return;
+  }
+
+  labels.forEach((label) => {
+    const chevrons = label.querySelectorAll('.section-label__chevrons img');
+
+    if (!chevrons.length) {
+      return;
+    }
+
+    gsap.from(chevrons, {
+      autoAlpha: 0,
+      x: isMobileViewport() ? -14 : -18,
+      duration: isMobileViewport() ? 0.48 : 0.58,
+      ease: 'power3.out',
+      stagger: 0.09,
+      force3D: true,
+      scrollTrigger: {
+        trigger: label,
+        start: 'top 84%',
+        once: true
+      }
+    });
+  });
+}
+
 // Hero intro stays timeline-driven so load order is intentional and premium.
 function initHeroTimeline() {
   if (!heroSection) {
@@ -615,6 +646,7 @@ function initMotionSystem() {
   initHeroTimeline();
   initHeroMetricsCarousel();
   createRevealSystem();
+  initSectionLabelChevronMotion();
   initFeatureCards();
   initInteractiveHoverStates();
 
