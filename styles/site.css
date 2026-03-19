@@ -55,10 +55,10 @@ body.site-page.is-preloading {
 .site-transition-layer__col,
 .site-preloader__col {
   background: #151515;
-  border-right: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .site-transition-layer__col {
+  border-right: 1px solid rgba(255, 255, 255, 0.22);
   transform: translate3d(0, 100%, 0);
 }
 
