@@ -179,13 +179,15 @@ function initSectionLabelChevronMotion() {
   }
 
   labels.forEach((label) => {
-    const chevrons = label.querySelectorAll('.section-label__chevrons img');
+    const chevrons = Array.from(label.querySelectorAll('.section-label__chevrons img'));
 
     if (!chevrons.length) {
       return;
     }
 
-    gsap.from(chevrons, {
+    const orderedChevrons = chevrons.reverse();
+
+    gsap.from(orderedChevrons, {
       autoAlpha: 0,
       x: isMobileViewport() ? -20 : -28,
       duration: isMobileViewport() ? 0.62 : 0.78,
