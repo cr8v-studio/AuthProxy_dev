@@ -180,27 +180,42 @@ function initSectionLabelChevronMotion() {
 
   labels.forEach((label) => {
     const chevrons = Array.from(label.querySelectorAll('.section-label__chevrons img'));
+    const labelText = label.querySelector(':scope > :not(.section-label__chevrons)');
 
-    if (!chevrons.length) {
+    if (!chevrons.length || !labelText) {
       return;
     }
 
     const orderedChevrons = chevrons.reverse();
-
-    gsap.from(orderedChevrons, {
-      autoAlpha: 0,
-      x: isMobileViewport() ? -20 : -28,
-      duration: isMobileViewport() ? 0.62 : 0.78,
-      ease: 'power3.out',
-      delay: isMobileViewport() ? 0.12 : 0.18,
-      stagger: 0.16,
-      force3D: true,
+    const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: label,
         start: 'top 84%',
         once: true
       }
     });
+
+    timeline.from(orderedChevrons, {
+      autoAlpha: 0,
+      x: isMobileViewport() ? -20 : -28,
+      duration: isMobileViewport() ? 0.62 : 0.78,
+      ease: 'power3.out',
+      delay: isMobileViewport() ? 0.12 : 0.18,
+      stagger: 0.16,
+      force3D: true
+    });
+
+    timeline.from(
+      labelText,
+      {
+        autoAlpha: 0,
+        y: isMobileViewport() ? 14 : 18,
+        duration: isMobileViewport() ? 0.56 : 0.66,
+        ease: 'power3.out',
+        force3D: true
+      },
+      '-=0.34'
+    );
   });
 }
 
