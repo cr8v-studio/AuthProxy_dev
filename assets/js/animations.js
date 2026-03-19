@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobileViewport = window.matchMedia('(max-width: 767px)');
 const isMobileViewport = () => mobileViewport.matches;
+const MOTION_BOOT_FLAG = '__apMotionBooted';
 
 const getMotion = () => ({
   duration: isMobileViewport() ? 0.5 : 0.65,
@@ -815,12 +816,16 @@ function initInteractiveHoverStates() {
 
 // One base motion system for the whole page.
 async function initMotionSystem() {
-  mapRevealUtilities();
+  if (window[MOTION_BOOT_FLAG]) {
+    return;
+  }
+  window[MOTION_BOOT_FLAG] = true;
 
   if (prefersReducedMotion) {
+    await runInitialPreloader(null);
+    mapRevealUtilities();
     setReducedMotionState();
     initNavbarMotion(null);
-    await runInitialPreloader(null);
     initPageTransitions(null);
     return;
   }
@@ -831,6 +836,7 @@ async function initMotionSystem() {
 
   const lenis = initLenis();
   await runInitialPreloader(lenis);
+  mapRevealUtilities();
 
   initNavbarMotion(lenis);
   initHeroTimeline();
