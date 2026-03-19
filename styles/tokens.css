@@ -376,6 +376,7 @@
   --figma-type-br0-t1-size: 1rem;
   --figma-type-br0-t1-line: 1.5rem;
   --figma-type-br0-t1-track: var(--tracking-none);
+  --figma-type-br0-t1-weight: var(--font-weight-light);
   --figma-type-br0-t1-highlight-size: 1rem;
   --figma-type-br0-t1-highlight-line: 1.5rem;
   --figma-type-br0-t1-highlight-track: var(--tracking-none);
@@ -426,9 +427,11 @@
   --figma-type-br1-t1-size: 1.125rem;
   --figma-type-br1-t1-line: 1.6875rem;
   --figma-type-br1-t1-track: var(--tracking-tight-body);
+  --figma-type-br1-t1-weight: var(--font-weight-regular);
   --figma-type-br1-t1-highlight-size: 1.125rem;
   --figma-type-br1-t1-highlight-line: 1.6875rem;
   --figma-type-br1-t1-highlight-track: var(--tracking-none);
+  --figma-type-br1-t1-highlight-weight: var(--font-weight-regular);
   --figma-type-br1-t2-size: 0.875rem;
   --figma-type-br1-t2-line: 1.3125rem;
   --figma-type-br1-t2-track: var(--tracking-tight-display);
@@ -477,9 +480,11 @@
   --type-body-lg-size: var(--figma-type-br1-t1-size);
   --type-body-lg-line: var(--figma-type-br1-t1-line);
   --type-body-lg-track: var(--figma-type-br1-t1-track);
+  --type-body-lg-weight: var(--figma-type-br1-t1-weight);
   --type-body-lg-highlight-size: var(--figma-type-br1-t1-highlight-size);
   --type-body-lg-highlight-line: var(--figma-type-br1-t1-highlight-line);
   --type-body-lg-highlight-track: var(--figma-type-br1-t1-highlight-track);
+  --type-body-lg-highlight-weight: var(--figma-type-br1-t1-highlight-weight);
   --type-body-sm-size: var(--figma-type-br1-t2-size);
   --type-body-sm-line: var(--figma-type-br1-t2-line);
   --type-body-sm-track: var(--figma-type-br1-t2-track);
