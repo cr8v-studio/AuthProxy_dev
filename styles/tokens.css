@@ -1,4 +1,45 @@
 :root {
+  /* Immutable layout tokens */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-96: 96px;
+  --space-120: 120px;
+  --space-160: 160px;
+
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-pill: 999px;
+
+  --container-mobile: 100%;
+  --container-tablet: 1024px;
+  --container-desktop: 1440px;
+  --container-padding-mobile: 16px;
+  --container-padding-tablet: 24px;
+  --container-padding-desktop: 32px;
+
+  --grid-columns-mobile: 4;
+  --grid-columns-tablet: 8;
+  --grid-columns-desktop: 12;
+  --grid-gap-mobile: 16px;
+  --grid-gap-tablet: 20px;
+  --grid-gap-desktop: 24px;
+  --grid-margin-mobile: 16px;
+  --grid-margin-tablet: 24px;
+  --grid-margin-desktop: 32px;
+
   /* Typeface */
   --font-family-sans: "Lexend", sans-serif;
   --font-weight-light: 300;
@@ -17,19 +58,19 @@
   --border-width-thin: 1px;
 
   /* Foundation spacing */
-  --space-inline-xs: 4px;
-  --space-inline-sm: 5px;
-  --space-inline-md: 6px;
-  --space-inline-lg: 8px;
-  --space-inline-xl: 0.375rem;
-  --space-stack-xs: 10px;
-  --space-stack-sm: 12px;
-  --space-stack-md: 16px;
-  --space-stack-lg: 20px;
-  --space-stack-xl: 24px;
-  --space-stack-2xl: 1.5rem;
-  --space-stack-3xl: 32px;
-  --space-stack-4xl: 40px;
+  --space-inline-xs: var(--space-4);
+  --space-inline-sm: var(--space-4);
+  --space-inline-md: var(--space-8);
+  --space-inline-lg: var(--space-8);
+  --space-inline-xl: var(--space-8);
+  --space-stack-xs: var(--space-12);
+  --space-stack-sm: var(--space-12);
+  --space-stack-md: var(--space-16);
+  --space-stack-lg: var(--space-20);
+  --space-stack-xl: var(--space-24);
+  --space-stack-2xl: var(--space-24);
+  --space-stack-3xl: var(--space-32);
+  --space-stack-4xl: var(--space-40);
 
   /* Foundation sizes */
   --size-control-md: 44px;
@@ -41,24 +82,24 @@
   --size-corner-height: 12px;
 
   /* Foundation layout */
-  --layout-page-max: 1440px;
-  --layout-shell-max: 1200px;
-  --layout-auth-padding: 120px;
-  --layout-header-padding-inline: 44px;
+  --layout-page-max: var(--container-desktop);
+  --layout-shell-max: calc(var(--container-desktop) - (var(--container-padding-desktop) * 2));
+  --layout-auth-padding: var(--space-120);
+  --layout-header-padding-inline: var(--container-padding-desktop);
   --layout-dropdown-panel-min: 14rem;
   --layout-problem-visual-max: 534px;
   --layout-auth-device-max: 544px;
 
   /* Foundation section spacing */
-  --section-space-2xl: 120px;
-  --section-space-xl: 80px;
-  --section-space-lg: 44px;
-  --section-space-md: 24px;
-  --section-space-sm: 20px;
+  --section-space-2xl: var(--space-120);
+  --section-space-xl: var(--space-80);
+  --section-space-lg: var(--space-48);
+  --section-space-md: var(--space-24);
+  --section-space-sm: var(--space-20);
 
   /* Foundation radius */
-  --radius-sm: 6px;
-  --radius-md: 12px;
+  --radius-sm: var(--radius-8);
+  --radius-md: var(--radius-12);
 
   /* Foundation shadows */
   --shadow-hero-visual:
@@ -170,29 +211,29 @@
   /* Hero source tokens */
   --hero-panel-columns: minmax(0, 2fr) minmax(0, 1fr);
   --hero-panel-row-height: 330px;
-  --hero-panel-gap: 44px;
-  --hero-panel-padding-x: 44px;
-  --hero-panel-padding-top: 44px;
-  --hero-panel-padding-bottom: 44px;
+  --hero-panel-gap: var(--space-48);
+  --hero-panel-padding-x: var(--space-48);
+  --hero-panel-padding-top: var(--space-48);
+  --hero-panel-padding-bottom: var(--space-48);
   --hero-panel-background-image-fallback: url("../assets/figma/hero-panel-bg.webp");
   --hero-panel-background-image: -webkit-image-set(url("../assets/figma/hero-panel-bg.webp") 1x);
   --hero-visual-width: 356px;
   --hero-visual-height: 496px;
   --hero-lead-strip-background: var(--figma-color-off-white-base);
-  --hero-lead-strip-padding: 44px;
+  --hero-lead-strip-padding: var(--space-48);
   --hero-lead-strip-color: var(--figma-color-dark-tint-2);
   --hero-metrics-wrap-blur: 2.5px;
-  --hero-metric-padding-x: 44px;
-  --hero-metric-padding-y: 24px;
+  --hero-metric-padding-x: var(--space-48);
+  --hero-metric-padding-y: var(--space-24);
   --hero-metric-value-size: 80px;
   --hero-metric-value-line: 80px;
-  --hero-metric-label-gap: 6px;
+  --hero-metric-label-gap: var(--space-8);
   --hero-cta-columns: minmax(0, 2fr) minmax(0, 1fr);
   --hero-cta-row-height: 44px;
-  --hero-cta-gap: 44px;
-  --hero-cta-padding: 44px;
-  --hero-cta-button-gap: 12px;
-  --hero-cta-corner-offset: 24px;
+  --hero-cta-gap: var(--space-48);
+  --hero-cta-padding: var(--space-48);
+  --hero-cta-button-gap: var(--space-12);
+  --hero-cta-corner-offset: var(--space-24);
 
   /* Landing page structural tokens */
   --landing-toggle-gap: var(--space-inline-xs);
