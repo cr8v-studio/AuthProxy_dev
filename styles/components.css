@@ -440,39 +440,3 @@
 .site-header-button-v2[aria-current="page"] .site-header-button-v2__icon {
   left: var(--header-button-v2-icon-shift-hover);
 }
-
-/* Safari/WebKit text clipping fix for framed buttons */
-@supports (-webkit-touch-callout: none) {
-  .site-header-link-m2,
-  .site-header-button-v1 {
-    display: inline-flex;
-    flex: 0 0 auto;
-    overflow: visible;
-    width: auto !important;
-    min-width: -webkit-max-content;
-    min-width: max-content;
-    max-width: none;
-    padding-left: calc(var(--control-padding-inline, 0px) + 4px);
-    padding-right: calc(var(--control-padding-inline, 0px) + 14px);
-  }
-
-  .site-header-link-m2::before,
-  .site-header-button-v1::before {
-    transform: none;
-    -webkit-transform: none;
-    will-change: auto;
-  }
-
-  .site-header-link-m2__label,
-  .site-header-button-v1__label {
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    margin-right: 0;
-    padding-right: 0;
-    white-space: nowrap;
-    text-rendering: geometricPrecision;
-    -webkit-font-smoothing: antialiased;
-    overflow: visible;
-  }
-}
