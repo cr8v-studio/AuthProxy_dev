@@ -1226,6 +1226,10 @@ a {
 }
 
 @media (min-width: 1200px) {
+  .hero-section {
+    padding-block: 0;
+  }
+
   .hero-section__viewport {
     width: 100%;
     min-height: calc(100svh - var(--site-header-height));
