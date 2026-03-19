@@ -1269,15 +1269,16 @@ a {
 @media (min-width: 1200px) {
   .hero-section {
     padding-block: 0;
+    padding-top: var(--space-24);
   }
 
   .hero-section__viewport {
     width: 100%;
-    min-height: calc(100svh - var(--site-header-height));
-    height: calc(100dvh - var(--site-header-height));
+    min-height: calc(100svh - var(--site-header-height) - var(--space-24));
+    height: auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 }
 
@@ -1325,13 +1326,6 @@ a {
     margin-left: var(--space-8);
   }
 
-  .hero-section__viewport {
-    min-height: calc(100svh - var(--site-header-height));
-    height: auto;
-    align-items: flex-start;
-    padding-top: var(--space-24);
-    padding-bottom: var(--space-16);
-  }
 }
 
 @media (max-width: 1439px) {
