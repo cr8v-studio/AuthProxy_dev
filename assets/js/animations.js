@@ -846,7 +846,7 @@ async function initMotionSystem() {
   mapRevealUtilities();
 
   initNavbarMotion(lenis);
-  initHeroTimeline();
+  initHeroTimeline({ skipIntro: true });
   initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
