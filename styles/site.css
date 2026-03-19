@@ -321,8 +321,9 @@ a {
 }
 
 .hero-section__frame > .hero-section__metrics-wrap {
-  width: 100%;
-  margin-inline: 0;
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
 }
 
 .hero-section__frame > .hero-section__cta-bar {

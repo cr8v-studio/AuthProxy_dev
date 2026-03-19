@@ -280,15 +280,15 @@
   --header-logo-width: 114px;
   --header-logo-height: var(--size-control-lg);
   --header-inner-max: 1200px;
-  --header-nav-gap: var(--space-4);
+  --header-nav-gap: var(--space-24);
 
   /* Component tokens: header link */
   --header-link-height: 41px;
   --header-link-padding-x: var(--space-stack-lg);
   --header-link-color: var(--figma-color-dark-tint-1);
-  --header-link-font-size: var(--type-control-body-size);
-  --header-link-line-height: var(--type-control-body-line);
-  --header-link-letter-spacing: var(--type-control-body-track);
+  --header-link-font-size: var(--figma-type-br0-t1-highlight-size);
+  --header-link-line-height: var(--figma-type-br0-t1-highlight-line);
+  --header-link-letter-spacing: var(--figma-type-br0-t1-highlight-track);
   --header-link-corner-width: var(--size-corner-width);
   --header-link-corner-height: var(--size-corner-height);
   --header-link-corner-inset: var(--space-inline-sm);
@@ -323,9 +323,9 @@
   --header-dropdown-gap: var(--space-inline-md);
   --header-dropdown-padding-x: var(--space-stack-lg);
   --header-dropdown-color: var(--figma-color-dark-tint-1);
-  --header-dropdown-font-size: var(--type-control-body-size);
-  --header-dropdown-line-height: var(--type-control-body-line);
-  --header-dropdown-letter-spacing: var(--type-control-body-track);
+  --header-dropdown-font-size: var(--figma-type-br0-t1-highlight-size);
+  --header-dropdown-line-height: var(--figma-type-br0-t1-highlight-line);
+  --header-dropdown-letter-spacing: var(--figma-type-br0-t1-highlight-track);
   --header-dropdown-icon-size: var(--size-icon-sm);
   --header-dropdown-icon-width: 16.6667px;
   --header-dropdown-icon-height: 11.1298px;
