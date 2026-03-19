@@ -85,9 +85,7 @@ body.site-page.is-preloading {
 
 .site-preloader__pixel {
   position: absolute;
-  background: var(--preloader-pixel-bg, #1b1b1b);
-  outline: 1px solid rgba(255, 255, 255, 0.1);
-  outline-offset: -1px;
+  background: #151515;
   will-change: transform, opacity;
 }
 
