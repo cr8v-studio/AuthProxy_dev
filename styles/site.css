@@ -82,8 +82,8 @@ body.site-page.is-preloading {
   transform: translate(-50%, -50%);
   width: clamp(9rem, 16vw, 12.5rem);
   height: auto;
-  opacity: 0.88;
-  filter: saturate(0) brightness(1.5);
+  opacity: 0.92;
+  filter: brightness(0) invert(1);
 }
 
 img {

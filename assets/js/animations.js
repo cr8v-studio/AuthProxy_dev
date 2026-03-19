@@ -174,35 +174,34 @@ function runInitialPreloader(lenis) {
       onComplete: finishPreloader
     });
 
+    timeline.to(
+      preloaderColumns,
+      {
+        yPercent: 0,
+        duration: 0.72,
+        ease: 'power3.out',
+        stagger: { each: 0.06, from: 'start' }
+      }
+    );
+
     if (logo) {
-      timeline.to(logo, { autoAlpha: 1, scale: 1, duration: 0.52, ease: 'power2.out' }, 0.86);
-      timeline.to(logo, { autoAlpha: 0, duration: 0.38, ease: 'power2.inOut' }, 1.64);
+      timeline.to(logo, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power2.out' });
+      timeline.to({}, { duration: 0.48 });
+      timeline.to(logo, { autoAlpha: 0, duration: 0.34, ease: 'power2.inOut' });
     }
 
     timeline.to(
       preloaderColumns,
       {
-        yPercent: 0,
-        duration: 0.7,
-        ease: 'power3.out',
-        stagger: { each: 0.05, from: 'start' }
-      },
-      0
-    );
-
-    timeline.to(
-      preloaderColumns,
-      {
         yPercent: -100,
-        duration: 0.88,
+        duration: 0.86,
         ease: 'power3.inOut',
-        stagger: { each: 0.05, from: 'end' }
-      },
-      2.08
+        stagger: { each: 0.06, from: 'end' }
+      }
     );
 
     // Failsafe: never keep the page locked behind preloader.
-    safetyTimeoutId = window.setTimeout(finishPreloader, 3800);
+    safetyTimeoutId = window.setTimeout(finishPreloader, 4600);
   });
 }
 
