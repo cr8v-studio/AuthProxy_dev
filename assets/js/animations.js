@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobileViewport = window.matchMedia('(max-width: 767px)');
 const isMobileViewport = () => mobileViewport.matches;
+const PRELOAD_SESSION_KEY = 'apgPreloadShown';
 
 const getMotion = () => ({
   duration: isMobileViewport() ? 0.5 : 0.65,
@@ -110,6 +111,159 @@ function initLenis() {
   });
 
   return lenis;
+}
+
+function animateOverlayColumns(columns, options = {}) {
+  if (!columns.length) {
+    options.onComplete?.();
+    return;
+  }
+
+  gsap.to(columns, {
+    yPercent: options.toYPercent ?? 0,
+    duration: options.duration ?? 0.9,
+    ease: options.ease ?? 'power3.inOut',
+    stagger: options.stagger ?? { amount: 0.24, from: 'random' },
+    onComplete: options.onComplete
+  });
+}
+
+function runInitialPreloader(lenis) {
+  const preloader = document.querySelector('[data-preloader]');
+  const counter = preloader?.querySelector('[data-preloader-counter]');
+  const preloaderColumns = gsap.utils.toArray('.site-preloader__col');
+
+  if (!preloader) {
+    return Promise.resolve();
+  }
+
+  if (sessionStorage.getItem(PRELOAD_SESSION_KEY) === 'true') {
+    document.body.classList.remove('is-preloading');
+    preloader.setAttribute('hidden', '');
+    return Promise.resolve();
+  }
+
+  if (prefersReducedMotion) {
+    sessionStorage.setItem(PRELOAD_SESSION_KEY, 'true');
+    document.documentElement.classList.add('ap-preload-shown');
+    document.body.classList.remove('is-preloading');
+    preloader.setAttribute('hidden', '');
+    return Promise.resolve();
+  }
+
+  sessionStorage.setItem(PRELOAD_SESSION_KEY, 'true');
+  preloader.removeAttribute('hidden');
+  document.body.classList.add('is-preloading');
+  lenis?.stop();
+  gsap.set(preloaderColumns, { yPercent: 0 });
+
+  const progressState = { value: 0 };
+
+  return new Promise((resolve) => {
+    const timeline = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      onComplete: () => {
+        preloader.setAttribute('hidden', '');
+        document.documentElement.classList.add('ap-preload-shown');
+        document.body.classList.remove('is-preloading');
+        lenis?.start();
+        resolve();
+      }
+    });
+
+    if (counter) {
+      timeline.fromTo(counter, { autoAlpha: 0.4 }, { autoAlpha: 1, duration: 0.2 }, 0);
+      timeline.to(
+        progressState,
+        {
+          value: 100,
+          duration: 1.1,
+          ease: 'none',
+          onUpdate: () => {
+            counter.textContent = String(Math.round(progressState.value)).padStart(3, '0');
+          }
+        },
+        0
+      );
+      timeline.to(counter, { autoAlpha: 0, duration: 0.25 }, 0.9);
+    }
+
+    timeline.to(
+      preloaderColumns,
+      {
+        yPercent: -100,
+        duration: 0.95,
+        ease: 'power3.inOut',
+        stagger: { amount: 0.45, from: 'random' }
+      },
+      0.28
+    );
+  });
+}
+
+function initPageTransitions(lenis) {
+  const transitionLayer = document.querySelector('[data-page-transition]');
+  const transitionColumns = gsap.utils.toArray('.site-transition-layer__col');
+
+  if (!transitionLayer || transitionColumns.length === 0) {
+    return;
+  }
+
+  const isInternalTransitionLink = (link) => {
+    const href = link.getAttribute('href') || '';
+
+    if (!href || href.startsWith('#')) {
+      return false;
+    }
+
+    if (
+      href.startsWith('mailto:') ||
+      href.startsWith('tel:') ||
+      href.startsWith('javascript:')
+    ) {
+      return false;
+    }
+
+    if (link.target === '_blank' || link.hasAttribute('download')) {
+      return false;
+    }
+
+    const nextUrl = new URL(link.href, window.location.href);
+    const currentUrl = new URL(window.location.href);
+
+    if (nextUrl.origin !== currentUrl.origin) {
+      return false;
+    }
+
+    return `${nextUrl.pathname}${nextUrl.search}` !== `${currentUrl.pathname}${currentUrl.search}`;
+  };
+
+  let isTransitioning = false;
+
+  document.querySelectorAll('a[href]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (isTransitioning || !isInternalTransitionLink(link)) {
+        return;
+      }
+
+      event.preventDefault();
+      isTransitioning = true;
+      lenis?.stop();
+
+      transitionLayer.hidden = false;
+      transitionLayer.classList.add('is-active');
+      gsap.set(transitionColumns, { yPercent: 100 });
+
+      animateOverlayColumns(transitionColumns, {
+        toYPercent: 0,
+        duration: 0.85,
+        stagger: { amount: 0.24, from: 'random' },
+        onComplete: () => {
+          window.location.href = link.href;
+        }
+      });
+    });
+  });
 }
 
 // Header scroll-state stays centralized here so the rest of the motion system can stay declarative.
@@ -647,12 +801,14 @@ function initInteractiveHoverStates() {
 }
 
 // One base motion system for the whole page.
-function initMotionSystem() {
+async function initMotionSystem() {
   mapRevealUtilities();
 
   if (prefersReducedMotion) {
     setReducedMotionState();
     initNavbarMotion(null);
+    await runInitialPreloader(null);
+    initPageTransitions(null);
     return;
   }
 
@@ -661,6 +817,7 @@ function initMotionSystem() {
   });
 
   const lenis = initLenis();
+  await runInitialPreloader(lenis);
 
   initNavbarMotion(lenis);
   initHeroTimeline();
@@ -669,6 +826,7 @@ function initMotionSystem() {
   initSectionLabelChevronMotion();
   initFeatureCards();
   initInteractiveHoverStates();
+  initPageTransitions(lenis);
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
   ScrollTrigger.refresh();
