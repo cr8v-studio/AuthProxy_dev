@@ -393,6 +393,11 @@ function initHeroTimeline() {
   if (!heroSection) {
     return;
   }
+  if (heroSection.dataset.motionHeroInit === 'true') {
+    return;
+  }
+  heroSection.dataset.motionHeroInit = 'true';
+
   const motion = getMotion();
 
   const title = heroSection.querySelector('.hero-section__title');
