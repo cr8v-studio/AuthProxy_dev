@@ -446,7 +446,11 @@
   .site-header-link-m2,
   .site-header-button-v1 {
     overflow: visible;
-    padding-right: calc(var(--control-padding-inline, 0px) + 4px);
+    width: -webkit-fit-content;
+    width: fit-content;
+    min-width: -webkit-max-content;
+    min-width: max-content;
+    padding-right: calc(var(--control-padding-inline, 0px) + 10px);
   }
 
   .site-header-link-m2::before,
@@ -459,9 +463,13 @@
 
   .site-header-link-m2__label,
   .site-header-button-v1__label {
+    display: inline-block;
     position: relative;
     z-index: 1;
-    padding-right: 3px;
+    margin-right: 2px;
+    padding-right: 6px;
+    white-space: nowrap;
+    text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
   }
 }
