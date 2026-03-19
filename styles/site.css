@@ -54,12 +54,8 @@ body.site-page.is-preloading {
 
 .site-transition-layer__col,
 .site-preloader__col {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    #151515;
-  background-size: 100% 24px, 24px 100%, auto;
-  border-right: 1px solid rgba(255, 255, 255, 0.085);
+  background: #151515;
+  border-right: 1px solid rgba(255, 255, 255, 0.22);
   transform: translate3d(0, 100%, 0);
 }
 

@@ -145,7 +145,10 @@ function runInitialPreloader(lenis) {
   preloader.removeAttribute('hidden');
   document.body.classList.add('is-preloading');
   lenis?.stop();
-  gsap.set(preloaderColumns, { yPercent: 0 });
+  gsap.set(preloaderColumns, { yPercent: 100 });
+  if (logo) {
+    gsap.set(logo, { autoAlpha: 0, scale: 0.93 });
+  }
 
   return new Promise((resolve) => {
     let finished = false;
@@ -172,28 +175,38 @@ function runInitialPreloader(lenis) {
     });
 
     if (logo) {
-      timeline.fromTo(
+      timeline.to(
         logo,
-        { autoAlpha: 0, scale: 0.92 },
-        { autoAlpha: 1, scale: 1, duration: 0.44, ease: 'power2.out' },
-        0
+        { autoAlpha: 1, scale: 1, duration: 0.56, ease: 'power2.out' },
+        0.56
       );
-      timeline.to(logo, { autoAlpha: 0, duration: 0.28, ease: 'power2.inOut' }, 0.92);
+      timeline.to(logo, { autoAlpha: 0, duration: 0.4, ease: 'power2.inOut' }, 1.78);
     }
 
     timeline.to(
       preloaderColumns,
       {
-        yPercent: -100,
-        duration: 0.95,
-        ease: 'power3.inOut',
-        stagger: { amount: 0.45, from: 'random' }
+        yPercent: 0,
+        duration: 0.62,
+        ease: 'power3.out',
+        stagger: { each: 0.05, from: 'start' }
       },
-      0.28
+      0
+    );
+
+    timeline.to(
+      preloaderColumns,
+      {
+        yPercent: -100,
+        duration: 0.88,
+        ease: 'power3.inOut',
+        stagger: { each: 0.05, from: 'end' }
+      },
+      1.92
     );
 
     // Failsafe: never keep the page locked behind preloader.
-    safetyTimeoutId = window.setTimeout(finishPreloader, 2600);
+    safetyTimeoutId = window.setTimeout(finishPreloader, 3800);
   });
 }
 
