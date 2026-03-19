@@ -719,11 +719,24 @@ a {
 }
 
 #problem .section-label-bar {
+  position: relative;
   min-height: 149px;
   padding-top: var(--space-120);
   display: flex;
   align-items: flex-end;
   border-inline: 1px solid var(--site-section-border);
+  border-bottom: 0;
+}
+
+#problem .section-label-bar::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  width: 100vw;
+  border-bottom: 1px solid var(--site-section-border);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 #problem .section-label {
