@@ -4,6 +4,27 @@ const navMenu = document.querySelector('.site-header__menu');
 const dropdownGroups = Array.from(document.querySelectorAll('[data-dropdown]'));
 const authSlider = document.querySelector('[data-slider]');
 
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+const navigationEntry = performance.getEntriesByType('navigation')[0];
+const isReloadNavigation = navigationEntry?.type === 'reload';
+
+if (isReloadNavigation) {
+  if (window.location.hash) {
+    history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+  }
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  window.addEventListener(
+    'load',
+    () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    },
+    { once: true }
+  );
+}
+
 function closeMenu() {
   if (!rootHeader || !navToggle) {
     return;
