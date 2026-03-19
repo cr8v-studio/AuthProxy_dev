@@ -129,12 +129,94 @@ function animateOverlayColumns(columns, options = {}) {
 
 function runInitialPreloader(lenis) {
   const preloader = document.querySelector('[data-preloader]');
-  if (preloader) {
-    preloader.setAttribute('hidden', '');
+  const logo = preloader?.querySelector('[data-preloader-logo]');
+  const columns = gsap.utils.toArray('.site-preloader__col');
+
+  if (!preloader || columns.length === 0) {
+    document.body.classList.remove('is-preloading');
+    lenis?.start();
+    return Promise.resolve();
   }
-  document.body.classList.remove('is-preloading');
-  lenis?.start();
-  return Promise.resolve();
+
+  if (prefersReducedMotion) {
+    preloader.setAttribute('hidden', '');
+    document.body.classList.remove('is-preloading');
+    lenis?.start();
+    return Promise.resolve();
+  }
+
+  preloader.hidden = false;
+  document.body.classList.add('is-preloading');
+  lenis?.stop();
+
+  gsap.set(columns, { yPercent: 100, autoAlpha: 1 });
+  if (logo) {
+    gsap.set(logo, {
+      autoAlpha: 0,
+      scale: 0.86,
+      filter: 'brightness(0) invert(1) blur(6px)'
+    });
+  }
+
+  return new Promise((resolve) => {
+    let completed = false;
+    let safetyTimeoutId = 0;
+
+    const finish = () => {
+      if (completed) {
+        return;
+      }
+      completed = true;
+      if (safetyTimeoutId) {
+        window.clearTimeout(safetyTimeoutId);
+      }
+      preloader.setAttribute('hidden', '');
+      document.body.classList.remove('is-preloading');
+      lenis?.start();
+      resolve();
+    };
+
+    const timeline = gsap.timeline({
+      defaults: { ease: 'power3.out' },
+      onComplete: finish
+    });
+
+    timeline.to(columns, {
+      yPercent: 0,
+      duration: 0.72,
+      stagger: { each: 0.06, from: 'start' },
+      ease: 'power4.out'
+    });
+
+    if (logo) {
+      timeline.to(
+        logo,
+        {
+          autoAlpha: 1,
+          scale: 1,
+          filter: 'brightness(0) invert(1) blur(0px)',
+          duration: 0.58,
+          ease: 'power3.out'
+        },
+        '>-0.08'
+      );
+      timeline.to(logo, { scale: 1.04, duration: 0.32, ease: 'power2.inOut' });
+      timeline.to(logo, { autoAlpha: 0, scale: 0.95, duration: 0.34, ease: 'power2.in' });
+    }
+
+    timeline.to(
+      columns,
+      {
+        yPercent: -100,
+        duration: 0.86,
+        stagger: { each: 0.06, from: 'end' },
+        ease: 'power3.inOut'
+      },
+      '>-0.04'
+    );
+
+    safetyTimeoutId = window.setTimeout(finish, 4400);
+  });
 }
 
 function initPageTransitions(lenis) {
