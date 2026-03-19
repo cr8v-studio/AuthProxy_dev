@@ -1,5 +1,4 @@
 const rootHeader = document.querySelector('.site-header-shell');
-const logoLink = document.querySelector('.site-header-logo');
 const navToggle = document.querySelector('.site-header__toggle');
 const navMenu = document.querySelector('.site-header__menu');
 const dropdownGroups = Array.from(document.querySelectorAll('[data-dropdown]'));
@@ -64,18 +63,6 @@ document.addEventListener('keydown', (event) => {
     closeMenu();
   }
 });
-
-if (logoLink) {
-  logoLink.addEventListener('click', (event) => {
-    event.preventDefault();
-    dropdownGroups.forEach((group) => toggleDropdown(group, false));
-    closeMenu();
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    if (window.location.hash) {
-      history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
-    }
-  });
-}
 
 function initAuthSlider() {
   if (!authSlider) {
