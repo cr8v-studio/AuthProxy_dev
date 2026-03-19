@@ -149,7 +149,6 @@ function runInitialPreloader(lenis) {
   document.body.classList.add('is-preloading');
   lenis?.stop();
 
-  gsap.set(preloader, { yPercent: 0, autoAlpha: 1 });
   gsap.set(columns, { yPercent: 100, autoAlpha: 1 });
   if (logo) {
     gsap.set(logo, {
@@ -206,17 +205,17 @@ function runInitialPreloader(lenis) {
     }
 
     timeline.to(
-      preloader,
+      columns,
       {
         yPercent: -100,
-        autoAlpha: 0,
-        duration: 0.92,
+        duration: 0.86,
+        stagger: { each: 0.06, from: 'end' },
         ease: 'power3.inOut'
       },
       '>-0.04'
     );
 
-    safetyTimeoutId = window.setTimeout(finish, 4700);
+    safetyTimeoutId = window.setTimeout(finish, 4400);
   });
 }
 
