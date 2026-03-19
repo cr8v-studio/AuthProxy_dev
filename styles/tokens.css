@@ -23,20 +23,20 @@
   --radius-24: 24px;
   --radius-pill: 999px;
 
-  --container-mobile: 100%;
-  --container-tablet: 1024px;
+  --container-phone: 100%;
+  --container-tablet: 100%;
   --container-desktop: 1440px;
-  --container-padding-mobile: 16px;
+  --container-padding-phone: 16px;
   --container-padding-tablet: 24px;
   --container-padding-desktop: 32px;
 
-  --grid-columns-mobile: 4;
+  --grid-columns-phone: 4;
   --grid-columns-tablet: 8;
   --grid-columns-desktop: 12;
-  --grid-gap-mobile: 16px;
+  --grid-gap-phone: 16px;
   --grid-gap-tablet: 20px;
   --grid-gap-desktop: 24px;
-  --grid-margin-mobile: 16px;
+  --grid-margin-phone: 16px;
   --grid-margin-tablet: 24px;
   --grid-margin-desktop: 32px;
 
