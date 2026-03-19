@@ -710,7 +710,6 @@ a {
   max-width: 13ch;
 }
 
-#problem .section-label-bar,
 #problem .section-intro,
 #problem .problem-grid,
 #problem .problem-statement {
@@ -719,11 +718,13 @@ a {
 }
 
 #problem .section-label-bar {
+  width: 100%;
+  margin-inline: 0;
   min-height: 149px;
   padding-top: var(--space-120);
   display: flex;
   align-items: flex-end;
-  border-inline: 1px solid var(--site-section-border);
+  border-inline: 0;
 }
 
 #problem .section-label {
