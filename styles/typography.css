@@ -115,6 +115,7 @@ body {
   font-size: var(--type-body-lg-size);
   line-height: var(--type-body-lg-line);
   letter-spacing: var(--type-body-lg-track);
+  font-weight: var(--type-body-lg-weight);
   text-wrap: pretty;
 }
 
@@ -122,6 +123,7 @@ body {
   font-size: var(--type-body-lg-highlight-size);
   line-height: var(--type-body-lg-highlight-line);
   letter-spacing: var(--type-body-lg-highlight-track);
+  font-weight: var(--type-body-lg-highlight-weight);
   text-wrap: pretty;
 }
 
