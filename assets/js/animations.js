@@ -177,8 +177,12 @@ function runInitialPreloader(lenis) {
       }
       preloader.setAttribute('hidden', '');
       document.body.classList.remove('is-preloading');
-      lenis?.start();
-      resolve();
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          lenis?.start();
+          resolve();
+        });
+      });
     };
 
     const timeline = gsap.timeline({
