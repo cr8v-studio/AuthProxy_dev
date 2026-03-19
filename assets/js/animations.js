@@ -103,7 +103,8 @@ function initLenis() {
 
       event.preventDefault();
       const isHeaderLogo = link.classList.contains('site-header-logo');
-      lenis.scrollTo(target, {
+      const scrollTarget = isHeaderLogo ? 0 : target;
+      lenis.scrollTo(scrollTarget, {
         offset: isHeaderLogo ? 0 : -24,
         duration: isMobileViewport() ? 0.9 : 1.05,
         easing: (value) => 1 - Math.pow(1 - value, 3)
