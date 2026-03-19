@@ -710,6 +710,7 @@ a {
   max-width: 13ch;
 }
 
+#problem .section-label-bar,
 #problem .section-intro,
 #problem .problem-grid,
 #problem .problem-statement {
@@ -718,14 +719,12 @@ a {
 }
 
 #problem .section-label-bar {
-  width: 100%;
-  margin-inline: 0;
   position: relative;
   min-height: 149px;
   padding-top: var(--space-120);
   display: flex;
   align-items: flex-end;
-  border-inline: 0;
+  border-inline: 1px solid var(--site-section-border);
   border-bottom: 0;
 }
 
@@ -741,10 +740,10 @@ a {
 }
 
 #problem .section-label {
-  width: auto;
+  width: 100%;
   max-width: none;
   min-height: auto;
-  margin-inline: var(--space-120);
+  margin-inline: 0;
   padding: var(--space-12) var(--space-48);
   gap: var(--space-8);
   border-bottom: 0;
