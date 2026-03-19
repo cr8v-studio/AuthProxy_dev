@@ -187,6 +187,7 @@ function initSectionLabelChevronMotion() {
     }
 
     const orderedChevrons = chevrons.reverse();
+    const chevronDelay = isMobileViewport() ? 0.12 : 0.18;
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: label,
@@ -200,7 +201,7 @@ function initSectionLabelChevronMotion() {
       x: isMobileViewport() ? -20 : -28,
       duration: isMobileViewport() ? 0.62 : 0.78,
       ease: 'power3.out',
-      delay: isMobileViewport() ? 0.12 : 0.18,
+      delay: chevronDelay,
       stagger: 0.16,
       force3D: true
     });
@@ -212,9 +213,10 @@ function initSectionLabelChevronMotion() {
         y: isMobileViewport() ? 14 : 18,
         duration: isMobileViewport() ? 0.56 : 0.66,
         ease: 'power3.out',
+        delay: chevronDelay,
         force3D: true
       },
-      '-=0.34'
+      0
     );
   });
 }
