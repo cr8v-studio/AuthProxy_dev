@@ -129,7 +129,7 @@ function animateOverlayColumns(columns, options = {}) {
 
 function runInitialPreloader(lenis) {
   const preloader = document.querySelector('[data-preloader]');
-  const counter = preloader?.querySelector('[data-preloader-counter]');
+  const logo = preloader?.querySelector('[data-preloader-logo]');
   const preloaderColumns = gsap.utils.toArray('.site-preloader__col');
 
   if (!preloader) {
@@ -147,34 +147,38 @@ function runInitialPreloader(lenis) {
   lenis?.stop();
   gsap.set(preloaderColumns, { yPercent: 0 });
 
-  const progressState = { value: 0 };
-
   return new Promise((resolve) => {
+    let finished = false;
+    let safetyTimeoutId = 0;
+
+    const finishPreloader = () => {
+      if (finished) {
+        return;
+      }
+
+      finished = true;
+      if (safetyTimeoutId) {
+        window.clearTimeout(safetyTimeoutId);
+      }
+      preloader.setAttribute('hidden', '');
+      document.body.classList.remove('is-preloading');
+      lenis?.start();
+      resolve();
+    };
+
     const timeline = gsap.timeline({
       defaults: { ease: 'power3.out' },
-      onComplete: () => {
-        preloader.setAttribute('hidden', '');
-        document.body.classList.remove('is-preloading');
-        lenis?.start();
-        resolve();
-      }
+      onComplete: finishPreloader
     });
 
-    if (counter) {
-      timeline.fromTo(counter, { autoAlpha: 0.4 }, { autoAlpha: 1, duration: 0.2 }, 0);
-      timeline.to(
-        progressState,
-        {
-          value: 100,
-          duration: 1.1,
-          ease: 'none',
-          onUpdate: () => {
-            counter.textContent = String(Math.round(progressState.value)).padStart(3, '0');
-          }
-        },
+    if (logo) {
+      timeline.fromTo(
+        logo,
+        { autoAlpha: 0, scale: 0.92 },
+        { autoAlpha: 1, scale: 1, duration: 0.44, ease: 'power2.out' },
         0
       );
-      timeline.to(counter, { autoAlpha: 0, duration: 0.25 }, 0.9);
+      timeline.to(logo, { autoAlpha: 0, duration: 0.28, ease: 'power2.inOut' }, 0.92);
     }
 
     timeline.to(
@@ -187,6 +191,9 @@ function runInitialPreloader(lenis) {
       },
       0.28
     );
+
+    // Failsafe: never keep the page locked behind preloader.
+    safetyTimeoutId = window.setTimeout(finishPreloader, 2600);
   });
 }
 

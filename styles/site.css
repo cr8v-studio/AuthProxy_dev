@@ -74,17 +74,15 @@ body.site-page.is-preloading {
   pointer-events: auto;
 }
 
-.site-preloader__counter {
+.site-preloader__logo {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  color: rgba(244, 244, 244, 0.88);
-  font-family: var(--font-family-main);
-  font-size: clamp(2.25rem, 6vw, 4.5rem);
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  width: clamp(9rem, 16vw, 12.5rem);
+  height: auto;
+  opacity: 0.88;
+  filter: saturate(0) brightness(1.5);
 }
 
 img {
