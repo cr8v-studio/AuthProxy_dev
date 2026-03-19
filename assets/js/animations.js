@@ -175,19 +175,15 @@ function runInitialPreloader(lenis) {
     });
 
     if (logo) {
-      timeline.to(
-        logo,
-        { autoAlpha: 1, scale: 1, duration: 0.56, ease: 'power2.out' },
-        0.56
-      );
-      timeline.to(logo, { autoAlpha: 0, duration: 0.4, ease: 'power2.inOut' }, 1.78);
+      timeline.to(logo, { autoAlpha: 1, scale: 1, duration: 0.52, ease: 'power2.out' }, 0.86);
+      timeline.to(logo, { autoAlpha: 0, duration: 0.38, ease: 'power2.inOut' }, 1.64);
     }
 
     timeline.to(
       preloaderColumns,
       {
         yPercent: 0,
-        duration: 0.62,
+        duration: 0.7,
         ease: 'power3.out',
         stagger: { each: 0.05, from: 'start' }
       },
@@ -202,7 +198,7 @@ function runInitialPreloader(lenis) {
         ease: 'power3.inOut',
         stagger: { each: 0.05, from: 'end' }
       },
-      1.92
+      2.08
     );
 
     // Failsafe: never keep the page locked behind preloader.
