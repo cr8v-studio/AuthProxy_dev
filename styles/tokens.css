@@ -167,9 +167,9 @@
     linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
 
   /* Semantic effect tokens */
-  --effect-blur-header-base: 4px;
-  --effect-blur-header-progressive-start: 56px;
-  --effect-blur-header-progressive-mid: 24px;
+  --effect-blur-header-base: 5px;
+  --effect-blur-header-progressive-start: 64px;
+  --effect-blur-header-progressive-mid: 30px;
   --effect-header-overlay-top:
     linear-gradient(
       180deg,
