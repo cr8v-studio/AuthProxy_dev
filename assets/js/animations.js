@@ -193,10 +193,11 @@ function runInitialPreloader(lenis) {
     timeline.to({}, { duration: 0.42 });
 
     if (logo) {
-      timeline.to(logo, { autoAlpha: 0, duration: 0.28, ease: 'power2.inOut' });
+      timeline.to({}, { duration: 0.3 });
+      timeline.to(logo, { autoAlpha: 0, duration: 0.3, ease: 'power2.inOut' });
     }
 
-    timeline.to({}, { duration: 0.2 });
+    timeline.to({}, { duration: 0.28 });
 
     timeline.to(
       columns,
