@@ -129,80 +129,12 @@ function animateOverlayColumns(columns, options = {}) {
 
 function runInitialPreloader(lenis) {
   const preloader = document.querySelector('[data-preloader]');
-  const logo = preloader?.querySelector('[data-preloader-logo]');
-  const preloaderColumns = gsap.utils.toArray('.site-preloader__col');
-
-  if (!preloader) {
-    return Promise.resolve();
-  }
-
-  if (prefersReducedMotion) {
-    document.body.classList.remove('is-preloading');
+  if (preloader) {
     preloader.setAttribute('hidden', '');
-    return Promise.resolve();
   }
-
-  preloader.removeAttribute('hidden');
-  document.body.classList.add('is-preloading');
-  lenis?.stop();
-  gsap.set(preloaderColumns, { yPercent: 100 });
-  if (logo) {
-    gsap.set(logo, { autoAlpha: 0, scale: 0.93 });
-  }
-
-  return new Promise((resolve) => {
-    let finished = false;
-    let safetyTimeoutId = 0;
-
-    const finishPreloader = () => {
-      if (finished) {
-        return;
-      }
-
-      finished = true;
-      if (safetyTimeoutId) {
-        window.clearTimeout(safetyTimeoutId);
-      }
-      preloader.setAttribute('hidden', '');
-      document.body.classList.remove('is-preloading');
-      lenis?.start();
-      resolve();
-    };
-
-    const timeline = gsap.timeline({
-      defaults: { ease: 'power3.out' },
-      onComplete: finishPreloader
-    });
-
-    timeline.to(
-      preloaderColumns,
-      {
-        yPercent: 0,
-        duration: 0.72,
-        ease: 'power3.out',
-        stagger: { each: 0.06, from: 'start' }
-      }
-    );
-
-    if (logo) {
-      timeline.to(logo, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power2.out' });
-      timeline.to({}, { duration: 0.48 });
-      timeline.to(logo, { autoAlpha: 0, duration: 0.34, ease: 'power2.inOut' });
-    }
-
-    timeline.to(
-      preloaderColumns,
-      {
-        yPercent: -100,
-        duration: 0.86,
-        ease: 'power3.inOut',
-        stagger: { each: 0.06, from: 'end' }
-      }
-    );
-
-    // Failsafe: never keep the page locked behind preloader.
-    safetyTimeoutId = window.setTimeout(finishPreloader, 4600);
-  });
+  document.body.classList.remove('is-preloading');
+  lenis?.start();
+  return Promise.resolve();
 }
 
 function initPageTransitions(lenis) {
