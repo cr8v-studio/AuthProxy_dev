@@ -389,7 +389,7 @@ function initSectionLabelChevronMotion() {
 }
 
 // Hero intro stays timeline-driven so load order is intentional and premium.
-function initHeroTimeline() {
+function initHeroTimeline({ skipIntro = false } = {}) {
   if (!heroSection) {
     return;
   }
@@ -407,58 +407,60 @@ function initHeroTimeline() {
   const visual = heroSection.querySelector('.hero-section__visual');
   const visualRevealDistance = isMobileViewport() ? 44 : 72;
 
-  const timeline = gsap.timeline({
-    defaults: {
-      duration: motion.duration,
-      ease: motion.ease
-    }
-  });
-
-  if (title) {
-    timeline.from(
-      title,
-      {
-        autoAlpha: 0,
-        y: motion.distance
-      },
-      0
-    );
-  }
-
-  if (subtitle) {
-    timeline.from(
-      subtitle,
-      {
-        autoAlpha: 0,
-        y: motion.distance * 0.8
-      },
-      '-=0.3'
-    );
-  }
-
-  if (ctaButtons.length) {
-    timeline.from(
-      ctaButtons,
-      {
-        autoAlpha: 0,
-        y: motion.distance * 0.75,
-        stagger: 0.08
-      },
-      '-=0.26'
-    );
-  }
-
-  if (visualWrap && visual) {
-    timeline.from(
-      visual,
-      {
-        autoAlpha: 0,
-        y: visualRevealDistance,
-        duration: 0.74,
+  if (!skipIntro) {
+    const timeline = gsap.timeline({
+      defaults: {
+        duration: motion.duration,
         ease: motion.ease
-      },
-      '-=0.34'
-    );
+      }
+    });
+
+    if (title) {
+      timeline.from(
+        title,
+        {
+          autoAlpha: 0,
+          y: motion.distance
+        },
+        0
+      );
+    }
+
+    if (subtitle) {
+      timeline.from(
+        subtitle,
+        {
+          autoAlpha: 0,
+          y: motion.distance * 0.8
+        },
+        '-=0.3'
+      );
+    }
+
+    if (ctaButtons.length) {
+      timeline.from(
+        ctaButtons,
+        {
+          autoAlpha: 0,
+          y: motion.distance * 0.75,
+          stagger: 0.08
+        },
+        '-=0.26'
+      );
+    }
+
+    if (visualWrap && visual) {
+      timeline.from(
+        visual,
+        {
+          autoAlpha: 0,
+          y: visualRevealDistance,
+          duration: 0.74,
+          ease: motion.ease
+        },
+        '-=0.34'
+      );
+    }
   }
 
   if (visual) {
@@ -844,7 +846,7 @@ async function initMotionSystem() {
   mapRevealUtilities();
 
   initNavbarMotion(lenis);
-  initHeroTimeline();
+  initHeroTimeline({ skipIntro: true });
   initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
