@@ -209,9 +209,8 @@ function runInitialPreloader(lenis) {
       preloader,
       {
         yPercent: -100,
-        autoAlpha: 0,
-        duration: 0.92,
-        ease: 'power3.inOut'
+        duration: 0.82,
+        ease: 'power3.in'
       },
       '>-0.04'
     );
