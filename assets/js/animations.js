@@ -149,12 +149,12 @@ function runInitialPreloader(lenis) {
   document.body.classList.add('is-preloading');
   lenis?.stop();
 
-  gsap.set(columns, { yPercent: 100, autoAlpha: 1 });
+  gsap.set(columns, { yPercent: 0, autoAlpha: 1 });
   if (logo) {
     gsap.set(logo, {
-      autoAlpha: 0,
-      scale: 0.86,
-      filter: 'brightness(0) invert(1) blur(6px)'
+      autoAlpha: 1,
+      scale: 1,
+      filter: 'brightness(0) invert(1) blur(0px)'
     });
   }
 
@@ -181,41 +181,24 @@ function runInitialPreloader(lenis) {
       onComplete: finish
     });
 
-    timeline.to(columns, {
-      yPercent: 0,
-      duration: 0.72,
-      stagger: { each: 0.06, from: 'start' },
-      ease: 'power4.out'
-    });
+    timeline.to({}, { duration: 0.42 });
 
     if (logo) {
-      timeline.to(
-        logo,
-        {
-          autoAlpha: 1,
-          scale: 1,
-          filter: 'brightness(0) invert(1) blur(0px)',
-          duration: 0.58,
-          ease: 'power3.out'
-        },
-        '>-0.08'
-      );
-      timeline.to(logo, { scale: 1.04, duration: 0.32, ease: 'power2.inOut' });
-      timeline.to(logo, { autoAlpha: 0, scale: 0.95, duration: 0.34, ease: 'power2.in' });
+      timeline.to(logo, { autoAlpha: 0, duration: 0.28, ease: 'power2.inOut' });
     }
 
     timeline.to(
       columns,
       {
         yPercent: -100,
-        duration: 0.86,
+        duration: 0.9,
         stagger: { each: 0.06, from: 'start' },
         ease: 'power3.inOut'
       },
-      '>-0.04'
+      '>-0.02'
     );
 
-    safetyTimeoutId = window.setTimeout(finish, 4400);
+    safetyTimeoutId = window.setTimeout(finish, 3200);
   });
 }
 
