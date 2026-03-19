@@ -137,6 +137,7 @@ function buildPreloaderPixels(preloader) {
   const cell = isMobileViewport() ? 22 : 28;
   const cols = Math.ceil(window.innerWidth / cell);
   const rows = Math.ceil(window.innerHeight / cell);
+  const shades = ['#161616', '#1a1a1a', '#1e1e1e', '#232323'];
 
   for (let row = 0; row < rows; row += 1) {
     for (let col = 0; col < cols; col += 1) {
@@ -146,6 +147,7 @@ function buildPreloaderPixels(preloader) {
       pixel.style.height = `${cell}px`;
       pixel.style.left = `${col * cell}px`;
       pixel.style.top = `${row * cell}px`;
+      pixel.style.setProperty('--preloader-pixel-bg', shades[(row + col) % shades.length]);
       layer.append(pixel);
     }
   }
@@ -179,7 +181,7 @@ function runInitialPreloader(lenis) {
   const pixels = buildPreloaderPixels(preloader);
 
   gsap.set(columns, { yPercent: 100, autoAlpha: 1 });
-  gsap.set(pixels, { autoAlpha: 1, scale: 1 });
+  gsap.set(pixels, { autoAlpha: 0, scale: 1 });
   if (logo) {
     gsap.set(logo, {
       autoAlpha: 0,
@@ -235,16 +237,25 @@ function runInitialPreloader(lenis) {
       timeline.to(logo, { autoAlpha: 0, scale: 0.95, duration: 0.34, ease: 'power2.in' });
     }
 
+    timeline.to(
+      pixels,
+      {
+        autoAlpha: 1,
+        duration: 0.18,
+        ease: 'none'
+      },
+      '>-0.02'
+    );
     timeline.set(columns, { autoAlpha: 0 });
 
     timeline.to(
       pixels,
       {
         autoAlpha: 0,
-        scale: 0.92,
-        duration: 0.72,
+        scale: 0.9,
+        duration: 0.86,
         ease: 'power2.out',
-        stagger: { amount: 0.9, from: 'random' }
+        stagger: { amount: 1.05, from: 'random' }
       },
       '>-0.04'
     );
