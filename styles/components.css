@@ -434,3 +434,28 @@
 .site-header-button-v2[aria-current="page"] .site-header-button-v2__icon {
   left: var(--header-button-v2-icon-shift-hover);
 }
+
+/* Safari/WebKit text clipping fix for framed buttons */
+@supports (-webkit-touch-callout: none) {
+  .site-header-link-m2,
+  .site-header-button-v1 {
+    overflow: visible;
+    padding-right: calc(var(--control-padding-inline, 0px) + 2px);
+  }
+
+  .site-header-link-m2::before,
+  .site-header-button-v1::before {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .site-header-link-m2__label,
+  .site-header-button-v1__label {
+    position: relative;
+    z-index: 1;
+    padding-right: 1px;
+    -webkit-font-smoothing: antialiased;
+  }
+}
