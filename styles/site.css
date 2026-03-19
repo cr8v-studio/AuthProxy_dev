@@ -71,7 +71,7 @@ body.site-page.is-preloading {
 .site-preloader {
   display: grid;
   place-items: center;
-  background: #151515;
+  background: transparent;
   pointer-events: auto;
 }
 
