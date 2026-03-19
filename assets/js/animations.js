@@ -127,6 +127,33 @@ function animateOverlayColumns(columns, options = {}) {
   });
 }
 
+function buildPreloaderPixels(preloader) {
+  const existingLayer = preloader.querySelector('.site-preloader__pixels');
+  existingLayer?.remove();
+
+  const layer = document.createElement('div');
+  layer.className = 'site-preloader__pixels';
+
+  const cell = isMobileViewport() ? 22 : 28;
+  const cols = Math.ceil(window.innerWidth / cell);
+  const rows = Math.ceil(window.innerHeight / cell);
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let col = 0; col < cols; col += 1) {
+      const pixel = document.createElement('div');
+      pixel.className = 'site-preloader__pixel';
+      pixel.style.width = `${cell}px`;
+      pixel.style.height = `${cell}px`;
+      pixel.style.left = `${col * cell}px`;
+      pixel.style.top = `${row * cell}px`;
+      layer.append(pixel);
+    }
+  }
+
+  preloader.append(layer);
+  return Array.from(layer.children);
+}
+
 function runInitialPreloader(lenis) {
   const preloader = document.querySelector('[data-preloader]');
   const logo = preloader?.querySelector('[data-preloader-logo]');
@@ -149,7 +176,10 @@ function runInitialPreloader(lenis) {
   document.body.classList.add('is-preloading');
   lenis?.stop();
 
+  const pixels = buildPreloaderPixels(preloader);
+
   gsap.set(columns, { yPercent: 100, autoAlpha: 1 });
+  gsap.set(pixels, { autoAlpha: 1, scale: 1 });
   if (logo) {
     gsap.set(logo, {
       autoAlpha: 0,
@@ -170,6 +200,7 @@ function runInitialPreloader(lenis) {
       if (safetyTimeoutId) {
         window.clearTimeout(safetyTimeoutId);
       }
+      preloader.querySelector('.site-preloader__pixels')?.remove();
       preloader.setAttribute('hidden', '');
       document.body.classList.remove('is-preloading');
       lenis?.start();
@@ -204,13 +235,16 @@ function runInitialPreloader(lenis) {
       timeline.to(logo, { autoAlpha: 0, scale: 0.95, duration: 0.34, ease: 'power2.in' });
     }
 
+    timeline.set(columns, { autoAlpha: 0 });
+
     timeline.to(
-      columns,
+      pixels,
       {
-        yPercent: -100,
-        duration: 0.86,
-        stagger: { each: 0.06, from: 'end' },
-        ease: 'power3.inOut'
+        autoAlpha: 0,
+        scale: 0.92,
+        duration: 0.72,
+        ease: 'power2.out',
+        stagger: { amount: 0.9, from: 'random' }
       },
       '>-0.04'
     );
