@@ -209,7 +209,7 @@ function runInitialPreloader(lenis) {
       {
         yPercent: -100,
         duration: 0.86,
-        stagger: { each: 0.06, from: 'start' },
+        stagger: { each: 0.06, from: 'end' },
         ease: 'power3.inOut'
       },
       '>-0.04'
