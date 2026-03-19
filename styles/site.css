@@ -728,7 +728,7 @@ a {
 }
 
 #problem .section-label {
-  width: auto;
+  width: calc(100% - (var(--space-120) * 2));
   max-width: none;
   min-height: auto;
   margin-inline: var(--space-120);
