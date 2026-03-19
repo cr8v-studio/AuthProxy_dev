@@ -1324,6 +1324,14 @@ a {
   .site-header__controls {
     margin-left: var(--space-8);
   }
+
+  .hero-section__viewport {
+    min-height: calc(100svh - var(--site-header-height));
+    height: auto;
+    align-items: flex-start;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-16);
+  }
 }
 
 @media (max-width: 1439px) {
