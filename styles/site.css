@@ -35,6 +35,11 @@ body.site-page.is-preloading {
   pointer-events: none;
 }
 
+.site-transition-layer[hidden],
+.site-preloader[hidden] {
+  display: none !important;
+}
+
 .site-transition-layer {
   background: transparent;
 }
