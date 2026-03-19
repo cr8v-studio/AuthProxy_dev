@@ -751,7 +751,7 @@ a {
 
 #problem .section-intro {
   padding: 0;
-  border-top: 0;
+  border-top: 1px solid var(--site-section-border);
   background: var(--color-surface-overlay-strong);
   backdrop-filter: blur(var(--hero-metrics-wrap-blur));
   -webkit-backdrop-filter: blur(var(--hero-metrics-wrap-blur));
