@@ -1296,15 +1296,15 @@ a {
   }
 
   .site-header-shell {
-    backdrop-filter: blur(1.5px);
-    -webkit-backdrop-filter: blur(1.5px);
+    backdrop-filter: blur(0.8px);
+    -webkit-backdrop-filter: blur(0.8px);
     background: rgba(244, 244, 244, 0.92);
   }
 
   .site-header-shell.is-scrolled,
   .site-header-shell.is-open {
-    backdrop-filter: blur(1.5px);
-    -webkit-backdrop-filter: blur(1.5px);
+    backdrop-filter: blur(0.8px);
+    -webkit-backdrop-filter: blur(0.8px);
     background: rgba(244, 244, 244, 0.92);
   }
 
@@ -1320,18 +1320,19 @@ a {
     min-height: calc(100svh - var(--site-header-height));
     height: auto;
     align-items: flex-start;
-    padding-block: var(--space-24);
+    padding-block: clamp(12px, 1.8vh, 24px);
   }
 
   .hero-section__panel {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.9fr);
-    gap: var(--space-32);
-    padding: var(--space-40) var(--space-32);
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+    grid-template-rows: auto;
+    gap: clamp(20px, 2vw, 32px);
+    padding: clamp(24px, 2vw, 32px);
   }
 
   .hero-section__title {
-    font-size: clamp(3.25rem, 4.8vw, 4.25rem);
-    line-height: clamp(3.25rem, 4.8vw, 4.25rem);
+    font-size: clamp(2.9rem, 4.4vw, 4rem);
+    line-height: 1;
     white-space: normal;
   }
 
@@ -1340,7 +1341,61 @@ a {
   }
 
   .hero-section__visual {
-    width: min(100%, clamp(300px, 28vw, 332px));
+    width: min(100%, clamp(268px, 24vw, 324px));
+  }
+
+  .hero-section__lead-strip {
+    padding: clamp(20px, 2vw, 32px);
+  }
+
+  .hero-section__lead {
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: clamp(1.45, 1.5, 1.6);
+  }
+
+  .hero-metric {
+    padding: clamp(16px, 1.6vw, 24px) clamp(20px, 2vw, 32px);
+  }
+
+  .hero-metric__value {
+    font-size: clamp(3rem, 4vw, 4rem);
+    line-height: 1;
+  }
+
+  .hero-section__cta-bar {
+    padding: clamp(20px, 1.6vw, 28px);
+    gap: clamp(16px, 1.6vw, 24px);
+  }
+}
+
+@media (min-width: 1200px) and (max-height: 860px) {
+  .hero-section__viewport {
+    padding-block: 10px;
+  }
+
+  .hero-section__panel {
+    padding: 20px 24px;
+    gap: 20px;
+  }
+
+  .hero-section__title {
+    font-size: clamp(2.65rem, 4.1vw, 3.6rem);
+  }
+
+  .hero-section__visual {
+    width: min(100%, clamp(248px, 22vw, 304px));
+  }
+
+  .hero-section__lead-strip {
+    padding: 20px 24px;
+  }
+
+  .hero-metric {
+    padding: 14px 20px;
+  }
+
+  .hero-metric__value {
+    font-size: clamp(2.7rem, 3.7vw, 3.4rem);
   }
 }
 
