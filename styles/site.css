@@ -431,6 +431,7 @@ a {
   position: relative;
   z-index: 2;
   width: 100%;
+  margin-inline: auto;
   overflow: hidden;
   background: var(--color-surface-canvas);
   border: 1px solid var(--site-section-border);
@@ -444,9 +445,10 @@ a {
 }
 
 .hero-section__metrics {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   width: 100%;
-  min-width: 100%;
+  min-width: 0;
   background: var(--color-surface-canvas);
   will-change: transform;
 }
@@ -473,7 +475,6 @@ a {
 }
 
 .hero-metric {
-  flex: 1 1 25%;
   min-width: 0;
   padding: var(--hero-metric-padding-y) var(--hero-metric-padding-x);
   text-align: center;
