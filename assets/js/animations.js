@@ -152,6 +152,11 @@ function runInitialPreloader(lenis) {
   gsap.set(columns, { yPercent: 0, autoAlpha: 1 });
   if (logo) {
     gsap.set(logo, {
+      left: '50%',
+      top: '50%',
+      xPercent: -50,
+      yPercent: -50,
+      transformOrigin: '50% 50%',
       autoAlpha: 1,
       scale: 1,
       filter: 'brightness(0) invert(1) blur(0px)'
@@ -187,6 +192,8 @@ function runInitialPreloader(lenis) {
       timeline.to(logo, { autoAlpha: 0, duration: 0.28, ease: 'power2.inOut' });
     }
 
+    timeline.to({}, { duration: 0.2 });
+
     timeline.to(
       columns,
       {
@@ -194,8 +201,7 @@ function runInitialPreloader(lenis) {
         duration: 0.9,
         stagger: { each: 0.06, from: 'start' },
         ease: 'power3.inOut'
-      },
-      '>-0.02'
+      }
     );
 
     safetyTimeoutId = window.setTimeout(finish, 3200);
