@@ -1220,9 +1220,11 @@ a {
 @media (min-width: 1200px) {
   .hero-section__viewport {
     width: 100%;
-    min-height: auto;
-    height: auto;
-    display: block;
+    min-height: calc(100svh - var(--site-header-height));
+    height: calc(100dvh - var(--site-header-height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
