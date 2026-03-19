@@ -316,8 +316,8 @@ a {
 }
 
 .hero-section__frame > .hero-section__metrics-wrap {
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
+  width: 100%;
+  margin-inline: 0;
 }
 
 .hero-section__frame > .hero-section__cta-bar {
