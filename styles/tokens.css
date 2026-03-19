@@ -214,8 +214,8 @@
   --hero-panel-row-height: 330px;
   --hero-panel-gap: var(--space-48);
   --hero-panel-padding-x: var(--space-48);
-  --hero-panel-padding-top: var(--space-48);
-  --hero-panel-padding-bottom: var(--space-48);
+  --hero-panel-padding-top: var(--space-80);
+  --hero-panel-padding-bottom: var(--space-80);
   --hero-panel-background-image-fallback: url("../assets/figma/hero-panel-bg.webp");
   --hero-panel-background-image: -webkit-image-set(url("../assets/figma/hero-panel-bg.webp") 1x);
   --hero-visual-width: 356px;
