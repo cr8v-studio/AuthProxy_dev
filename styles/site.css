@@ -73,20 +73,6 @@ body.site-page.is-preloading {
   place-items: center;
   background: #151515;
   pointer-events: auto;
-  overflow: hidden;
-}
-
-.site-preloader__pixels {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.site-preloader__pixel {
-  position: absolute;
-  background: #151515;
-  will-change: transform, opacity;
 }
 
 .site-preloader__logo {
@@ -99,7 +85,6 @@ body.site-page.is-preloading {
   opacity: 0.92;
   filter: brightness(0) invert(1);
   will-change: transform, opacity, filter;
-  z-index: 3;
 }
 
 img {
