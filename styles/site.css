@@ -20,6 +20,7 @@ body.site-page {
   min-width: 320px;
   color: var(--color-text-strong);
   background: var(--figma-color-off-white-base);
+  overflow-x: clip;
 }
 
 img {
@@ -1277,6 +1278,60 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+/* Labs-style adaptive layer: fluid typography + compact desktop normalization */
+@media (min-width: 320px) and (max-width: 1439px) {
+  html {
+    font-size: calc(15px + 1 * ((100vw - 320px) / 1119));
+  }
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: calc(16px + 1 * ((100vw - 1440px) / 960));
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+  :root {
+    --layout-header-padding-inline: var(--space-32);
+    --header-nav-gap: var(--space-12);
+    --header-link-padding-x: var(--space-16);
+    --header-dropdown-padding-x: var(--space-16);
+    --header-link-m2-padding-x: var(--space-16);
+    --header-link-font-size: var(--type-body-sm-size);
+    --header-link-line-height: var(--type-body-sm-line);
+    --header-link-letter-spacing: var(--type-body-sm-track);
+    --header-dropdown-font-size: var(--type-body-sm-size);
+    --header-dropdown-line-height: var(--type-body-sm-line);
+    --header-dropdown-letter-spacing: var(--type-body-sm-track);
+  }
+
+  .site-header-shell,
+  .site-header-shell.is-scrolled,
+  .site-header-shell.is-open {
+    backdrop-filter: blur(0.8px);
+    -webkit-backdrop-filter: blur(0.8px);
+    background: rgba(244, 244, 244, 0.92);
+  }
+
+  .site-header__inner {
+    gap: var(--space-16);
+  }
+
+  .site-header__controls {
+    margin-left: var(--space-8);
+  }
+}
+
+@media (max-width: 1439px) {
+  .hero-section,
+  .content-section,
+  .section-label-bar,
+  .auth-slider {
+    overflow-x: clip;
   }
 }
 
