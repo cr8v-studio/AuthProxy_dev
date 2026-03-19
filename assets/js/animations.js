@@ -240,7 +240,7 @@ function initHeroTimeline() {
 
   if (visual) {
     gsap.to(visual, {
-      yPercent: isMobileViewport() ? -2 : -5,
+      yPercent: isMobileViewport() ? -3 : -8,
       ease: 'none',
       scrollTrigger: {
         trigger: heroSection,
