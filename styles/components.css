@@ -230,6 +230,8 @@
   --corner-height: var(--header-link-m2-corner-height);
   --corner-inset: var(--header-link-m2-corner-inset);
   position: relative;
+  flex-shrink: 0;
+  min-width: max-content;
   text-transform: uppercase;
 }
 
@@ -344,6 +346,8 @@
   --corner-height: var(--header-button-v1-corner-height);
   --corner-inset: var(--header-button-v1-corner-inset);
   position: relative;
+  flex-shrink: 0;
+  min-width: max-content;
   text-transform: uppercase;
   background-color: var(--header-button-v1-bg);
 }
@@ -401,6 +405,8 @@
   --control-line-height: var(--header-button-v2-line-height);
   --control-letter-spacing: var(--header-button-v2-letter-spacing);
   --control-font-weight: var(--header-button-v2-font-weight);
+  flex-shrink: 0;
+  min-width: max-content;
   text-transform: uppercase;
   background-color: var(--header-button-v2-bg);
 }
@@ -440,7 +446,7 @@
   .site-header-link-m2,
   .site-header-button-v1 {
     overflow: visible;
-    padding-right: calc(var(--control-padding-inline, 0px) + 2px);
+    padding-right: calc(var(--control-padding-inline, 0px) + 4px);
   }
 
   .site-header-link-m2::before,
@@ -455,7 +461,7 @@
   .site-header-button-v1__label {
     position: relative;
     z-index: 1;
-    padding-right: 1px;
+    padding-right: 3px;
     -webkit-font-smoothing: antialiased;
   }
 }
