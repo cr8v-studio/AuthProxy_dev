@@ -104,10 +104,16 @@ function initLenis() {
       event.preventDefault();
       const isHeaderLogo = link.classList.contains('site-header-logo');
       const scrollTarget = isHeaderLogo ? 0 : target;
+      const scrollDuration = isHeaderLogo
+        ? (isMobileViewport() ? 1.15 : 1.45)
+        : (isMobileViewport() ? 0.9 : 1.05);
+      const scrollEasing = isHeaderLogo
+        ? (value) => 1 - Math.pow(1 - value, 4)
+        : (value) => 1 - Math.pow(1 - value, 3);
       lenis.scrollTo(scrollTarget, {
         offset: isHeaderLogo ? 0 : -24,
-        duration: isMobileViewport() ? 0.9 : 1.05,
-        easing: (value) => 1 - Math.pow(1 - value, 3)
+        duration: scrollDuration,
+        easing: scrollEasing
       });
 
       if (isHeaderLogo && window.location.hash) {
