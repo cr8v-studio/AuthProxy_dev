@@ -312,7 +312,7 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
   border-top: 1px solid var(--site-section-border);
-  border-inline: 0;
+  border-inline: 1px solid var(--site-section-border);
 }
 
 .hero-section__content-shell > .hero-section__panel,
