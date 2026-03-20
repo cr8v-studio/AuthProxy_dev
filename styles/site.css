@@ -790,24 +790,25 @@ a {
   min-height: var(--landing-problem-visual-min-height);
 }
 
-#problem .problem-grid__visual-wrap::before {
-  content: "";
+.problem-grid__visual-grid {
   position: absolute;
-  top: calc(50% - 9.5px);
   left: 50%;
+  bottom: 122px;
   width: 480px;
   height: 500px;
-  transform: translate(-50%, -50%);
-  background: center / contain no-repeat url("../assets/figma/problem-visual-overlay.svg");
+  transform: translateX(-50%);
+  object-fit: contain;
   pointer-events: none;
   z-index: 1;
 }
 
-.problem-grid__visual {
+.problem-grid__visual-cube {
   position: relative;
   z-index: 2;
-  width: min(100%, var(--layout-problem-visual-max));
+  width: 286px;
+  height: 305px;
   object-fit: contain;
+  pointer-events: none;
 }
 
 .problem-list {
