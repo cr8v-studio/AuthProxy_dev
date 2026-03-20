@@ -1,0 +1,27 @@
+<svg width="480" height="500" viewBox="0 0 480 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="#D7D7D7" stroke-width="1" shape-rendering="crispEdges">
+    <path d="M48 20H432"/>
+    <path d="M48 116H432"/>
+    <path d="M48 212H432"/>
+    <path d="M48 308H432"/>
+    <path d="M48 404H432"/>
+    <path d="M128 20V500"/>
+    <path d="M208 20V500"/>
+    <path d="M288 20V500"/>
+    <path d="M368 20V500"/>
+  </g>
+  <g stroke="#EE585A" stroke-width="1" shape-rendering="geometricPrecision">
+    <path d="M128 116H208"/>
+    <path d="M208 116V212"/>
+    <path d="M288 212H368"/>
+    <path d="M368 212V308"/>
+    <path d="M208 308H368"/>
+    <path d="M288 308V404"/>
+  </g>
+  <g fill="#EE585A">
+    <circle cx="128" cy="116" r="6.467"/>
+    <circle cx="368" cy="212" r="6.467"/>
+    <circle cx="368" cy="308" r="6.467"/>
+    <circle cx="288" cy="404" r="6.467"/>
+  </g>
+</svg>
