@@ -785,22 +785,113 @@ a {
 .problem-grid__visual-grid {
   position: absolute;
   left: 50%;
-  bottom: 122px;
+  top: calc(50% - 9.5px);
   width: 480px;
   height: 500px;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
   z-index: 1;
 }
 
 .problem-grid__visual-cube {
-  position: relative;
+  position: absolute;
+  left: calc(50% - 0.24px);
+  top: calc(50% - 0.01px);
+  transform: translate(-50%, -50%);
   z-index: 2;
-  width: 286px;
-  height: 305px;
-  object-fit: contain;
+  width: 209.527px;
+  height: 168.971px;
   pointer-events: none;
+  filter: drop-shadow(0 6px 13px rgba(0, 0, 0, 0.1)) drop-shadow(0 23px 23px rgba(0, 0, 0, 0.09))
+    drop-shadow(0 52px 31px rgba(0, 0, 0, 0.05)) drop-shadow(0 92px 37px rgba(0, 0, 0, 0.01))
+    drop-shadow(0 144px 40px rgba(0, 0, 0, 0));
+}
+
+.problem-cube__base,
+.problem-cube__tile,
+.problem-cube__rface,
+.problem-cube__dots {
+  position: absolute;
+  display: block;
+}
+
+.problem-cube__base {
+  inset: 0 0 28.41% 0;
+  width: 100%;
+  height: auto;
+}
+
+.problem-cube__tile--left {
+  inset: 18.66% 54.93% 50.03% 5.47%;
+}
+
+.problem-cube__tile--top {
+  inset: 0.91% 30.12% 67.78% 30.29%;
+}
+
+.problem-cube__tile--center {
+  inset: 36.42% 30.11% 32.28% 30.29%;
+}
+
+.problem-cube__tile--right {
+  inset: 18.66% 5.3% 50.03% 55.11%;
+}
+
+.problem-cube__left-face,
+.problem-cube__right-face {
+  position: absolute;
+  width: 104px;
+  height: 48px;
+  border: 1px solid #1f1f1f;
+  background-image: linear-gradient(180deg, rgba(240, 240, 240, 0.1) 0%, rgba(31, 31, 31, 0.2) 100%),
+    linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+}
+
+.problem-cube__left-face {
+  left: 4.3px;
+  top: 66.5px;
+  transform: skewX(30deg) rotate(30deg) scaleY(0.87);
+}
+
+.problem-cube__left-pills {
+  position: absolute;
+  left: 30.75px;
+  top: 94px;
+  width: 38px;
+  height: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 10px);
+  gap: 4px;
+  transform: skewX(30deg) rotate(30deg) scaleY(0.87);
+}
+
+.problem-cube__left-pills span {
+  border-radius: 100px;
+  border: 1px solid #1f1f1f;
+  background: #ee585a;
+}
+
+.problem-cube__right-face {
+  right: 4.3px;
+  top: 66.5px;
+  transform: skewX(-30deg) rotate(-30deg) scaleY(0.87);
+}
+
+.problem-cube__rface--1 {
+  inset: 35.8% 97.95% 32.25% 0;
+}
+
+.problem-cube__rface--2 {
+  inset: 70.12% 45.04% 0 45.04%;
+}
+
+.problem-cube__rface--3 {
+  inset: 35.8% 0 32.25% 97.95%;
+}
+
+.problem-cube__dots {
+  inset: 61.19% 15.68% 23.91% 68.61%;
 }
 
 .problem-list {
