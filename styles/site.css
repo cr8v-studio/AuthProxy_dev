@@ -788,9 +788,9 @@ a {
   top: calc(50% - 9.5px);
   width: 480px;
   height: 500px;
+  max-width: none;
+  max-height: none;
   transform: translate(-50%, -50%);
-  object-fit: contain;
-  object-position: center;
   pointer-events: none;
 }
 
