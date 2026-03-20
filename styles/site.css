@@ -785,28 +785,22 @@ a {
 .problem-grid__visual-grid {
   position: absolute;
   left: 50%;
-  top: calc(50% - 9.5px);
+  bottom: 122px;
   width: 480px;
   height: 500px;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   object-fit: contain;
   pointer-events: none;
   z-index: 1;
 }
 
 .problem-grid__visual-cube {
-  position: absolute;
-  left: calc(50% - 0.24px);
-  top: calc(50% - 0.01px);
-  transform: translate(-50%, -50%);
+  position: relative;
   z-index: 2;
-  width: 209.527px;
-  height: 168.971px;
+  width: 286px;
+  height: 305px;
   object-fit: contain;
   pointer-events: none;
-  filter: drop-shadow(0 6px 13px rgba(0, 0, 0, 0.1)) drop-shadow(0 23px 23px rgba(0, 0, 0, 0.09))
-    drop-shadow(0 52px 31px rgba(0, 0, 0, 0.05)) drop-shadow(0 92px 37px rgba(0, 0, 0, 0.01))
-    drop-shadow(0 144px 40px rgba(0, 0, 0, 0));
 }
 
 .problem-list {
