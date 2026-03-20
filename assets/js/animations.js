@@ -574,18 +574,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
 
   }
 
-  if (visual) {
-    gsap.to(visual, {
-      yPercent: isMobileViewport() ? -4 : -10,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroSection,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.8
-      }
-    });
-  }
+  // Mockup parallax disabled by request.
 }
 
 function initHeroMetricsCarousel() {
