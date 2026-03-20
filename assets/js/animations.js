@@ -177,7 +177,7 @@ function runInitialPreloader(lenis) {
       left: '50%',
       top: '50%',
       xPercent: -50,
-      yPercent: -45,
+      yPercent: -50,
       transformOrigin: '50% 50%',
       autoAlpha: 0,
       scale: 0.94,
@@ -270,7 +270,7 @@ function runInitialPreloader(lenis) {
         logo,
         {
           autoAlpha: 0,
-          yPercent: -54,
+          yPercent: isMobileViewport() ? -50 : -53,
           scale: 1.01,
           filter: 'brightness(0) invert(1) blur(1px)',
           duration: isMobileViewport() ? 0.4 : 0.48,
@@ -474,23 +474,24 @@ function prepareHeroIntroState() {
   }
 
   const motion = getMotion();
-  const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
-  const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
+  const ctaButtons = Array.from(heroSection.querySelectorAll('.hero-section__cta-row > *'));
+  const primaryCta = ctaButtons[0];
+  const secondaryCta = ctaButtons[1];
   const visual = heroSection.querySelector('.hero-section__visual');
-  const visualRevealDistance = isMobileViewport() ? 26 : 36;
+  const visualRevealDistance = isMobileViewport() ? 34 : 46;
 
-  if (title) {
-    gsap.set(title, { autoAlpha: 0, y: motion.distance });
-  }
   if (subtitle) {
-    gsap.set(subtitle, { autoAlpha: 0, y: motion.distance * 0.8 });
+    gsap.set(subtitle, { autoAlpha: 0, y: motion.distance * 0.65 });
   }
-  if (ctaButtons.length) {
-    gsap.set(ctaButtons, { autoAlpha: 0, y: motion.distance * 0.75 });
+  if (primaryCta) {
+    gsap.set(primaryCta, { autoAlpha: 0, y: motion.distance * 0.6 });
+  }
+  if (secondaryCta) {
+    gsap.set(secondaryCta, { autoAlpha: 0, y: motion.distance * 0.6 });
   }
   if (visual) {
-    gsap.set(visual, { autoAlpha: 0, y: visualRevealDistance });
+    gsap.set(visual, { autoAlpha: 0, y: visualRevealDistance, scale: 0.985 });
   }
 
   heroSection.dataset.motionHeroPrepared = 'true';
@@ -506,30 +507,32 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   }
   heroSection.dataset.motionHeroInit = 'true';
 
-  const motion = getMotion();
-
-  const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
-  const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
+  const ctaButtons = Array.from(heroSection.querySelectorAll('.hero-section__cta-row > *'));
+  const primaryCta = ctaButtons[0];
+  const secondaryCta = ctaButtons[1];
   const visual = heroSection.querySelector('.hero-section__visual');
-  const visualRevealDuration = isMobileViewport() ? 0.58 : 0.68;
+  const visualRevealDuration = isMobileViewport() ? 0.74 : 0.84;
 
   if (!skipIntro) {
-    const heroIntroDuration = isMobileViewport() ? 0.46 : 0.56;
-    const heroStepGap = isMobileViewport() ? 0.06 : 0.08;
+    const heroIntroDuration = isMobileViewport() ? 0.48 : 0.58;
+    const heroStepGap = isMobileViewport() ? 0.08 : 0.1;
     const timeline = gsap.timeline({
       defaults: {
         duration: heroIntroDuration,
-        ease: motion.ease
+        ease: 'power3.out'
       }
     });
 
-    if (title) {
+    if (visual) {
       timeline.to(
-        title,
+        visual,
         {
           autoAlpha: 1,
-          y: 0
+          y: 0,
+          scale: 1,
+          duration: visualRevealDuration,
+          ease: 'power3.out'
         },
         0
       );
@@ -546,26 +549,23 @@ function initHeroTimeline({ skipIntro = false } = {}) {
       );
     }
 
-    if (ctaButtons.length) {
+    if (primaryCta) {
       timeline.to(
-        ctaButtons,
+        primaryCta,
         {
           autoAlpha: 1,
-          y: 0,
-          stagger: 0.06
+          y: 0
         },
         `+=${heroStepGap}`
       );
     }
 
-    if (visual) {
+    if (secondaryCta) {
       timeline.to(
-        visual,
+        secondaryCta,
         {
           autoAlpha: 1,
-          y: 0,
-          duration: visualRevealDuration,
-          ease: motion.ease
+          y: 0
         },
         `+=${heroStepGap}`
       );

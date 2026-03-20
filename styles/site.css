@@ -102,6 +102,12 @@ body.site-page.is-preloading {
   z-index: 4;
 }
 
+@media (max-width: 767px) {
+  .site-preloader__logo {
+    width: min(52vw, 12rem);
+  }
+}
+
 .site-preloader__frame {
   position: absolute;
   inset: 0;
