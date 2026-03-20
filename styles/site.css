@@ -52,6 +52,12 @@ body.site-page.is-preloading {
   height: 100%;
 }
 
+.site-preloader__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 .site-transition-layer__col,
 .site-preloader__col {
   background: #151515;
@@ -78,8 +84,9 @@ body.site-page.is-preloading {
 .site-preloader {
   display: grid;
   place-items: center;
-  background: transparent;
+  background: #121212;
   pointer-events: auto;
+  overflow: hidden;
 }
 
 .site-preloader__logo {
@@ -92,6 +99,100 @@ body.site-page.is-preloading {
   opacity: 0.92;
   filter: brightness(0) invert(1);
   will-change: transform, opacity, filter;
+  z-index: 4;
+}
+
+.site-preloader__frame {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.site-preloader__line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.2);
+  will-change: transform, opacity;
+}
+
+.site-preloader__line--top,
+.site-preloader__line--bottom {
+  left: 12%;
+  width: 76%;
+  height: 1px;
+  transform: scaleX(0);
+}
+
+.site-preloader__line--top {
+  top: 22%;
+  transform-origin: left center;
+}
+
+.site-preloader__line--bottom {
+  bottom: 22%;
+  transform-origin: right center;
+}
+
+.site-preloader__line--left,
+.site-preloader__line--right {
+  top: 16%;
+  width: 1px;
+  height: 68%;
+  transform: scaleY(0);
+}
+
+.site-preloader__line--left {
+  left: 18%;
+  transform-origin: center top;
+}
+
+.site-preloader__line--right {
+  right: 18%;
+  transform-origin: center bottom;
+}
+
+.site-preloader__blocks {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.site-preloader__block {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: scale(0.7);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.site-preloader__block:nth-child(1) {
+  top: 9%;
+  left: 7%;
+  width: clamp(7rem, 11vw, 12rem);
+  aspect-ratio: 1;
+}
+
+.site-preloader__block:nth-child(2) {
+  top: 9%;
+  right: 7%;
+  width: clamp(8rem, 13vw, 14rem);
+  aspect-ratio: 1;
+}
+
+.site-preloader__block:nth-child(3) {
+  bottom: 9%;
+  left: 7%;
+  width: clamp(8rem, 13vw, 14rem);
+  aspect-ratio: 1;
+}
+
+.site-preloader__block:nth-child(4) {
+  bottom: 9%;
+  right: 7%;
+  width: clamp(7rem, 11vw, 12rem);
+  aspect-ratio: 1;
 }
 
 img {
