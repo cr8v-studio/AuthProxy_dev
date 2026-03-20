@@ -926,6 +926,8 @@ a {
 #problem .problem-list {
   height: 100%;
   overflow: hidden;
+  border: 0;
+  border-left: 1px solid var(--site-section-border);
 }
 
 #problem .problem-item {
