@@ -504,7 +504,7 @@ a {
 .hero-section__mockup-underlay {
   position: absolute;
   top: 50%;
-  right: 47px;
+  right: var(--space-48);
   width: 480px;
   height: 480px;
   transform: translateY(-50%);
