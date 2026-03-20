@@ -785,13 +785,14 @@ a {
 .problem-grid__visual-grid {
   position: absolute;
   left: 50%;
-  top: calc(50% - 9.5px);
+  top: 50%;
   width: 480px;
-  height: 500px;
+  height: 480px;
   max-width: none;
   max-height: none;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  display: block;
 }
 
 .problem-list {
