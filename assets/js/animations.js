@@ -200,10 +200,8 @@ function runInitialPreloader(lenis) {
       preloader.setAttribute('hidden', '');
       document.body.classList.remove('is-preloading');
       window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(() => {
-          lenis?.start();
-          resolve();
-        });
+        lenis?.start();
+        resolve();
       });
     };
 
@@ -538,9 +536,10 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   const visualRevealDistance = isMobileViewport() ? 44 : 72;
 
   if (!skipIntro) {
+    const heroIntroDuration = isMobileViewport() ? 0.46 : 0.56;
     const timeline = gsap.timeline({
       defaults: {
-        duration: motion.duration,
+        duration: heroIntroDuration,
         ease: motion.ease
       }
     });
@@ -563,7 +562,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        0.06
+        0.02
       );
     }
 
@@ -574,7 +573,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        '-=0.28'
+        '-=0.4'
       );
     }
 
@@ -584,9 +583,9 @@ function initHeroTimeline({ skipIntro = false } = {}) {
         {
           autoAlpha: 1,
           y: 0,
-          stagger: 0.08
+          stagger: 0.06
         },
-        '-=0.22'
+        '-=0.36'
       );
     }
 
@@ -596,10 +595,10 @@ function initHeroTimeline({ skipIntro = false } = {}) {
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.74,
+          duration: isMobileViewport() ? 0.54 : 0.64,
           ease: motion.ease
         },
-        '-=0.3'
+        '-=0.42'
       );
     }
 
@@ -610,7 +609,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        '-=0.4'
+        '-=0.46'
       );
     }
 
@@ -621,7 +620,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        '-=0.34'
+        '-=0.44'
       );
     }
 
@@ -632,7 +631,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        '-=0.3'
+        '-=0.4'
       );
     }
   }
@@ -1018,10 +1017,9 @@ async function initMotionSystem() {
   const lenis = initLenis();
   prepareHeroIntroState();
   await runInitialPreloader(lenis);
-  mapRevealUtilities();
-
-  initNavbarMotion(lenis);
   initHeroTimeline();
+  mapRevealUtilities();
+  initNavbarMotion(lenis);
   initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
