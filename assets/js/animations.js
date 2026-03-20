@@ -470,6 +470,50 @@ function initSectionLabelChevronMotion() {
   });
 }
 
+function prepareHeroIntroState() {
+  if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
+    return;
+  }
+
+  const motion = getMotion();
+  const title = heroSection.querySelector('.hero-section__title');
+  const subtitle = heroSection.querySelector('.hero-section__lead');
+  const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
+  const panel = heroSection.querySelector('.hero-section__panel');
+  const leadStrip = heroSection.querySelector('.hero-section__lead-strip');
+  const metricsWrap = heroSection.querySelector('.hero-section__metrics-wrap');
+  const ctaBar = heroSection.querySelector('.hero-section__cta-bar');
+  const visual = heroSection.querySelector('.hero-section__visual');
+  const visualRevealDistance = isMobileViewport() ? 44 : 72;
+
+  if (panel) {
+    gsap.set(panel, { autoAlpha: 0, y: motion.distance * 0.55 });
+  }
+  if (title) {
+    gsap.set(title, { autoAlpha: 0, y: motion.distance });
+  }
+  if (subtitle) {
+    gsap.set(subtitle, { autoAlpha: 0, y: motion.distance * 0.8 });
+  }
+  if (ctaButtons.length) {
+    gsap.set(ctaButtons, { autoAlpha: 0, y: motion.distance * 0.75 });
+  }
+  if (visual) {
+    gsap.set(visual, { autoAlpha: 0, y: visualRevealDistance });
+  }
+  if (leadStrip) {
+    gsap.set(leadStrip, { autoAlpha: 0, y: motion.distance * 0.5 });
+  }
+  if (metricsWrap) {
+    gsap.set(metricsWrap, { autoAlpha: 0, y: motion.distance * 0.45 });
+  }
+  if (ctaBar) {
+    gsap.set(ctaBar, { autoAlpha: 0, y: motion.distance * 0.5 });
+  }
+
+  heroSection.dataset.motionHeroPrepared = 'true';
+}
+
 // Hero intro stays timeline-driven so load order is intentional and premium.
 function initHeroTimeline({ skipIntro = false } = {}) {
   if (!heroSection) {
@@ -502,44 +546,44 @@ function initHeroTimeline({ skipIntro = false } = {}) {
     });
 
     if (panel) {
-      timeline.from(
+      timeline.to(
         panel,
         {
-          autoAlpha: 0,
-          y: motion.distance * 0.55
+          autoAlpha: 1,
+          y: 0
         },
         0
       );
     }
 
     if (title) {
-      timeline.from(
+      timeline.to(
         title,
         {
-          autoAlpha: 0,
-          y: motion.distance
+          autoAlpha: 1,
+          y: 0
         },
         0.06
       );
     }
 
     if (subtitle) {
-      timeline.from(
+      timeline.to(
         subtitle,
         {
-          autoAlpha: 0,
-          y: motion.distance * 0.8
+          autoAlpha: 1,
+          y: 0
         },
         '-=0.28'
       );
     }
 
     if (ctaButtons.length) {
-      timeline.from(
+      timeline.to(
         ctaButtons,
         {
-          autoAlpha: 0,
-          y: motion.distance * 0.75,
+          autoAlpha: 1,
+          y: 0,
           stagger: 0.08
         },
         '-=0.22'
@@ -547,11 +591,11 @@ function initHeroTimeline({ skipIntro = false } = {}) {
     }
 
     if (visualWrap && visual) {
-      timeline.from(
+      timeline.to(
         visual,
         {
-          autoAlpha: 0,
-          y: visualRevealDistance,
+          autoAlpha: 1,
+          y: 0,
           duration: 0.74,
           ease: motion.ease
         },
@@ -560,33 +604,33 @@ function initHeroTimeline({ skipIntro = false } = {}) {
     }
 
     if (leadStrip) {
-      timeline.from(
+      timeline.to(
         leadStrip,
         {
-          autoAlpha: 0,
-          y: motion.distance * 0.5
+          autoAlpha: 1,
+          y: 0
         },
         '-=0.4'
       );
     }
 
     if (metricsWrap) {
-      timeline.from(
+      timeline.to(
         metricsWrap,
         {
-          autoAlpha: 0,
-          y: motion.distance * 0.45
+          autoAlpha: 1,
+          y: 0
         },
         '-=0.34'
       );
     }
 
     if (ctaBar) {
-      timeline.from(
+      timeline.to(
         ctaBar,
         {
-          autoAlpha: 0,
-          y: motion.distance * 0.5
+          autoAlpha: 1,
+          y: 0
         },
         '-=0.3'
       );
@@ -972,6 +1016,7 @@ async function initMotionSystem() {
   });
 
   const lenis = initLenis();
+  prepareHeroIntroState();
   await runInitialPreloader(lenis);
   mapRevealUtilities();
 
