@@ -11,7 +11,6 @@
   </g>
 
   <g stroke="#EE585A" stroke-width="1" shape-rendering="geometricPrecision">
-    <path d="M0 192V288" />
     <path d="M96 96H192" />
     <path d="M192 96V192" />
     <path d="M288 192H384" />
