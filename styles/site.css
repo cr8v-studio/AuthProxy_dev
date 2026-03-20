@@ -782,6 +782,18 @@ a {
   min-height: var(--landing-problem-visual-min-height);
 }
 
+.problem-grid__visual-grid {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 9.5px);
+  width: 480px;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+}
+
 .problem-list {
   display: grid;
   align-content: start;
