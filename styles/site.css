@@ -793,6 +793,21 @@ a {
   transform: translate(-50%, -50%);
   pointer-events: none;
   display: block;
+  z-index: 0;
+}
+
+.problem-grid__visual-cube {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 211px;
+  height: 170px;
+  max-width: none;
+  max-height: none;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: block;
+  z-index: 1;
 }
 
 .problem-list {
