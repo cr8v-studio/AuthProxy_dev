@@ -215,7 +215,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--top',
         {
           scaleX: 1,
-          autoAlpha: 0.52,
+          autoAlpha: 0.44,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         }
@@ -224,7 +224,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--right',
         {
           scaleY: 1,
-          autoAlpha: 0.52,
+          autoAlpha: 0.44,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
@@ -234,7 +234,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--bottom',
         {
           scaleX: 1,
-          autoAlpha: 0.52,
+          autoAlpha: 0.44,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
@@ -244,7 +244,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--left',
         {
           scaleY: 1,
-          autoAlpha: 0.52,
+          autoAlpha: 0.44,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
@@ -516,7 +516,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
 
   if (!skipIntro) {
     const heroIntroDuration = isMobileViewport() ? 0.48 : 0.58;
-    const heroStepGap = isMobileViewport() ? 0.08 : 0.1;
+    const heroStepGap = isMobileViewport() ? 0.05 : 0.06;
     const timeline = gsap.timeline({
       defaults: {
         duration: heroIntroDuration,
