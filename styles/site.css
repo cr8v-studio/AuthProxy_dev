@@ -760,10 +760,19 @@ a {
   font-size: var(--type-heading-md-numeric-size);
   line-height: var(--type-heading-md-numeric-line);
   font-variant-numeric: tabular-nums;
+  color: var(--figma-color-dark-base);
 }
 
 .problem-item__copy p {
   margin: 0;
+}
+
+.problem-item__copy .text-body-lg {
+  color: var(--figma-color-dark-tint-2);
+}
+
+.problem-item__copy .heading-xs-caps {
+  color: var(--figma-color-dark-base);
 }
 
 .problem-statement {
