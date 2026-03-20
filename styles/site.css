@@ -111,7 +111,7 @@ body.site-page.is-preloading {
 
 .site-preloader__line {
   position: absolute;
-  background: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.46);
   will-change: transform, opacity;
 }
 
