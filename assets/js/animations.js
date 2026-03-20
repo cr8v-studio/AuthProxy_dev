@@ -477,6 +477,8 @@ function prepareHeroIntroState() {
   const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
+  const visual = heroSection.querySelector('.hero-section__visual');
+  const visualRevealDistance = isMobileViewport() ? 26 : 36;
 
   if (title) {
     gsap.set(title, { autoAlpha: 0, y: motion.distance });
@@ -486,6 +488,9 @@ function prepareHeroIntroState() {
   }
   if (ctaButtons.length) {
     gsap.set(ctaButtons, { autoAlpha: 0, y: motion.distance * 0.75 });
+  }
+  if (visual) {
+    gsap.set(visual, { autoAlpha: 0, y: visualRevealDistance });
   }
 
   heroSection.dataset.motionHeroPrepared = 'true';
@@ -507,6 +512,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
   const visual = heroSection.querySelector('.hero-section__visual');
+  const visualRevealDuration = isMobileViewport() ? 0.58 : 0.68;
 
   if (!skipIntro) {
     const heroIntroDuration = isMobileViewport() ? 0.46 : 0.56;
@@ -548,6 +554,19 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           stagger: 0.06
         },
         '-=0.36'
+      );
+    }
+
+    if (visual) {
+      timeline.to(
+        visual,
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: visualRevealDuration,
+          ease: motion.ease
+        },
+        '+=0.12'
       );
     }
 
