@@ -516,6 +516,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
 
   if (!skipIntro) {
     const heroIntroDuration = isMobileViewport() ? 0.46 : 0.56;
+    const heroStepGap = isMobileViewport() ? 0.08 : 0.1;
     const timeline = gsap.timeline({
       defaults: {
         duration: heroIntroDuration,
@@ -541,7 +542,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        '-=0.4'
+        `+=${heroStepGap}`
       );
     }
 
@@ -553,7 +554,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           y: 0,
           stagger: 0.06
         },
-        '-=0.36'
+        `+=${heroStepGap}`
       );
     }
 
@@ -566,7 +567,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           duration: visualRevealDuration,
           ease: motion.ease
         },
-        '+=0.04'
+        `+=${heroStepGap}`
       );
     }
 
