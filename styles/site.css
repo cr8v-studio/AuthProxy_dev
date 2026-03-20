@@ -437,9 +437,8 @@ a {
     var(--hero-panel-padding-top)
     var(--hero-panel-padding-x)
     var(--hero-panel-padding-bottom);
-  background-color: var(--color-surface-canvas);
-  background-image: var(--hero-panel-background-image-fallback);
-  background-image: var(--hero-panel-background-image);
+  background-color: var(--figma-color-white-base);
+  background-image: none;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -502,6 +501,23 @@ a {
   overflow: visible;
 }
 
+.hero-section__mockup-underlay {
+  position: absolute;
+  top: 50%;
+  right: 47px;
+  width: 480px;
+  height: 480px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-section__mockup-underlay img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .hero-section__visual-wrap {
   position: relative;
   display: flex;
@@ -509,6 +525,7 @@ a {
   align-items: flex-start;
   width: 100%;
   min-height: var(--hero-visual-height);
+  z-index: 2;
 }
 
 .hero-section__visual {
@@ -1338,6 +1355,10 @@ a {
 }
 
 @media (max-width: 1199px) {
+  .hero-section__mockup-underlay {
+    display: none;
+  }
+
   .hero-section__frame > .hero-section__metrics-wrap {
     width: 100%;
     max-width: 100%;
