@@ -479,7 +479,7 @@ function prepareHeroIntroState() {
   const primaryCta = ctaButtons[0];
   const secondaryCta = ctaButtons[1];
   const visual = heroSection.querySelector('.hero-section__visual');
-  const visualRevealDistance = isMobileViewport() ? 34 : 46;
+  const visualRevealYPercent = isMobileViewport() ? 8 : 10;
 
   if (subtitle) {
     gsap.set(subtitle, { autoAlpha: 0, y: motion.distance * 0.65 });
@@ -491,7 +491,7 @@ function prepareHeroIntroState() {
     gsap.set(secondaryCta, { autoAlpha: 0, y: motion.distance * 0.6 });
   }
   if (visual) {
-    gsap.set(visual, { autoAlpha: 0, y: visualRevealDistance, scale: 0.985 });
+    gsap.set(visual, { autoAlpha: 0, yPercent: visualRevealYPercent });
   }
 
   heroSection.dataset.motionHeroPrepared = 'true';
@@ -512,11 +512,13 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   const primaryCta = ctaButtons[0];
   const secondaryCta = ctaButtons[1];
   const visual = heroSection.querySelector('.hero-section__visual');
-  const visualRevealDuration = isMobileViewport() ? 0.74 : 0.84;
+  const visualRevealDuration = isMobileViewport() ? 0.56 : 0.64;
 
   if (!skipIntro) {
-    const heroIntroDuration = isMobileViewport() ? 0.48 : 0.58;
-    const heroStepGap = isMobileViewport() ? 0.05 : 0.06;
+    const heroIntroDuration = isMobileViewport() ? 0.46 : 0.54;
+    const timelineOffsets = isMobileViewport()
+      ? { subtitle: 0.2, primary: 0.34, secondary: 0.46 }
+      : { subtitle: 0.24, primary: 0.4, secondary: 0.54 };
     const timeline = gsap.timeline({
       defaults: {
         duration: heroIntroDuration,
@@ -529,10 +531,9 @@ function initHeroTimeline({ skipIntro = false } = {}) {
         visual,
         {
           autoAlpha: 1,
-          y: 0,
-          scale: 1,
+          yPercent: 0,
           duration: visualRevealDuration,
-          ease: 'power3.out'
+          ease: 'power2.out'
         },
         0
       );
@@ -545,7 +546,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        `+=${heroStepGap}`
+        timelineOffsets.subtitle
       );
     }
 
@@ -556,7 +557,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        `+=${heroStepGap}`
+        timelineOffsets.primary
       );
     }
 
@@ -567,7 +568,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        `+=${heroStepGap}`
+        timelineOffsets.secondary
       );
     }
 
