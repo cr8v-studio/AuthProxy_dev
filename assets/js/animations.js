@@ -212,7 +212,7 @@ function runInitialPreloader(lenis) {
     };
 
     const timeline = gsap.timeline({
-      defaults: { ease: 'power3.out' },
+      defaults: { ease: 'power2.out' },
       onComplete: finish
     });
 
@@ -222,9 +222,9 @@ function runInitialPreloader(lenis) {
         {
           scaleX: 1,
           autoAlpha: 0.22,
-          duration: isMobileViewport() ? 0.48 : 0.56,
-          stagger: 0.08,
-          ease: 'power3.out'
+          duration: isMobileViewport() ? 0.58 : 0.68,
+          stagger: 0.1,
+          ease: 'power2.out'
         },
         0
       );
@@ -233,11 +233,11 @@ function runInitialPreloader(lenis) {
         {
           scaleY: 1,
           autoAlpha: 0.22,
-          duration: isMobileViewport() ? 0.48 : 0.56,
-          stagger: 0.08,
-          ease: 'power3.out'
+          duration: isMobileViewport() ? 0.58 : 0.68,
+          stagger: 0.1,
+          ease: 'power2.out'
         },
-        0.04
+        0.08
       );
     }
 
@@ -247,11 +247,11 @@ function runInitialPreloader(lenis) {
         {
           autoAlpha: 1,
           scale: 1,
-          duration: isMobileViewport() ? 0.5 : 0.62,
-          stagger: { each: 0.08, from: 'random' },
-          ease: 'power3.out'
+          duration: isMobileViewport() ? 0.64 : 0.76,
+          stagger: { each: 0.1, from: 'random' },
+          ease: 'power2.out'
         },
-        0.12
+        0.16
       );
     }
 
@@ -263,23 +263,23 @@ function runInitialPreloader(lenis) {
           yPercent: -50,
           scale: 1,
           filter: 'brightness(0) invert(1) blur(0px)',
-          duration: isMobileViewport() ? 0.54 : 0.68,
-          ease: 'power2.out'
+          duration: isMobileViewport() ? 0.7 : 0.86,
+          ease: 'power3.out'
         },
-        0.22
+        0.28
       );
-      timeline.to({}, { duration: 0.48 });
+      timeline.to({}, { duration: isMobileViewport() ? 0.58 : 0.74 });
       timeline.to(
         logo,
         {
           autoAlpha: 0,
-          yPercent: -56,
-          scale: 1.03,
+          yPercent: -54,
+          scale: 1.01,
           filter: 'brightness(0) invert(1) blur(1px)',
-          duration: 0.34,
+          duration: isMobileViewport() ? 0.4 : 0.48,
           ease: 'power2.inOut'
         },
-        '>-0.04'
+        '>-0.02'
       );
     }
 
@@ -287,13 +287,13 @@ function runInitialPreloader(lenis) {
       preloader,
       {
         yPercent: -100,
-        duration: isMobileViewport() ? 0.82 : 0.94,
-        ease: 'power3.inOut'
+        duration: isMobileViewport() ? 0.96 : 1.12,
+        ease: 'power2.inOut'
       },
-      '>-0.02'
+      '>'
     );
 
-    safetyTimeoutId = window.setTimeout(finish, 4200);
+    safetyTimeoutId = window.setTimeout(finish, 5200);
   });
 }
 
