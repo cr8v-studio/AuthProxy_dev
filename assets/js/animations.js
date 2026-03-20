@@ -477,16 +477,7 @@ function prepareHeroIntroState() {
   const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
-  const panel = heroSection.querySelector('.hero-section__panel');
-  const leadStrip = heroSection.querySelector('.hero-section__lead-strip');
-  const metricsWrap = heroSection.querySelector('.hero-section__metrics-wrap');
-  const ctaBar = heroSection.querySelector('.hero-section__cta-bar');
-  const visual = heroSection.querySelector('.hero-section__visual');
-  const visualRevealDistance = isMobileViewport() ? 44 : 72;
 
-  if (panel) {
-    gsap.set(panel, { autoAlpha: 0, y: motion.distance * 0.55 });
-  }
   if (title) {
     gsap.set(title, { autoAlpha: 0, y: motion.distance });
   }
@@ -495,18 +486,6 @@ function prepareHeroIntroState() {
   }
   if (ctaButtons.length) {
     gsap.set(ctaButtons, { autoAlpha: 0, y: motion.distance * 0.75 });
-  }
-  if (visual) {
-    gsap.set(visual, { autoAlpha: 0, y: visualRevealDistance });
-  }
-  if (leadStrip) {
-    gsap.set(leadStrip, { autoAlpha: 0, y: motion.distance * 0.5 });
-  }
-  if (metricsWrap) {
-    gsap.set(metricsWrap, { autoAlpha: 0, y: motion.distance * 0.45 });
-  }
-  if (ctaBar) {
-    gsap.set(ctaBar, { autoAlpha: 0, y: motion.distance * 0.5 });
   }
 
   heroSection.dataset.motionHeroPrepared = 'true';
@@ -527,13 +506,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
-  const panel = heroSection.querySelector('.hero-section__panel');
-  const leadStrip = heroSection.querySelector('.hero-section__lead-strip');
-  const metricsWrap = heroSection.querySelector('.hero-section__metrics-wrap');
-  const ctaBar = heroSection.querySelector('.hero-section__cta-bar');
-  const visualWrap = heroSection.querySelector('.hero-section__visual-wrap');
   const visual = heroSection.querySelector('.hero-section__visual');
-  const visualRevealDistance = isMobileViewport() ? 44 : 72;
 
   if (!skipIntro) {
     const heroIntroDuration = isMobileViewport() ? 0.46 : 0.56;
@@ -544,17 +517,6 @@ function initHeroTimeline({ skipIntro = false } = {}) {
       }
     });
 
-    if (panel) {
-      timeline.to(
-        panel,
-        {
-          autoAlpha: 1,
-          y: 0
-        },
-        0
-      );
-    }
-
     if (title) {
       timeline.to(
         title,
@@ -562,7 +524,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 1,
           y: 0
         },
-        0.02
+        0
       );
     }
 
@@ -589,51 +551,6 @@ function initHeroTimeline({ skipIntro = false } = {}) {
       );
     }
 
-    if (visualWrap && visual) {
-      timeline.to(
-        visual,
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: isMobileViewport() ? 0.54 : 0.64,
-          ease: motion.ease
-        },
-        '-=0.42'
-      );
-    }
-
-    if (leadStrip) {
-      timeline.to(
-        leadStrip,
-        {
-          autoAlpha: 1,
-          y: 0
-        },
-        '-=0.46'
-      );
-    }
-
-    if (metricsWrap) {
-      timeline.to(
-        metricsWrap,
-        {
-          autoAlpha: 1,
-          y: 0
-        },
-        '-=0.44'
-      );
-    }
-
-    if (ctaBar) {
-      timeline.to(
-        ctaBar,
-        {
-          autoAlpha: 1,
-          y: 0
-        },
-        '-=0.4'
-      );
-    }
   }
 
   if (visual) {
