@@ -512,11 +512,11 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
   const visual = heroSection.querySelector('.hero-section__visual');
-  const visualRevealDuration = isMobileViewport() ? 0.48 : 0.56;
+  const visualRevealDuration = isMobileViewport() ? 0.58 : 0.68;
 
   if (!skipIntro) {
-    const heroIntroDuration = isMobileViewport() ? 0.4 : 0.48;
-    const heroStepGap = isMobileViewport() ? 0.05 : 0.06;
+    const heroIntroDuration = isMobileViewport() ? 0.46 : 0.56;
+    const heroStepGap = isMobileViewport() ? 0.06 : 0.08;
     const timeline = gsap.timeline({
       defaults: {
         duration: heroIntroDuration,
@@ -552,7 +552,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
         {
           autoAlpha: 1,
           y: 0,
-          stagger: 0.05
+          stagger: 0.06
         },
         `+=${heroStepGap}`
       );
