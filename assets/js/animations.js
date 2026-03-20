@@ -144,7 +144,6 @@ function runInitialPreloader(lenis) {
   const preloader = document.querySelector('[data-preloader]');
   const logo = preloader?.querySelector('[data-preloader-logo]');
   const frameLines = preloader ? gsap.utils.toArray('.site-preloader__line', preloader) : [];
-  const blocks = preloader ? gsap.utils.toArray('.site-preloader__block', preloader) : [];
   const columns = gsap.utils.toArray('.site-preloader__col');
 
   if (!preloader) {
@@ -169,12 +168,9 @@ function runInitialPreloader(lenis) {
     gsap.set(columns, { yPercent: 0, autoAlpha: 1 });
   }
   if (frameLines.length) {
-    gsap.set(frameLines, { autoAlpha: 0.18 });
+    gsap.set(frameLines, { autoAlpha: 0.1 });
     gsap.set('.site-preloader__line--top, .site-preloader__line--bottom', { scaleX: 0 });
     gsap.set('.site-preloader__line--left, .site-preloader__line--right', { scaleY: 0 });
-  }
-  if (blocks.length) {
-    gsap.set(blocks, { autoAlpha: 0, scale: 0.72, transformOrigin: '50% 50%' });
   }
   if (logo) {
     gsap.set(logo, {
@@ -218,40 +214,43 @@ function runInitialPreloader(lenis) {
 
     if (frameLines.length) {
       timeline.to(
-        '.site-preloader__line--top, .site-preloader__line--bottom',
+        '.site-preloader__line--top',
         {
           scaleX: 1,
-          autoAlpha: 0.22,
-          duration: isMobileViewport() ? 0.58 : 0.68,
-          stagger: 0.1,
+          autoAlpha: 0.38,
+          duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
-        },
-        0
+        }
       );
       timeline.to(
-        '.site-preloader__line--left, .site-preloader__line--right',
+        '.site-preloader__line--right',
         {
           scaleY: 1,
-          autoAlpha: 0.22,
-          duration: isMobileViewport() ? 0.58 : 0.68,
-          stagger: 0.1,
+          autoAlpha: 0.38,
+          duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
-        0.08
+        '>-0.46'
       );
-    }
-
-    if (blocks.length) {
       timeline.to(
-        blocks,
+        '.site-preloader__line--bottom',
         {
-          autoAlpha: 1,
-          scale: 1,
-          duration: isMobileViewport() ? 0.64 : 0.76,
-          stagger: { each: 0.1, from: 'random' },
+          scaleX: 1,
+          autoAlpha: 0.38,
+          duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
-        0.16
+        '>-0.46'
+      );
+      timeline.to(
+        '.site-preloader__line--left',
+        {
+          scaleY: 1,
+          autoAlpha: 0.38,
+          duration: isMobileViewport() ? 0.6 : 0.72,
+          ease: 'power2.out'
+        },
+        '>-0.46'
       );
     }
 
