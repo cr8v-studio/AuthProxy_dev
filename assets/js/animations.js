@@ -174,13 +174,10 @@ function runInitialPreloader(lenis) {
   }
   if (logo) {
     gsap.set(logo, {
-      left: '50%',
-      top: '50%',
-      xPercent: -50,
-      yPercent: -50,
       transformOrigin: '50% 50%',
       autoAlpha: 0,
       scale: 0.94,
+      y: 0,
       filter: 'brightness(0) invert(1) blur(2px)'
     });
   }
@@ -257,7 +254,7 @@ function runInitialPreloader(lenis) {
         logo,
         {
           autoAlpha: 1,
-          yPercent: -50,
+          y: 0,
           scale: 1,
           filter: 'brightness(0) invert(1) blur(0px)',
           duration: isMobileViewport() ? 0.7 : 0.86,
@@ -270,7 +267,7 @@ function runInitialPreloader(lenis) {
         logo,
         {
           autoAlpha: 0,
-          yPercent: isMobileViewport() ? -50 : -53,
+          y: isMobileViewport() ? -4 : -8,
           scale: 1.01,
           filter: 'brightness(0) invert(1) blur(1px)',
           duration: isMobileViewport() ? 0.4 : 0.48,
