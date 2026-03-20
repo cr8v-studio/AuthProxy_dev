@@ -461,7 +461,7 @@
   --figma-type-br1-h6-uppercase-size: 1.125rem;
   --figma-type-br1-h6-uppercase-line: 1.625rem;
   --figma-type-br1-h6-uppercase-track: var(--tracking-wide);
-  --figma-type-br1-h6-uppercase-weight: var(--font-weight-light);
+  --figma-type-br1-h6-uppercase-weight: var(--font-weight-regular);
   --figma-type-br1-h7-size: 0.875rem;
   --figma-type-br1-h7-line: 1.0625rem;
   --figma-type-br1-h7-track: var(--tracking-widest);
