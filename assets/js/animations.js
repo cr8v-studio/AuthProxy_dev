@@ -485,6 +485,10 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   const title = heroSection.querySelector('.hero-section__title');
   const subtitle = heroSection.querySelector('.hero-section__lead');
   const ctaButtons = heroSection.querySelectorAll('.hero-section__cta-row > *');
+  const panel = heroSection.querySelector('.hero-section__panel');
+  const leadStrip = heroSection.querySelector('.hero-section__lead-strip');
+  const metricsWrap = heroSection.querySelector('.hero-section__metrics-wrap');
+  const ctaBar = heroSection.querySelector('.hero-section__cta-bar');
   const visualWrap = heroSection.querySelector('.hero-section__visual-wrap');
   const visual = heroSection.querySelector('.hero-section__visual');
   const visualRevealDistance = isMobileViewport() ? 44 : 72;
@@ -497,6 +501,17 @@ function initHeroTimeline({ skipIntro = false } = {}) {
       }
     });
 
+    if (panel) {
+      timeline.from(
+        panel,
+        {
+          autoAlpha: 0,
+          y: motion.distance * 0.55
+        },
+        0
+      );
+    }
+
     if (title) {
       timeline.from(
         title,
@@ -504,7 +519,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 0,
           y: motion.distance
         },
-        0
+        0.06
       );
     }
 
@@ -515,7 +530,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           autoAlpha: 0,
           y: motion.distance * 0.8
         },
-        '-=0.3'
+        '-=0.28'
       );
     }
 
@@ -527,7 +542,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           y: motion.distance * 0.75,
           stagger: 0.08
         },
-        '-=0.26'
+        '-=0.22'
       );
     }
 
@@ -540,7 +555,40 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           duration: 0.74,
           ease: motion.ease
         },
+        '-=0.3'
+      );
+    }
+
+    if (leadStrip) {
+      timeline.from(
+        leadStrip,
+        {
+          autoAlpha: 0,
+          y: motion.distance * 0.5
+        },
+        '-=0.4'
+      );
+    }
+
+    if (metricsWrap) {
+      timeline.from(
+        metricsWrap,
+        {
+          autoAlpha: 0,
+          y: motion.distance * 0.45
+        },
         '-=0.34'
+      );
+    }
+
+    if (ctaBar) {
+      timeline.from(
+        ctaBar,
+        {
+          autoAlpha: 0,
+          y: motion.distance * 0.5
+        },
+        '-=0.3'
       );
     }
   }
@@ -928,7 +976,7 @@ async function initMotionSystem() {
   mapRevealUtilities();
 
   initNavbarMotion(lenis);
-  initHeroTimeline({ skipIntro: true });
+  initHeroTimeline();
   initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
