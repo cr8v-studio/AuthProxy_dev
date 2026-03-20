@@ -942,7 +942,7 @@ a {
 
 #problem .problem-statement {
   padding: 0;
-  border-top: 1px solid var(--site-section-border);
+  border-top: 0;
   background: var(--color-surface-overlay-strong);
   backdrop-filter: blur(var(--hero-metrics-wrap-blur));
   -webkit-backdrop-filter: blur(var(--hero-metrics-wrap-blur));
