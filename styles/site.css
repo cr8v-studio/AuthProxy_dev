@@ -719,7 +719,7 @@ a {
 .problem-list {
   display: grid;
   align-content: start;
-  background: var(--color-surface-canvas);
+  background: transparent;
   border: 1px solid var(--site-section-border);
 }
 
@@ -729,6 +729,7 @@ a {
   grid-template-columns: auto 1fr;
   gap: var(--space-stack-2xl);
   padding: var(--space-stack-2xl);
+  background: var(--figma-color-white-base);
 }
 
 .problem-item + .problem-item {
