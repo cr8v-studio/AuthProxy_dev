@@ -215,7 +215,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--top',
         {
           scaleX: 1,
-          autoAlpha: 0.38,
+          autoAlpha: 0.52,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         }
@@ -224,7 +224,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--right',
         {
           scaleY: 1,
-          autoAlpha: 0.38,
+          autoAlpha: 0.52,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
@@ -234,7 +234,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--bottom',
         {
           scaleX: 1,
-          autoAlpha: 0.38,
+          autoAlpha: 0.52,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
@@ -244,7 +244,7 @@ function runInitialPreloader(lenis) {
         '.site-preloader__line--left',
         {
           scaleY: 1,
-          autoAlpha: 0.38,
+          autoAlpha: 0.52,
           duration: isMobileViewport() ? 0.6 : 0.72,
           ease: 'power2.out'
         },
@@ -566,7 +566,7 @@ function initHeroTimeline({ skipIntro = false } = {}) {
           duration: visualRevealDuration,
           ease: motion.ease
         },
-        '+=0.12'
+        '+=0.04'
       );
     }
 
