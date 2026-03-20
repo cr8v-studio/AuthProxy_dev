@@ -118,36 +118,6 @@
     right var(--corner-inset) top var(--corner-inset);
 }
 
-.button-page-numbering {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--button-page-numbering-size);
-  min-width: var(--button-page-numbering-size);
-  height: var(--button-page-numbering-size);
-  padding: var(--button-page-numbering-padding-y) var(--button-page-numbering-padding-x);
-  background-color: var(--button-page-numbering-bg);
-  border: var(--button-page-numbering-border-width) solid var(--button-page-numbering-border-color);
-  color: var(--button-page-numbering-color);
-  transition:
-    background-color var(--motion-duration-fast) var(--motion-ease-standard),
-    border-color var(--motion-duration-fast) var(--motion-ease-standard),
-    color var(--motion-duration-fast) var(--motion-ease-standard);
-}
-
-.button-page-numbering .icon {
-  width: var(--button-page-numbering-icon-size);
-  height: var(--button-page-numbering-icon-size);
-}
-
-.button-page-numbering:hover,
-.button-page-numbering.is-hover,
-.button-page-numbering[aria-current="true"] {
-  background-color: var(--button-page-numbering-hover-bg);
-  border-color: var(--button-page-numbering-hover-border-color);
-  color: var(--button-page-numbering-hover-color);
-}
-
 .site-header-logo {
   display: inline-flex;
   align-items: center;

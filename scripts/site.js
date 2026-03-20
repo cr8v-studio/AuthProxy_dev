@@ -2,7 +2,6 @@ const rootHeader = document.querySelector('.site-header-shell');
 const navToggle = document.querySelector('.site-header__toggle');
 const navMenu = document.querySelector('.site-header__menu');
 const dropdownGroups = Array.from(document.querySelectorAll('[data-dropdown]'));
-const authSlider = document.querySelector('[data-slider]');
 
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
@@ -84,46 +83,3 @@ document.addEventListener('keydown', (event) => {
     closeMenu();
   }
 });
-
-function initAuthSlider() {
-  if (!authSlider) {
-    return;
-  }
-
-  const track = authSlider.querySelector('.auth-slider__track');
-  const slides = Array.from(authSlider.querySelectorAll('[data-slide]'));
-  const prevButton = authSlider.querySelector('[data-slider-prev]');
-  const nextButton = authSlider.querySelector('[data-slider-next]');
-  const currentLabel = authSlider.querySelector('[data-slider-current]');
-  const totalLabel = authSlider.querySelector('[data-slider-total]');
-  let currentIndex = 0;
-
-  if (!track || !prevButton || !nextButton || !currentLabel || !totalLabel || slides.length === 0) {
-    console.warn('Auth slider markup is incomplete');
-    return;
-  }
-
-  const formatIndex = (value) => String(value + 1).padStart(2, '0');
-
-  const render = () => {
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    prevButton.disabled = currentIndex === 0;
-    nextButton.disabled = currentIndex === slides.length - 1;
-    currentLabel.textContent = formatIndex(currentIndex);
-    totalLabel.textContent = String(slides.length).padStart(2, '0');
-  };
-
-  prevButton.addEventListener('click', () => {
-    currentIndex = Math.max(0, currentIndex - 1);
-    render();
-  });
-
-  nextButton.addEventListener('click', () => {
-    currentIndex = Math.min(slides.length - 1, currentIndex + 1);
-    render();
-  });
-
-  render();
-}
-
-initAuthSlider();

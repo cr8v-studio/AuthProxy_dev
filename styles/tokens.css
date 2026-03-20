@@ -88,7 +88,6 @@
   --layout-header-padding-inline: var(--space-48);
   --layout-dropdown-panel-min: 14rem;
   --layout-problem-visual-max: 534px;
-  --layout-auth-device-max: 544px;
 
   /* Foundation section spacing */
   --section-space-2xl: var(--space-120);
@@ -112,12 +111,6 @@
     drop-shadow(0 87px 52px rgba(0, 0, 0, 0.05))
     drop-shadow(0 39px 39px rgba(0, 0, 0, 0.09))
     drop-shadow(0 10px 21px rgba(0, 0, 0, 0.1));
-  --shadow-device-soft:
-    0 144px 58px rgba(0, 0, 0, 0.01),
-    0 81px 49px rgba(0, 0, 0, 0.05),
-    0 36px 36px rgba(0, 0, 0, 0.09),
-    0 9px 20px rgba(0, 0, 0, 0.1);
-
   /* Color tokens synced from Figma */
   --figma-color-black-base: #000000;
   --figma-color-white-base: #ffffff;
@@ -160,11 +153,6 @@
   --color-surface-glass-strong: rgba(244, 244, 244, 0.92);
   --color-surface-glass-medium: rgba(244, 244, 244, 0.55);
   --color-border-soft: var(--figma-color-dark-tint-9);
-
-  /* Semantic surface gradients */
-  --surface-gradient-panel-secondary:
-    linear-gradient(297deg, rgba(255, 255, 255, 0) 0%, var(--figma-color-white-base) 57.065%),
-    linear-gradient(90deg, var(--figma-color-white-base) 0%, var(--figma-color-white-base) 100%);
 
   /* Semantic effect tokens */
   --effect-blur-header-base: 6px;
@@ -240,10 +228,6 @@
   --landing-toggle-gap: var(--space-inline-xs);
   --landing-section-label-min-height: 3.1875rem;
   --landing-problem-visual-min-height: 33.4375rem;
-  --landing-capability-card-padding-block: var(--space-stack-3xl);
-  --landing-capability-card-padding-inline: var(--section-space-lg);
-  --landing-how-visual-min-height: 52.5rem;
-  --landing-auth-card-gap: var(--space-stack-4xl);
 
   --hero-cta-shell-corner-tr: url("../assets/header-button-v1-corner-tr-default.svg");
   --hero-cta-shell-corner-br: url("../assets/header-button-v1-corner-br-default.svg");
@@ -262,19 +246,6 @@
   --color-control-dark-bg: var(--figma-color-dark-base);
   --color-control-dark-fg: var(--figma-color-off-white-alpha-1);
   --color-control-dark-fg-strong: var(--figma-color-off-white-base);
-
-  /* Component tokens: page numbering button */
-  --button-page-numbering-size: var(--size-control-md);
-  --button-page-numbering-padding-x: var(--space-stack-xl);
-  --button-page-numbering-padding-y: var(--space-stack-sm);
-  --button-page-numbering-icon-size: var(--size-icon-sm);
-  --button-page-numbering-border-width: var(--border-width-thin);
-  --button-page-numbering-bg: var(--figma-color-white-base);
-  --button-page-numbering-border-color: var(--figma-color-dark-tint-9);
-  --button-page-numbering-color: var(--figma-color-dark-base);
-  --button-page-numbering-hover-bg: var(--figma-color-dark-base);
-  --button-page-numbering-hover-border-color: var(--figma-color-dark-base);
-  --button-page-numbering-hover-color: var(--figma-color-white-base);
 
   /* Component tokens: header logo */
   --header-logo-width: 114px;

@@ -1,8 +1,0 @@
-<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 270 270" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Vector">
-<path d="M202 0H270V68H269V1H202V0Z" fill="var(--fill-0, #1F1F1F)"/>
-<path d="M68 1V5.85733e-06L202 0H0V68H1V1H68Z" fill="var(--fill-0, #1F1F1F)"/>
-<path d="M1 202H0V270H68V269H1V202Z" fill="var(--fill-0, #1F1F1F)"/>
-<path d="M202 269V270H270V202H269V269H202Z" fill="var(--fill-0, #1F1F1F)"/>
-</g>
-</svg>
