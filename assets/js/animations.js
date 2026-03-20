@@ -12,13 +12,9 @@ const MOTION_BOOT_FLAG = '__apMotionBooted';
 
 const getMotion = () => ({
   duration: isMobileViewport() ? 0.5 : 0.65,
-  hoverDuration: 0.52,
   distance: isMobileViewport() ? 18 : 28,
   scaleStart: isMobileViewport() ? 0.985 : 0.965,
-  buttonScale: isMobileViewport() ? 1.01 : 1.018,
-  cardLift: isMobileViewport() ? -4 : -8,
-  ease: 'power3.out',
-  easeSoft: 'power2.out'
+  ease: 'power3.out'
 });
 
 const heroSection = document.querySelector('.hero-section');
@@ -28,13 +24,7 @@ const REVEAL_ASSIGNMENTS = [
   ['.section-intro > *', 'fade-up'],
   ['.problem-grid__visual-wrap', 'scale-in'],
   ['.problem-item', 'fade-up'],
-  ['.problem-statement > *', 'fade-up'],
-  ['.how-grid__visual-wrap', 'scale-in'],
-  ['.how-grid__core > *', 'fade-up'],
-  ['.how-note > *', 'fade-up'],
-  ['.auth-section__intro > *', 'fade-up'],
-  ['.auth-slider__viewport', 'fade-up'],
-  ['.auth-slider__footer', 'fade-in']
+  ['.problem-statement > *', 'fade-up']
 ];
 
 document.documentElement.style.scrollBehavior = 'auto';
@@ -48,7 +38,7 @@ function addClass(selector, className) {
 // Keep reduced-motion users on the same visual hierarchy without transitional movement.
 function setReducedMotionState() {
   document
-    .querySelectorAll('.fade-up, .fade-in, .scale-in, .capability-card, .hero-section__visual, .hero-metric')
+    .querySelectorAll('.fade-up, .fade-in, .scale-in, .hero-section__visual, .hero-metric')
     .forEach((element) => {
       gsap.set(element, { clearProps: 'transform,opacity,visibility' });
     });
@@ -686,65 +676,6 @@ function initHeroMetricsCarousel() {
   );
 }
 
-// Section-specific card motion stays lightweight: stagger on reveal, restrained hover on intent.
-function initFeatureCards() {
-  const motion = getMotion();
-  const section = document.querySelector('.capability-list');
-  const cards = gsap.utils.toArray('.capability-card');
-
-  if (!section || cards.length === 0) {
-    return;
-  }
-
-  gsap.from(cards, {
-    autoAlpha: 0,
-    y: motion.distance,
-    duration: motion.duration,
-    ease: motion.ease,
-    stagger: isMobileViewport() ? 0.07 : 0.1,
-    force3D: true,
-    scrollTrigger: {
-      trigger: section,
-      start: 'top 76%',
-      once: true
-    }
-  });
-
-  if (prefersReducedMotion) {
-    return;
-  }
-
-  cards.forEach((card) => {
-    const cardStyles = getComputedStyle(card);
-    const shadowRest = cardStyles.getPropertyValue('--effect-shadow-card-rest').trim();
-    const shadowHover = cardStyles.getPropertyValue('--effect-shadow-card-hover').trim();
-
-    card.addEventListener('mouseenter', () => {
-      const nextMotion = getMotion();
-      gsap.to(card, {
-        y: nextMotion.cardLift,
-        scale: isMobileViewport() ? 1.01 : 1.015,
-        boxShadow: shadowHover,
-        duration: nextMotion.hoverDuration,
-        ease: nextMotion.easeSoft,
-        overwrite: 'auto'
-      });
-    });
-
-    card.addEventListener('mouseleave', () => {
-      const nextMotion = getMotion();
-      gsap.to(card, {
-        y: 0,
-        scale: 1,
-        boxShadow: shadowRest,
-        duration: nextMotion.hoverDuration,
-        ease: nextMotion.easeSoft,
-        overwrite: 'auto'
-      });
-    });
-  });
-}
-
 // Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
 function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
@@ -832,7 +763,7 @@ function initInteractiveHoverStates() {
   };
 
   const interactiveElements = document.querySelectorAll(
-    '.site-header-button-v1, .site-header-button-v2, .site-header-link-m2, .site-header-dropdown, .button-page-numbering'
+    '.site-header-button-v1, .site-header-button-v2, .site-header-link-m2, .site-header-dropdown'
   );
 
   interactiveElements.forEach((element) => {
@@ -840,7 +771,6 @@ function initInteractiveHoverStates() {
     const isButtonV1 = element.classList.contains('site-header-button-v1');
     const isButtonV2 = element.classList.contains('site-header-button-v2');
     const isDropdownTrigger = element.classList.contains('site-header-dropdown');
-    const isPageButton = element.classList.contains('button-page-numbering');
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
     const buttonV1Label = isButtonV1 ? element.querySelector('.site-header-button-v1__label') : null;
     const scrambleTarget = isBuildButton ? buildLabel : buttonV1Label;
@@ -881,18 +811,12 @@ function initInteractiveHoverStates() {
           ? isMobileViewport()
             ? 1.004
             : 1.008
-          : isPageButton
-            ? isMobileViewport()
-              ? 1.01
-              : 1.014
-            : nextMotion.buttonScale;
+          : nextMotion.buttonScale;
       const targetY = isBuildButton || isButtonV1 || isButtonV2
         ? 0
         : isDropdownTrigger
           ? -0.5
-          : isMobileViewport()
-            ? -0.75
-            : -1.5;
+          : 0;
 
       scaleTo(targetScale);
       yTo(targetY);
@@ -947,7 +871,6 @@ async function initMotionSystem() {
   initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
-  initFeatureCards();
   initInteractiveHoverStates();
   initPageTransitions(lenis);
 
