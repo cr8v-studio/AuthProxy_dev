@@ -769,6 +769,44 @@ a {
     drop-shadow(0 42px 52px rgba(31, 31, 31, 0.08));
 }
 
+.system-node-b-flow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 211px;
+  height: 170px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.system-node-b-flow__light {
+  position: absolute;
+  width: 8px;
+  height: 26px;
+  border-radius: 999px;
+  background: #ee585a;
+  border: 1px solid rgba(31, 31, 31, 0.9);
+  opacity: 0.4;
+  box-shadow: 0 0 0 rgba(238, 88, 90, 0);
+  will-change: transform, opacity, box-shadow;
+}
+
+.system-node-b-flow__light--1 {
+  left: 14.5%;
+  top: 56.2%;
+}
+
+.system-node-b-flow__light--2 {
+  left: 20.2%;
+  top: 60.4%;
+}
+
+.system-node-b-flow__light--3 {
+  left: 26.1%;
+  top: 64.6%;
+}
+
 .problem-list {
   display: grid;
   align-content: start;
