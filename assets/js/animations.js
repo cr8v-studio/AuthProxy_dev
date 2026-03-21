@@ -404,8 +404,7 @@ function initSystemNodeBDataFlow() {
       {
         autoAlpha: 1,
         scale: 0.9,
-        boxShadow:
-          '0 0 10px rgba(238, 88, 90, 0.46), 0 0 16px rgba(238, 88, 90, 0.3)',
+        boxShadow: 'none',
         duration: 0.2
       },
       startAt
@@ -416,7 +415,7 @@ function initSystemNodeBDataFlow() {
       {
         autoAlpha: 0.42,
         scale: 1,
-        boxShadow: '0 0 0 rgba(238, 88, 90, 0)',
+        boxShadow: 'none',
         duration: 0.34,
         ease: 'power1.inOut'
       },
