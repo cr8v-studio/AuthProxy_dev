@@ -880,46 +880,8 @@ a {
   left: 50%;
   top: 50%;
   width: 240px;
-  height: 402px;
+  height: 360px;
   transform: translate(-50%, -50%);
-}
-
-.how-stack__top {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 146px;
-  height: 92px;
-  border: 1px solid #1f1f1f;
-  border-radius: 12px;
-  background: var(--figma-color-off-white-base);
-  transform: translateX(-50%);
-  display: grid;
-  place-items: center;
-  z-index: 5;
-}
-
-.how-stack__top::before,
-.how-stack__top::after {
-  content: "";
-  position: absolute;
-  width: 150px;
-  height: 56px;
-  border: 1px solid #ed585a;
-  border-radius: 50%;
-}
-
-.how-stack__top::before {
-  top: 10px;
-}
-
-.how-stack__top::after {
-  top: 22px;
-}
-
-.how-stack__logo {
-  width: 96px;
-  height: auto;
 }
 
 .how-stack__node {
@@ -937,22 +899,22 @@ a {
 }
 
 .how-stack__node--1 {
-  top: 54px;
+  top: 0;
   z-index: 4;
 }
 
 .how-stack__node--2 {
-  top: 132px;
+  top: 88px;
   z-index: 3;
 }
 
 .how-stack__node--3 {
-  top: 210px;
+  top: 176px;
   z-index: 2;
 }
 
 .how-stack__node--4 {
-  top: 288px;
+  top: 264px;
   z-index: 1;
 }
 
