@@ -1006,6 +1006,62 @@ a {
   z-index: 0;
 }
 
+.problem-grid__stack {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 222px;
+  height: 483px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.problem-grid__stack-apg {
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 213px;
+  height: 125px;
+  display: block;
+}
+
+.problem-grid__stack-layers {
+  position: absolute;
+  left: 0;
+  top: 18px;
+  width: 222px;
+  height: 465px;
+}
+
+.problem-grid__stack-node {
+  position: absolute;
+  left: 0;
+  width: 222px;
+  height: 173px;
+  display: block;
+}
+
+.problem-grid__stack-node--auth {
+  top: 0;
+}
+
+.problem-grid__stack-node--proxy {
+  top: 73px;
+}
+
+.problem-grid__stack-node--file {
+  top: 146px;
+}
+
+.problem-grid__stack-node--notifs {
+  top: 219px;
+}
+
+.problem-grid__stack-node--admin {
+  top: 292px;
+}
+
 .problem-grid__impulse {
   position: absolute;
   left: 50%;
@@ -1267,7 +1323,7 @@ a {
 }
 
 #problem .problem-grid__visual-wrap {
-  min-height: 535px;
+  min-height: 725px;
 }
 
 #problem .problem-list {
