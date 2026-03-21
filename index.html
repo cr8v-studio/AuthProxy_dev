@@ -19,16 +19,6 @@
   </head>
   <body class="site-page">
     <div class="site-grid-overlay" aria-hidden="true"></div>
-    <div class="site-transition-layer" data-page-transition aria-hidden="true" hidden>
-      <div class="site-transition-layer__grid">
-        <div class="site-transition-layer__col"></div>
-        <div class="site-transition-layer__col"></div>
-        <div class="site-transition-layer__col"></div>
-        <div class="site-transition-layer__col"></div>
-        <div class="site-transition-layer__col"></div>
-        <div class="site-transition-layer__col"></div>
-      </div>
-    </div>
     <div class="site-preloader" data-preloader aria-hidden="true">
       <div class="site-preloader__grid">
         <div class="site-preloader__col"></div>
@@ -94,13 +84,13 @@
                 />
               </button>
               <div class="site-header__dropdown-panel" id="platform-menu">
-                <a class="site-header__dropdown-link" href="#how">Five Capabilities</a>
-                <a class="site-header__dropdown-link" href="#auth-crypto">Cryptographic Auth</a>
-                <a class="site-header__dropdown-link" href="#auth-social">Social / OAuth</a>
+                <a class="site-header__dropdown-link" href="#problem">Five Capabilities</a>
+                <a class="site-header__dropdown-link" href="#problem">Cryptographic Auth</a>
+                <a class="site-header__dropdown-link" href="#problem">Social / OAuth</a>
               </div>
             </div>
 
-            <a class="site-header-link" href="#auth">Security</a>
+            <a class="site-header-link" href="#problem">Security</a>
 
             <div class="site-header__dropdown-group" data-dropdown>
               <button
@@ -120,12 +110,12 @@
                 />
               </button>
               <div class="site-header__dropdown-panel" id="developers-menu">
-                <a class="site-header__dropdown-link" href="#auth-machine">AI / Machine</a>
+                <a class="site-header__dropdown-link" href="#problem">AI / Machine</a>
                 <a class="site-header__dropdown-link" href="#hero-cta">Start Building</a>
               </div>
             </div>
 
-            <a class="site-header-link" href="#auth">Pricing</a>
+            <a class="site-header-link" href="#problem">Pricing</a>
             <a class="site-header-link" href="#problem">FAQ</a>
           </nav>
 
@@ -140,87 +130,85 @@
       <section class="hero-section" id="top">
         <div class="hero-section__viewport">
           <div class="hero-section__frame">
-            <div class="hero-section__content-shell">
-                <div class="hero-section__panel">
-                  <div class="hero-section__mockup-underlay" aria-hidden="true">
+            <div class="hero-section__panel">
+              <div class="hero-section__mockup-underlay" aria-hidden="true">
+                <img
+                  src="./assets/figma/hero-mockup-underlay.svg"
+                  alt=""
+                  width="480"
+                  height="480"
+                />
+              </div>
+              <div class="hero-section__content">
+                <h1 class="hero-section__title heading-hero">
+                  Authentication,<br />
+                  Routing &amp; Files &mdash;<br />
+                  One Module, Zero<br />
+                  Dependencies
+                </h1>
+              </div>
+              <div class="hero-section__visual-stage">
+                <div class="hero-section__visual-wrap">
+                  <img
+                    class="hero-section__visual"
+                    src="./assets/figma/hero-visual.webp?v=20260320-0023"
+                    alt="AuthProxy mobile authentication interface"
+                    width="356"
+                    height="496"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-section__lead-strip">
+              <p class="text-body-lg hero-section__lead">
+                AuthProxy is a production-grade web server that handles authentication, reverse
+                proxy, file management, and real-time notifications for PWA applications. 11 auth
+                methods, in-memory sessions, rate limiting &mdash; all embedded in a single process.
+              </p>
+            </div>
+
+            <div class="hero-section__metrics-wrap">
+              <div class="hero-section__metrics">
+                <article class="hero-metric">
+                  <strong class="hero-metric__value">11</strong>
+                  <span class="hero-metric__label">Auth Methods</span>
+                </article>
+                <article class="hero-metric">
+                  <strong class="hero-metric__value">13</strong>
+                  <span class="hero-metric__label">Admin Pages</span>
+                </article>
+                <article class="hero-metric">
+                  <strong class="hero-metric__value">221</strong>
+                  <span class="hero-metric__label">Unit Tests</span>
+                </article>
+                <article class="hero-metric">
+                  <strong class="hero-metric__value">3 kb</strong>
+                  <span class="hero-metric__label">First Load</span>
+                </article>
+              </div>
+            </div>
+
+            <div class="hero-section__cta-bar" id="hero-cta">
+              <div class="hero-section__cta-row">
+                <a class="site-header-button-v1" href="#problem">
+                  <span class="site-header-button-v1__label">Start Building</span>
+                </a>
+                <a class="site-header-button-v2" href="#problem">
+                  <span class="site-header-button-v2__label">View Admin Demo</span>
+                  <span class="site-header-button-v2__icon-wrap">
                     <img
-                      src="./assets/figma/hero-mockup-underlay.svg"
+                      class="icon site-header-button-v2__icon"
+                      src="./assets/icons/arrow-right-offwhite.svg?v=20260319-2001"
                       alt=""
-                      width="480"
-                      height="480"
+                      aria-hidden="true"
+                      width="20"
+                      height="20"
                     />
-                  </div>
-                  <div class="hero-section__content">
-                    <h1 class="hero-section__title heading-hero">
-                      Authentication,<br />
-                      Routing &amp; Files &mdash;<br />
-                      One Module, Zero<br />
-                      Dependencies
-                    </h1>
-                  </div>
-                  <div class="hero-section__visual-stage">
-                    <div class="hero-section__visual-wrap">
-                      <img
-                        class="hero-section__visual"
-                        src="./assets/figma/hero-visual.webp?v=20260320-0023"
-                        alt="AuthProxy mobile authentication interface"
-                        width="356"
-                        height="496"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="hero-section__lead-strip">
-                  <p class="text-body-lg hero-section__lead">
-                    AuthProxy is a production-grade web server that handles authentication, reverse
-                    proxy, file management, and real-time notifications for PWA applications. 11 auth
-                    methods, in-memory sessions, rate limiting &mdash; all embedded in a single process.
-                  </p>
-                </div>
+                  </span>
+                </a>
               </div>
-
-              <div class="hero-section__metrics-wrap">
-                <div class="hero-section__metrics">
-                  <article class="hero-metric">
-                    <strong class="hero-metric__value">11</strong>
-                    <span class="hero-metric__label">Auth Methods</span>
-                  </article>
-                  <article class="hero-metric">
-                    <strong class="hero-metric__value">13</strong>
-                    <span class="hero-metric__label">Admin Pages</span>
-                  </article>
-                  <article class="hero-metric">
-                    <strong class="hero-metric__value">221</strong>
-                    <span class="hero-metric__label">Unit Tests</span>
-                  </article>
-                  <article class="hero-metric">
-                    <strong class="hero-metric__value">3 kb</strong>
-                    <span class="hero-metric__label">First Load</span>
-                  </article>
-                </div>
-              </div>
-
-              <div class="hero-section__cta-bar" id="hero-cta">
-                <div class="hero-section__cta-row">
-                  <a class="site-header-button-v1" href="#auth">
-                    <span class="site-header-button-v1__label">Start Building</span>
-                  </a>
-                  <a class="site-header-button-v2" href="#auth">
-                    <span class="site-header-button-v2__label">View Admin Demo</span>
-                    <span class="site-header-button-v2__icon-wrap">
-                      <img
-                        class="icon site-header-button-v2__icon"
-                        src="./assets/icons/arrow-right-offwhite.svg?v=20260319-2001"
-                        alt=""
-                        aria-hidden="true"
-                        width="20"
-                        height="20"
-                      />
-                    </span>
-                  </a>
-                </div>
-              </div>
+            </div>
           </div>
         </div>
       </section>
