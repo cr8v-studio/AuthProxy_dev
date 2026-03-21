@@ -4,8 +4,8 @@
 Краткая карта активного production-слоя для статического лендинга AuthProxy.
 
 ## Baseline
-- Текущий baseline для рефакторинга — рабочая директория в её текущем состоянии, включая незакоммиченные изменения.
-- Все следующие cleanup-изменения должны отталкиваться от этого runtime-состояния, а не от последнего коммита.
+- Baseline — текущий `main` в репозитории.
+- Cleanup выполняется относительно фактического runtime (`index.html` + подключенные CSS/JS), а не архивных секций.
 
 ## Active Architecture
 - Точка входа: `/Users/alexander/Desktop/Codex/AuthProxy_dev/index.html`
@@ -15,18 +15,27 @@
 ## Token Layers
 - `--figma-*`: исходные значения, синхронизированные из дизайна.
 - Семантические токены: цвета, layout, spacing и motion-aliased значения.
-- Компонентные токены: `--header-*`, `--button-page-numbering-*`, `--hero-*`.
+- Компонентные токены: `--header-*`, `--hero-*`.
 
 ## Active Typography Utilities
 - `.heading-hero`
 - `.heading-xl`
-- `.heading-lg-alt`
 - `.heading-md`
 - `.heading-xs-caps`
 - `.eyebrow`
 - `.text-body-lg`
 
 Остальные typography utilities сохранены как reserve-слой для будущих контентных обновлений и не считаются dead code автоматически.
+
+## Active / Reserve Policy
+- `Active runtime`: только то, что участвует в текущем рендере через `index.html` + подключенные CSS/JS.
+- `Reserve layer`: заранее подготовленные utilities/tokens для будущих контентных сценариев; не удаляются автоматически.
+- Любой cleanup по умолчанию затрагивает только `Active runtime`, если нет отдельного запроса на чистку reserve-слоя.
+
+## Dead Code Criteria
+- `Dead code` для этой кодовой базы: селектор/токен/JS-ветка, которые не используются в текущем runtime и не помечены как reserve.
+- Для токенов применяется `safe active-only`: удаляются только orphaned aliases, не участвующие в computed styles.
+- Figma/foundation/reserve слои не чистятся агрессивно без отдельного решения.
 
 ## Active Header Controls
 - `.site-header-logo`
@@ -35,15 +44,14 @@
 - `.site-header-dropdown`
 - `.site-header-button-v1`
 - `.site-header-button-v2`
-- `.button-page-numbering`
 
 Все header controls используют общий токенизированный control-layer для typography, hover и corner-pattern состояний.
 
 ## Hero Structure
 - `.hero-section__viewport`: desktop layout-shell для контролируемой высоты hero.
 - `.hero-section__frame`: внешний контейнер hero на ширину страницы.
-- `.hero-section__content-shell`: внутренняя контентная колонка hero.
 - `.hero-section__panel`
+- `.hero-section__mockup-underlay`
 - `.hero-section__lead-strip`
 - `.hero-section__metrics-wrap`
 - `.hero-section__cta-bar`

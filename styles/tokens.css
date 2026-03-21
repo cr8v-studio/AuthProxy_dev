@@ -77,14 +77,10 @@
   --size-control-lg: 48px;
   --size-icon-sm: 20px;
   --size-icon-xs: 18px;
-  --size-icon-frame-lg: 5rem;
   --size-corner-width: 15px;
   --size-corner-height: 12px;
 
   /* Foundation layout */
-  --layout-page-max: var(--container-desktop);
-  --layout-shell-max: calc(var(--container-desktop) - (var(--container-padding-desktop) * 2));
-  --layout-auth-padding: var(--space-120);
   --layout-header-padding-inline: var(--space-48);
   --layout-dropdown-panel-min: 14rem;
   --layout-problem-visual-max: 534px;
@@ -106,11 +102,6 @@
     drop-shadow(0 95px 57px rgba(0, 0, 0, 0.065))
     drop-shadow(0 42px 42px rgba(0, 0, 0, 0.11))
     drop-shadow(0 11px 23px rgba(0, 0, 0, 0.14));
-  --shadow-stack-visual:
-    drop-shadow(0 155px 62px rgba(0, 0, 0, 0.01))
-    drop-shadow(0 87px 52px rgba(0, 0, 0, 0.05))
-    drop-shadow(0 39px 39px rgba(0, 0, 0, 0.09))
-    drop-shadow(0 10px 21px rgba(0, 0, 0, 0.1));
   /* Color tokens synced from Figma */
   --figma-color-black-base: #000000;
   --figma-color-white-base: #ffffff;
@@ -192,9 +183,6 @@
     );
   --effect-blur-panel-md: 8px;
   --effect-shadow-panel-md: 0 12px 28px rgba(31, 31, 31, 0.05);
-  --effect-shadow-card-rest: 0 0 0 rgba(31, 31, 31, 0);
-  --effect-shadow-card-hover: 0 22px 44px rgba(31, 31, 31, 0.08);
-  --radius-device-frame: 5.989px;
 
   /* Hero source tokens */
   --hero-panel-columns: minmax(0, 2fr) minmax(0, 1fr);
@@ -204,8 +192,6 @@
   --hero-panel-padding-x: var(--space-48);
   --hero-panel-padding-top: var(--space-120);
   --hero-panel-padding-bottom: var(--space-120);
-  --hero-panel-background-image-fallback: url("../assets/figma/hero-panel-bg.webp");
-  --hero-panel-background-image: -webkit-image-set(url("../assets/figma/hero-panel-bg.webp") 1x);
   --hero-visual-width: 356px;
   --hero-visual-height: 496px;
   --hero-lead-strip-background: var(--figma-color-off-white-base);
@@ -234,9 +220,6 @@
   --problem-item-corner-asset: url("../assets/header-social-corner-tr-default.svg");
 
   /* Semantic control typography */
-  --type-control-body-size: var(--type-body-sm-size);
-  --type-control-body-line: var(--type-body-sm-line);
-  --type-control-body-track: var(--type-body-sm-track);
   --type-control-caps-size: var(--type-heading-xs-caps-size);
   --type-control-caps-line: var(--type-heading-xs-caps-line);
   --type-control-caps-track: var(--type-heading-xs-caps-track);
@@ -250,7 +233,6 @@
   /* Component tokens: header logo */
   --header-logo-width: 114px;
   --header-logo-height: var(--size-control-lg);
-  --header-inner-max: 1200px;
   --header-nav-gap: var(--space-24);
 
   /* Component tokens: header link */
@@ -297,7 +279,6 @@
   --header-dropdown-font-size: var(--figma-type-br0-t1-highlight-size);
   --header-dropdown-line-height: var(--figma-type-br0-t1-highlight-line);
   --header-dropdown-letter-spacing: var(--figma-type-br0-t1-highlight-track);
-  --header-dropdown-icon-size: var(--size-icon-sm);
   --header-dropdown-icon-width: 16.6667px;
   --header-dropdown-icon-height: 11.1298px;
   --header-dropdown-corner-width: var(--size-corner-width);

@@ -115,21 +115,6 @@ function initLenis() {
   return lenis;
 }
 
-function animateOverlayColumns(columns, options = {}) {
-  if (!columns.length) {
-    options.onComplete?.();
-    return;
-  }
-
-  gsap.to(columns, {
-    yPercent: options.toYPercent ?? 0,
-    duration: options.duration ?? 0.9,
-    ease: options.ease ?? 'power3.inOut',
-    stagger: options.stagger ?? { amount: 0.24, from: 'random' },
-    onComplete: options.onComplete
-  });
-}
-
 function runInitialPreloader(lenis) {
   const preloader = document.querySelector('[data-preloader]');
   const logo = preloader?.querySelector('[data-preloader-logo]');
@@ -278,71 +263,6 @@ function runInitialPreloader(lenis) {
     );
 
     safetyTimeoutId = window.setTimeout(finish, 5200);
-  });
-}
-
-function initPageTransitions(lenis) {
-  const transitionLayer = document.querySelector('[data-page-transition]');
-  const transitionColumns = gsap.utils.toArray('.site-transition-layer__col');
-
-  if (!transitionLayer || transitionColumns.length === 0) {
-    return;
-  }
-
-  const isInternalTransitionLink = (link) => {
-    const href = link.getAttribute('href') || '';
-
-    if (!href || href.startsWith('#')) {
-      return false;
-    }
-
-    if (
-      href.startsWith('mailto:') ||
-      href.startsWith('tel:') ||
-      href.startsWith('javascript:')
-    ) {
-      return false;
-    }
-
-    if (link.target === '_blank' || link.hasAttribute('download')) {
-      return false;
-    }
-
-    const nextUrl = new URL(link.href, window.location.href);
-    const currentUrl = new URL(window.location.href);
-
-    if (nextUrl.origin !== currentUrl.origin) {
-      return false;
-    }
-
-    return `${nextUrl.pathname}${nextUrl.search}` !== `${currentUrl.pathname}${currentUrl.search}`;
-  };
-
-  let isTransitioning = false;
-
-  document.querySelectorAll('a[href]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      if (isTransitioning || !isInternalTransitionLink(link)) {
-        return;
-      }
-
-      event.preventDefault();
-      isTransitioning = true;
-      lenis?.stop();
-
-      transitionLayer.hidden = false;
-      transitionLayer.classList.add('is-active');
-      gsap.set(transitionColumns, { yPercent: 100 });
-
-      animateOverlayColumns(transitionColumns, {
-        toYPercent: 0,
-        duration: 0.85,
-        stagger: { amount: 0.24, from: 'random' },
-        onComplete: () => {
-          window.location.href = link.href;
-        }
-      });
-    });
   });
 }
 
@@ -569,13 +489,13 @@ function initHeroMetricsCarousel() {
   const sourceTrack = metricsWrap?.querySelector('.hero-section__metrics');
 
   if (!metricsWrap || !sourceTrack || prefersReducedMotion) {
-    return;
+    return () => {};
   }
 
   const originalCards = Array.from(sourceTrack.children);
 
   if (originalCards.length === 0) {
-    return;
+    return () => {};
   }
 
   metricsWrap.classList.add('is-carousel');
@@ -610,6 +530,7 @@ function initHeroMetricsCarousel() {
   let tween = null;
   let resizeFrame = 0;
   let isHovered = false;
+  let destroyed = false;
   const playbackState = { value: 1 };
   const setPlayback = gsap.quickTo(playbackState, 'value', {
     duration: 1.2,
@@ -626,6 +547,9 @@ function initHeroMetricsCarousel() {
   });
 
   const applyMarqueeLayout = () => {
+    if (destroyed) {
+      return;
+    }
     const visibleCards = 4;
     const cardWidth = metricsWrap.clientWidth / visibleCards;
     const groups = Array.from(metricsTrack.querySelectorAll('.hero-section__metrics-group'));
@@ -656,24 +580,46 @@ function initHeroMetricsCarousel() {
 
   applyMarqueeLayout();
 
-  metricsWrap.addEventListener('mouseenter', () => {
+  const handleMouseEnter = () => {
+    if (destroyed) {
+      return;
+    }
     isHovered = true;
     setPlayback(0);
-  });
+  };
 
-  metricsWrap.addEventListener('mouseleave', () => {
+  const handleMouseLeave = () => {
+    if (destroyed) {
+      return;
+    }
     isHovered = false;
     setPlayback(1);
-  });
+  };
 
-  window.addEventListener(
-    'resize',
-    () => {
-      cancelAnimationFrame(resizeFrame);
-      resizeFrame = window.requestAnimationFrame(applyMarqueeLayout);
-    },
-    { passive: true }
-  );
+  const handleResize = () => {
+    if (destroyed) {
+      return;
+    }
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = window.requestAnimationFrame(applyMarqueeLayout);
+  };
+
+  metricsWrap.addEventListener('mouseenter', handleMouseEnter);
+  metricsWrap.addEventListener('mouseleave', handleMouseLeave);
+  window.addEventListener('resize', handleResize, { passive: true });
+
+  return () => {
+    if (destroyed) {
+      return;
+    }
+    destroyed = true;
+    cancelAnimationFrame(resizeFrame);
+    window.removeEventListener('resize', handleResize);
+    metricsWrap.removeEventListener('mouseenter', handleMouseEnter);
+    metricsWrap.removeEventListener('mouseleave', handleMouseLeave);
+    tween?.kill();
+    gsap.killTweensOf(playbackState);
+  };
 }
 
 // Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
@@ -698,9 +644,6 @@ function initInteractiveHoverStates() {
     if (previousState) {
       if (previousState.tween) {
         previousState.tween.kill();
-      }
-      if (previousState.delayTween) {
-        previousState.delayTween.kill();
       }
     }
 
@@ -745,7 +688,7 @@ function initInteractiveHoverStates() {
       }
     });
 
-    scrambleStateMap.set(label, { tween, delayTween: null });
+    scrambleStateMap.set(label, { tween });
   };
 
   const resetBuildScramble = (label, finalText) => {
@@ -763,13 +706,12 @@ function initInteractiveHoverStates() {
   };
 
   const interactiveElements = document.querySelectorAll(
-    '.site-header-button-v1, .site-header-button-v2, .site-header-link-m2, .site-header-dropdown'
+    '.site-header-button-v1, .site-header-link-m2, .site-header-dropdown'
   );
 
   interactiveElements.forEach((element) => {
     const isBuildButton = element.classList.contains('site-header-link-m2');
     const isButtonV1 = element.classList.contains('site-header-button-v1');
-    const isButtonV2 = element.classList.contains('site-header-button-v2');
     const isDropdownTrigger = element.classList.contains('site-header-dropdown');
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
     const buttonV1Label = isButtonV1 ? element.querySelector('.site-header-button-v1__label') : null;
@@ -777,11 +719,11 @@ function initInteractiveHoverStates() {
     const originalScrambleText = scrambleTarget ? (scrambleTarget.textContent || '').trim() : '';
     const motion = getMotion();
     const scaleTo = gsap.quickTo(element, 'scale', {
-      duration: motion.hoverDuration,
+      duration: motion.hoverDuration ?? 0.5,
       ease: motion.ease
     });
     const yTo = gsap.quickTo(element, 'y', {
-      duration: motion.hoverDuration,
+      duration: motion.hoverDuration ?? 0.5,
       ease: motion.ease
     });
 
@@ -811,8 +753,8 @@ function initInteractiveHoverStates() {
           ? isMobileViewport()
             ? 1.004
             : 1.008
-          : nextMotion.buttonScale;
-      const targetY = isBuildButton || isButtonV1 || isButtonV2
+          : (nextMotion.buttonScale ?? 1);
+      const targetY = isBuildButton || isButtonV1
         ? 0
         : isDropdownTrigger
           ? -0.5
@@ -854,7 +796,6 @@ async function initMotionSystem() {
     mapRevealUtilities();
     setReducedMotionState();
     initNavbarMotion(null);
-    initPageTransitions(null);
     return;
   }
 
@@ -868,11 +809,11 @@ async function initMotionSystem() {
   initHeroTimeline();
   mapRevealUtilities();
   initNavbarMotion(lenis);
-  initHeroMetricsCarousel();
+  const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
   initInteractiveHoverStates();
-  initPageTransitions(lenis);
+  window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
   ScrollTrigger.refresh();
