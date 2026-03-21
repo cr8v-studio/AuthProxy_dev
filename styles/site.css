@@ -800,8 +800,8 @@ a {
 }
 
 .problem-grid__impulse-dot {
-  left: 95px;
-  top: 96px;
+  left: 0;
+  top: 0;
   width: 8px;
   height: 8px;
   background: #ed585a;
