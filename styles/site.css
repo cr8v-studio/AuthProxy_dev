@@ -786,8 +786,8 @@ a {
 
 #how .section-label-bar {
   position: relative;
-  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
-  margin-inline: auto;
+  width: 100%;
+  margin-inline: 0;
   min-height: 149px;
   padding-top: var(--space-120);
   display: flex;
