@@ -152,6 +152,7 @@ function runInitialPreloader(lenis) {
       transformOrigin: '50% 50%',
       autoAlpha: 0,
       scale: 0.94,
+      x: 0,
       y: 0,
       filter: 'brightness(0) invert(1) blur(2px)'
     });
