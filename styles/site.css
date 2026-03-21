@@ -933,9 +933,15 @@ a {
   display: block;
   margin: 0;
   max-width: none;
-  color: var(--site-text-body);
+  color: var(--figma-color-dark-tint-2);
   visibility: visible;
   opacity: 1;
+}
+
+#how .how-section__foot-copy.fade-up {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
 }
 
 .content-section {
