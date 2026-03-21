@@ -375,6 +375,67 @@ function initSectionLabelChevronMotion() {
   });
 }
 
+function initSystemNodeBDataFlow() {
+  const flowWrap = document.querySelector('.system-node-b-flow');
+  const lights = gsap.utils.toArray('.system-node-b-flow__light');
+
+  if (!flowWrap || lights.length === 0 || prefersReducedMotion) {
+    return;
+  }
+
+  gsap.set(lights, {
+    autoAlpha: 0.42,
+    scaleY: 1,
+    transformOrigin: '50% 100%'
+  });
+
+  const flowTimeline = gsap.timeline({
+    paused: true,
+    repeat: -1,
+    defaults: { ease: 'power2.out' }
+  });
+
+  lights.forEach((light, index) => {
+    const startAt = index * 0.2;
+
+    flowTimeline.to(
+      light,
+      {
+        autoAlpha: 1,
+        scaleY: 1.08,
+        boxShadow:
+          '0 0 10px rgba(238, 88, 90, 0.46), 0 0 16px rgba(238, 88, 90, 0.3)',
+        duration: 0.16
+      },
+      startAt
+    );
+
+    flowTimeline.to(
+      light,
+      {
+        autoAlpha: 0.42,
+        scaleY: 1,
+        boxShadow: '0 0 0 rgba(238, 88, 90, 0)',
+        duration: 0.3,
+        ease: 'power1.inOut'
+      },
+      startAt + 0.16
+    );
+  });
+
+  flowTimeline.to({}, { duration: 0.22 });
+
+  ScrollTrigger.create({
+    trigger: flowWrap,
+    start: 'top 90%',
+    end: 'bottom 10%',
+    onEnter: () => flowTimeline.play(),
+    onEnterBack: () => flowTimeline.play(),
+    onLeave: () => flowTimeline.pause(),
+    onLeaveBack: () => flowTimeline.pause()
+  });
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -812,6 +873,7 @@ async function initMotionSystem() {
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
+  initSystemNodeBDataFlow();
   initInteractiveHoverStates();
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
 
