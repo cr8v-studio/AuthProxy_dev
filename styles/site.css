@@ -853,22 +853,23 @@ a {
   border: 1px solid rgba(31, 31, 31, 0.9);
   opacity: 0.4;
   box-shadow: 0 0 0 rgba(238, 88, 90, 0);
+  transform: translate(-50%, -50%);
   will-change: transform, opacity, box-shadow;
 }
 
 .system-node-b-flow__light--1 {
-  left: 14.5%;
-  top: 56.2%;
+  left: 16.4%;
+  top: 63.8%;
 }
 
 .system-node-b-flow__light--2 {
-  left: 20.2%;
-  top: 60.4%;
+  left: 22.1%;
+  top: 68%;
 }
 
 .system-node-b-flow__light--3 {
-  left: 26.1%;
-  top: 64.6%;
+  left: 28%;
+  top: 72.2%;
 }
 
 .problem-list {
