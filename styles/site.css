@@ -452,6 +452,69 @@ a {
   display: block;
 }
 
+.hero-section__impulse {
+  position: absolute;
+  top: 0;
+  right: 47px;
+  width: 480px;
+  height: 480px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-section__impulse-node,
+.hero-section__impulse-dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  will-change: transform, opacity, box-shadow;
+}
+
+.hero-section__impulse-node {
+  width: 12px;
+  height: 12px;
+  background: #ed585a;
+  opacity: 0;
+  box-shadow: 0 0 0 rgba(237, 88, 90, 0);
+}
+
+.hero-section__impulse-node--1 {
+  left: 95px;
+  top: 96px;
+}
+
+.hero-section__impulse-node--2 {
+  left: 287px;
+  top: 96px;
+}
+
+.hero-section__impulse-node--3 {
+  left: 383px;
+  top: 192px;
+}
+
+.hero-section__impulse-node--4 {
+  left: 383px;
+  top: 288px;
+}
+
+.hero-section__impulse-node--5 {
+  left: 95px;
+  top: 384px;
+}
+
+.hero-section__impulse-dot {
+  left: 0;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  background: #ed585a;
+  opacity: 0;
+  box-shadow:
+    0 0 8px rgba(237, 88, 90, 0.62),
+    0 0 16px rgba(237, 88, 90, 0.36);
+}
+
 .hero-section__content {
   position: relative;
   z-index: 2;
@@ -1146,6 +1209,10 @@ a {
   }
 
   .hero-section__grid-background {
+    display: none;
+  }
+
+  .hero-section__impulse {
     display: none;
   }
   .hero-section__frame > .hero-section__metrics-wrap {
