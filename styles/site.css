@@ -912,9 +912,9 @@ a {
   width: 8px;
   height: 26px;
   border-radius: 999px;
-  background: #ed585a;
-  border: 1px solid rgba(31, 31, 31, 0.9);
-  opacity: 0.4;
+  background: rgba(237, 88, 90, 0);
+  border: 1px solid #1f1f1f;
+  opacity: 1;
   box-shadow: none;
   transform: translate(-50%, -50%);
   will-change: transform, opacity, box-shadow;
