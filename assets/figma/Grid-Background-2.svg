@@ -1,0 +1,24 @@
+<svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M96 0V480" stroke="#D7D7D7"/>
+  <path d="M192 0V480" stroke="#D7D7D7"/>
+  <path d="M288 0V480" stroke="#D7D7D7"/>
+  <path d="M384 0V480" stroke="#D7D7D7"/>
+
+  <path d="M0 96H480" stroke="#D7D7D7"/>
+  <path d="M0 192H480" stroke="#D7D7D7"/>
+  <path d="M0 288H480" stroke="#D7D7D7"/>
+  <path d="M0 384H480" stroke="#D7D7D7"/>
+
+  <path d="M95 96H192" stroke="#ED585A"/>
+  <path d="M191 192H384" stroke="#ED585A"/>
+  <path d="M287 288H384" stroke="#ED585A"/>
+
+  <path d="M191 96V193" stroke="#ED585A"/>
+  <path d="M383 191V288" stroke="#ED585A"/>
+  <path d="M287 288V385" stroke="#ED585A"/>
+
+  <circle cx="95" cy="96" r="6.4671" fill="#ED585A"/>
+  <circle cx="383" cy="192" r="6.4671" fill="#ED585A"/>
+  <circle cx="383" cy="288" r="6.4671" fill="#ED585A"/>
+  <circle cx="287" cy="384" r="6.4671" fill="#ED585A"/>
+</svg>
