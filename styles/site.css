@@ -919,12 +919,12 @@ a {
 
 .how-section__foot {
   padding: var(--space-48);
-  background: var(--color-surface-glass-medium);
+  background: var(--color-surface-overlay-strong);
 }
 
 .how-section__foot-copy {
   margin: 0;
-  max-width: 77ch;
+  max-width: none;
   color: var(--site-text-body);
 }
 
