@@ -436,6 +436,17 @@ a {
   overflow: clip;
 }
 
+.hero-section__grid-background {
+  position: absolute;
+  top: 0;
+  right: 47px;
+  width: 480px;
+  height: 480px;
+  pointer-events: none;
+  z-index: 0;
+  display: block;
+}
+
 .hero-section__content {
   position: relative;
   z-index: 2;
@@ -1007,6 +1018,10 @@ a {
   .problem-grid,
   .problem-statement {
     border-inline: 0;
+  }
+
+  .hero-section__grid-background {
+    display: none;
   }
   .hero-section__frame > .hero-section__metrics-wrap {
     width: 100%;
