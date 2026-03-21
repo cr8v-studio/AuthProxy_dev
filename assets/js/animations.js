@@ -22,7 +22,7 @@ const header = document.querySelector('.site-header-shell');
 const REVEAL_ASSIGNMENTS = [
   ['.section-label', 'fade-in'],
   ['.section-intro > *', 'fade-up'],
-  ['.how-section__title-row, .how-section__intro, .how-section__foot', 'fade-up'],
+  ['.how-section__title-row, .how-section__intro', 'fade-up'],
   ['.how-step-card', 'fade-up'],
   ['.how-section__visual', 'scale-in'],
   ['.problem-grid__visual-wrap', 'scale-in'],
