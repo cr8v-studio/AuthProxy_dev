@@ -759,6 +759,14 @@ a {
   pointer-events: none;
   display: block;
   z-index: 1;
+  -webkit-filter:
+    drop-shadow(0 10px 12px rgba(31, 31, 31, 0.16))
+    drop-shadow(0 26px 30px rgba(31, 31, 31, 0.12))
+    drop-shadow(0 42px 52px rgba(31, 31, 31, 0.08));
+  filter:
+    drop-shadow(0 10px 12px rgba(31, 31, 31, 0.16))
+    drop-shadow(0 26px 30px rgba(31, 31, 31, 0.12))
+    drop-shadow(0 42px 52px rgba(31, 31, 31, 0.08));
 }
 
 .problem-list {
