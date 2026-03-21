@@ -912,10 +912,10 @@ a {
   width: 8px;
   height: 26px;
   border-radius: 999px;
-  background: #ee585a;
+  background: #ed585a;
   border: 1px solid rgba(31, 31, 31, 0.9);
   opacity: 0.4;
-  box-shadow: 0 0 0 rgba(238, 88, 90, 0);
+  box-shadow: none;
   transform: translate(-50%, -50%);
   will-change: transform, opacity, box-shadow;
 }
