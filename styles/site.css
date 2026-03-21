@@ -879,12 +879,12 @@ a {
 .how-step-card::after {
   content: "";
   position: absolute;
-  right: var(--space-24);
-  top: var(--space-24);
-  width: var(--size-corner-width);
-  height: var(--size-corner-height);
+  right: 24px;
+  top: 24px;
+  width: 15px;
+  height: 12px;
   background: center / 100% 100% no-repeat;
-  background-image: var(--hero-cta-shell-corner-tr);
+  background-image: var(--problem-item-corner-asset);
 }
 
 .how-step-card__title {
