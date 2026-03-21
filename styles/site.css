@@ -850,11 +850,14 @@ a {
 .how-section__main {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-48);
+  align-items: center;
   border-bottom: 1px solid var(--site-section-border);
 }
 
 .how-section__steps {
-  border-right: 1px solid var(--site-section-border);
+  border: 1px solid var(--site-section-border);
+  overflow: clip;
 }
 
 .how-step-card {
