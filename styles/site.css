@@ -864,11 +864,16 @@ a {
 .how-step-card {
   position: relative;
   padding: var(--space-40) var(--space-48);
-  background: var(--figma-color-off-white-base);
+  background: var(--figma-color-white-base);
+  border-bottom: 1px solid var(--site-section-border);
 }
 
 .how-step-card + .how-step-card {
-  border-top: 1px solid var(--site-section-border);
+  border-top: 0;
+}
+
+.how-step-card:last-child {
+  border-bottom: 0;
 }
 
 .how-step-card::after {
@@ -894,9 +899,10 @@ a {
   display: inline-block;
   margin: var(--space-8) 0 0;
   padding-inline: var(--space-4);
-  font-size: var(--type-body-lg-size);
-  line-height: var(--type-body-lg-line);
-  letter-spacing: 1px;
+  font-size: var(--type-heading-xs-caps-size);
+  line-height: var(--type-heading-xs-caps-line);
+  letter-spacing: var(--type-heading-xs-caps-track);
+  font-weight: var(--type-heading-xs-caps-weight);
   text-transform: uppercase;
   color: var(--figma-color-off-white-base);
   background: var(--figma-color-dark-base);
