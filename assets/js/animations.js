@@ -456,6 +456,7 @@ function initProblemGridImpulseFlow() {
     { x: 287, y: 288 },
     { x: 287, y: 384, node: 4 }
   ];
+  const segmentDuration = isMobileViewport() ? 0.36 : 0.42;
 
   gsap.set(dot, { x: 0, y: 0, autoAlpha: 0 });
   gsap.set(nodes, { autoAlpha: 0, scale: 0.72 });
@@ -504,21 +505,21 @@ function initProblemGridImpulseFlow() {
       {
         x: point.x,
         y: point.y,
-        duration: 0.28,
+        duration: segmentDuration,
         ease: 'none'
       },
       currentTime
     );
 
     if (point.node) {
-      pulseNode(timeline, point.node, currentTime + 0.04);
+      pulseNode(timeline, point.node, currentTime + 0.08);
     }
 
-    currentTime += 0.28;
+    currentTime += segmentDuration;
   }
 
   timeline.to(dot, { autoAlpha: 0, duration: 0.12, ease: 'power1.out' }, currentTime + 0.02);
-  timeline.to({}, { duration: 0.3 }, currentTime + 0.14);
+  timeline.to({}, { duration: isMobileViewport() ? 0.38 : 0.5 }, currentTime + 0.16);
 
   ScrollTrigger.create({
     trigger: wrap,
