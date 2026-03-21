@@ -386,8 +386,8 @@ function initSystemNodeBDataFlow() {
 
   gsap.set(lights, {
     autoAlpha: 0.42,
-    scaleY: 1,
-    transformOrigin: '50% 100%'
+    scale: 1,
+    transformOrigin: '50% 50%'
   });
 
   const flowTimeline = gsap.timeline({
@@ -403,10 +403,10 @@ function initSystemNodeBDataFlow() {
       light,
       {
         autoAlpha: 1,
-        scaleY: 1.08,
+        scale: 0.9,
         boxShadow:
           '0 0 10px rgba(238, 88, 90, 0.46), 0 0 16px rgba(238, 88, 90, 0.3)',
-        duration: 0.16
+        duration: 0.2
       },
       startAt
     );
@@ -415,9 +415,9 @@ function initSystemNodeBDataFlow() {
       light,
       {
         autoAlpha: 0.42,
-        scaleY: 1,
+        scale: 1,
         boxShadow: '0 0 0 rgba(238, 88, 90, 0)',
-        duration: 0.3,
+        duration: 0.34,
         ease: 'power1.inOut'
       },
       startAt + 0.16
