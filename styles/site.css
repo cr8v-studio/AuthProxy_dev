@@ -733,6 +733,20 @@ a {
   min-height: var(--landing-problem-visual-min-height);
 }
 
+.problem-grid__visual-grid {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 480px;
+  height: 480px;
+  max-width: none;
+  max-height: none;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: block;
+  z-index: 0;
+}
+
 .problem-grid__visual-cube {
   position: absolute;
   left: 50%;
