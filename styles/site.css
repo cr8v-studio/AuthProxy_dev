@@ -856,7 +856,8 @@ a {
 }
 
 .how-section__steps {
-  border: 1px solid var(--site-section-border);
+  border: 0;
+  border-right: 1px solid var(--site-section-border);
   overflow: clip;
 }
 
