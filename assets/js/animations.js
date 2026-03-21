@@ -437,6 +437,100 @@ function initSystemNodeBDataFlow() {
   });
 }
 
+function initProblemGridImpulseFlow() {
+  const wrap = document.querySelector('.problem-grid__impulse');
+  const dot = wrap?.querySelector('.problem-grid__impulse-dot');
+  const nodes = wrap ? gsap.utils.toArray('.problem-grid__impulse-node', wrap) : [];
+
+  if (!wrap || !dot || nodes.length === 0 || prefersReducedMotion) {
+    return;
+  }
+
+  const nodeById = (id) => wrap.querySelector(`.problem-grid__impulse-node--${id}`);
+  const points = [
+    { x: 95, y: 96, node: 1 },
+    { x: 191, y: 96 },
+    { x: 191, y: 192 },
+    { x: 383, y: 192, node: 2 },
+    { x: 383, y: 288, node: 3 },
+    { x: 287, y: 288 },
+    { x: 287, y: 384, node: 4 }
+  ];
+
+  gsap.set(dot, { x: 0, y: 0, autoAlpha: 0 });
+  gsap.set(nodes, { autoAlpha: 0, scale: 0.72 });
+
+  const pulseNode = (timeline, nodeId, at) => {
+    const node = nodeById(nodeId);
+
+    if (!node) {
+      return;
+    }
+
+    timeline.to(
+      node,
+      {
+        autoAlpha: 1,
+        scale: 1.18,
+        boxShadow:
+          '0 0 10px rgba(237, 88, 90, 0.56), 0 0 18px rgba(237, 88, 90, 0.32)',
+        duration: 0.14,
+        ease: 'power2.out'
+      },
+      at
+    );
+    timeline.to(
+      node,
+      {
+        autoAlpha: 0,
+        scale: 0.85,
+        boxShadow: '0 0 0 rgba(237, 88, 90, 0)',
+        duration: 0.22,
+        ease: 'power1.inOut'
+      },
+      at + 0.14
+    );
+  };
+
+  const timeline = gsap.timeline({ paused: true, repeat: -1 });
+  timeline.set(dot, { x: points[0].x, y: points[0].y, autoAlpha: 1 }, 0);
+  pulseNode(timeline, 1, 0);
+
+  let currentTime = 0.05;
+  for (let index = 1; index < points.length; index += 1) {
+    const point = points[index];
+    timeline.to(
+      dot,
+      {
+        x: point.x,
+        y: point.y,
+        duration: 0.28,
+        ease: 'none'
+      },
+      currentTime
+    );
+
+    if (point.node) {
+      pulseNode(timeline, point.node, currentTime + 0.04);
+    }
+
+    currentTime += 0.28;
+  }
+
+  timeline.to(dot, { autoAlpha: 0, duration: 0.12, ease: 'power1.out' }, currentTime + 0.02);
+  timeline.to({}, { duration: 0.3 }, currentTime + 0.14);
+
+  ScrollTrigger.create({
+    trigger: wrap,
+    start: 'top 88%',
+    end: 'bottom 12%',
+    onEnter: () => timeline.play(),
+    onEnterBack: () => timeline.play(),
+    onLeave: () => timeline.pause(),
+    onLeaveBack: () => timeline.pause()
+  });
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -875,6 +969,7 @@ async function initMotionSystem() {
   createRevealSystem();
   initSectionLabelChevronMotion();
   initSystemNodeBDataFlow();
+  initProblemGridImpulseFlow();
   initInteractiveHoverStates();
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
 
