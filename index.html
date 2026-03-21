@@ -67,6 +67,7 @@
         <div class="site-header__menu" id="site-navigation">
           <nav class="site-header__nav" aria-label="Primary">
             <a class="site-header-link" href="#problem">Problem</a>
+            <a class="site-header-link" href="#how">How it Works</a>
 
             <div class="site-header__dropdown-group" data-dropdown>
               <button
@@ -327,9 +328,112 @@
         </div>
       </section>
 
+      <section class="how-section" id="how">
+        <div class="site-container how-section__shell">
+          <div class="how-section__title-row">
+            <span class="how-section__chevrons" aria-hidden="true">
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
+            </span>
+            <h2 class="heading-md how-section__title">How it Works</h2>
+          </div>
+
+          <div class="how-section__intro">
+            <h3 class="how-section__headline">
+              <span>One Process. Five Capabilities.</span>
+            </h3>
+            <p class="eyebrow how-section__eyebrow">Internet → AuthProxy (port 443)</p>
+          </div>
+
+          <div class="how-section__main">
+            <div class="how-section__steps" aria-label="AuthProxy capabilities">
+              <article class="how-step-card">
+                <h4 class="how-step-card__title">Authentication</h4>
+                <p class="how-step-card__tag">11 methods</p>
+              </article>
+              <article class="how-step-card">
+                <h4 class="how-step-card__title">Reverse Proxy</h4>
+                <p class="how-step-card__tag">Dynamic routing</p>
+              </article>
+              <article class="how-step-card">
+                <h4 class="how-step-card__title">File Service</h4>
+                <p class="how-step-card__tag">Upload/Download/Images</p>
+              </article>
+              <article class="how-step-card">
+                <h4 class="how-step-card__title">Notifications</h4>
+                <p class="how-step-card__tag">SSE, Webhooks, Push</p>
+              </article>
+              <article class="how-step-card">
+                <h4 class="how-step-card__title">Admin Panel</h4>
+                <p class="how-step-card__tag">13 pages</p>
+              </article>
+            </div>
+
+            <div class="how-section__visual" aria-hidden="true">
+              <img
+                class="how-section__visual-grid"
+                src="./assets/figma/Grid-Background-3.svg"
+                alt=""
+                width="480"
+                height="480"
+              />
+              <div class="how-stack">
+                <div class="how-stack__top">
+                  <img
+                    class="how-stack__logo"
+                    src="./assets/logo-authproxy-dark.svg"
+                    alt=""
+                    width="88"
+                    height="48"
+                  />
+                </div>
+                <img
+                  class="how-stack__node how-stack__node--1"
+                  src="./assets/figma/System-node-b.svg"
+                  alt=""
+                  width="211"
+                  height="170"
+                />
+                <img
+                  class="how-stack__node how-stack__node--2"
+                  src="./assets/figma/System-node-b.svg"
+                  alt=""
+                  width="211"
+                  height="170"
+                />
+                <img
+                  class="how-stack__node how-stack__node--3"
+                  src="./assets/figma/System-node-b.svg"
+                  alt=""
+                  width="211"
+                  height="170"
+                />
+                <img
+                  class="how-stack__node how-stack__node--4"
+                  src="./assets/figma/System-node-b.svg"
+                  alt=""
+                  width="211"
+                  height="170"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="how-section__foot">
+            <p class="text-body-lg how-section__foot-copy">
+              AuthProxy sits at the edge of your application. Every request passes through it.
+              Authentication is verified, headers are injected (X-Crm, X-Scopes, X-Project), and
+              requests are forwarded to your backend services. Your services never see
+              unauthenticated traffic.
+            </p>
+          </div>
+        </div>
+      </section>
+
     </main>
 
-    <script type="module" src="./scripts/site.js?v=20260321-0005"></script>
-    <script type="module" src="./assets/js/animations.js?v=20260321-0005"></script>
+    <script type="module" src="./scripts/site.js?v=20260321-0007"></script>
+    <script type="module" src="./assets/js/animations.js?v=20260321-0007"></script>
   </body>
 </html>
