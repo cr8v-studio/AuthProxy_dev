@@ -758,6 +758,8 @@ a {
 }
 
 .how-section__shell {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
   border-left: 1px solid var(--site-section-border);
   border-right: 1px solid var(--site-section-border);
   background: var(--figma-color-off-white-base);
