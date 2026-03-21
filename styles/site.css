@@ -924,9 +924,12 @@ a {
 }
 
 .how-section__foot-copy {
+  display: block;
   margin: 0;
   max-width: none;
   color: var(--site-text-body);
+  visibility: visible;
+  opacity: 1;
 }
 
 .content-section {
