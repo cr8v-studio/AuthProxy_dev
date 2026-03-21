@@ -792,7 +792,7 @@ a {
   padding-top: var(--space-120);
   display: flex;
   align-items: flex-end;
-  border-bottom: 0;
+  border-bottom: 1px solid var(--site-section-border);
 }
 
 #how .section-label-bar::after {
@@ -804,6 +804,7 @@ a {
   border-bottom: 1px solid var(--site-section-border);
   transform: translateX(-50%);
   pointer-events: none;
+  z-index: 1;
 }
 
 #how .section-label {
