@@ -451,21 +451,21 @@ function initSystemNodeApgImpulseFlow() {
 
   const tweens = runners.map((runner, index) => {
     const pathLength = runner.getTotalLength();
-    const pulseLength = isMobileViewport() ? 30 : 48;
+    const pulseLength = isMobileViewport() ? 16 : 22;
 
     gsap.set(runner, {
       strokeDasharray: `${pulseLength} ${Math.max(pathLength, 1)}`,
       strokeDashoffset: 0,
-      autoAlpha: 1
+      autoAlpha: isMobileViewport() ? 0.86 : 0.94
     });
 
     return gsap.to(runner, {
       strokeDashoffset: -pathLength,
-      duration: isMobileViewport() ? 3.25 : 3.7,
+      duration: isMobileViewport() ? 2.9 : 3.35,
       ease: 'none',
       repeat: -1,
       paused: true,
-      delay: index * 0.35
+      delay: index * 0.5
     });
   });
 

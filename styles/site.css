@@ -937,7 +937,7 @@ a {
 
 .how-section__node-apg {
   position: absolute;
-  left: 8.3513px;
+  left: 6.3513px;
   top: 0;
   width: 213px;
   height: 125px;
@@ -958,16 +958,16 @@ a {
 
 .how-section__apg-impulse-base {
   fill: none;
-  stroke: rgba(238, 88, 90, 0.56);
-  stroke-width: 1.55;
+  stroke: rgba(238, 88, 90, 0.46);
+  stroke-width: 1.4;
 }
 
 .how-section__apg-impulse-runner {
   fill: none;
   stroke: #ed585a;
-  stroke-width: 2.6;
+  stroke-width: 1.85;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 8px rgba(237, 88, 90, 0.72));
+  filter: drop-shadow(0 0 5px rgba(237, 88, 90, 0.5));
 }
 
 .how-section__layer-group {
