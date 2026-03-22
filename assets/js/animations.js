@@ -444,9 +444,6 @@ function initSystemNodeBDataFlow() {
 function initSystemNodeApgImpulseFlow() {
   const wrap = document.querySelector('.how-section__node-apg-impulse');
   const runners = wrap ? gsap.utils.toArray('.how-section__apg-impulse-runner', wrap) : [];
-  const uplink = document.querySelector('.how-section__apg-uplink');
-  const uplinkBeam = uplink?.querySelector('.how-section__apg-uplink-beam');
-  const uplinkPulse = uplink?.querySelector('.how-section__apg-uplink-pulse');
 
   if (!wrap || runners.length === 0 || prefersReducedMotion) {
     return;
@@ -472,52 +469,14 @@ function initSystemNodeApgImpulseFlow() {
     });
   });
 
-  const uplinkTweens = [];
-
-  if (uplinkBeam && uplinkPulse) {
-    gsap.set(uplinkBeam, { autoAlpha: 0.42 });
-    gsap.set(uplinkPulse, { autoAlpha: 0.16, y: 0, scale: 0.75, transformOrigin: '50% 50%' });
-
-    const uplinkFlow = gsap.timeline({ paused: true, repeat: -1 });
-    uplinkFlow.to(uplinkPulse, {
-      y: -42,
-      autoAlpha: 1,
-      scale: 1,
-      duration: isMobileViewport() ? 0.84 : 0.96,
-      ease: 'none'
-    });
-    uplinkFlow.to(
-      uplinkPulse,
-      {
-        autoAlpha: 0,
-        scale: 0.84,
-        duration: 0.14,
-        ease: 'power1.out'
-      },
-      '>-0.02'
-    );
-    uplinkFlow.to({}, { duration: isMobileViewport() ? 0.16 : 0.22 });
-
-    const uplinkBeamPulse = gsap.to(uplinkBeam, {
-      autoAlpha: 0.88,
-      duration: isMobileViewport() ? 0.62 : 0.74,
-      ease: 'power1.inOut',
-      yoyo: true,
-      repeat: -1,
-      paused: true
-    });
-
-    uplinkTweens.push(uplinkFlow, uplinkBeamPulse);
-  }
-
   ScrollTrigger.create({
     trigger: wrap,
     start: 'top 88%',
     end: 'bottom 12%',
-    onEnter: () => [...tweens, ...uplinkTweens].forEach((tween) => tween.play()),
-    onEnterBack: () => [...tweens, ...uplinkTweens].forEach((tween) => tween.play()),
-    onLeave: () => [...tweens, ...uplinkTweens].forEach((tween) => tween.pause()),
-    onLeaveBack: () => [...tweens, ...uplinkTweens].forEach((tween) => tween.pause())
+    onEnter: () => tweens.forEach((tween) => tween.play()),
+    onEnterBack: () => tweens.forEach((tween) => tween.play()),
+    onLeave: () => tweens.forEach((tween) => tween.pause()),
+    onLeaveBack: () => tweens.forEach((tween) => tween.pause())
   });
 }
 
