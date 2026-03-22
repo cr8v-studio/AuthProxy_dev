@@ -1440,6 +1440,80 @@ function initInteractiveHoverStates() {
   });
 }
 
+function initCustomCursor() {
+  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  if (prefersReducedMotion || !hasFinePointer || !document.body) {
+    return;
+  }
+
+  const cursor = document.createElement('span');
+  cursor.className = 'site-cursor';
+  cursor.setAttribute('aria-hidden', 'true');
+  document.body.append(cursor);
+  document.body.classList.add('has-custom-cursor');
+
+  gsap.set(cursor, {
+    xPercent: -50,
+    yPercent: -50,
+    width: 16,
+    height: 16,
+    autoAlpha: 0,
+    scale: 1
+  });
+
+  const xTo = gsap.quickTo(cursor, 'x', {
+    duration: 0.16,
+    ease: 'power3.out'
+  });
+  const yTo = gsap.quickTo(cursor, 'y', {
+    duration: 0.16,
+    ease: 'power3.out'
+  });
+  const widthTo = gsap.quickTo(cursor, 'width', {
+    duration: 0.18,
+    ease: 'power3.out'
+  });
+  const heightTo = gsap.quickTo(cursor, 'height', {
+    duration: 0.18,
+    ease: 'power3.out'
+  });
+  const alphaTo = gsap.quickTo(cursor, 'autoAlpha', {
+    duration: 0.2,
+    ease: 'power2.out'
+  });
+
+  gsap.to(cursor, {
+    scale: 1.12,
+    duration: 0.92,
+    ease: 'sine.inOut',
+    yoyo: true,
+    repeat: -1
+  });
+
+  const move = (event) => {
+    xTo(event.clientX);
+    yTo(event.clientY);
+    alphaTo(1);
+  };
+
+  const onPress = () => {
+    widthTo(12);
+    heightTo(12);
+  };
+
+  const onRelease = () => {
+    widthTo(16);
+    heightTo(16);
+  };
+
+  window.addEventListener('mousemove', move, { passive: true });
+  window.addEventListener('mousedown', onPress, { passive: true });
+  window.addEventListener('mouseup', onRelease, { passive: true });
+  window.addEventListener('mouseleave', () => alphaTo(0), { passive: true });
+  window.addEventListener('blur', () => alphaTo(0), { passive: true });
+}
+
 // One base motion system for the whole page.
 async function initMotionSystem() {
   if (window[MOTION_BOOT_FLAG]) {
@@ -1453,6 +1527,7 @@ async function initMotionSystem() {
     setReducedMotionState();
     initNavbarMotion(null);
     initAuthAccordionMotion({ reduced: true });
+    initCustomCursor();
     return;
   }
 
@@ -1476,6 +1551,7 @@ async function initMotionSystem() {
   initProblemGridImpulseFlow();
   initAuthAccordionMotion();
   initInteractiveHoverStates();
+  initCustomCursor();
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });

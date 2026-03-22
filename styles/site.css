@@ -22,8 +22,39 @@ body.site-page {
   overflow-x: clip;
 }
 
+body.site-page.has-custom-cursor,
+body.site-page.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.site-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  z-index: 160;
+  opacity: 0;
+  will-change: transform, width, height, opacity;
+}
+
 body.site-page.is-preloading {
   overflow: hidden;
+}
+
+@media (hover: none), (pointer: coarse) {
+  body.site-page.has-custom-cursor,
+  body.site-page.has-custom-cursor * {
+    cursor: auto !important;
+  }
+
+  .site-cursor {
+    display: none !important;
+  }
 }
 
 .site-preloader {
