@@ -1467,6 +1467,7 @@ a {
   padding: var(--space-40) var(--space-48);
   border: 1px solid var(--site-section-border);
   background: var(--figma-color-white-base);
+  cursor: pointer;
 }
 
 .auth-acc__icon-box {
@@ -1519,7 +1520,7 @@ a {
   width: 20px;
   height: 20px;
   display: block;
-  transform: rotate(180deg);
+  transform: rotate(0deg);
   opacity: 0.95;
 }
 
@@ -1529,6 +1530,8 @@ a {
   background: var(--figma-color-white-base);
   border-left: 1px solid var(--site-section-border);
   border-right: 1px solid var(--site-section-border);
+  overflow: hidden;
+  transform: translateZ(0);
 }
 
 .auth-acc__grid {

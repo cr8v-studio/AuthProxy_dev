@@ -979,6 +979,216 @@ function initHeroMetricsCarousel() {
   };
 }
 
+function initAuthAccordionMotion({ reduced = false } = {}) {
+  const groups = gsap.utils.toArray('.auth-acc__group');
+
+  if (!groups.length) {
+    return;
+  }
+
+  const itemState = groups
+    .map((group) => {
+      const header = group.querySelector('.auth-acc__header');
+      const table = group.querySelector('.auth-acc__table');
+      const chevron = group.querySelector('.auth-acc__chevron');
+      const topCorner = group.querySelector('.auth-acc__icon-corner--tr');
+      const bottomCorner = group.querySelector('.auth-acc__icon-corner--bl');
+      const revealItems = table
+        ? gsap.utils.toArray('.auth-acc__head, .auth-acc__row', table)
+        : [];
+
+      if (!header || !table || !chevron) {
+        return null;
+      }
+
+      header.setAttribute('role', 'button');
+      header.setAttribute('tabindex', '0');
+      const contentId = table.id || `auth-acc-panel-${Math.random().toString(36).slice(2, 8)}`;
+      table.id = contentId;
+      header.setAttribute('aria-controls', contentId);
+
+      return {
+        group,
+        header,
+        table,
+        chevron,
+        topCorner,
+        bottomCorner,
+        revealItems
+      };
+    })
+    .filter(Boolean);
+
+  if (!itemState.length) {
+    return;
+  }
+
+  const setOpenState = (item, isOpen) => {
+    item.group.classList.toggle('is-open', isOpen);
+    item.header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+    if (reduced) {
+      item.table.hidden = !isOpen;
+      item.table.style.height = '';
+      item.table.style.opacity = '';
+      gsap.set(item.chevron, { rotate: isOpen ? 180 : 0 });
+      return;
+    }
+
+    gsap.killTweensOf(item.chevron);
+    gsap.to(item.chevron, {
+      rotate: isOpen ? 180 : 0,
+      duration: 0.46,
+      ease: 'power3.out',
+      overwrite: true
+    });
+  };
+
+  const animateOpen = (item) => {
+    if (reduced) {
+      item.table.hidden = false;
+      setOpenState(item, true);
+      return;
+    }
+
+    item.table.hidden = false;
+    gsap.killTweensOf(item.table);
+    gsap.set(item.table, { height: item.table.offsetHeight, opacity: 1 });
+
+    const targetHeight = item.table.scrollHeight;
+    gsap.to(item.table, {
+      height: targetHeight,
+      opacity: 1,
+      duration: isMobileViewport() ? 0.44 : 0.52,
+      ease: 'power2.out',
+      overwrite: true,
+      onComplete: () => {
+        item.table.style.height = 'auto';
+      }
+    });
+
+    if (item.revealItems.length) {
+      gsap.fromTo(
+        item.revealItems,
+        { autoAlpha: 0, y: 8 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.4,
+          ease: 'power2.out',
+          stagger: 0.05,
+          overwrite: true
+        }
+      );
+    }
+  };
+
+  const animateClose = (item) => {
+    if (reduced) {
+      item.table.hidden = true;
+      setOpenState(item, false);
+      return;
+    }
+
+    gsap.killTweensOf(item.table);
+    gsap.set(item.table, { height: item.table.scrollHeight, opacity: 1 });
+    gsap.to(item.table, {
+      height: 0,
+      opacity: 0,
+      duration: isMobileViewport() ? 0.36 : 0.44,
+      ease: 'power2.out',
+      overwrite: true,
+      onComplete: () => {
+        item.table.hidden = true;
+        item.table.style.height = '';
+      }
+    });
+  };
+
+  const openItem = (nextItem) => {
+    itemState.forEach((item) => {
+      const shouldOpen = item === nextItem;
+      setOpenState(item, shouldOpen);
+
+      if (shouldOpen) {
+        animateOpen(item);
+      } else {
+        animateClose(item);
+      }
+    });
+  };
+
+  itemState.forEach((item, index) => {
+    const isInitiallyOpen = index === 0;
+    item.group.classList.toggle('is-open', isInitiallyOpen);
+    item.header.setAttribute('aria-expanded', isInitiallyOpen ? 'true' : 'false');
+    gsap.set(item.chevron, { rotate: isInitiallyOpen ? 180 : 0 });
+    item.table.hidden = !isInitiallyOpen;
+    if (!isInitiallyOpen && !reduced) {
+      gsap.set(item.table, { height: 0, opacity: 0 });
+    } else if (!reduced) {
+      gsap.set(item.table, { height: 'auto', opacity: 1 });
+    }
+
+    item.header.addEventListener('click', () => {
+      openItem(item);
+    });
+
+    item.header.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') {
+        return;
+      }
+      event.preventDefault();
+      openItem(item);
+    });
+
+    if (!reduced && item.topCorner && item.bottomCorner) {
+      const trX = gsap.quickTo(item.topCorner, 'x', {
+        duration: 0.42,
+        ease: 'power3.out'
+      });
+      const trY = gsap.quickTo(item.topCorner, 'y', {
+        duration: 0.42,
+        ease: 'power3.out'
+      });
+      const blX = gsap.quickTo(item.bottomCorner, 'x', {
+        duration: 0.42,
+        ease: 'power3.out'
+      });
+      const blY = gsap.quickTo(item.bottomCorner, 'y', {
+        duration: 0.42,
+        ease: 'power3.out'
+      });
+      const chevRotate = gsap.quickTo(item.chevron, 'rotate', {
+        duration: 0.42,
+        ease: 'power3.out'
+      });
+
+      const onEnter = () => {
+        trX(3);
+        trY(-3);
+        blX(-3);
+        blY(3);
+
+        chevRotate(180);
+      };
+
+      const onLeave = () => {
+        trX(0);
+        trY(0);
+        blX(0);
+        blY(0);
+
+        const isOpen = item.header.getAttribute('aria-expanded') === 'true';
+        chevRotate(isOpen ? 180 : 0);
+      };
+
+      item.header.addEventListener('mouseenter', onEnter);
+      item.header.addEventListener('mouseleave', onLeave);
+    }
+  });
+}
+
 // Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
 function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
@@ -1153,6 +1363,7 @@ async function initMotionSystem() {
     mapRevealUtilities();
     setReducedMotionState();
     initNavbarMotion(null);
+    initAuthAccordionMotion({ reduced: true });
     return;
   }
 
@@ -1174,6 +1385,7 @@ async function initMotionSystem() {
   initHowSystemNodeEllipsesFlow();
   initHeroGridImpulseFlow();
   initProblemGridImpulseFlow();
+  initAuthAccordionMotion();
   initInteractiveHoverStates();
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
 
