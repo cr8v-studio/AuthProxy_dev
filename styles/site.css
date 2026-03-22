@@ -937,7 +937,7 @@ a {
 
 .how-section__node-apg {
   position: absolute;
-  left: 4.3513px;
+  left: 6.3513px;
   top: 0;
   width: 213px;
   height: 125px;
@@ -984,6 +984,8 @@ a {
 .how-section__layer-node--admin {
   top: 292px;
   z-index: 2;
+  filter: drop-shadow(0 16px 20px rgba(31, 31, 31, 0.22))
+    drop-shadow(0 8px 8px rgba(31, 31, 31, 0.14));
 }
 
 .how-section__foot {
