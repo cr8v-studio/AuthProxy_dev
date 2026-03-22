@@ -1105,21 +1105,25 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
     });
   };
 
+  const closeItem = (item) => {
+    setOpenState(item, false);
+    animateClose(item);
+  };
+
   const openItem = (nextItem) => {
     itemState.forEach((item) => {
-      const shouldOpen = item === nextItem;
-      setOpenState(item, shouldOpen);
-
-      if (shouldOpen) {
-        animateOpen(item);
-      } else {
-        animateClose(item);
+      if (item === nextItem) {
+        return;
       }
+      closeItem(item);
     });
+
+    setOpenState(nextItem, true);
+    animateOpen(nextItem);
   };
 
   itemState.forEach((item, index) => {
-    const isInitiallyOpen = index === 0;
+    const isInitiallyOpen = item.group.classList.contains('is-open');
     item.group.classList.toggle('is-open', isInitiallyOpen);
     item.header.setAttribute('aria-expanded', isInitiallyOpen ? 'true' : 'false');
     gsap.set(item.chevron, { rotate: isInitiallyOpen ? 180 : 0 });
@@ -1131,6 +1135,11 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
     }
 
     item.header.addEventListener('click', () => {
+      const isOpen = item.header.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        closeItem(item);
+        return;
+      }
       openItem(item);
     });
 
@@ -1139,6 +1148,11 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
         return;
       }
       event.preventDefault();
+      const isOpen = item.header.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        closeItem(item);
+        return;
+      }
       openItem(item);
     });
 
