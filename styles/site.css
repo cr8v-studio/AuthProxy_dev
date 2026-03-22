@@ -944,8 +944,8 @@ a {
   display: block;
   z-index: 7;
   filter:
-    drop-shadow(0 6px 10px rgba(237, 88, 90, 0.07))
-    drop-shadow(0 2px 5px rgba(31, 31, 31, 0.1));
+    drop-shadow(0 4px 8px rgba(237, 88, 90, 0.05))
+    drop-shadow(0 1px 4px rgba(31, 31, 31, 0.07));
 }
 
 .how-section__node-apg-impulse {
@@ -1076,8 +1076,8 @@ a {
 .how-section__layer-node--admin {
   top: 292px;
   z-index: 2;
-  filter: drop-shadow(0 10px 14px rgba(31, 31, 31, 0.15))
-    drop-shadow(0 4px 6px rgba(31, 31, 31, 0.08));
+  filter: drop-shadow(0 7px 10px rgba(31, 31, 31, 0.11))
+    drop-shadow(0 3px 5px rgba(31, 31, 31, 0.06));
 }
 
 .how-section__foot {
