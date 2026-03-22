@@ -499,14 +499,14 @@ function initHowSystemNodeEllipsesFlow() {
   const timeline = gsap.timeline({ paused: true, repeat: -1 });
 
   indicators.forEach((indicator, index) => {
-    const startAt = index * 0.24;
+    const startAt = index * 0.16;
 
     timeline.to(
       indicator,
       {
         autoAlpha: 1,
         scale: 1,
-        duration: 0.28,
+        duration: 0.2,
         ease: 'power2.out'
       },
       startAt
@@ -517,14 +517,14 @@ function initHowSystemNodeEllipsesFlow() {
       {
         autoAlpha: 0.08,
         scale: 0.84,
-        duration: 0.52,
+        duration: 0.34,
         ease: 'power1.inOut'
       },
-      startAt + 0.2
+      startAt + 0.14
     );
   });
 
-  timeline.to({}, { duration: 0.42 });
+  timeline.to({}, { duration: 0.18 });
 
   ScrollTrigger.create({
     trigger: container,
