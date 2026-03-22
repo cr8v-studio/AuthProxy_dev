@@ -1461,6 +1461,8 @@ a {
   display: flex;
   align-items: center;
   gap: var(--space-24);
+  box-sizing: border-box;
+  width: 100%;
   min-height: 110px;
   padding: var(--space-40) var(--space-48);
   border: 1px solid var(--site-section-border);
@@ -1495,6 +1497,8 @@ a {
 }
 
 .auth-acc__table {
+  box-sizing: border-box;
+  width: 100%;
   background: var(--figma-color-white-base);
   border-left: 1px solid var(--site-section-border);
   border-right: 1px solid var(--site-section-border);
@@ -1546,8 +1550,8 @@ a {
   font-family: var(--font-family-base);
 }
 
-.auth-acc__cell:first-child {
-  border-left: 1px solid var(--site-section-border);
+.auth-acc__cell:last-child {
+  border-right: 0;
 }
 
 .auth-acc__row:last-child .auth-acc__cell {
