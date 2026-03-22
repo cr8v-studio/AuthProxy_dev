@@ -27,7 +27,11 @@ const REVEAL_ASSIGNMENTS = [
   ['.how-section__visual', 'scale-in'],
   ['.problem-grid__visual-wrap', 'scale-in'],
   ['.problem-item', 'fade-up'],
-  ['.problem-statement > *', 'fade-up']
+  ['.problem-statement > *', 'fade-up'],
+  ['#auth .auth-section__intro', 'fade-up'],
+  ['#auth .auth-acc__group', 'fade-up'],
+  ['#auth .auth-section__technical', 'fade-up'],
+  ['#auth .auth-detail-card', 'fade-up']
 ];
 
 document.documentElement.style.scrollBehavior = 'auto';
