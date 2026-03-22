@@ -1010,54 +1010,6 @@ a {
   z-index: 3;
 }
 
-.how-section__notifs-flow {
-  position: absolute;
-  left: 0;
-  top: 219px;
-  width: 222px;
-  height: 173px;
-  z-index: 4;
-  pointer-events: none;
-}
-
-.how-section__notifs-underline {
-  position: absolute;
-  left: 18px;
-  top: 107px;
-  width: 49px;
-  height: 1.5px;
-  border-radius: 999px;
-  background: #1f1f1f;
-  opacity: 0.25;
-}
-
-.how-section__notifs-indicator {
-  position: absolute;
-  width: 7.5px;
-  height: 7.5px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-}
-
-.how-section__notifs-indicator--1 {
-  left: 154px;
-  top: 129px;
-  background: #7b9d89;
-}
-
-.how-section__notifs-indicator--2 {
-  left: 166px;
-  top: 122px;
-  background: #ee585a;
-}
-
-.how-section__notifs-indicator--3 {
-  left: 178px;
-  top: 115px;
-  background: #1f1f1f;
-}
-
 .how-section__layer-node--admin {
   top: 292px;
   z-index: 2;
