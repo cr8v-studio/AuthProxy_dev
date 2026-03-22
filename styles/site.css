@@ -937,17 +937,18 @@ a {
 
 .how-section__node-apg {
   position: absolute;
-  left: 10.3513px;
+  left: 9.3513px;
   top: 0;
   width: 213px;
   height: 125px;
   display: block;
   z-index: 7;
+  filter: drop-shadow(0 6px 10px rgba(237, 88, 90, 0.06));
 }
 
 .how-section__node-apg-impulse {
   position: absolute;
-  left: 10.3513px;
+  left: 9.3513px;
   top: 0;
   width: 213px;
   height: 125px;
