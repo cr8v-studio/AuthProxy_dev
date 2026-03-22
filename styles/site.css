@@ -976,47 +976,6 @@ a {
     drop-shadow(0 0 12px rgba(237, 88, 90, 0.28));
 }
 
-.how-section__apg-uplink {
-  position: absolute;
-  left: 111px;
-  top: 108px;
-  width: 2px;
-  height: 42px;
-  z-index: 6;
-  pointer-events: none;
-}
-
-.how-section__apg-uplink-beam {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 1px;
-  height: 100%;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to top,
-    rgba(237, 88, 90, 0.06) 0%,
-    rgba(237, 88, 90, 0.42) 48%,
-    rgba(237, 88, 90, 0.1) 100%
-  );
-  opacity: 0.45;
-}
-
-.how-section__apg-uplink-pulse {
-  position: absolute;
-  left: 50%;
-  bottom: -2px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  transform: translate(-50%, 50%);
-  background: #ed585a;
-  box-shadow:
-    0 0 2px rgba(237, 88, 90, 0.88),
-    0 0 6px rgba(237, 88, 90, 0.52);
-  opacity: 0.18;
-}
-
 .how-section__layer-group {
   position: absolute;
   left: -0.1487px;
