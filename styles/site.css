@@ -1366,6 +1366,25 @@ a {
   border-bottom: 0;
 }
 
+.auth-section__intro {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
+  border-left: 1px solid var(--site-section-border);
+  border-right: 1px solid var(--site-section-border);
+  background: rgba(244, 244, 244, 0.85);
+  padding: 44px;
+}
+
+.auth-section__title {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: 59px;
+  line-height: 59px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--figma-color-dark-base);
+}
+
 #problem .section-intro {
   padding: 0;
   border-top: 1px solid var(--site-section-border);
