@@ -1457,6 +1457,10 @@ a {
   margin-top: 0;
 }
 
+.auth-acc__group + .auth-acc__group .auth-acc__header {
+  border-top: 0;
+}
+
 .auth-acc__header {
   display: flex;
   align-items: center;
