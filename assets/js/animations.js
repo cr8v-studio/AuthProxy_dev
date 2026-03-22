@@ -480,6 +480,75 @@ function initSystemNodeApgImpulseFlow() {
   });
 }
 
+function initHowNotifsFlow() {
+  const wrap = document.querySelector('.how-section__notifs-flow');
+  const underline = wrap?.querySelector('.how-section__notifs-underline');
+  const indicators = wrap ? gsap.utils.toArray('.how-section__notifs-indicator', wrap) : [];
+
+  if (!wrap || !underline || indicators.length === 0 || prefersReducedMotion) {
+    return;
+  }
+
+  gsap.set(underline, { autoAlpha: 0.28 });
+  gsap.set(indicators, {
+    autoAlpha: 0.08,
+    scale: 0.78,
+    transformOrigin: '50% 50%'
+  });
+
+  const timeline = gsap.timeline({ paused: true, repeat: -1 });
+
+  timeline
+    .to(underline, {
+      autoAlpha: 1,
+      duration: 0.24,
+      ease: 'power2.out'
+    })
+    .to(underline, {
+      autoAlpha: 0.28,
+      duration: 0.34,
+      ease: 'power1.inOut'
+    });
+
+  indicators.forEach((indicator, index) => {
+    const startAt = 0.16 + index * 0.26;
+
+    timeline.to(
+      indicator,
+      {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.22,
+        ease: 'power2.out'
+      },
+      startAt
+    );
+
+    timeline.to(
+      indicator,
+      {
+        autoAlpha: 0.1,
+        scale: 0.8,
+        duration: 0.3,
+        ease: 'power1.inOut'
+      },
+      startAt + 0.14
+    );
+  });
+
+  timeline.to({}, { duration: 0.24 });
+
+  ScrollTrigger.create({
+    trigger: wrap,
+    start: 'top 90%',
+    end: 'bottom 10%',
+    onEnter: () => timeline.play(),
+    onEnterBack: () => timeline.play(),
+    onLeave: () => timeline.pause(),
+    onLeaveBack: () => timeline.pause()
+  });
+}
+
 function initProblemGridImpulseFlow() {
   const wrap = document.querySelector('.problem-grid__impulse');
   const dot = wrap?.querySelector('.problem-grid__impulse-dot');
@@ -1114,6 +1183,7 @@ async function initMotionSystem() {
   initSectionLabelChevronMotion();
   initSystemNodeBDataFlow();
   initSystemNodeApgImpulseFlow();
+  initHowNotifsFlow();
   initHeroGridImpulseFlow();
   initProblemGridImpulseFlow();
   initInteractiveHoverStates();
