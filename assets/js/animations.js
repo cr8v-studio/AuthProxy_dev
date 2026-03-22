@@ -1238,7 +1238,12 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
         trY?.(-3);
         blX?.(-3);
         blY?.(3);
-        playHeaderScramble(item.title, item.titleText);
+        const isOpen = item.header.getAttribute('aria-expanded') === 'true';
+        if (!isOpen) {
+          playHeaderScramble(item.title, item.titleText);
+        } else {
+          item.title.textContent = item.titleText;
+        }
 
         gsap.to(item.chevron, {
           rotate: 180,
