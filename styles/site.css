@@ -1372,7 +1372,7 @@ a {
   border-left: 1px solid var(--site-section-border);
   border-right: 1px solid var(--site-section-border);
   background: rgba(244, 244, 244, 0.85);
-  padding: 44px;
+  padding: var(--space-48);
 }
 
 .auth-section__title {
