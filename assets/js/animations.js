@@ -480,6 +480,63 @@ function initSystemNodeApgImpulseFlow() {
   });
 }
 
+function initHowSystemNodeEllipsesFlow() {
+  const container = document.querySelector('.how-section__nodes-telemetry');
+  const indicators = container
+    ? gsap.utils.toArray('.how-section__node-telemetry-indicator', container)
+    : [];
+
+  if (!container || indicators.length === 0 || prefersReducedMotion) {
+    return;
+  }
+
+  gsap.set(indicators, {
+    autoAlpha: 0.06,
+    scale: 0.82,
+    transformOrigin: '50% 50%'
+  });
+
+  const timeline = gsap.timeline({ paused: true, repeat: -1 });
+
+  indicators.forEach((indicator, index) => {
+    const startAt = index * 0.24;
+
+    timeline.to(
+      indicator,
+      {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.28,
+        ease: 'power2.out'
+      },
+      startAt
+    );
+
+    timeline.to(
+      indicator,
+      {
+        autoAlpha: 0.08,
+        scale: 0.84,
+        duration: 0.52,
+        ease: 'power1.inOut'
+      },
+      startAt + 0.2
+    );
+  });
+
+  timeline.to({}, { duration: 0.42 });
+
+  ScrollTrigger.create({
+    trigger: container,
+    start: 'top 88%',
+    end: 'bottom 12%',
+    onEnter: () => timeline.play(),
+    onEnterBack: () => timeline.play(),
+    onLeave: () => timeline.pause(),
+    onLeaveBack: () => timeline.pause()
+  });
+}
+
 function initProblemGridImpulseFlow() {
   const wrap = document.querySelector('.problem-grid__impulse');
   const dot = wrap?.querySelector('.problem-grid__impulse-dot');
@@ -1114,6 +1171,7 @@ async function initMotionSystem() {
   initSectionLabelChevronMotion();
   initSystemNodeBDataFlow();
   initSystemNodeApgImpulseFlow();
+  initHowSystemNodeEllipsesFlow();
   initHeroGridImpulseFlow();
   initProblemGridImpulseFlow();
   initInteractiveHoverStates();
