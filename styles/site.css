@@ -1457,7 +1457,7 @@ a {
   margin-top: 0;
 }
 
-.auth-acc__group:not(.is-open) + .auth-acc__group:not(.is-open) .auth-acc__header {
+.auth-acc__group + .auth-acc__group .auth-acc__header {
   border-top: 0;
 }
 
@@ -1534,6 +1534,7 @@ a {
   background: var(--figma-color-white-base);
   border-left: 1px solid var(--site-section-border);
   border-right: 1px solid var(--site-section-border);
+  border-bottom: 1px solid var(--site-section-border);
   overflow: hidden;
   transform: translateZ(0);
 }
