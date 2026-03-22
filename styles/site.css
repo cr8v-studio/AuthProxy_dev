@@ -111,12 +111,12 @@ body.site-page.is-preloading {
 }
 
 .site-preloader__line--top {
-  top: 22%;
+  top: 14%;
   transform-origin: left center;
 }
 
 .site-preloader__line--bottom {
-  bottom: 22%;
+  bottom: 14%;
   transform-origin: right center;
 }
 
