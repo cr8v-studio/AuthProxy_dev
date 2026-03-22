@@ -910,7 +910,7 @@ a {
 
 .how-section__visual {
   position: relative;
-  min-height: 512px;
+  min-height: 544px;
   overflow: visible;
   background: var(--figma-color-off-white-base);
 }
