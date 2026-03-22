@@ -1448,6 +1448,128 @@ a {
   color: var(--figma-color-dark-base);
 }
 
+.auth-section__accordion {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
+}
+
+.auth-acc__group + .auth-acc__group {
+  margin-top: 0;
+}
+
+.auth-acc__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  min-height: 110px;
+  padding: var(--space-40) var(--space-48);
+  border: 1px solid var(--site-section-border);
+  background: var(--figma-color-white-base);
+}
+
+.auth-acc__icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.auth-acc__title {
+  margin: 0;
+  flex: 1 1 auto;
+  font-family: var(--font-family-base);
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--figma-color-dark-base);
+}
+
+.auth-acc__chevron {
+  width: 20px;
+  height: 20px;
+  display: block;
+  transform: rotate(180deg);
+  opacity: 0.95;
+}
+
+.auth-acc__table {
+  background: var(--figma-color-white-base);
+  border-left: 1px solid var(--site-section-border);
+  border-right: 1px solid var(--site-section-border);
+}
+
+.auth-acc__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.auth-acc__head {
+  min-height: 65px;
+}
+
+.auth-acc__head-cell {
+  display: flex;
+  align-items: center;
+  min-height: 65px;
+  padding: var(--space-24) var(--space-48);
+  background: var(--figma-color-dark-base);
+  color: var(--figma-color-off-white-base);
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.auth-acc__head-cell:not(:last-child) {
+  border-right: 1px solid var(--site-section-border);
+}
+
+.auth-acc__row--90 {
+  min-height: 90px;
+}
+
+.auth-acc__row--75 {
+  min-height: 75px;
+}
+
+.auth-acc__cell {
+  display: flex;
+  align-items: center;
+  min-height: inherit;
+  padding: var(--space-24) var(--space-48);
+  border-right: 1px solid var(--site-section-border);
+  border-bottom: 1px solid var(--site-section-border);
+  font-family: var(--font-family-base);
+}
+
+.auth-acc__cell:first-child {
+  border-left: 1px solid var(--site-section-border);
+}
+
+.auth-acc__row:last-child .auth-acc__cell {
+  border-bottom: 0;
+}
+
+.auth-acc__cell--method {
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--figma-color-dark-base);
+}
+
+.auth-acc__cell--muted {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  letter-spacing: 0.14px;
+  color: var(--figma-color-dark-tint-2);
+}
+
 #problem .section-intro {
   padding: 0;
   border-top: 1px solid var(--site-section-border);

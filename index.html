@@ -507,6 +507,151 @@
             Every Auth Method Your Users Need. Already Built.
           </h2>
         </div>
+
+        <div class="site-container auth-section__accordion" data-node-id="304:7671">
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <img class="auth-acc__icon" src="./assets/figma/auth/icon-crypto.svg" alt="" aria-hidden="true" width="30" height="30" />
+              <h3 class="auth-acc__title">Cryptographic (Strongest)</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--90 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">PassKey</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Ed25519 challenge-response, SHA256(phone+password+domain)</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Default login for most users</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">FIDO2/WebAuthn</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Hardware keys with sign-count anti-cloning</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Enterprise, high-security accounts</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">UserKey</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Imported Ed25519 hex private key</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Automation, power users</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <img class="auth-acc__icon" src="./assets/figma/auth/icon-otp.svg" alt="" aria-hidden="true" width="30" height="30" />
+              <h3 class="auth-acc__title">One-Time Passwords</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--90 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Phone OTP</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">SMS/Messenger delivery, optional account creation</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Mobile-first onboarding</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--90 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Email OTP</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Email with MX validation + Magic Link option</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Desktop users, enterprise</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <img class="auth-acc__icon" src="./assets/figma/auth/icon-social.svg" alt="" aria-hidden="true" width="30" height="30" />
+              <h3 class="auth-acc__title">Social / OAuth</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Google</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">JWT validation with ID tokens</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Global audience</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Telegram</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">HMAC-SHA256 bot-based login</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">CIS/crypto communities</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Discord</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Code exchange + account linking</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Gaming, communities</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Facebook</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Graph API v21.0</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Consumer apps</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">GitHub</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Code exchange</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Developer tools</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">VK</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">JWT validation</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Russian market</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Apple</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">JWT + nonce verification</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">iOS requirement</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <img class="auth-acc__icon" src="./assets/figma/auth/icon-ai.svg" alt="" aria-hidden="true" width="30" height="30" />
+              <h3 class="auth-acc__title">AI / MACHINE</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">MCP Basic</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Public key headers, read-only</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">AI monitoring agents</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">MCP Verified</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Ed25519 timestamp signing</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">AI trading bots, automation</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">MCP App</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Delegated third-party access</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Third-party AI integrations</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </section>
 
     </main>
