@@ -1469,6 +1469,33 @@ a {
   background: var(--figma-color-white-base);
 }
 
+.auth-acc__icon-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-20);
+  flex: 0 0 auto;
+}
+
+.auth-acc__icon-corner {
+  position: absolute;
+  width: 15px;
+  height: 12px;
+  display: block;
+  pointer-events: none;
+}
+
+.auth-acc__icon-corner--tr {
+  top: 0;
+  right: 0;
+}
+
+.auth-acc__icon-corner--bl {
+  left: 0;
+  bottom: 0;
+}
+
 .auth-acc__icon {
   width: 30px;
   height: 30px;
