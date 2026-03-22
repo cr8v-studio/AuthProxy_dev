@@ -104,8 +104,8 @@ body.site-page.is-preloading {
 
 .site-preloader__line--top,
 .site-preloader__line--bottom {
-  left: 12%;
-  width: 76%;
+  left: 8%;
+  width: 84%;
   height: 1px;
   transform: scaleX(0);
 }
@@ -122,19 +122,19 @@ body.site-page.is-preloading {
 
 .site-preloader__line--left,
 .site-preloader__line--right {
-  top: 16%;
+  top: 12%;
   width: 1px;
-  height: 68%;
+  height: 76%;
   transform: scaleY(0);
 }
 
 .site-preloader__line--left {
-  left: 18%;
+  left: 12%;
   transform-origin: center top;
 }
 
 .site-preloader__line--right {
-  right: 18%;
+  right: 12%;
   transform-origin: center bottom;
 }
 
