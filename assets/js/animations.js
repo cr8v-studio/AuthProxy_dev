@@ -1156,45 +1156,52 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
       openItem(item);
     });
 
-    if (!reduced && item.topCorner && item.bottomCorner) {
-      const trX = gsap.quickTo(item.topCorner, 'x', {
-        duration: 0.42,
-        ease: 'power3.out'
+    if (!reduced) {
+      gsap.set(item.chevron, {
+        transformOrigin: '50% 50%',
+        willChange: 'transform'
       });
-      const trY = gsap.quickTo(item.topCorner, 'y', {
-        duration: 0.42,
-        ease: 'power3.out'
-      });
-      const blX = gsap.quickTo(item.bottomCorner, 'x', {
-        duration: 0.42,
-        ease: 'power3.out'
-      });
-      const blY = gsap.quickTo(item.bottomCorner, 'y', {
-        duration: 0.42,
-        ease: 'power3.out'
-      });
-      const chevRotate = gsap.quickTo(item.chevron, 'rotate', {
-        duration: 0.42,
-        ease: 'power3.out'
-      });
+
+      const trX = item.topCorner
+        ? gsap.quickTo(item.topCorner, 'x', { duration: 0.42, ease: 'power3.out' })
+        : null;
+      const trY = item.topCorner
+        ? gsap.quickTo(item.topCorner, 'y', { duration: 0.42, ease: 'power3.out' })
+        : null;
+      const blX = item.bottomCorner
+        ? gsap.quickTo(item.bottomCorner, 'x', { duration: 0.42, ease: 'power3.out' })
+        : null;
+      const blY = item.bottomCorner
+        ? gsap.quickTo(item.bottomCorner, 'y', { duration: 0.42, ease: 'power3.out' })
+        : null;
 
       const onEnter = () => {
-        trX(3);
-        trY(-3);
-        blX(-3);
-        blY(3);
+        trX?.(3);
+        trY?.(-3);
+        blX?.(-3);
+        blY?.(3);
 
-        chevRotate(180);
+        gsap.to(item.chevron, {
+          rotate: 180,
+          duration: 0.42,
+          ease: 'power3.out',
+          overwrite: true
+        });
       };
 
       const onLeave = () => {
-        trX(0);
-        trY(0);
-        blX(0);
-        blY(0);
+        trX?.(0);
+        trY?.(0);
+        blX?.(0);
+        blY?.(0);
 
         const isOpen = item.header.getAttribute('aria-expanded') === 'true';
-        chevRotate(isOpen ? 180 : 0);
+        gsap.to(item.chevron, {
+          rotate: isOpen ? 180 : 0,
+          duration: 0.42,
+          ease: 'power3.out',
+          overwrite: true
+        });
       };
 
       item.header.addEventListener('mouseenter', onEnter);
