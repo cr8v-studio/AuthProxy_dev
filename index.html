@@ -678,6 +678,44 @@
             </div>
           </div>
         </div>
+
+        <div class="site-container auth-section__details-grid" data-node-id="307:7746">
+          <article class="auth-detail-card auth-detail-card--tl" data-node-id="307:7747">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7753">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7748">• Challenge-Response Protocol: No passwords stored. Server generates random challenge → client signs with Ed25519 → server verifies. Replay attacks impossible (2-minute TTL).</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
+
+          <article class="auth-detail-card auth-detail-card--tr" data-node-id="307:7757">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7758">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7762">• In-Memory Sessions: ConcurrentDictionary, O(1) lookup, instant revocation. No Redis, no DB queries on every request.</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
+
+          <article class="auth-detail-card auth-detail-card--bl" data-node-id="307:7763">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7764">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7768">• Domain Salting: Password hash includes domain — stolen credentials don’t work on other sites.</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
+
+          <article class="auth-detail-card auth-detail-card--br" data-node-id="307:7769">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7770">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7774">• Timing Protection: Random 50-150ms delay on all auth attempts prevents timing attacks.</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
+        </div>
       </section>
 
     </main>
