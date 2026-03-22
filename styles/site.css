@@ -1333,6 +1333,39 @@ a {
   border-bottom: 0;
 }
 
+#auth .section-label-bar {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
+  position: relative;
+  min-height: 149px;
+  padding-top: var(--space-120);
+  display: flex;
+  align-items: flex-end;
+  border-inline: 1px solid var(--site-section-border);
+  border-bottom: 0;
+}
+
+#auth .section-label-bar::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  width: 100vw;
+  border-bottom: 1px solid var(--site-section-border);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+#auth .section-label {
+  width: 100%;
+  max-width: none;
+  min-height: auto;
+  margin-inline: 0;
+  padding: var(--space-12) var(--space-48);
+  gap: var(--space-8);
+  border-bottom: 0;
+}
+
 #problem .section-intro {
   padding: 0;
   border-top: 1px solid var(--site-section-border);
