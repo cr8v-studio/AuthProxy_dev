@@ -942,6 +942,7 @@ a {
   width: 213px;
   height: 125px;
   display: block;
+  z-index: 7;
 }
 
 .how-section__layer-group {
@@ -962,22 +963,27 @@ a {
 
 .how-section__layer-node--auth {
   top: 0;
+  z-index: 6;
 }
 
 .how-section__layer-node--proxy {
   top: 73px;
+  z-index: 5;
 }
 
 .how-section__layer-node--file {
   top: 146px;
+  z-index: 4;
 }
 
 .how-section__layer-node--notifs {
   top: 219px;
+  z-index: 3;
 }
 
 .how-section__layer-node--admin {
   top: 292px;
+  z-index: 2;
 }
 
 .how-section__foot {
