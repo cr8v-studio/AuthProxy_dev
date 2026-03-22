@@ -451,7 +451,7 @@ function initSystemNodeApgImpulseFlow() {
 
   const tweens = runners.map((runner, index) => {
     const pathLength = runner.getTotalLength();
-    const pulseLength = isMobileViewport() ? 16 : 22;
+    const pulseLength = isMobileViewport() ? 30 : 48;
 
     gsap.set(runner, {
       strokeDasharray: `${pulseLength} ${Math.max(pathLength, 1)}`,
@@ -461,11 +461,11 @@ function initSystemNodeApgImpulseFlow() {
 
     return gsap.to(runner, {
       strokeDashoffset: -pathLength,
-      duration: isMobileViewport() ? 2.9 : 3.35,
+      duration: isMobileViewport() ? 3.25 : 3.7,
       ease: 'none',
       repeat: -1,
       paused: true,
-      delay: index * 0.5
+      delay: index * 0.35
     });
   });
 
