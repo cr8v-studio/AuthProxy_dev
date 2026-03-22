@@ -991,13 +991,14 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
       const header = group.querySelector('.auth-acc__header');
       const table = group.querySelector('.auth-acc__table');
       const chevron = group.querySelector('.auth-acc__chevron');
+      const title = group.querySelector('.auth-acc__title');
       const topCorner = group.querySelector('.auth-acc__icon-corner--tr');
       const bottomCorner = group.querySelector('.auth-acc__icon-corner--bl');
       const revealItems = table
         ? gsap.utils.toArray('.auth-acc__head, .auth-acc__row', table)
         : [];
 
-      if (!header || !table || !chevron) {
+      if (!header || !table || !chevron || !title) {
         return null;
       }
 
@@ -1012,6 +1013,8 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
         header,
         table,
         chevron,
+        title,
+        titleText: (title.textContent || '').trim(),
         topCorner,
         bottomCorner,
         revealItems
@@ -1022,6 +1025,61 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
   if (!itemState.length) {
     return;
   }
+
+  const scrambleStateMap = new WeakMap();
+  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const randomScrambleChar = () =>
+    scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+
+  const playHeaderScramble = (label, finalText) => {
+    if (!label || !finalText || reduced) {
+      return;
+    }
+
+    const previousState = scrambleStateMap.get(label);
+    if (previousState?.tween) {
+      previousState.tween.kill();
+    }
+
+    const state = { progress: 0 };
+    const revealDelay = 0.08;
+    const totalFrames = Math.max(1, finalText.length);
+
+    const renderFrame = () => {
+      const normalized = gsap.utils.clamp(0, 1, state.progress);
+      const revealProgress =
+        normalized <= revealDelay ? 0 : (normalized - revealDelay) / (1 - revealDelay);
+      const revealCount = Math.floor(revealProgress * totalFrames);
+
+      label.textContent = finalText
+        .split('')
+        .map((character, index) => {
+          if (character === ' ') {
+            return ' ';
+          }
+          if (index < revealCount) {
+            return character;
+          }
+          return randomScrambleChar();
+        })
+        .join('');
+    };
+
+    renderFrame();
+
+    const tween = gsap.to(state, {
+      progress: 1,
+      duration: 0.58,
+      ease: 'power1.out',
+      overwrite: 'auto',
+      onUpdate: renderFrame,
+      onComplete: () => {
+        label.textContent = finalText;
+      }
+    });
+
+    scrambleStateMap.set(label, { tween });
+  };
 
   const setOpenState = (item, isOpen) => {
     item.group.classList.toggle('is-open', isOpen);
@@ -1180,6 +1238,7 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
         trY?.(-3);
         blX?.(-3);
         blY?.(3);
+        playHeaderScramble(item.title, item.titleText);
 
         gsap.to(item.chevron, {
           rotate: 180,
