@@ -911,7 +911,7 @@ a {
 .how-section__visual {
   position: relative;
   min-height: 512px;
-  overflow: hidden;
+  overflow: visible;
   background: var(--figma-color-off-white-base);
 }
 
@@ -964,10 +964,10 @@ a {
 
 .how-section__apg-impulse-runner {
   fill: none;
-  stroke: #ed585a;
+  stroke: rgba(255, 255, 255, 0.98);
   stroke-width: 1.85;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 5px rgba(237, 88, 90, 0.5));
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.36));
 }
 
 .how-section__layer-group {
