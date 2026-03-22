@@ -964,10 +964,13 @@ a {
 
 .how-section__apg-impulse-runner {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.98);
-  stroke-width: 1.85;
+  stroke: #ffffff;
+  stroke-width: 2.05;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.36));
+  filter:
+    drop-shadow(0 0 2px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 7px rgba(255, 255, 255, 0.72))
+    drop-shadow(0 0 12px rgba(255, 255, 255, 0.46));
 }
 
 .how-section__layer-group {
