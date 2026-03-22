@@ -924,6 +924,62 @@ a {
   transform: translate(-50%, -50%);
 }
 
+.how-section__group-svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 221.7026px;
+  height: 483px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.how-section__node-apg {
+  position: absolute;
+  left: 4.3513px;
+  top: 0;
+  width: 213px;
+  height: 125px;
+  display: block;
+}
+
+.how-section__layer-group {
+  position: absolute;
+  left: -0.1487px;
+  top: 18px;
+  width: 222px;
+  height: 465px;
+}
+
+.how-section__layer-node {
+  position: absolute;
+  left: 0;
+  width: 222px;
+  height: 173px;
+  display: block;
+}
+
+.how-section__layer-node--auth {
+  top: 0;
+}
+
+.how-section__layer-node--proxy {
+  top: 73px;
+}
+
+.how-section__layer-node--file {
+  top: 146px;
+}
+
+.how-section__layer-node--notifs {
+  top: 219px;
+}
+
+.how-section__layer-node--admin {
+  top: 292px;
+}
+
 .how-section__foot {
   padding: var(--space-48);
   background: var(--color-surface-overlay-strong);
