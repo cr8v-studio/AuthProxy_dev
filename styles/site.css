@@ -1641,6 +1641,92 @@ a {
   color: var(--figma-color-white-base);
 }
 
+.auth-section__details-grid {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, auto);
+}
+
+.auth-detail-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-24);
+  padding: 0 0 var(--space-48);
+  background: var(--figma-color-off-white-base);
+  overflow: hidden;
+}
+
+.auth-detail-card--tl {
+  border-left: 1px solid var(--site-section-border);
+  border-top: 1px solid var(--site-section-border);
+}
+
+.auth-detail-card--tr {
+  border-left: 1px solid var(--site-section-border);
+  border-right: 1px solid var(--site-section-border);
+  border-top: 1px solid var(--site-section-border);
+}
+
+.auth-detail-card--bl {
+  border-left: 1px solid var(--site-section-border);
+  border-top: 1px solid var(--site-section-border);
+  border-bottom: 1px solid var(--site-section-border);
+}
+
+.auth-detail-card--br {
+  border: 1px solid var(--site-section-border);
+}
+
+.auth-detail-card__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-12);
+  padding: var(--space-24);
+  border: 1px solid var(--site-section-border);
+  background: var(--figma-color-white-base);
+}
+
+.auth-detail-card__icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.auth-detail-card__text {
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--space-48);
+  font-family: var(--font-family-base);
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 400;
+  letter-spacing: 0.18px;
+  color: var(--figma-color-dark-tint-2);
+}
+
+.auth-detail-card__corner {
+  position: absolute;
+  left: 23px;
+  width: 15px;
+  height: 12px;
+  border-left: 1px solid var(--site-section-border);
+}
+
+.auth-detail-card__corner--top-left {
+  top: 23px;
+  border-top: 1px solid var(--site-section-border);
+}
+
+.auth-detail-card__corner--bottom-left {
+  bottom: 23px;
+  border-bottom: 1px solid var(--site-section-border);
+}
+
 #problem .section-intro {
   padding: 0;
   border-top: 1px solid var(--site-section-border);
