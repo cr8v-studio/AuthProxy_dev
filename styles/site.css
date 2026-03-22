@@ -938,18 +938,20 @@ a {
 .how-section__node-apg {
   position: absolute;
   left: 9.3513px;
-  top: 0;
+  top: -10px;
   width: 213px;
   height: 125px;
   display: block;
   z-index: 7;
-  filter: drop-shadow(0 6px 10px rgba(237, 88, 90, 0.06));
+  filter:
+    drop-shadow(0 10px 16px rgba(237, 88, 90, 0.18))
+    drop-shadow(0 3px 6px rgba(31, 31, 31, 0.14));
 }
 
 .how-section__node-apg-impulse {
   position: absolute;
   left: 9.3513px;
-  top: 0;
+  top: -10px;
   width: 213px;
   height: 125px;
   display: block;
@@ -965,13 +967,54 @@ a {
 
 .how-section__apg-impulse-runner {
   fill: none;
-  stroke: #ffffff;
-  stroke-width: 2.05;
+  stroke: #ed585a;
+  stroke-width: 2.15;
   stroke-linecap: round;
   filter:
-    drop-shadow(0 0 2px rgba(255, 255, 255, 0.95))
-    drop-shadow(0 0 7px rgba(255, 255, 255, 0.72))
-    drop-shadow(0 0 12px rgba(255, 255, 255, 0.46));
+    drop-shadow(0 0 2px rgba(237, 88, 90, 0.82))
+    drop-shadow(0 0 7px rgba(237, 88, 90, 0.48))
+    drop-shadow(0 0 12px rgba(237, 88, 90, 0.28));
+}
+
+.how-section__apg-uplink {
+  position: absolute;
+  left: 111px;
+  top: 108px;
+  width: 2px;
+  height: 42px;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.how-section__apg-uplink-beam {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to top,
+    rgba(237, 88, 90, 0.06) 0%,
+    rgba(237, 88, 90, 0.42) 48%,
+    rgba(237, 88, 90, 0.1) 100%
+  );
+  opacity: 0.45;
+}
+
+.how-section__apg-uplink-pulse {
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  background: #ed585a;
+  box-shadow:
+    0 0 2px rgba(237, 88, 90, 0.88),
+    0 0 6px rgba(237, 88, 90, 0.52);
+  opacity: 0.18;
 }
 
 .how-section__layer-group {
