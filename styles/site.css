@@ -23,13 +23,13 @@ body.site-page {
 }
 
 ::selection {
-  background: #9bbce2;
-  color: #1f1f1f;
+  background: #1f1f1f;
+  color: #ffffff;
 }
 
 ::-moz-selection {
-  background: #9bbce2;
-  color: #1f1f1f;
+  background: #1f1f1f;
+  color: #ffffff;
 }
 
 body.site-page.has-custom-cursor,
