@@ -308,7 +308,7 @@ function createRevealSystem() {
   const revealMap = new Map([
     ['fade-up', { autoAlpha: 0, y: motion.distance }],
     ['fade-in', { autoAlpha: 0 }],
-    ['scale-in', { autoAlpha: 0, y: motion.distance * 0.35, scaleX: motion.scaleStart, scaleY: motion.scaleStart }]
+    ['scale-in', { autoAlpha: 0, y: motion.distance * 0.35, scale: motion.scaleStart }]
   ]);
 
   revealMap.forEach((fromVars, className) => {
@@ -321,7 +321,6 @@ function createRevealSystem() {
         ...fromVars,
         duration: motion.duration,
         ease: motion.ease,
-        immediateRender: false,
         force3D: true,
         scrollTrigger: {
           trigger: element,
