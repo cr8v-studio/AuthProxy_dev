@@ -22,6 +22,16 @@ body.site-page {
   overflow-x: clip;
 }
 
+::selection {
+  background: #9bbce2;
+  color: #1f1f1f;
+}
+
+::-moz-selection {
+  background: #9bbce2;
+  color: #1f1f1f;
+}
+
 body.site-page.has-custom-cursor,
 body.site-page.has-custom-cursor * {
   cursor: none !important;
