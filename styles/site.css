@@ -1024,19 +1024,19 @@ a {
 
 .how-section__apg-impulse-base {
   fill: none;
-  stroke: rgba(238, 88, 90, 0.36);
-  stroke-width: 1.4;
+  stroke: rgba(238, 88, 90, 0.52);
+  stroke-width: 1.55;
 }
 
 .how-section__apg-impulse-runner {
   fill: none;
-  stroke: #ffb0b7;
+  stroke: #ff7f88;
   stroke-width: 2.45;
   stroke-linecap: round;
   filter:
-    drop-shadow(0 0 3px rgba(255, 184, 190, 0.82))
-    drop-shadow(0 0 10px rgba(255, 112, 122, 0.66))
-    drop-shadow(0 0 16px rgba(237, 88, 90, 0.46));
+    drop-shadow(0 0 6px rgba(255, 144, 154, 0.92))
+    drop-shadow(0 0 16px rgba(255, 92, 103, 0.82))
+    drop-shadow(0 0 28px rgba(237, 88, 90, 0.66));
 }
 
 .how-section__layer-group {
