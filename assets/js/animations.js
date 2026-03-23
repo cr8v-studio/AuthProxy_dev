@@ -449,9 +449,6 @@ function initSystemNodeApgImpulseFlow() {
   const wrap = document.querySelector('.how-section__node-apg-impulse');
   const bases = wrap ? gsap.utils.toArray('.how-section__apg-impulse-base', wrap) : [];
   const runners = wrap ? gsap.utils.toArray('.how-section__apg-impulse-runner', wrap) : [];
-  const energy = document.querySelector('.how-section__node-apg-energy');
-  const energyBase = energy?.querySelector('.how-section__node-apg-energy-base');
-  const energyFlow = energy?.querySelector('.how-section__node-apg-energy-flow');
 
   if (!wrap || runners.length === 0 || prefersReducedMotion) {
     return;
@@ -479,8 +476,8 @@ function initSystemNodeApgImpulseFlow() {
 
   if (bases.length) {
     gsap.set(bases, {
-      stroke: 'rgba(238, 88, 90, 0.52)',
-      strokeWidth: 1.55,
+      stroke: 'rgba(238, 88, 90, 0.58)',
+      strokeWidth: 1.7,
       filter:
         'drop-shadow(0 0 0 rgba(237, 88, 90, 0))'
     });
@@ -492,17 +489,17 @@ function initSystemNodeApgImpulseFlow() {
 
   if (diffuseTimeline) {
     diffuseTimeline.to(bases, {
-      stroke: 'rgba(255, 150, 158, 0.96)',
-      strokeWidth: 2.25,
+      stroke: 'rgba(255, 64, 72, 1)',
+      strokeWidth: 2.55,
       filter:
-        'drop-shadow(0 0 6px rgba(255, 226, 230, 0.84)) drop-shadow(0 0 16px rgba(237, 88, 90, 0.66))',
+        'drop-shadow(0 0 4px rgba(255, 88, 96, 0.96)) drop-shadow(0 0 12px rgba(255, 63, 71, 0.9)) drop-shadow(0 0 24px rgba(237, 88, 90, 0.64))',
       duration: isMobileViewport() ? 0.38 : 0.46,
       ease: 'power2.out',
       stagger: 0.08
     });
     diffuseTimeline.to(bases, {
-      stroke: 'rgba(238, 88, 90, 0.52)',
-      strokeWidth: 1.55,
+      stroke: 'rgba(238, 88, 90, 0.58)',
+      strokeWidth: 1.7,
       filter:
         'drop-shadow(0 0 0 rgba(237, 88, 90, 0))',
       duration: isMobileViewport() ? 0.74 : 0.9,
@@ -512,57 +509,6 @@ function initSystemNodeApgImpulseFlow() {
     diffuseTimeline.to({}, { duration: isMobileViewport() ? 0.36 : 0.44 });
   }
 
-  const energyTimeline =
-    energyBase && energyFlow
-      ? gsap.timeline({ paused: true, repeat: -1 })
-      : null;
-
-  if (energyTimeline) {
-    gsap.set(energyBase, { opacity: 0.42, scaleX: 0.78, transformOrigin: '50% 50%' });
-    gsap.set(energyFlow, {
-      yPercent: 16,
-      opacity: 0.18,
-      scaleY: 0.84,
-      transformOrigin: '50% 80%'
-    });
-
-    energyTimeline.to(energyFlow, {
-      yPercent: -18,
-      opacity: 0.98,
-      scaleY: 1.2,
-      duration: isMobileViewport() ? 0.42 : 0.5,
-      ease: 'power2.out'
-    });
-    energyTimeline.to(
-      energyBase,
-      {
-        opacity: 0.82,
-        scaleX: 1.14,
-        duration: isMobileViewport() ? 0.34 : 0.42,
-        ease: 'power2.out'
-      },
-      0
-    );
-    energyTimeline.to(energyFlow, {
-      yPercent: -32,
-      opacity: 0,
-      scaleY: 1.3,
-      duration: isMobileViewport() ? 0.5 : 0.6,
-      ease: 'power1.in'
-    });
-    energyTimeline.to(
-      energyBase,
-      {
-        opacity: 0.44,
-        scaleX: 0.8,
-        duration: isMobileViewport() ? 0.52 : 0.62,
-        ease: 'power1.inOut'
-      },
-      '<'
-    );
-    energyTimeline.to({}, { duration: isMobileViewport() ? 0.44 : 0.56 });
-  }
-
   ScrollTrigger.create({
     trigger: wrap,
     start: 'top 88%',
@@ -570,22 +516,18 @@ function initSystemNodeApgImpulseFlow() {
     onEnter: () => {
       tweens.forEach((tween) => tween.play());
       diffuseTimeline?.play();
-      energyTimeline?.play();
     },
     onEnterBack: () => {
       tweens.forEach((tween) => tween.play());
       diffuseTimeline?.play();
-      energyTimeline?.play();
     },
     onLeave: () => {
       tweens.forEach((tween) => tween.pause());
       diffuseTimeline?.pause();
-      energyTimeline?.pause();
     },
     onLeaveBack: () => {
       tweens.forEach((tween) => tween.pause());
       diffuseTimeline?.pause();
-      energyTimeline?.pause();
     }
   });
 }
