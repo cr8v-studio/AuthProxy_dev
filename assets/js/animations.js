@@ -490,9 +490,9 @@ function initSystemNodeApgImpulseFlow() {
   if (diffuseTimeline) {
     diffuseTimeline.to(bases, {
       stroke: 'rgba(255, 150, 158, 0.96)',
-      strokeWidth: 2.65,
+      strokeWidth: 2.25,
       filter:
-        'drop-shadow(0 0 10px rgba(255, 172, 182, 0.96)) drop-shadow(0 0 28px rgba(255, 96, 108, 0.82))',
+        'drop-shadow(0 0 4px rgba(255, 255, 255, 0.28)) drop-shadow(0 0 8px rgba(255, 156, 166, 0.92)) drop-shadow(0 0 20px rgba(255, 92, 103, 0.72))',
       duration: isMobileViewport() ? 0.38 : 0.46,
       ease: 'power2.out',
       stagger: 0.08
