@@ -1117,59 +1117,84 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
     return;
   }
 
-  const scrambleStateMap = new WeakMap();
-  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const randomScrambleChar = () =>
-    scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+  const titleWaveStateMap = new WeakMap();
 
-  const playHeaderScramble = (label, finalText) => {
+  const ensurePopMarkup = (label, text) => {
+    if (!label || !text) {
+      return [];
+    }
+
+    if (label.dataset.popReady === 'true') {
+      return Array.from(label.querySelectorAll('.hover-pop-char'));
+    }
+
+    label.textContent = '';
+    const chars = text.split('');
+    chars.forEach((character) => {
+      const part = document.createElement('span');
+      part.className = 'hover-pop-char';
+      if (character === ' ') {
+        part.dataset.space = 'true';
+        part.innerHTML = '&nbsp;';
+      } else {
+        part.textContent = character;
+      }
+      label.append(part);
+    });
+
+    const allParts = Array.from(label.querySelectorAll('.hover-pop-char'));
+    gsap.set(allParts, {
+      display: 'inline-block',
+      scale: 1,
+      y: 0,
+      transformOrigin: '50% 70%'
+    });
+
+    label.dataset.popReady = 'true';
+    return allParts;
+  };
+
+  const playHeaderPopWave = (label, finalText) => {
     if (!label || !finalText || reduced) {
       return;
     }
 
-    const previousState = scrambleStateMap.get(label);
-    if (previousState?.tween) {
-      previousState.tween.kill();
+    const allParts = ensurePopMarkup(label, finalText);
+    if (!allParts.length) {
+      return;
     }
 
-    const state = { progress: 0 };
-    const revealDelay = 0.08;
-    const totalFrames = Math.max(1, finalText.length);
+    const animatedParts = allParts.filter((part) => part.dataset.space !== 'true');
+    if (!animatedParts.length) {
+      return;
+    }
 
-    const renderFrame = () => {
-      const normalized = gsap.utils.clamp(0, 1, state.progress);
-      const revealProgress =
-        normalized <= revealDelay ? 0 : (normalized - revealDelay) / (1 - revealDelay);
-      const revealCount = Math.floor(revealProgress * totalFrames);
+    const previousTween = titleWaveStateMap.get(label);
+    if (previousTween) {
+      previousTween.kill();
+    }
 
-      label.textContent = finalText
-        .split('')
-        .map((character, index) => {
-          if (character === ' ') {
-            return ' ';
-          }
-          if (index < revealCount) {
-            return character;
-          }
-          return randomScrambleChar();
-        })
-        .join('');
-    };
+    gsap.set(allParts, { scale: 1, y: 0 });
 
-    renderFrame();
-
-    const tween = gsap.to(state, {
-      progress: 1,
-      duration: 0.58,
-      ease: 'power1.out',
-      overwrite: 'auto',
-      onUpdate: renderFrame,
-      onComplete: () => {
-        label.textContent = finalText;
-      }
+    const tween = gsap.timeline();
+    tween.to(animatedParts, {
+      scale: 1.34,
+      duration: 0.18,
+      ease: 'power2.out',
+      stagger: 0.038
     });
+    tween.to(
+      animatedParts,
+      {
+        scale: 1,
+        duration: 0.24,
+        ease: 'power2.out',
+        stagger: 0.038
+      },
+      0.08
+    );
 
-    scrambleStateMap.set(label, { tween });
+    titleWaveStateMap.set(label, tween);
   };
 
   const setOpenState = (item, isOpen) => {
@@ -1331,9 +1356,10 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
         blY?.(3);
         const isOpen = item.header.getAttribute('aria-expanded') === 'true';
         if (!isOpen) {
-          playHeaderScramble(item.title, item.titleText);
+          playHeaderPopWave(item.title, item.titleText);
         } else {
-          item.title.textContent = item.titleText;
+          const prepared = ensurePopMarkup(item.title, item.titleText);
+          gsap.set(prepared, { scale: 1, y: 0 });
         }
 
         gsap.to(item.chevron, {
@@ -1365,87 +1391,99 @@ function initAuthAccordionMotion({ reduced = false } = {}) {
   });
 }
 
-// Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
+// Shared interactive motion for buttons and controls, including hover text pop-wave treatment.
 function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
     return;
   }
 
-  const scrambleStateMap = new WeakMap();
-  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const waveStateMap = new WeakMap();
 
-  const randomScrambleChar = () =>
-    scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+  const ensurePopMarkup = (label, text) => {
+    if (!label || !text) {
+      return [];
+    }
 
-  const playBuildScramble = (label, finalText) => {
+    if (label.dataset.popReady === 'true') {
+      return Array.from(label.querySelectorAll('.hover-pop-char'));
+    }
+
+    label.textContent = '';
+    text.split('').forEach((character) => {
+      const part = document.createElement('span');
+      part.className = 'hover-pop-char';
+      if (character === ' ') {
+        part.dataset.space = 'true';
+        part.innerHTML = '&nbsp;';
+      } else {
+        part.textContent = character;
+      }
+      label.append(part);
+    });
+
+    const parts = Array.from(label.querySelectorAll('.hover-pop-char'));
+    gsap.set(parts, {
+      display: 'inline-block',
+      scale: 1,
+      y: 0,
+      transformOrigin: '50% 70%'
+    });
+    label.dataset.popReady = 'true';
+    return parts;
+  };
+
+  const playHoverPopWave = (label, finalText) => {
     if (!label || !finalText) {
       return;
     }
 
-    const previousState = scrambleStateMap.get(label);
-
-    if (previousState) {
-      if (previousState.tween) {
-        previousState.tween.kill();
-      }
-    }
-
-    const state = { progress: 0 };
-    const revealDelay = 0.08;
-    const totalFrames = Math.max(1, finalText.length);
-
-    const renderFrame = () => {
-      const normalized = gsap.utils.clamp(0, 1, state.progress);
-      const revealProgress =
-        normalized <= revealDelay ? 0 : (normalized - revealDelay) / (1 - revealDelay);
-      const revealCount = Math.floor(revealProgress * totalFrames);
-
-      const nextText = finalText
-        .split('')
-        .map((character, index) => {
-          if (character === ' ') {
-            return ' ';
-          }
-
-          if (index < revealCount) {
-            return character;
-          }
-
-          return randomScrambleChar();
-        })
-        .join('');
-
-      label.textContent = nextText;
-    };
-
-    renderFrame();
-
-    const tween = gsap.to(state, {
-      progress: 1,
-      duration: 0.58,
-      ease: 'power1.out',
-      overwrite: 'auto',
-      onUpdate: renderFrame,
-      onComplete: () => {
-        label.textContent = finalText;
-      }
-    });
-
-    scrambleStateMap.set(label, { tween });
-  };
-
-  const resetBuildScramble = (label, finalText) => {
-    if (!label) {
+    const parts = ensurePopMarkup(label, finalText);
+    const animatedParts = parts.filter((part) => part.dataset.space !== 'true');
+    if (!animatedParts.length) {
       return;
     }
 
-    const state = scrambleStateMap.get(label);
-
-    if (state?.tween) {
-      state.tween.kill();
+    const previousTween = waveStateMap.get(label);
+    if (previousTween) {
+      previousTween.kill();
     }
 
-    label.textContent = finalText || 'BUILD';
+    gsap.set(parts, { scale: 1, y: 0 });
+
+    const tween = gsap.timeline();
+    tween.to(animatedParts, {
+      scale: 1.34,
+      duration: 0.18,
+      ease: 'power2.out',
+      stagger: 0.034
+    });
+    tween.to(
+      animatedParts,
+      {
+        scale: 1,
+        duration: 0.24,
+        ease: 'power2.out',
+        stagger: 0.034
+      },
+      0.08
+    );
+
+    waveStateMap.set(label, tween);
+  };
+
+  const resetHoverPopWave = (label, finalText) => {
+    if (!label || !finalText) {
+      return;
+    }
+
+    const parts = ensurePopMarkup(label, finalText);
+    const previousTween = waveStateMap.get(label);
+
+    if (previousTween) {
+      previousTween.kill();
+    }
+
+    gsap.set(parts, { scale: 1, y: 0 });
   };
 
   const interactiveElements = document.querySelectorAll(
@@ -1458,8 +1496,8 @@ function initInteractiveHoverStates() {
     const isDropdownTrigger = element.classList.contains('site-header-dropdown');
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
     const buttonV1Label = isButtonV1 ? element.querySelector('.site-header-button-v1__label') : null;
-    const scrambleTarget = isBuildButton ? buildLabel : buttonV1Label;
-    const originalScrambleText = scrambleTarget ? (scrambleTarget.textContent || '').trim() : '';
+    const textHoverTarget = isBuildButton ? buildLabel : buttonV1Label;
+    const originalHoverText = textHoverTarget ? (textHoverTarget.textContent || '').trim() : '';
     const motion = getMotion();
     const scaleTo = gsap.quickTo(element, 'scale', {
       duration: motion.hoverDuration ?? 0.5,
@@ -1475,8 +1513,8 @@ function initInteractiveHoverStates() {
       willChange: 'transform'
     });
 
-    if (scrambleTarget) {
-      // Keep a stable button footprint so scramble glyph widths don't shift nearby controls.
+    if (textHoverTarget) {
+      // Keep a stable button footprint so hover glyph animation doesn't shift nearby controls.
       const stableWidth = Math.ceil(element.getBoundingClientRect().width);
       element.style.width = `${stableWidth}px`;
       element.style.minWidth = `${stableWidth}px`;
@@ -1506,8 +1544,8 @@ function initInteractiveHoverStates() {
       scaleTo(targetScale);
       yTo(targetY);
 
-      if (scrambleTarget) {
-        playBuildScramble(scrambleTarget, originalScrambleText);
+      if (textHoverTarget) {
+        playHoverPopWave(textHoverTarget, originalHoverText);
       }
     };
 
@@ -1515,8 +1553,8 @@ function initInteractiveHoverStates() {
       scaleTo(1);
       yTo(0);
 
-      if (scrambleTarget) {
-        resetBuildScramble(scrambleTarget, originalScrambleText);
+      if (textHoverTarget) {
+        resetHoverPopWave(textHoverTarget, originalHoverText);
       }
     };
 
