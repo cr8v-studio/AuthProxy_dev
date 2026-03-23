@@ -68,12 +68,36 @@
           <nav class="site-header__nav" aria-label="Primary">
             <a class="site-header-link" href="#problem">Problem</a>
             <a class="site-header-link" href="#how">How it Works</a>
-            <a class="site-header-link" href="./platform/">Platform</a>
-            <a class="site-header-link" href="./developers/">Developers</a>
-            <a class="site-header-link" href="#security">Security</a>
-            <a class="site-header-link" href="#pricing">Pricing</a>
-            <a class="site-header-link" href="#quick-start">Quick Start</a>
-            <a class="site-header-link" href="#faq">FAQ</a>
+            <a class="site-header-link" href="#auth">Auth</a>
+
+            <a class="site-header-dropdown" href="#problem">
+              <span>Platform</span>
+              <img
+                class="icon site-header-dropdown__icon"
+                src="./assets/icons/arrow-down.svg"
+                alt=""
+                aria-hidden="true"
+                width="16.6667"
+                height="11.1298"
+              />
+            </a>
+
+            <a class="site-header-link" href="#problem">Security</a>
+
+            <a class="site-header-dropdown" href="#problem">
+              <span>Developers</span>
+              <img
+                class="icon site-header-dropdown__icon"
+                src="./assets/icons/arrow-down.svg"
+                alt=""
+                aria-hidden="true"
+                width="16.6667"
+                height="11.1298"
+              />
+            </a>
+
+            <a class="site-header-link" href="#problem">Pricing</a>
+            <a class="site-header-link" href="#problem">FAQ</a>
           </nav>
 
           <div class="site-header__controls">
@@ -443,7 +467,7 @@
         </div>
       </section>
 
-      <section class="content-section" id="platform-preview">
+      <section class="content-section" id="auth">
         <div class="site-wide section-label-bar">
           <div class="section-label">
             <span class="section-label__chevrons" aria-hidden="true">
@@ -451,195 +475,225 @@
               <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
               <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
             </span>
-            <span class="heading-md">Platform</span>
+            <span class="heading-md">Authentication</span>
           </div>
         </div>
 
-        <div class="site-container section-intro">
-          <h2 class="heading-md section-intro__title">
-            One Process. Five Capabilities.
+        <div class="site-container auth-section__intro" data-node-id="130:9273">
+          <h2 class="auth-section__title" data-node-id="130:9277">
+            Every Auth Method Your Users Need. Already Built.
           </h2>
-          <p class="eyebrow section-intro__kicker">Preview of the full platform modules</p>
         </div>
 
-        <div class="site-container how-section__steps" aria-label="Platform preview">
-          <article class="how-step-card"><h3 class="how-step-card__title">Authentication</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">Reverse Proxy</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">File Service</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">Notifications</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">Admin Panel</h3></article>
+        <div class="site-container auth-section__accordion" data-node-id="304:7671">
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <div class="auth-acc__icon-box" aria-hidden="true" data-node-id="307:7695">
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--tr" src="./assets/figma/auth/div-icon-corner-tr.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--bl" src="./assets/figma/auth/div-icon-corner-bl.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon" src="./assets/figma/auth/icon-crypto.svg" alt="" width="30" height="30" />
+              </div>
+              <h3 class="auth-acc__title">Cryptographic (Strongest)</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--90 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">PassKey</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Ed25519 challenge-response, SHA256(phone+password+domain)</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Default login for most users</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">FIDO2/WebAuthn</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Hardware keys with sign-count anti-cloning</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Enterprise, high-security accounts</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">UserKey</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Imported Ed25519 hex private key</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Automation, power users</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <div class="auth-acc__icon-box" aria-hidden="true" data-node-id="307:7709">
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--tr" src="./assets/figma/auth/div-icon-corner-tr.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--bl" src="./assets/figma/auth/div-icon-corner-bl.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon" src="./assets/figma/auth/icon-otp-header.svg" alt="" width="30" height="30" />
+              </div>
+              <h3 class="auth-acc__title">One-Time Passwords</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--90 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Phone OTP</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">SMS/Messenger delivery, optional account creation</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Mobile-first onboarding</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--90 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Email OTP</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Email with MX validation + Magic Link option</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Desktop users, enterprise</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <div class="auth-acc__icon-box" aria-hidden="true" data-node-id="307:7716">
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--tr" src="./assets/figma/auth/div-icon-corner-tr.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--bl" src="./assets/figma/auth/div-icon-corner-bl.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon" src="./assets/figma/auth/icon-social-header.svg" alt="" width="30" height="30" />
+              </div>
+              <h3 class="auth-acc__title">Social / OAuth</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Google</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">JWT validation with ID tokens</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Global audience</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Telegram</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">HMAC-SHA256 bot-based login</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">CIS/crypto communities</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Discord</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Code exchange + account linking</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Gaming, communities</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Facebook</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Graph API v21.0</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Consumer apps</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">GitHub</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Code exchange</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Developer tools</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">VK</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">JWT validation</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Russian market</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">Apple</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">JWT + nonce verification</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">iOS requirement</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="auth-acc__group">
+            <header class="auth-acc__header">
+              <div class="auth-acc__icon-box" aria-hidden="true" data-node-id="307:7723">
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--tr" src="./assets/figma/auth/div-icon-corner-tr.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon-corner auth-acc__icon-corner--bl" src="./assets/figma/auth/div-icon-corner-bl.svg" alt="" width="15" height="12" />
+                <img class="auth-acc__icon" src="./assets/figma/auth/icon-ai-header.svg" alt="" width="30" height="30" />
+              </div>
+              <h3 class="auth-acc__title">AI / MACHINE</h3>
+              <img class="auth-acc__chevron" src="./assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="20" height="20" />
+            </header>
+            <div class="auth-acc__table">
+              <div class="auth-acc__head auth-acc__grid">
+                <div class="auth-acc__head-cell">Method</div>
+                <div class="auth-acc__head-cell">How It Works</div>
+                <div class="auth-acc__head-cell">Best For</div>
+              </div>
+              <div class="auth-acc__body">
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">MCP Basic</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Public key headers, read-only</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">AI monitoring agents</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">MCP Verified</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Ed25519 timestamp signing</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">AI trading bots, automation</div>
+                </div>
+                <div class="auth-acc__row auth-acc__row--75 auth-acc__grid">
+                  <div class="auth-acc__cell auth-acc__cell--method">MCP App</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Delegated third-party access</div>
+                  <div class="auth-acc__cell auth-acc__cell--muted">Third-party AI integrations</div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
 
-        <div class="site-container problem-statement">
-          <p class="problem-statement__quote heading-xl">
-            Full details for each capability are available on the dedicated Platform page.
-          </p>
-          <p class="eyebrow problem-statement__eyebrow">
-            <a class="site-header-button-v1" href="./platform/"><span class="site-header-button-v1__label">View Platform</span></a>
-          </p>
-        </div>
-      </section>
-
-      <section class="content-section" id="developers-preview">
-        <div class="site-wide section-label-bar">
-          <div class="section-label">
-            <span class="section-label__chevrons" aria-hidden="true">
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-            </span>
-            <span class="heading-md">Developers</span>
+        <div class="site-container auth-section__technical" data-node-id="307:7730">
+          <div class="auth-section__technical-inner" data-node-id="307:7731">
+            <div class="auth-section__technical-solution" data-node-id="307:7734">
+              <div class="auth-section__technical-row" data-node-id="307:7735">
+                <h3 class="auth-section__technical-title" data-node-id="307:7736">Key Technical Details</h3>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="site-container section-intro">
-          <h2 class="heading-md section-intro__title">AI-native and integration-ready tooling</h2>
-          <p class="eyebrow section-intro__kicker">Preview of the full Developers page</p>
-        </div>
+        <div class="site-container auth-section__details-grid" data-node-id="307:7746">
+          <article class="auth-detail-card auth-detail-card--tl" data-node-id="307:7747">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7753">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7748">• Challenge-Response Protocol: No passwords stored. Server generates random challenge → client signs with Ed25519 → server verifies. Replay attacks impossible (2-minute TTL).</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
 
-        <div class="site-container how-section__steps" aria-label="Developers preview">
-          <article class="how-step-card"><h3 class="how-step-card__title">PWA Optimization</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">MCP Integration</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">Federation</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">Integration</h3></article>
-          <article class="how-step-card"><h3 class="how-step-card__title">Form Customization</h3></article>
-        </div>
+          <article class="auth-detail-card auth-detail-card--tr" data-node-id="307:7757">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7758">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7762">• In-Memory Sessions: ConcurrentDictionary, O(1) lookup, instant revocation. No Redis, no DB queries on every request.</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
 
-        <div class="site-container problem-statement">
-          <p class="problem-statement__quote heading-xl">
-            Dedicated developer docs and architecture blocks are grouped on one page.
-          </p>
-          <p class="eyebrow problem-statement__eyebrow">
-            <a class="site-header-button-v1" href="./developers/"><span class="site-header-button-v1__label">View Developers</span></a>
-          </p>
+          <article class="auth-detail-card auth-detail-card--bl" data-node-id="307:7763">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7764">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7768">• Domain Salting: Password hash includes domain — stolen credentials don’t work on other sites.</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
+
+          <article class="auth-detail-card auth-detail-card--br" data-node-id="307:7769">
+            <div class="auth-detail-card__icon-wrap" data-node-id="307:7770">
+              <img class="auth-detail-card__icon" src="./assets/figma/auth/technical-card-icon.svg" alt="" aria-hidden="true" width="24" height="24" />
+            </div>
+            <p class="auth-detail-card__text" data-node-id="307:7774">• Timing Protection: Random 50-150ms delay on all auth attempts prevents timing attacks.</p>
+            <span class="auth-detail-card__corner auth-detail-card__corner--top-left" aria-hidden="true"></span>
+            <span class="auth-detail-card__corner auth-detail-card__corner--bottom-left" aria-hidden="true"></span>
+          </article>
         </div>
       </section>
-
-      <section class="content-section" id="security">
-        <div class="site-wide section-label-bar">
-          <div class="section-label">
-            <span class="section-label__chevrons" aria-hidden="true">
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-            </span>
-            <span class="heading-md">Security</span>
-          </div>
-        </div>
-        <div class="site-container section-intro">
-          <h2 class="heading-md section-intro__title">Enterprise Security Without Enterprise Complexity</h2>
-        </div>
-        <div class="site-container problem-list">
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Transport</p><p class="heading-xs-caps">HTTPS + Let's Encrypt auto-renewal</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Authentication</p><p class="heading-xs-caps">Ed25519 challenge-response (no passwords stored)</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Sessions</p><p class="heading-xs-caps">In-memory + HttpOnly + SameSite=Strict cookies</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">API</p><p class="heading-xs-caps">Per-session rate limiting (20 req buffer, 1/sec replenish)</p></div></article>
-        </div>
-      </section>
-
-      <section class="content-section" id="pricing">
-        <div class="site-wide section-label-bar">
-          <div class="section-label">
-            <span class="section-label__chevrons" aria-hidden="true">
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-            </span>
-            <span class="heading-md">Pricing</span>
-          </div>
-        </div>
-        <div class="site-container section-intro">
-          <h2 class="heading-md section-intro__title">AuthProxy is included in every project tier</h2>
-        </div>
-        <div class="site-container problem-list">
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Free — $0</p><p class="heading-xs-caps">Full module, all auth methods, community support</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Business — from $500/mo</p><p class="heading-xs-caps">Priority support, included hosting</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Enterprise — Custom</p><p class="heading-xs-caps">Dedicated engineer, SLA, custom features</p></div></article>
-        </div>
-      </section>
-
-      <section class="content-section" id="quick-start">
-        <div class="site-wide section-label-bar">
-          <div class="section-label">
-            <span class="section-label__chevrons" aria-hidden="true">
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-            </span>
-            <span class="heading-md">Quick Start</span>
-          </div>
-        </div>
-        <div class="site-container section-intro">
-          <h2 class="heading-md section-intro__title">Running in 15 Minutes</h2>
-        </div>
-        <div class="site-container problem-list">
-          <article class="problem-item"><span class="problem-item__number">01</span><div class="problem-item__copy"><p class="text-body-lg">Pull Docker image</p><p class="heading-xs-caps">docker pull itbuild/authproxy</p></div></article>
-          <article class="problem-item"><span class="problem-item__number">02</span><div class="problem-item__copy"><p class="text-body-lg">Configure database</p><p class="heading-xs-caps">Point to SQL Server (Express is free)</p></div></article>
-          <article class="problem-item"><span class="problem-item__number">03</span><div class="problem-item__copy"><p class="text-body-lg">Set domain</p><p class="heading-xs-caps">Configure rpId for cookie binding</p></div></article>
-          <article class="problem-item"><span class="problem-item__number">04</span><div class="problem-item__copy"><p class="text-body-lg">Enable auth methods</p><p class="heading-xs-caps">Toggle in settings table</p></div></article>
-          <article class="problem-item"><span class="problem-item__number">05</span><div class="problem-item__copy"><p class="text-body-lg">Add routes and deploy</p><p class="heading-xs-caps">Map backend services in route_map</p></div></article>
-        </div>
-      </section>
-
-      <section class="content-section" id="faq">
-        <div class="site-wide section-label-bar">
-          <div class="section-label">
-            <span class="section-label__chevrons" aria-hidden="true">
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-            </span>
-            <span class="heading-md">FAQ</span>
-          </div>
-        </div>
-        <div class="site-container problem-list">
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Do I need Redis for sessions?</p><p class="heading-xs-caps">No. Sessions are in-memory (ConcurrentDictionary).</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Can I use my own identity provider?</p><p class="heading-xs-caps">AuthProxy is your identity provider, with optional social OAuth.</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">What happens if AuthProxy goes down?</p><p class="heading-xs-caps">All requests stop. For HA run up to 10 instances with sticky sessions.</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Can I use AuthProxy without other ItBuild modules?</p><p class="heading-xs-caps">Yes. AuthProxy + your custom backend is the minimal setup.</p></div></article>
-        </div>
-      </section>
-
-      <section class="content-section" id="social-proof">
-        <div class="site-wide section-label-bar">
-          <div class="section-label">
-            <span class="section-label__chevrons" aria-hidden="true">
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-              <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
-            </span>
-            <span class="heading-md">Social Proof</span>
-          </div>
-        </div>
-        <div class="site-container problem-list">
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">Gekkard</p><p class="heading-xs-caps">EU-regulated fintech, Malta FSA license (EMI C55146)</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">GekWallet</p><p class="heading-xs-caps">Live crypto wallet deployment</p></div></article>
-          <article class="problem-item"><div class="problem-item__copy"><p class="text-body-lg">TeleStore</p><p class="heading-xs-caps">Game app marketplace</p></div></article>
-        </div>
-      </section>
-
-      <section class="content-section" id="closing-cta">
-        <div class="site-container problem-statement">
-          <p class="problem-statement__quote heading-xl">
-            Stop Building Auth Infrastructure. Start Building Your Product.
-          </p>
-          <p class="eyebrow problem-statement__eyebrow">
-            AuthProxy handles authentication, routing, files, and notifications so you can focus on
-            what makes your application unique.
-          </p>
-          <p class="eyebrow problem-statement__eyebrow">
-            <a class="site-header-button-v1" href="#quick-start"><span class="site-header-button-v1__label">Start Free</span></a>
-            <a class="site-header-button-v2" href="#quick-start"><span class="site-header-button-v2__label">Read Documentation</span></a>
-          </p>
-        </div>
-      </section>
-
-      <footer class="content-section" id="footer">
-        <div class="site-container section-intro">
-          <h2 class="heading-md section-intro__title">AuthProxy</h2>
-          <p class="eyebrow section-intro__kicker">Authentication, routing, files and notifications in one module.</p>
-        </div>
-      </footer>
 
     </main>
 
