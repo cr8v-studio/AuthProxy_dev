@@ -476,8 +476,8 @@ function initSystemNodeApgImpulseFlow() {
 
   if (bases.length) {
     gsap.set(bases, {
-      stroke: 'rgba(238, 88, 90, 0.58)',
-      strokeWidth: 1.7,
+      stroke: 'rgba(238, 88, 90, 0.52)',
+      strokeWidth: 1.55,
       filter:
         'drop-shadow(0 0 0 rgba(237, 88, 90, 0))'
     });
@@ -489,17 +489,17 @@ function initSystemNodeApgImpulseFlow() {
 
   if (diffuseTimeline) {
     diffuseTimeline.to(bases, {
-      stroke: 'rgba(255, 64, 72, 1)',
-      strokeWidth: 2.55,
+      stroke: 'rgba(255, 150, 158, 0.96)',
+      strokeWidth: 2.25,
       filter:
-        'drop-shadow(0 0 4px rgba(255, 88, 96, 0.96)) drop-shadow(0 0 12px rgba(255, 63, 71, 0.9)) drop-shadow(0 0 24px rgba(237, 88, 90, 0.64))',
+        'drop-shadow(0 0 6px rgba(255, 226, 230, 0.84)) drop-shadow(0 0 16px rgba(237, 88, 90, 0.66))',
       duration: isMobileViewport() ? 0.38 : 0.46,
       ease: 'power2.out',
       stagger: 0.08
     });
     diffuseTimeline.to(bases, {
-      stroke: 'rgba(238, 88, 90, 0.58)',
-      strokeWidth: 1.7,
+      stroke: 'rgba(238, 88, 90, 0.52)',
+      strokeWidth: 1.55,
       filter:
         'drop-shadow(0 0 0 rgba(237, 88, 90, 0))',
       duration: isMobileViewport() ? 0.74 : 0.9,
