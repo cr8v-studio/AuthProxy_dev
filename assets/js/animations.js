@@ -1441,9 +1441,9 @@ function initInteractiveHoverStates() {
 }
 
 function initCustomCursor() {
-  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
-  if (prefersReducedMotion || !hasFinePointer || !document.body) {
+  if (hasCoarsePointer || !document.body) {
     return;
   }
 
@@ -1492,8 +1492,10 @@ function initCustomCursor() {
   });
 
   const move = (event) => {
-    xTo(event.clientX);
-    yTo(event.clientY);
+    const x = event.clientX ?? 0;
+    const y = event.clientY ?? 0;
+    xTo(x);
+    yTo(y);
     alphaTo(1);
   };
 
@@ -1507,11 +1509,22 @@ function initCustomCursor() {
     heightTo(16);
   };
 
-  window.addEventListener('mousemove', move, { passive: true });
-  window.addEventListener('mousedown', onPress, { passive: true });
-  window.addEventListener('mouseup', onRelease, { passive: true });
-  window.addEventListener('mouseleave', () => alphaTo(0), { passive: true });
+  window.addEventListener('pointermove', move, { passive: true });
+  window.addEventListener('pointerdown', onPress, { passive: true });
+  window.addEventListener('pointerup', onRelease, { passive: true });
+  window.addEventListener('pointercancel', onRelease, { passive: true });
+  window.addEventListener('pointerleave', () => alphaTo(0), { passive: true });
   window.addEventListener('blur', () => alphaTo(0), { passive: true });
+
+  // Ensure cursor is visible even before first movement after tab focus.
+  window.addEventListener(
+    'pointerenter',
+    (event) => {
+      move(event);
+      alphaTo(1);
+    },
+    { passive: true }
+  );
 }
 
 // One base motion system for the whole page.
