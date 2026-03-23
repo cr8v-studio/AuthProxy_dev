@@ -1454,11 +1454,14 @@ function initCustomCursor() {
   document.body.classList.add('has-custom-cursor');
 
   gsap.set(cursor, {
+    x: window.innerWidth * 0.5,
+    y: window.innerHeight * 0.5,
     xPercent: -50,
     yPercent: -50,
     width: 16,
     height: 16,
-    autoAlpha: 0,
+    opacity: 1,
+    visibility: 'visible',
     scale: 1
   });
 
@@ -1478,7 +1481,7 @@ function initCustomCursor() {
     duration: 0.18,
     ease: 'power3.out'
   });
-  const alphaTo = gsap.quickTo(cursor, 'autoAlpha', {
+  const alphaTo = gsap.quickTo(cursor, 'opacity', {
     duration: 0.2,
     ease: 'power2.out'
   });
