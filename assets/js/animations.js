@@ -1502,7 +1502,7 @@ function initCustomCursor() {
         {
           scale: 2.05,
           opacity: 0,
-          duration: 1.45,
+          duration: 1.9,
           ease: 'power2.out'
         }
       )
@@ -1514,7 +1514,7 @@ function initCustomCursor() {
       });
 
   const ringPulseA = createRingPulse(ringA, 0);
-  const ringPulseB = createRingPulse(ringB, 0.72);
+  const ringPulseB = createRingPulse(ringB, 0.95);
 
   const corePulse = gsap.timeline({ repeat: -1 });
   corePulse.to(cursor, {
