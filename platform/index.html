@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AuthProxy Platform</title>
+    <meta
+      name="description"
+      content="AuthProxy platform modules: Authentication, Reverse Proxy, File Service, Notifications, Admin Panel."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/main.css?v=20260321-0004" />
+    <link rel="stylesheet" href="../styles/site.css?v=20260323-0027" />
+  </head>
+  <body class="site-page">
+    <div class="site-grid-overlay" aria-hidden="true"></div>
+    <div class="site-preloader" data-preloader aria-hidden="true">
+      <div class="site-preloader__grid">
+        <div class="site-preloader__col"></div>
+        <div class="site-preloader__col"></div>
+        <div class="site-preloader__col"></div>
+        <div class="site-preloader__col"></div>
+        <div class="site-preloader__col"></div>
+        <div class="site-preloader__col"></div>
+      </div>
+      <div class="site-preloader__frame" aria-hidden="true">
+        <div class="site-preloader__line site-preloader__line--top"></div>
+        <div class="site-preloader__line site-preloader__line--bottom"></div>
+        <div class="site-preloader__line site-preloader__line--left"></div>
+        <div class="site-preloader__line site-preloader__line--right"></div>
+      </div>
+      <div class="site-preloader__logo-wrap">
+        <img
+          class="site-preloader__logo"
+          data-preloader-logo
+          src="../assets/logo-preloader.svg"
+          alt="AuthProxy"
+          width="200"
+          height="80"
+        />
+      </div>
+    </div>
+
+    <header class="site-header-shell" id="page-top">
+      <div class="site-header__inner">
+        <a class="site-header-logo" href="../index.html#page-top" aria-label="AuthProxy home">
+          <img src="../assets/logo-authproxy-dark.svg" alt="AuthProxy" width="113.112" height="48" />
+        </a>
+        <button
+          class="site-header__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-navigation"
+        >
+          <span class="site-header__toggle-line"></span>
+          <span class="site-header__toggle-line"></span>
+          <span class="site-header__toggle-line"></span>
+          <span class="sr-only">Open navigation</span>
+        </button>
+        <div class="site-header__menu" id="site-navigation">
+          <nav class="site-header__nav" aria-label="Primary">
+            <a class="site-header-link" href="../index.html#problem">Problem</a>
+            <a class="site-header-link" href="../index.html#how">How it Works</a>
+            <div class="site-header__dropdown-group" data-dropdown>
+              <button
+                class="site-header-dropdown"
+                type="button"
+                aria-expanded="false"
+                aria-controls="platform-menu"
+              >
+                <span>Platform</span>
+                <img class="icon site-header-dropdown__icon" src="../assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="16.6667" height="11.1298" />
+              </button>
+              <div class="site-header__dropdown-panel" id="platform-menu">
+                <a class="site-header__dropdown-link" href="#authentication">Authentication</a>
+                <a class="site-header__dropdown-link" href="#reverse-proxy">Reverse Proxy</a>
+                <a class="site-header__dropdown-link" href="#file-service">File Service</a>
+                <a class="site-header__dropdown-link" href="#notifications">Notifications</a>
+                <a class="site-header__dropdown-link" href="#admin-panel">Admin Panel</a>
+              </div>
+            </div>
+            <div class="site-header__dropdown-group" data-dropdown>
+              <button
+                class="site-header-dropdown"
+                type="button"
+                aria-expanded="false"
+                aria-controls="developers-menu"
+              >
+                <span>Developers</span>
+                <img class="icon site-header-dropdown__icon" src="../assets/icons/arrow-down.svg" alt="" aria-hidden="true" width="16.6667" height="11.1298" />
+              </button>
+              <div class="site-header__dropdown-panel" id="developers-menu">
+                <a class="site-header__dropdown-link" href="../developers/#pwa-optimization">PWA Optimization</a>
+                <a class="site-header__dropdown-link" href="../developers/#mcp-integration">MCP Integration</a>
+                <a class="site-header__dropdown-link" href="../developers/#federation">Federation</a>
+                <a class="site-header__dropdown-link" href="../developers/#integration">Integration</a>
+                <a class="site-header__dropdown-link" href="../developers/#form-customization">Form Customization</a>
+              </div>
+            </div>
+            <a class="site-header-link" href="../index.html#security">Security</a>
+            <a class="site-header-link" href="../index.html#pricing">Pricing</a>
+            <a class="site-header-link" href="../index.html#quick-start">Quick Start</a>
+            <a class="site-header-link" href="../index.html#faq">FAQ</a>
+          </nav>
+          <div class="site-header__controls">
+            <a class="site-header-link-m2" href="../index.html#quick-start"><span class="site-header-link-m2__label">Build</span></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="landing-page">
+      <section class="hero-section" id="platform-top">
+        <div class="hero-section__viewport">
+          <div class="hero-section__frame">
+            <div class="hero-section__lead-strip">
+              <p class="text-body-lg hero-section__lead">Platform modules</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="authentication">
+        <div class="site-wide section-label-bar"><div class="section-label"><span class="section-label__chevrons" aria-hidden="true"><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /></span><span class="heading-md">Authentication</span></div></div>
+      </section>
+      <section class="content-section" id="reverse-proxy">
+        <div class="site-wide section-label-bar"><div class="section-label"><span class="section-label__chevrons" aria-hidden="true"><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /></span><span class="heading-md">Reverse Proxy</span></div></div>
+      </section>
+      <section class="content-section" id="file-service">
+        <div class="site-wide section-label-bar"><div class="section-label"><span class="section-label__chevrons" aria-hidden="true"><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /></span><span class="heading-md">File Service</span></div></div>
+      </section>
+      <section class="content-section" id="notifications">
+        <div class="site-wide section-label-bar"><div class="section-label"><span class="section-label__chevrons" aria-hidden="true"><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /></span><span class="heading-md">Notifications</span></div></div>
+      </section>
+      <section class="content-section" id="admin-panel">
+        <div class="site-wide section-label-bar"><div class="section-label"><span class="section-label__chevrons" aria-hidden="true"><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /><img src="../assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" /></span><span class="heading-md">Admin Panel</span></div></div>
+      </section>
+
+      <footer class="content-section" id="footer">
+        <div class="site-container section-intro"><h2 class="heading-md section-intro__title">AuthProxy Platform</h2></div>
+      </footer>
+    </main>
+
+    <script type="module" src="../scripts/site.js?v=20260321-0007"></script>
+    <script type="module" src="../assets/js/animations.js?v=20260323-0036"></script>
+  </body>
+</html>
