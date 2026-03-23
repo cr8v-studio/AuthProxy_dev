@@ -447,67 +447,43 @@ function initSystemNodeBDataFlow() {
 
 function initSystemNodeApgImpulseFlow() {
   const wrap = document.querySelector('.how-section__node-apg-impulse');
-  const bases = wrap ? gsap.utils.toArray('.how-section__apg-impulse-base', wrap) : [];
-  const runners = wrap ? gsap.utils.toArray('.how-section__apg-impulse-runner', wrap) : [];
+  const orbitPaths = wrap ? gsap.utils.toArray('.how-section__apg-impulse-runner', wrap) : [];
 
-  if (!wrap || runners.length === 0 || prefersReducedMotion) {
+  if (!wrap || orbitPaths.length === 0 || prefersReducedMotion) {
     return;
   }
 
-  const tweens = runners.map((runner, index) => {
-    const pathLength = runner.getTotalLength();
-    const pulseLength = isMobileViewport() ? 18 : 26;
+  const guidePaths = orbitPaths.filter((path) => typeof path.getTotalLength === 'function');
+  gsap.set(guidePaths, { autoAlpha: 0 });
 
-    gsap.set(runner, {
-      strokeDasharray: `${pulseLength} ${Math.max(pathLength, 1)}`,
-      strokeDashoffset: 0,
-      autoAlpha: 1
-    });
+  const dots = guidePaths.map(() => {
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('class', 'how-section__apg-impulse-dot');
+    dot.setAttribute('r', isMobileViewport() ? '2.6' : '3.2');
+    dot.setAttribute('cx', '0');
+    dot.setAttribute('cy', '0');
+    wrap.append(dot);
+    return dot;
+  });
 
-    return gsap.to(runner, {
-      strokeDashoffset: -pathLength,
-      duration: isMobileViewport() ? 2.15 : 2.55,
+  const tracks = guidePaths.map(() => ({ progress: 0 }));
+  const tweens = guidePaths.map((path, index) => {
+    const length = path.getTotalLength();
+
+    return gsap.to(tracks[index], {
+      progress: 1,
+      duration: isMobileViewport() ? 2.8 : 3.25,
       ease: 'none',
       repeat: -1,
       paused: true,
-      delay: index * 0.34
+      delay: index * 0.36,
+      onUpdate: () => {
+        const point = path.getPointAtLength((tracks[index].progress % 1) * length);
+        dots[index].setAttribute('cx', `${point.x}`);
+        dots[index].setAttribute('cy', `${point.y}`);
+      }
     });
   });
-
-  if (bases.length) {
-    gsap.set(bases, {
-      stroke: 'rgba(238, 88, 90, 0.52)',
-      strokeWidth: 1.55,
-      filter:
-        'drop-shadow(0 0 0 rgba(237, 88, 90, 0))'
-    });
-  }
-
-  const diffuseTimeline = bases.length
-    ? gsap.timeline({ paused: true, repeat: -1 })
-    : null;
-
-  if (diffuseTimeline) {
-    diffuseTimeline.to(bases, {
-      stroke: 'rgba(255, 150, 158, 0.96)',
-      strokeWidth: 2.25,
-      filter:
-        'drop-shadow(0 0 4px rgba(255, 255, 255, 0.28)) drop-shadow(0 0 8px rgba(255, 156, 166, 0.92)) drop-shadow(0 0 20px rgba(255, 92, 103, 0.72))',
-      duration: isMobileViewport() ? 0.38 : 0.46,
-      ease: 'power2.out',
-      stagger: 0.08
-    });
-    diffuseTimeline.to(bases, {
-      stroke: 'rgba(238, 88, 90, 0.52)',
-      strokeWidth: 1.55,
-      filter:
-        'drop-shadow(0 0 0 rgba(237, 88, 90, 0))',
-      duration: isMobileViewport() ? 0.74 : 0.9,
-      ease: 'power1.inOut',
-      stagger: 0.08
-    });
-    diffuseTimeline.to({}, { duration: isMobileViewport() ? 0.36 : 0.44 });
-  }
 
   ScrollTrigger.create({
     trigger: wrap,
@@ -515,19 +491,15 @@ function initSystemNodeApgImpulseFlow() {
     end: 'bottom 12%',
     onEnter: () => {
       tweens.forEach((tween) => tween.play());
-      diffuseTimeline?.play();
     },
     onEnterBack: () => {
       tweens.forEach((tween) => tween.play());
-      diffuseTimeline?.play();
     },
     onLeave: () => {
       tweens.forEach((tween) => tween.pause());
-      diffuseTimeline?.pause();
     },
     onLeaveBack: () => {
       tweens.forEach((tween) => tween.pause());
-      diffuseTimeline?.pause();
     }
   });
 }

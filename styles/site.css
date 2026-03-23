@@ -1030,14 +1030,16 @@ a {
 
 .how-section__apg-impulse-runner {
   fill: none;
-  stroke: #ff7f88;
-  stroke-width: 2.45;
-  stroke-linecap: round;
+  stroke: transparent;
+  stroke-width: 0;
+  opacity: 0;
+}
+
+.how-section__apg-impulse-dot {
+  fill: #ed585a;
   filter:
-    drop-shadow(0 0 3px rgba(255, 255, 255, 0.34))
-    drop-shadow(0 0 6px rgba(255, 144, 154, 0.92))
-    drop-shadow(0 0 16px rgba(255, 92, 103, 0.82))
-    drop-shadow(0 0 28px rgba(237, 88, 90, 0.66));
+    drop-shadow(0 0 6px rgba(237, 88, 90, 0.78))
+    drop-shadow(0 0 14px rgba(237, 88, 90, 0.52));
 }
 
 .how-section__layer-group {
