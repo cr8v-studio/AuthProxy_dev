@@ -561,7 +561,7 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
     return;
   }
 
-  const compactGap = isMobileViewport() ? 24 : 30;
+  const compactGap = isMobileViewport() ? 44 : 52;
   const expandedGap = 73;
   const offsetStep = Math.max(0, expandedGap - compactGap);
 
