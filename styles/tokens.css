@@ -236,7 +236,7 @@
   --header-nav-gap: var(--space-24);
 
   /* Component tokens: header link */
-  --header-link-height: 41px;
+  --header-link-height: var(--size-control-md);
   --header-link-padding-x: var(--space-stack-lg);
   --header-link-color: var(--figma-color-dark-tint-1);
   --header-link-font-size: var(--figma-type-br0-t1-highlight-size);
