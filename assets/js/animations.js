@@ -492,7 +492,7 @@ function initSystemNodeApgImpulseFlow() {
       stroke: 'rgba(255, 150, 158, 0.96)',
       strokeWidth: 2.25,
       filter:
-        'drop-shadow(0 0 6px rgba(255, 226, 230, 0.84)) drop-shadow(0 0 16px rgba(237, 88, 90, 0.66))',
+        'drop-shadow(0 0 6px rgba(255, 138, 148, 0.92)) drop-shadow(0 0 16px rgba(255, 92, 103, 0.72))',
       duration: isMobileViewport() ? 0.38 : 0.46,
       ease: 'power2.out',
       stagger: 0.08
