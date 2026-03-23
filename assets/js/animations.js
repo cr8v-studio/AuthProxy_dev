@@ -591,8 +591,7 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
     y: 0,
     duration: isMobileViewport() ? 0.84 : 1.06,
     ease: 'power3.out',
-    delay: isMobileViewport() ? 0.12 : 0.16,
-    stagger: isMobileViewport() ? 0.12 : 0.16
+    delay: isMobileViewport() ? 0.12 : 0.16
   });
 
   if (telemetryNodes.length) {
@@ -602,8 +601,7 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
         y: 0,
         duration: isMobileViewport() ? 0.84 : 1.06,
         ease: 'power3.out',
-        delay: isMobileViewport() ? 0.12 : 0.16,
-        stagger: isMobileViewport() ? 0.12 : 0.16
+        delay: isMobileViewport() ? 0.12 : 0.16
       },
       0
     );
