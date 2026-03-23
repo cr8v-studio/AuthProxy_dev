@@ -1034,9 +1034,9 @@ a {
   stroke-width: 2.45;
   stroke-linecap: round;
   filter:
-    drop-shadow(0 0 3px rgba(255, 255, 255, 0.98))
-    drop-shadow(0 0 10px rgba(255, 255, 255, 0.76))
-    drop-shadow(0 0 18px rgba(237, 88, 90, 0.52));
+    drop-shadow(0 0 3px rgba(255, 214, 218, 0.98))
+    drop-shadow(0 0 10px rgba(255, 170, 178, 0.76))
+    drop-shadow(0 0 18px rgba(237, 88, 90, 0.58));
 }
 
 .how-section__layer-group {
