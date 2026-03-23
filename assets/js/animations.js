@@ -1450,6 +1450,13 @@ function initCustomCursor() {
   const cursor = document.createElement('span');
   cursor.className = 'site-cursor';
   cursor.setAttribute('aria-hidden', 'true');
+  const ringA = document.createElement('span');
+  ringA.className = 'site-cursor__ring';
+  ringA.setAttribute('aria-hidden', 'true');
+  const ringB = document.createElement('span');
+  ringB.className = 'site-cursor__ring';
+  ringB.setAttribute('aria-hidden', 'true');
+  cursor.append(ringA, ringB);
   document.body.append(cursor);
   document.body.classList.add('has-custom-cursor');
 
@@ -1486,20 +1493,41 @@ function initCustomCursor() {
     ease: 'power2.out'
   });
 
-  const pulseTimeline = gsap.timeline({ repeat: -1 });
-  pulseTimeline.to(cursor, {
-    scale: 1.1,
-    opacity: 1,
-    duration: 0.2,
+  const createRingPulse = (ring, delay = 0) =>
+    gsap
+      .timeline({ repeat: -1, delay })
+      .fromTo(
+        ring,
+        { scale: 1, opacity: 0.58 },
+        {
+          scale: 2.05,
+          opacity: 0,
+          duration: 1.05,
+          ease: 'power2.out'
+        }
+      )
+      .to(ring, {
+        scale: 1,
+        opacity: 0,
+        duration: 0.01,
+        ease: 'none'
+      });
+
+  const ringPulseA = createRingPulse(ringA, 0);
+  const ringPulseB = createRingPulse(ringB, 0.5);
+
+  const corePulse = gsap.timeline({ repeat: -1 });
+  corePulse.to(cursor, {
+    scale: 1.04,
+    duration: 0.24,
     ease: 'power2.out'
   });
-  pulseTimeline.to(cursor, {
-    scale: 0.9,
-    opacity: 0.72,
-    duration: 0.34,
+  corePulse.to(cursor, {
+    scale: 1,
+    duration: 0.32,
     ease: 'power1.inOut'
   });
-  pulseTimeline.to({}, { duration: 0.18 });
+  corePulse.to({}, { duration: 0.18 });
 
   const move = (event) => {
     const x = event.clientX ?? 0;
@@ -1510,6 +1538,8 @@ function initCustomCursor() {
   };
 
   const onPress = () => {
+    ringPulseA.pause();
+    ringPulseB.pause();
     widthTo(12);
     heightTo(12);
   };
@@ -1517,6 +1547,8 @@ function initCustomCursor() {
   const onRelease = () => {
     widthTo(16);
     heightTo(16);
+    ringPulseA.play();
+    ringPulseB.play();
   };
 
   window.addEventListener('pointermove', move, { passive: true });
