@@ -1500,7 +1500,7 @@ function initInteractiveHoverStates() {
       const targetY = isBuildButton || isButtonV1
         ? 0
         : isDropdownTrigger
-          ? -0.5
+          ? 0
           : 0;
 
       scaleTo(targetScale);
