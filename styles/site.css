@@ -41,7 +41,19 @@ body.site-page.has-custom-cursor * {
   mix-blend-mode: difference;
   z-index: 160;
   opacity: 0;
+  overflow: visible;
   will-change: transform, width, height, opacity;
+}
+
+.site-cursor__ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
 }
 
 @supports not (mix-blend-mode: difference) {
