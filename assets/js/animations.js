@@ -1493,9 +1493,7 @@ function initInteractiveHoverStates() {
           ? 1.008
           : 1.012
         : isDropdownTrigger
-          ? isMobileViewport()
-            ? 1.004
-            : 1.008
+          ? 1
           : (nextMotion.buttonScale ?? 1);
       const targetY = isBuildButton || isButtonV1
         ? 0
