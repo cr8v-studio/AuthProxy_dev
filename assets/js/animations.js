@@ -1486,13 +1486,20 @@ function initCustomCursor() {
     ease: 'power2.out'
   });
 
-  gsap.to(cursor, {
-    scale: 1.12,
-    duration: 0.92,
-    ease: 'sine.inOut',
-    yoyo: true,
-    repeat: -1
+  const pulseTimeline = gsap.timeline({ repeat: -1 });
+  pulseTimeline.to(cursor, {
+    scale: 1.1,
+    opacity: 1,
+    duration: 0.2,
+    ease: 'power2.out'
   });
+  pulseTimeline.to(cursor, {
+    scale: 0.9,
+    opacity: 0.72,
+    duration: 0.34,
+    ease: 'power1.inOut'
+  });
+  pulseTimeline.to({}, { duration: 0.18 });
 
   const move = (event) => {
     const x = event.clientX ?? 0;
