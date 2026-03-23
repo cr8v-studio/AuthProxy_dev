@@ -36,11 +36,19 @@ body.site-page.has-custom-cursor * {
   height: 16px;
   border-radius: 50%;
   background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.65);
   pointer-events: none;
   mix-blend-mode: difference;
   z-index: 160;
   opacity: 0;
   will-change: transform, width, height, opacity;
+}
+
+@supports not (mix-blend-mode: difference) {
+  .site-cursor {
+    background: #111;
+    border-color: rgba(255, 255, 255, 0.85);
+  }
 }
 
 body.site-page.is-preloading {
