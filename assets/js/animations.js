@@ -589,9 +589,10 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
 
   timeline.to(layerNodes, {
     y: 0,
-    duration: isMobileViewport() ? 0.66 : 0.84,
+    duration: isMobileViewport() ? 0.84 : 1.06,
     ease: 'power3.out',
-    stagger: 0.07
+    delay: isMobileViewport() ? 0.12 : 0.16,
+    stagger: isMobileViewport() ? 0.12 : 0.16
   });
 
   if (telemetryNodes.length) {
@@ -599,9 +600,10 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
       telemetryNodes,
       {
         y: 0,
-        duration: isMobileViewport() ? 0.66 : 0.84,
+        duration: isMobileViewport() ? 0.84 : 1.06,
         ease: 'power3.out',
-        stagger: 0.07
+        delay: isMobileViewport() ? 0.12 : 0.16,
+        stagger: isMobileViewport() ? 0.12 : 0.16
       },
       0
     );
