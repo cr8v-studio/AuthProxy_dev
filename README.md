@@ -1,15 +1,32 @@
 # AuthProxy_dev
 
-Статический лендинг AuthProxy на HTML, CSS и JavaScript, готовый к публикации на GitHub Pages.
+Статический сайт AuthProxy на HTML, CSS и JavaScript (multi-page), готовый к публикации на GitHub Pages.
 
 ## Структура
 
-- `index.html` — основная страница
+- `index.html` — главная страница
+- `platform/index.html` — страница Platform
+- `developers/index.html` — страница Developers
 - `styles/` — стили, токены, типографика и page-level layout
 - `scripts/` — интерактивность сайта
 - `assets/` — изображения, иконки и motion-скрипт
+- `docs/LANDING-AUTHPROXY.md` — источник истины по структуре и текстам (source of truth)
 - `docs/` — служебная документация по компонентам
 - `.github/workflows/deploy-pages.yml` — автодеплой в GitHub Pages
+
+## Контент и навигация
+
+- Контент и порядок секций синхронизируются строго по `docs/LANDING-AUTHPROXY.md`.
+- Главная навигация содержит:
+  - `Problem`
+  - `How it Works`
+  - `Platform` (dropdown)
+  - `Developers` (dropdown)
+  - `Security`
+  - `Pricing`
+  - `Quick Start`
+  - `FAQ`
+- На `platform` и `developers` используется тот же header/nav shell и та же логика dropdown/mobile menu.
 
 ## Локальный запуск
 
