@@ -541,6 +541,73 @@ function initHowSystemNodeEllipsesFlow() {
   });
 }
 
+function initHowLayerStackReveal({ reduced = false } = {}) {
+  const group = document.querySelector('.how-section__layer-group');
+
+  if (!group) {
+    return;
+  }
+
+  const layerNodes = gsap.utils.toArray('.how-section__layer-node', group);
+  const telemetryNodes = gsap.utils.toArray('.how-section__node-telemetry', group);
+  const visual = document.querySelector('.how-section__visual');
+
+  if (!layerNodes.length || !visual) {
+    return;
+  }
+
+  if (reduced || prefersReducedMotion) {
+    gsap.set([...layerNodes, ...telemetryNodes], { clearProps: 'transform' });
+    return;
+  }
+
+  const compactGap = isMobileViewport() ? 24 : 30;
+  const expandedGap = 73;
+  const offsetStep = Math.max(0, expandedGap - compactGap);
+
+  layerNodes.forEach((node, index) => {
+    gsap.set(node, {
+      y: -(index * offsetStep),
+      transformOrigin: '50% 50%'
+    });
+  });
+
+  telemetryNodes.forEach((node, index) => {
+    gsap.set(node, {
+      y: -(index * offsetStep),
+      transformOrigin: '50% 50%'
+    });
+  });
+
+  const timeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: visual,
+      start: 'top 78%',
+      once: true
+    }
+  });
+
+  timeline.to(layerNodes, {
+    y: 0,
+    duration: isMobileViewport() ? 0.66 : 0.84,
+    ease: 'power3.out',
+    stagger: 0.07
+  });
+
+  if (telemetryNodes.length) {
+    timeline.to(
+      telemetryNodes,
+      {
+        y: 0,
+        duration: isMobileViewport() ? 0.66 : 0.84,
+        ease: 'power3.out',
+        stagger: 0.07
+      },
+      0
+    );
+  }
+}
+
 function initProblemGridImpulseFlow() {
   const wrap = document.querySelector('.problem-grid__impulse');
   const dot = wrap?.querySelector('.problem-grid__impulse-dot');
@@ -1581,6 +1648,7 @@ async function initMotionSystem() {
     mapRevealUtilities();
     setReducedMotionState();
     initNavbarMotion(null);
+    initHowLayerStackReveal({ reduced: true });
     initAuthAccordionMotion({ reduced: true });
     initCustomCursor();
     return;
@@ -1601,6 +1669,7 @@ async function initMotionSystem() {
   initSectionLabelChevronMotion();
   initSystemNodeBDataFlow();
   initSystemNodeApgImpulseFlow();
+  initHowLayerStackReveal();
   initHowSystemNodeEllipsesFlow();
   initHeroGridImpulseFlow();
   initProblemGridImpulseFlow();
