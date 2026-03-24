@@ -928,6 +928,13 @@ a {
   padding: var(--space-40) var(--space-48);
   background: var(--figma-color-white-base);
   border-bottom: 1px solid var(--site-section-border);
+  cursor: pointer;
+  transition: background-color 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.how-step-card:hover,
+.how-step-card:focus-within {
+  background: #f4f4f4;
 }
 
 .how-step-card + .how-step-card {
