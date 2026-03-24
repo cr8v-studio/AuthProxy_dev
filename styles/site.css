@@ -938,15 +938,21 @@ a {
   border-bottom: 0;
 }
 
-.how-step-card::after {
-  content: "";
+.how-step-card__icon-box {
   position: absolute;
-  right: 24px;
   top: 24px;
-  width: 15px;
-  height: 12px;
-  background: center / 100% 100% no-repeat;
-  background-image: var(--problem-item-corner-asset);
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.how-step-card__icon {
+  width: 29.5px;
+  height: 29.5px;
+  display: block;
 }
 
 .how-step-card__title {
