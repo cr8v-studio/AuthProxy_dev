@@ -217,7 +217,9 @@
 
   --hero-cta-shell-corner-tr: url("../assets/header-button-v1-corner-tr-default.svg");
   --hero-cta-shell-corner-br: url("../assets/header-button-v1-corner-br-default.svg");
-  --problem-item-corner-asset: url("../assets/header-social-corner-tr-default.svg");
+  --problem-item-corner-tr-asset: url("../assets/figma/problem/problem-step-corner-tr.svg");
+  --problem-item-corner-bl-asset: url("../assets/figma/problem/problem-step-corner-bl.svg");
+  --problem-item-corner-asset: var(--problem-item-corner-tr-asset);
 
   /* Semantic control typography */
   --type-control-caps-size: var(--type-heading-xs-caps-size);
