@@ -1869,7 +1869,7 @@ a {
 
 #problem .problem-item::after {
   left: var(--space-24);
-  bottom: 23px;
+  bottom: var(--space-24);
 }
 
 #problem .problem-item::before {
