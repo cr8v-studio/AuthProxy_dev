@@ -1378,20 +1378,22 @@ a {
 .problem-item::after {
   content: "";
   position: absolute;
-  right: var(--space-stack-sm);
   width: var(--size-corner-width);
   height: var(--size-corner-height);
   background: center / 100% 100% no-repeat;
 }
 
 .problem-item::before {
-  content: none;
+  top: var(--space-stack-sm);
+  right: var(--space-stack-sm);
+  background-image: var(--problem-item-corner-tr-asset);
 }
 
 .problem-item::after {
+  left: var(--space-stack-sm);
   bottom: var(--space-stack-sm);
-  transform: scaleY(-1);
-  background-image: var(--problem-item-corner-asset);
+  transform: rotate(180deg);
+  background-image: var(--problem-item-corner-bl-asset);
 }
 
 .problem-item__number {
@@ -1859,8 +1861,13 @@ a {
 }
 
 #problem .problem-item::after {
+  left: var(--space-24);
+  bottom: 23px;
+}
+
+#problem .problem-item::before {
   right: var(--space-24);
-  bottom: calc(var(--space-24) - 1px);
+  top: var(--space-24);
 }
 
 #problem .problem-statement {
