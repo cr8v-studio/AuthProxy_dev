@@ -9,6 +9,10 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const mobileViewport = window.matchMedia('(max-width: 767px)');
 const isMobileViewport = () => mobileViewport.matches;
 const MOTION_BOOT_FLAG = '__apMotionBooted';
+const rootStyles = getComputedStyle(document.documentElement);
+const accentAlertRgbToken = rootStyles.getPropertyValue('--figma-color-extra-2-rgb').trim();
+const ACCENT_ALERT_RGB = accentAlertRgbToken || '237 88 90';
+const accentAlert = (alpha) => `rgb(${ACCENT_ALERT_RGB} / ${alpha})`;
 
 const getMotion = () => ({
   duration: isMobileViewport() ? 0.5 : 0.65,
@@ -395,7 +399,7 @@ function initSystemNodeBDataFlow() {
     autoAlpha: 1,
     scale: 1,
     transformOrigin: '50% 50%',
-    backgroundColor: 'rgba(237, 88, 90, 0)',
+    backgroundColor: accentAlert(0),
     borderColor: '#1f1f1f'
   });
 
@@ -412,7 +416,7 @@ function initSystemNodeBDataFlow() {
       light,
       {
         scale: 0.9,
-        backgroundColor: 'rgba(237, 88, 90, 1)',
+        backgroundColor: accentAlert(1),
         boxShadow: 'none',
         duration: 0.2
       },
@@ -423,7 +427,7 @@ function initSystemNodeBDataFlow() {
       light,
       {
         scale: 1,
-        backgroundColor: 'rgba(237, 88, 90, 0)',
+        backgroundColor: accentAlert(0),
         boxShadow: 'none',
         duration: 0.34,
         ease: 'power1.inOut'
@@ -664,8 +668,7 @@ function initProblemGridImpulseFlow() {
       {
         autoAlpha: 1,
         scale: 1.18,
-        boxShadow:
-          '0 0 10px rgba(237, 88, 90, 0.56), 0 0 18px rgba(237, 88, 90, 0.32)',
+        boxShadow: `0 0 10px ${accentAlert(0.56)}, 0 0 18px ${accentAlert(0.32)}`,
         duration: 0.14,
         ease: 'power2.out'
       },
@@ -676,7 +679,7 @@ function initProblemGridImpulseFlow() {
       {
         autoAlpha: 0,
         scale: 0.85,
-        boxShadow: '0 0 0 rgba(237, 88, 90, 0)',
+        boxShadow: `0 0 0 ${accentAlert(0)}`,
         duration: 0.22,
         ease: 'power1.inOut'
       },
@@ -764,8 +767,7 @@ function initHeroGridImpulseFlow() {
       {
         autoAlpha: 1,
         scale: 1.18,
-        boxShadow:
-          '0 0 10px rgba(237, 88, 90, 0.56), 0 0 18px rgba(237, 88, 90, 0.32)',
+        boxShadow: `0 0 10px ${accentAlert(0.56)}, 0 0 18px ${accentAlert(0.32)}`,
         duration: 0.14,
         ease: 'power2.out'
       },
@@ -776,7 +778,7 @@ function initHeroGridImpulseFlow() {
       {
         autoAlpha: 0,
         scale: 0.85,
-        boxShadow: '0 0 0 rgba(237, 88, 90, 0)',
+        boxShadow: `0 0 0 ${accentAlert(0)}`,
         duration: 0.22,
         ease: 'power1.inOut'
       },
