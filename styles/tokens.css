@@ -117,6 +117,8 @@
   --figma-color-dark-tint-9: #d7d7d7;
   --figma-color-extra-0: #778f99;
   --figma-color-extra-1: #7b9d89;
+  --figma-color-extra-2: #ed585a;
+  --figma-color-extra-2-rgb: 237 88 90;
   --figma-color-off-white-base: #f4f4f4;
   --figma-color-off-white-alpha-1: rgba(244, 244, 244, 0.85);
   --figma-color-off-white-alpha-2: rgba(244, 244, 244, 0.74);
@@ -144,6 +146,7 @@
   --color-surface-glass-strong: rgba(244, 244, 244, 0.92);
   --color-surface-glass-medium: rgba(244, 244, 244, 0.55);
   --color-border-soft: var(--figma-color-dark-tint-9);
+  --color-accent-alert: var(--figma-color-extra-2);
 
   /* Semantic effect tokens */
   --effect-blur-header-base: 6px;
