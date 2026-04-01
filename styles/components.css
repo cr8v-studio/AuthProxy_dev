@@ -86,6 +86,22 @@
   object-fit: contain;
 }
 
+.site-header-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--size-control-md);
+  padding-inline: var(--space-stack-lg);
+  color: var(--header-link-color);
+  text-decoration: none;
+}
+
+.site-header-social img {
+  display: block;
+  width: var(--size-icon-sm);
+  height: auto;
+}
+
 .site-header-link {
   --control-height: var(--header-link-height);
   --control-padding-inline: var(--header-link-padding-x);

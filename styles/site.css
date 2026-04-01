@@ -353,7 +353,9 @@ a {
 
 .site-header__controls {
   flex: 0 0 auto;
-  margin-left: var(--space-4);
+  width: var(--header-logo-width);
+  min-width: var(--header-logo-width);
+  margin-left: 0;
   justify-content: flex-end;
 }
 
