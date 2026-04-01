@@ -46,8 +46,10 @@ body.site-page {
   .solution-capability-item__tag,
   .text-highlight
 )::selection {
-  background: #f4f4f4;
-  color: #1f1f1f;
+  background: #f4f4f4 !important;
+  color: #1f1f1f !important;
+  text-shadow: none;
+  -webkit-text-fill-color: #1f1f1f;
 }
 
 :is(
@@ -63,8 +65,9 @@ body.site-page {
   .solution-capability-item__tag,
   .text-highlight
 )::-moz-selection {
-  background: #f4f4f4;
-  color: #1f1f1f;
+  background: #f4f4f4 !important;
+  color: #1f1f1f !important;
+  text-shadow: none;
 }
 
 body.site-page.has-custom-cursor,
