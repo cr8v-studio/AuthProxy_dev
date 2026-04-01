@@ -32,39 +32,37 @@ body.site-page {
   color: #ffffff;
 }
 
-/* Keep text selection visible on dark cards/chips by inverting selection colors locally. */
-:is(
-  .solution-card--lead,
-  .solution-card--lead *,
-  .auth-acc__head-cell,
-  .auth-acc__head-cell *,
-  .auth-section__technical-row,
-  .auth-section__technical-row *,
-  .how-section__headline span,
-  .how-step-card__tag,
-  .solution-section__label-chip,
-  .solution-capability-item__tag,
-  .text-highlight
-)::selection {
+/* Keep text selection visible on dark cards/chips via explicit selectors (Safari-safe). */
+.solution-card--lead::selection,
+.solution-card--lead *::selection,
+.auth-acc__head-cell::selection,
+.auth-acc__head-cell *::selection,
+.auth-section__technical-row::selection,
+.auth-section__technical-row *::selection,
+.how-section__headline span::selection,
+.how-step-card__tag::selection,
+.solution-section__label-chip::selection,
+.solution-capability-item__tag::selection,
+.text-highlight::selection,
+.text-highlight *::selection {
   background: #f4f4f4 !important;
   color: #1f1f1f !important;
   text-shadow: none;
   -webkit-text-fill-color: #1f1f1f;
 }
 
-:is(
-  .solution-card--lead,
-  .solution-card--lead *,
-  .auth-acc__head-cell,
-  .auth-acc__head-cell *,
-  .auth-section__technical-row,
-  .auth-section__technical-row *,
-  .how-section__headline span,
-  .how-step-card__tag,
-  .solution-section__label-chip,
-  .solution-capability-item__tag,
-  .text-highlight
-)::-moz-selection {
+.solution-card--lead::-moz-selection,
+.solution-card--lead *::-moz-selection,
+.auth-acc__head-cell::-moz-selection,
+.auth-acc__head-cell *::-moz-selection,
+.auth-section__technical-row::-moz-selection,
+.auth-section__technical-row *::-moz-selection,
+.how-section__headline span::-moz-selection,
+.how-step-card__tag::-moz-selection,
+.solution-section__label-chip::-moz-selection,
+.solution-capability-item__tag::-moz-selection,
+.text-highlight::-moz-selection,
+.text-highlight *::-moz-selection {
   background: #f4f4f4 !important;
   color: #1f1f1f !important;
   text-shadow: none;
