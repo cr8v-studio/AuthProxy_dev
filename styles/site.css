@@ -334,7 +334,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-stack-2xl);
+  gap: 0;
 }
 
 .site-header__menu {
