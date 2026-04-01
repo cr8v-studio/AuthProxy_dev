@@ -842,7 +842,7 @@ a {
     linear-gradient(90deg, var(--site-line-soft) 1px, transparent 1px),
     linear-gradient(180deg, var(--site-line-soft) 1px, transparent 1px);
   background-size: 100px 100px;
-  background-position: 100px 100px;
+  background-position: -1px -1px;
 }
 
 .hero-section__grid-bg::after {
