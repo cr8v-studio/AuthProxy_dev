@@ -2005,6 +2005,19 @@ a {
   color: var(--figma-color-dark-base);
 }
 
+.solution-section__summary-title .text-highlight {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding-inline: 0;
+  font-size: 59px;
+  line-height: 59px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--figma-color-white-base);
+  background: var(--figma-color-dark-base);
+}
+
 .solution-section__capability-list {
   list-style: none;
   margin: var(--space-48) 0 0;
