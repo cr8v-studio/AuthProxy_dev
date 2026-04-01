@@ -923,7 +923,7 @@ a {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgb(255 255 255 / 0.95) 80%, rgb(255 255 255 / 0.4) 100%);
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgb(255 255 255 / 0.95) 80%, rgb(255 255 255 / 0.4) 100%);
 }
 
 .hero-section__content {
