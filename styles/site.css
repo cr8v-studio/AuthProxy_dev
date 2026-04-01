@@ -32,6 +32,41 @@ body.site-page {
   color: #ffffff;
 }
 
+/* Keep text selection visible on dark cards/chips by inverting selection colors locally. */
+:is(
+  .solution-card--lead,
+  .solution-card--lead *,
+  .auth-acc__head-cell,
+  .auth-acc__head-cell *,
+  .auth-section__technical-row,
+  .auth-section__technical-row *,
+  .how-section__headline span,
+  .how-step-card__tag,
+  .solution-section__label-chip,
+  .solution-capability-item__tag,
+  .text-highlight
+)::selection {
+  background: #f4f4f4;
+  color: #1f1f1f;
+}
+
+:is(
+  .solution-card--lead,
+  .solution-card--lead *,
+  .auth-acc__head-cell,
+  .auth-acc__head-cell *,
+  .auth-section__technical-row,
+  .auth-section__technical-row *,
+  .how-section__headline span,
+  .how-step-card__tag,
+  .solution-section__label-chip,
+  .solution-capability-item__tag,
+  .text-highlight
+)::-moz-selection {
+  background: #f4f4f4;
+  color: #1f1f1f;
+}
+
 body.site-page.has-custom-cursor,
 body.site-page.has-custom-cursor * {
   cursor: none !important;
