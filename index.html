@@ -187,7 +187,7 @@
         </div>
       </section>
 
-      <section class="content-section" id="problem">
+      <section class="content-section solution-section" id="problem">
         <div class="site-wide section-label-bar">
           <div class="section-label">
             <span class="section-label__chevrons" aria-hidden="true">
@@ -195,98 +195,124 @@
               <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
               <img src="./assets/icons/vector-1.svg" alt="" width="9.899" height="16.971" />
             </span>
-            <span class="heading-md">The Problem</span>
+            <span class="solution-section__label-chip heading-md">Solution</span>
           </div>
         </div>
 
-        <div class="site-container section-intro">
-          <h2 class="heading-md section-intro__title">
-            You're Assembling Auth Infrastructure From 5 Different Services
-          </h2>
-          <p class="eyebrow section-intro__kicker">Building a modern web application? You need:</p>
+        <div class="site-container solution-section__intro">
+          <h2 class="solution-section__title">You’re building infrastructure instead of product.</h2>
         </div>
 
-        <div class="site-container problem-grid">
-          <div class="problem-grid__visual-wrap">
-            <img
-              class="problem-grid__visual-grid"
-              data-name="Grid-Background-2"
-              src="./assets/figma/Grid-Background-2.svg"
-              alt=""
-              aria-hidden="true"
-              width="480"
-              height="480"
-            />
-            <div class="problem-grid__impulse" aria-hidden="true">
-              <span class="problem-grid__impulse-node problem-grid__impulse-node--1"></span>
-              <span class="problem-grid__impulse-node problem-grid__impulse-node--2"></span>
-              <span class="problem-grid__impulse-node problem-grid__impulse-node--3"></span>
-              <span class="problem-grid__impulse-node problem-grid__impulse-node--4"></span>
-              <span class="problem-grid__impulse-dot"></span>
+        <div class="site-container solution-section__cards">
+          <article class="solution-card solution-card--lead">
+            <p class="solution-card__lead-copy">
+              Modern applications usually depend on multiple systems for authentication, routing,
+              file storage, notifications, and admin operations. Each new service adds integration
+              time, operational complexity, security risk, and another point of failure.
+            </p>
+          </article>
+
+          <article class="solution-card">
+            <span class="solution-card__number">01</span>
+            <div class="solution-card__copy">
+              <p class="solution-card__desc">Authentication requires a separate provider.</p>
+              <p class="solution-card__detail">Auth0, Keycloak, Firebase</p>
             </div>
-            <img
-              class="problem-grid__visual-cube"
-              data-name="System-node b"
-              src="./assets/figma/System-node-b.svg"
-              alt=""
-              aria-hidden="true"
-              width="211"
-              height="170"
-            />
-            <div class="system-node-b-flow" aria-hidden="true">
-              <span class="system-node-b-flow__light system-node-b-flow__light--1"></span>
-              <span class="system-node-b-flow__light system-node-b-flow__light--2"></span>
-              <span class="system-node-b-flow__light system-node-b-flow__light--3"></span>
+          </article>
+
+          <article class="solution-card">
+            <span class="solution-card__number">02</span>
+            <div class="solution-card__copy">
+              <p class="solution-card__desc">Reverse proxying adds routing and security overhead.</p>
+              <p class="solution-card__detail">nginx, Traefik</p>
             </div>
-          </div>
-          <div class="problem-list">
-            <article class="problem-item">
-              <span class="problem-item__number">01</span>
-              <div class="problem-item__copy">
-                <p class="text-body-lg">An identity provider</p>
-                <p class="heading-xs-caps">Auth0, Keycloak, Firebase</p>
-              </div>
-            </article>
-            <article class="problem-item">
-              <span class="problem-item__number">02</span>
-              <div class="problem-item__copy">
-                <p class="text-body-lg">A reverse proxy</p>
-                <p class="heading-xs-caps">nginx, Traefik</p>
-              </div>
-            </article>
-            <article class="problem-item">
-              <span class="problem-item__number">03</span>
-              <div class="problem-item__copy">
-                <p class="text-body-lg">A file storage service</p>
-                <p class="heading-xs-caps">S3, MinIO</p>
-              </div>
-            </article>
-            <article class="problem-item">
-              <span class="problem-item__number">04</span>
-              <div class="problem-item__copy">
-                <p class="text-body-lg">A notification system</p>
-                <p class="heading-xs-caps">Firebase, OneSignal</p>
-              </div>
-            </article>
-            <article class="problem-item">
-              <span class="problem-item__number">05</span>
-              <div class="problem-item__copy">
-                <p class="text-body-lg">An admin panel</p>
-                <p class="heading-xs-caps">Custom build or Retool</p>
-              </div>
-            </article>
-          </div>
+          </article>
+
+          <article class="solution-card">
+            <span class="solution-card__number">03</span>
+            <div class="solution-card__copy">
+              <p class="solution-card__desc">File storage needs its own service and rules.</p>
+              <p class="solution-card__detail">S3, MinIO</p>
+            </div>
+          </article>
+
+          <article class="solution-card">
+            <span class="solution-card__number">04</span>
+            <div class="solution-card__copy">
+              <p class="solution-card__desc">
+                Notifications introduce more infrastructure and integrations.
+              </p>
+              <p class="solution-card__detail">Firebase, OneSignal</p>
+            </div>
+          </article>
+
+          <article class="solution-card">
+            <span class="solution-card__number">05</span>
+            <div class="solution-card__copy">
+              <p class="solution-card__desc">Admin tooling often becomes a custom internal project.</p>
+              <p class="solution-card__detail">Custom Build or Retool</p>
+            </div>
+          </article>
         </div>
 
-        <div class="site-container problem-statement">
-          <p class="eyebrow problem-statement__eyebrow">
-            That's 5 vendors, 5 failure points, 5 learning curves, and weeks of integration work.
-          </p>
-          <p class="problem-statement__quote heading-xl">
-            <span class="text-highlight">AuthProxy</span>
-            replaces all five. Single ASP.NET process. No external dependencies. Production-ready
-            from day one.
-          </p>
+        <div class="site-container solution-section__bottom">
+          <div class="solution-section__summary">
+            <p class="solution-section__summary-title">
+              <span class="text-highlight">AuthProxy</span>
+              <span>replaces all five.</span>
+            </p>
+
+            <ul class="solution-section__capability-list">
+              <li class="solution-capability-item">
+                <p class="solution-capability-item__title">Authentication</p>
+                <p class="solution-capability-item__tag">12 methods</p>
+              </li>
+              <li class="solution-capability-item">
+                <p class="solution-capability-item__title">Reverse Proxy</p>
+                <p class="solution-capability-item__tag">Dynamic routing</p>
+              </li>
+              <li class="solution-capability-item">
+                <p class="solution-capability-item__title">File Service</p>
+                <p class="solution-capability-item__tag">Upload/Download/Images</p>
+              </li>
+              <li class="solution-capability-item">
+                <p class="solution-capability-item__title">Notifications</p>
+                <p class="solution-capability-item__tag">SSE, Webhooks, Push</p>
+              </li>
+              <li class="solution-capability-item">
+                <p class="solution-capability-item__title">Admin Panel</p>
+                <p class="solution-capability-item__tag">13 pages</p>
+              </li>
+            </ul>
+
+            <a class="site-header-button-v2 solution-section__docs-link" href="https://docs.authproxy.tech/docs/intro">
+              <span class="site-header-button-v2__label">Explore docs</span>
+              <span class="site-header-button-v2__icon-wrap">
+                <img
+                  class="icon site-header-button-v2__icon"
+                  src="./assets/figma/hero/explore-docs-arrow.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="9.8995"
+                  height="16.9706"
+                />
+              </span>
+            </a>
+          </div>
+
+          <div class="solution-section__visual-col" aria-hidden="true">
+            <div class="solution-section__visual-grid"></div>
+            <div class="solution-section__stack">
+              <img class="solution-section__node-apg" src="./assets/figma/System-node-apg.svg" alt="" />
+              <div class="solution-section__layer-group">
+                <img class="solution-section__layer-node solution-section__layer-node--auth" src="./assets/figma/System-node-auth.svg" alt="" />
+                <img class="solution-section__layer-node solution-section__layer-node--proxy" src="./assets/figma/System-node-proxy.svg" alt="" />
+                <img class="solution-section__layer-node solution-section__layer-node--file" src="./assets/figma/System-node-file.svg" alt="" />
+                <img class="solution-section__layer-node solution-section__layer-node--notifs" src="./assets/figma/System-node-notifs.svg" alt="" />
+                <img class="solution-section__layer-node solution-section__layer-node--admin" src="./assets/figma/System-node-admin.svg" alt="" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
