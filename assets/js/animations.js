@@ -938,7 +938,12 @@ function initHeroMetricsCarousel() {
   const metricsWrap = heroSection?.querySelector('.hero-section__metrics-wrap');
   const sourceTrack = metricsWrap?.querySelector('.hero-section__metrics');
 
-  if (!metricsWrap || !sourceTrack || prefersReducedMotion) {
+  if (
+    !metricsWrap ||
+    !sourceTrack ||
+    prefersReducedMotion ||
+    metricsWrap.classList.contains('hero-section__metrics-wrap--static')
+  ) {
     return () => {};
   }
 
