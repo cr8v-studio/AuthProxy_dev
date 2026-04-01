@@ -866,7 +866,8 @@ a {
 .hero-section__grid-laser-line {
   position: absolute;
   opacity: 0;
-  will-change: transform, opacity, width, height;
+  will-change: transform, opacity, width, height, filter;
+  transform-origin: 50% 50%;
 }
 
 .hero-section__grid-laser-line--v {
