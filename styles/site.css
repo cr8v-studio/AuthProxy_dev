@@ -856,13 +856,12 @@ a {
 .hero-section__grid-laser-line {
   position: absolute;
   opacity: 0;
-  will-change: transform, opacity;
+  will-change: transform, opacity, width, height;
 }
 
 .hero-section__grid-laser-line--v {
-  top: 0;
-  bottom: 0;
   width: 1px;
+  height: 200px;
   background:
     linear-gradient(
       180deg,
@@ -876,9 +875,8 @@ a {
 }
 
 .hero-section__grid-laser-line--h {
-  left: 0;
-  right: 0;
   height: 1px;
+  width: 200px;
   background:
     linear-gradient(
       90deg,
@@ -889,21 +887,6 @@ a {
       rgb(237 88 90 / 0) 100%
     );
   box-shadow: 0 0 12px rgb(237 88 90 / 0.3);
-}
-
-.hero-section__grid-laser-node {
-  position: absolute;
-  opacity: 0;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  will-change: transform, opacity;
-  background: rgb(237 88 90 / 0.96);
-  box-shadow:
-    0 0 0 3px rgb(237 88 90 / 0.16),
-    0 0 10px rgb(237 88 90 / 0.48),
-    0 0 18px rgb(237 88 90 / 0.24);
 }
 
 .hero-section__grid-laser-dot {
