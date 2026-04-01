@@ -926,7 +926,7 @@ a {
 
 .hero-section__content {
   position: relative;
-  z-index: 1;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -942,6 +942,7 @@ a {
   gap: var(--space-24);
   width: 100%;
   padding: var(--space-24) var(--space-48);
+  background: var(--figma-color-white-base);
 }
 
 .hero-section__lead-wrap {
@@ -949,6 +950,7 @@ a {
   justify-content: center;
   width: 100%;
   padding: var(--space-24) var(--space-48);
+  background: var(--figma-color-white-base);
 }
 
 .hero-section__kicker {
@@ -986,6 +988,7 @@ a {
 .hero-section__cta-row {
   padding: var(--space-24) var(--space-48);
   justify-content: center;
+  background: var(--figma-color-white-base);
 }
 
 .hero-section__cta-row .site-header-button-v1 {
