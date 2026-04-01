@@ -835,14 +835,14 @@ a {
 
 .hero-section__grid-bg {
   position: absolute;
-  inset: 0;
+  inset: 1px;
   pointer-events: none;
   z-index: 0;
   background-image:
-    linear-gradient(90deg, var(--site-line-soft) 1px, transparent 1px),
-    linear-gradient(180deg, var(--site-line-soft) 1px, transparent 1px);
+    linear-gradient(90deg, var(--site-section-border) 1px, transparent 1px),
+    linear-gradient(180deg, var(--site-section-border) 1px, transparent 1px);
   background-size: 100px 100px;
-  background-position: -1px -1px;
+  background-position: 99px 99px;
 }
 
 .hero-section__grid-bg::after {
