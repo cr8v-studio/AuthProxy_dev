@@ -887,11 +887,17 @@ function initHeroGridLaserHover() {
   const alphaToGhostV = gsap.quickTo(vGhost, 'opacity', { duration: 0.28, ease: 'power2.out' });
   const alphaToGhostH = gsap.quickTo(hGhost, 'opacity', { duration: 0.28, ease: 'power2.out' });
   const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.2, ease: 'power2.out' });
+  const dotPulse = gsap.timeline({ repeat: -1, paused: true });
 
   const toNearestGridLine = (value, max) => {
     const snapped = gridOffset + Math.round((value - gridOffset) / gridStep) * gridStep;
     return gsap.utils.clamp(0, max, snapped);
   };
+
+  dotPulse.to(dot, { scale: 1.22, duration: 0.18, ease: 'power2.out' });
+  dotPulse.to(dot, { scale: 0.94, duration: 0.22, ease: 'power1.inOut' });
+  dotPulse.to(dot, { scale: 1, duration: 0.18, ease: 'power2.out' });
+  dotPulse.to({}, { duration: 0.12 });
 
   const updateLaser = (event) => {
     const rect = grid.getBoundingClientRect();
@@ -931,10 +937,15 @@ function initHeroGridLaserHover() {
     alphaToGhostV(0.52);
     alphaToGhostH(0.52);
     alphaToDot(0.88);
+    if (!dotPulse.isActive()) {
+      dotPulse.play();
+    }
   };
 
   const hideLaser = () => {
     document.body.classList.remove('is-hero-laser-cursor');
+    dotPulse.pause(0);
+    gsap.set(dot, { scale: 1 });
     alphaToMainV(0);
     alphaToMainH(0);
     alphaToGhostV(0);
