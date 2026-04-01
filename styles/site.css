@@ -1865,6 +1865,7 @@ a {
   position: absolute;
   width: var(--size-corner-width);
   height: var(--size-corner-height);
+  box-sizing: border-box;
   background: transparent;
   z-index: 1;
   pointer-events: none;
@@ -1873,6 +1874,8 @@ a {
 .solution-card::before {
   top: var(--space-24);
   right: var(--space-24);
+  border-top: 1px solid var(--solution-corner-color);
+  border-right: 1px solid var(--solution-corner-color);
   box-shadow:
     inset 0 1px 0 var(--solution-corner-color),
     inset -1px 0 0 var(--solution-corner-color);
@@ -1881,6 +1884,8 @@ a {
 .solution-card::after {
   left: var(--space-24);
   bottom: var(--space-24);
+  border-bottom: 1px solid var(--solution-corner-color);
+  border-left: 1px solid var(--solution-corner-color);
   box-shadow:
     inset 0 -1px 0 var(--solution-corner-color),
     inset 1px 0 0 var(--solution-corner-color);
