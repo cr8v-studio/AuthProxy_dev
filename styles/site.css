@@ -890,12 +890,12 @@ a {
     linear-gradient(
       180deg,
       rgb(237 88 90 / 0) 0%,
-      rgb(237 88 90 / 0.58) 26%,
-      rgb(237 88 90 / 0.9) 50%,
-      rgb(237 88 90 / 0.58) 74%,
+      rgb(237 88 90 / 0.66) 24%,
+      rgb(237 88 90 / 0.96) 50%,
+      rgb(237 88 90 / 0.66) 76%,
       rgb(237 88 90 / 0) 100%
     );
-  box-shadow: 0 0 12px rgb(237 88 90 / 0.28);
+  box-shadow: 0 0 14px rgb(237 88 90 / 0.34);
 }
 
 .hero-section__grid-laser-line--h {
@@ -904,17 +904,17 @@ a {
     linear-gradient(
       90deg,
       rgb(237 88 90 / 0) 0%,
-      rgb(237 88 90 / 0.58) 26%,
-      rgb(237 88 90 / 0.9) 50%,
-      rgb(237 88 90 / 0.58) 74%,
+      rgb(237 88 90 / 0.66) 24%,
+      rgb(237 88 90 / 0.96) 50%,
+      rgb(237 88 90 / 0.66) 76%,
       rgb(237 88 90 / 0) 100%
     );
-  box-shadow: 0 0 12px rgb(237 88 90 / 0.28);
+  box-shadow: 0 0 14px rgb(237 88 90 / 0.34);
 }
 
 .hero-section__grid-laser-line--ghost {
-  filter: blur(1px);
-  box-shadow: 0 0 18px rgb(237 88 90 / 0.2);
+  filter: blur(0.9px);
+  box-shadow: 0 0 20px rgb(237 88 90 / 0.28);
 }
 
 .hero-section__grid-bg::after {

@@ -926,11 +926,11 @@ function initHeroGridLaserHover() {
     wToGhostH(width);
     xToDot(lineX);
     yToDot(lineY);
-    alphaToMainV(0.9);
-    alphaToMainH(0.9);
-    alphaToGhostV(0.44);
-    alphaToGhostH(0.44);
-    alphaToDot(0.82);
+    alphaToMainV(0.96);
+    alphaToMainH(0.96);
+    alphaToGhostV(0.52);
+    alphaToGhostH(0.52);
+    alphaToDot(0.88);
   };
 
   const hideLaser = () => {
