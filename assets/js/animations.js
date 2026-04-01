@@ -894,6 +894,7 @@ function initHeroGridLaserHover() {
     if (localX < 0 || localX > rect.width || localY < 0 || localY > rect.height) {
       return;
     }
+    document.body.classList.add('is-hero-laser-cursor');
 
     const lineX = toNearestGridLine(localX, rect.width);
     const lineY = toNearestGridLine(localY, rect.height);
@@ -921,6 +922,7 @@ function initHeroGridLaserHover() {
   };
 
   const hideLaser = () => {
+    document.body.classList.remove('is-hero-laser-cursor');
     dotPulse.pause(0);
     gsap.set(dot, { scale: 1 });
     alphaToV(0);
