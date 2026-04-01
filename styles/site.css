@@ -1911,6 +1911,22 @@ a {
   color: var(--figma-color-off-white-base);
 }
 
+/* Explicit selection colors for the dark lead card copy. */
+.solution-card__lead-copy::selection,
+.solution-card__lead-copy *::selection {
+  background-color: #f4f4f4 !important;
+  color: #1f1f1f !important;
+  -webkit-text-fill-color: #1f1f1f !important;
+  text-shadow: none !important;
+}
+
+.solution-card__lead-copy::-moz-selection,
+.solution-card__lead-copy *::-moz-selection {
+  background-color: #f4f4f4 !important;
+  color: #1f1f1f !important;
+  text-shadow: none !important;
+}
+
 .solution-card__number {
   font-size: 28px;
   line-height: 31px;
