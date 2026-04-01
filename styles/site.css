@@ -853,6 +853,44 @@ a {
   overflow: hidden;
 }
 
+.hero-section__grid-laser-line {
+  position: absolute;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.hero-section__grid-laser-line--v {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background:
+    linear-gradient(
+      180deg,
+      rgb(237 88 90 / 0) 0%,
+      rgb(237 88 90 / 0.52) 26%,
+      rgb(237 88 90 / 0.9) 50%,
+      rgb(237 88 90 / 0.52) 74%,
+      rgb(237 88 90 / 0) 100%
+    );
+  box-shadow: 0 0 12px rgb(237 88 90 / 0.3);
+}
+
+.hero-section__grid-laser-line--h {
+  left: 0;
+  right: 0;
+  height: 1px;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(237 88 90 / 0) 0%,
+      rgb(237 88 90 / 0.52) 26%,
+      rgb(237 88 90 / 0.9) 50%,
+      rgb(237 88 90 / 0.52) 74%,
+      rgb(237 88 90 / 0) 100%
+    );
+  box-shadow: 0 0 12px rgb(237 88 90 / 0.3);
+}
+
 .hero-section__grid-laser-node {
   position: absolute;
   opacity: 0;
