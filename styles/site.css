@@ -949,6 +949,7 @@ a {
   max-width: 100vw;
   margin-inline: calc(50% - 50vw);
   border: 1px solid var(--site-section-border);
+  border-bottom: 0;
   background: var(--figma-color-white-base);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -974,6 +975,13 @@ a {
 
 .hero-metric:last-child {
   border-right: 0;
+}
+
+.hero-section__metrics-wrap.is-carousel .hero-metric,
+.hero-section__metrics-wrap.is-carousel .hero-metric:nth-child(2n),
+.hero-section__metrics-wrap.is-carousel .hero-metric:last-child {
+  border-right: 1px solid var(--site-section-border);
+  border-top: 0;
 }
 
 .hero-metric__icon {
