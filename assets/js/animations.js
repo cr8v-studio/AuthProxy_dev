@@ -825,6 +825,89 @@ function initHeroGridImpulseFlow() {
   });
 }
 
+// Pointer-driven laser highlight on hero grid lines (Figma node 476:11902).
+function initHeroGridLaserHover() {
+  const panel = document.querySelector('.hero-section__panel');
+  const grid = panel?.querySelector('.hero-section__grid-bg');
+  const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
+  if (!panel || !grid || prefersReducedMotion || hasCoarsePointer) {
+    return;
+  }
+
+  let overlay = grid.querySelector('.hero-section__grid-laser');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'hero-section__grid-laser';
+
+    const vertical = document.createElement('span');
+    vertical.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--v';
+
+    const horizontal = document.createElement('span');
+    horizontal.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--h';
+
+    const dot = document.createElement('span');
+    dot.className = 'hero-section__grid-laser-dot';
+
+    overlay.append(vertical, horizontal, dot);
+    grid.append(overlay);
+  }
+
+  const vLine = overlay.querySelector('.hero-section__grid-laser-line--v');
+  const hLine = overlay.querySelector('.hero-section__grid-laser-line--h');
+  const dot = overlay.querySelector('.hero-section__grid-laser-dot');
+
+  if (!vLine || !hLine || !dot) {
+    return;
+  }
+
+  const gridStep = 100;
+  const gridOffset = 99;
+  const xToV = gsap.quickTo(vLine, 'x', { duration: 0.34, ease: 'power3.out' });
+  const yToH = gsap.quickTo(hLine, 'y', { duration: 0.34, ease: 'power3.out' });
+  const xToDot = gsap.quickTo(dot, 'x', { duration: 0.36, ease: 'power3.out' });
+  const yToDot = gsap.quickTo(dot, 'y', { duration: 0.36, ease: 'power3.out' });
+  const alphaToV = gsap.quickTo(vLine, 'opacity', { duration: 0.24, ease: 'power2.out' });
+  const alphaToH = gsap.quickTo(hLine, 'opacity', { duration: 0.24, ease: 'power2.out' });
+  const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.24, ease: 'power2.out' });
+
+  const toNearestGridLine = (value, max) => {
+    const snapped = gridOffset + Math.round((value - gridOffset) / gridStep) * gridStep;
+    return gsap.utils.clamp(0, max, snapped);
+  };
+
+  const updateLaser = (event) => {
+    const rect = grid.getBoundingClientRect();
+    const localX = event.clientX - rect.left;
+    const localY = event.clientY - rect.top;
+
+    if (localX < 0 || localX > rect.width || localY < 0 || localY > rect.height) {
+      return;
+    }
+
+    const lineX = toNearestGridLine(localX, rect.width);
+    const lineY = toNearestGridLine(localY, rect.height);
+
+    xToV(lineX);
+    yToH(lineY);
+    xToDot(lineX);
+    yToDot(lineY);
+    alphaToV(1);
+    alphaToH(1);
+    alphaToDot(1);
+  };
+
+  const hideLaser = () => {
+    alphaToV(0);
+    alphaToH(0);
+    alphaToDot(0);
+  };
+
+  panel.addEventListener('pointerenter', updateLaser, { passive: true });
+  panel.addEventListener('pointermove', updateLaser, { passive: true });
+  panel.addEventListener('pointerleave', hideLaser, { passive: true });
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -1696,6 +1779,7 @@ async function initMotionSystem() {
   initHowLayerStackReveal();
   initHowSystemNodeEllipsesFlow();
   initHeroGridImpulseFlow();
+  initHeroGridLaserHover();
   initProblemGridImpulseFlow();
   initAuthAccordionMotion();
   initInteractiveHoverStates();
