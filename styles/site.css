@@ -863,6 +863,21 @@ a {
   overflow: hidden;
 }
 
+.hero-section__grid-laser-node {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+  background: rgb(237 88 90 / 0.96);
+  box-shadow:
+    0 0 0 3px rgb(237 88 90 / 0.16),
+    0 0 10px rgb(237 88 90 / 0.48),
+    0 0 18px rgb(237 88 90 / 0.24);
+}
+
 .hero-section__grid-laser-line {
   position: absolute;
   opacity: 0;
