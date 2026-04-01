@@ -875,16 +875,72 @@ function initHeroGridLaserHover() {
   const alphaToH = gsap.quickTo(hLine, 'opacity', { duration: 0.22, ease: 'power2.out' });
   const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.24, ease: 'power2.out' });
   const dotPulse = gsap.timeline({ repeat: -1, paused: true });
+  const linePulse = gsap.timeline({ repeat: -1, paused: true });
 
   const toNearestGridLine = (value, max) => {
     const snapped = gridOffset + Math.round((value - gridOffset) / gridStep) * gridStep;
     return gsap.utils.clamp(0, max, snapped);
   };
 
+  gsap.set(vLine, {
+    scaleX: 1,
+    filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
+  });
+  gsap.set(hLine, {
+    scaleY: 1,
+    filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
+  });
+
   dotPulse.to(dot, { scale: 1.2, duration: 0.24, ease: 'power2.out' });
   dotPulse.to(dot, { scale: 0.92, duration: 0.34, ease: 'power1.inOut' });
   dotPulse.to(dot, { scale: 1, duration: 0.24, ease: 'power2.out' });
   dotPulse.to({}, { duration: 0.12 });
+
+  linePulse.to(
+    vLine,
+    {
+      scaleX: 2.2,
+      opacity: 1,
+      filter: 'drop-shadow(0 0 10px rgb(237 88 90 / 0.55))',
+      duration: 0.2,
+      ease: 'power2.out'
+    },
+    0
+  );
+  linePulse.to(
+    hLine,
+    {
+      scaleY: 2.2,
+      opacity: 1,
+      filter: 'drop-shadow(0 0 10px rgb(237 88 90 / 0.55))',
+      duration: 0.2,
+      ease: 'power2.out'
+    },
+    0
+  );
+  linePulse.to(
+    vLine,
+    {
+      scaleX: 1,
+      opacity: 0.72,
+      filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))',
+      duration: 0.38,
+      ease: 'power1.inOut'
+    },
+    0.2
+  );
+  linePulse.to(
+    hLine,
+    {
+      scaleY: 1,
+      opacity: 0.72,
+      filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))',
+      duration: 0.38,
+      ease: 'power1.inOut'
+    },
+    0.2
+  );
+  linePulse.to({}, { duration: 0.1 });
 
   const updateLaser = (event) => {
     const rect = grid.getBoundingClientRect();
@@ -913,18 +969,30 @@ function initHeroGridLaserHover() {
     wToH(width);
     xToDot(lineX);
     yToDot(lineY);
-    alphaToV(0.78);
-    alphaToH(0.78);
+    alphaToV(0.72);
+    alphaToH(0.72);
     alphaToDot(1);
     if (!dotPulse.isActive()) {
       dotPulse.play();
+    }
+    if (!linePulse.isActive()) {
+      linePulse.play();
     }
   };
 
   const hideLaser = () => {
     document.body.classList.remove('is-hero-laser-cursor');
     dotPulse.pause(0);
+    linePulse.pause(0);
     gsap.set(dot, { scale: 1 });
+    gsap.set(vLine, {
+      scaleX: 1,
+      filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
+    });
+    gsap.set(hLine, {
+      scaleY: 1,
+      filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
+    });
     alphaToV(0);
     alphaToH(0);
     alphaToDot(0);
