@@ -835,7 +835,7 @@ a {
 
 .hero-section__grid-bg {
   position: absolute;
-  inset: 0;
+  inset: 1px;
   pointer-events: none;
   z-index: 0;
   background-image:
