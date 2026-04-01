@@ -883,10 +883,12 @@ function initHeroGridLaserHover() {
   };
 
   gsap.set(vLine, {
+    scaleY: 1,
     scaleX: 1,
     filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
   });
   gsap.set(hLine, {
+    scaleX: 1,
     scaleY: 1,
     filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
   });
@@ -899,48 +901,48 @@ function initHeroGridLaserHover() {
   linePulse.to(
     vLine,
     {
-      scaleX: 2.2,
+      scaleY: 0.14,
       opacity: 1,
       filter: 'drop-shadow(0 0 10px rgb(237 88 90 / 0.55))',
-      duration: 0.2,
-      ease: 'power2.out'
+      duration: 0,
+      ease: 'none'
     },
     0
   );
   linePulse.to(
     hLine,
     {
-      scaleY: 2.2,
+      scaleX: 0.14,
       opacity: 1,
       filter: 'drop-shadow(0 0 10px rgb(237 88 90 / 0.55))',
-      duration: 0.2,
-      ease: 'power2.out'
+      duration: 0,
+      ease: 'none'
     },
     0
   );
   linePulse.to(
     vLine,
     {
-      scaleX: 1,
-      opacity: 0.72,
+      scaleY: 1,
+      opacity: 0.74,
       filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))',
-      duration: 0.38,
-      ease: 'power1.inOut'
+      duration: 0.34,
+      ease: 'power2.out'
     },
-    0.2
+    0
   );
   linePulse.to(
     hLine,
     {
-      scaleY: 1,
-      opacity: 0.72,
+      scaleX: 1,
+      opacity: 0.74,
       filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))',
-      duration: 0.38,
-      ease: 'power1.inOut'
+      duration: 0.34,
+      ease: 'power2.out'
     },
-    0.2
+    0
   );
-  linePulse.to({}, { duration: 0.1 });
+  linePulse.to({}, { duration: 0.16 });
 
   const updateLaser = (event) => {
     const rect = grid.getBoundingClientRect();
@@ -986,10 +988,12 @@ function initHeroGridLaserHover() {
     linePulse.pause(0);
     gsap.set(dot, { scale: 1 });
     gsap.set(vLine, {
+      scaleY: 1,
       scaleX: 1,
       filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
     });
     gsap.set(hLine, {
+      scaleX: 1,
       scaleY: 1,
       filter: 'drop-shadow(0 0 6px rgb(237 88 90 / 0.24))'
     });
