@@ -66,6 +66,16 @@ body.site-page.has-custom-cursor * {
   will-change: transform, opacity;
 }
 
+body.site-page.is-hero-laser-cursor .site-cursor {
+  background: #ed585a;
+  border-color: rgb(237 88 90 / 0.8);
+  mix-blend-mode: normal;
+}
+
+body.site-page.is-hero-laser-cursor .site-cursor__ring {
+  border-color: rgb(237 88 90 / 0.72);
+}
+
 @supports not (mix-blend-mode: difference) {
   .site-cursor {
     background: #111;
