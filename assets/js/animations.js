@@ -840,6 +840,12 @@ function initHeroGridLaserHover() {
     overlay = document.createElement('div');
     overlay.className = 'hero-section__grid-laser';
 
+    const vertical = document.createElement('span');
+    vertical.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--v';
+
+    const horizontal = document.createElement('span');
+    horizontal.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--h';
+
     const nodes = Array.from({ length: 4 }, () => {
       const node = document.createElement('span');
       node.className = 'hero-section__grid-laser-node';
@@ -849,19 +855,23 @@ function initHeroGridLaserHover() {
     const dot = document.createElement('span');
     dot.className = 'hero-section__grid-laser-dot';
 
-    overlay.append(...nodes, dot);
+    overlay.append(vertical, horizontal, ...nodes, dot);
     grid.append(overlay);
   }
 
+  const vLine = overlay.querySelector('.hero-section__grid-laser-line--v');
+  const hLine = overlay.querySelector('.hero-section__grid-laser-line--h');
   const pulseNodes = gsap.utils.toArray('.hero-section__grid-laser-node', overlay);
   const dot = overlay.querySelector('.hero-section__grid-laser-dot');
 
-  if (pulseNodes.length !== 4 || !dot) {
+  if (!vLine || !hLine || pulseNodes.length !== 4 || !dot) {
     return;
   }
 
   const gridStep = 100;
   const gridOffset = 99;
+  const xToV = gsap.quickTo(vLine, 'x', { duration: 0.3, ease: 'power3.out' });
+  const yToH = gsap.quickTo(hLine, 'y', { duration: 0.3, ease: 'power3.out' });
   const nodeTweens = pulseNodes.map((node) => ({
     x: gsap.quickTo(node, 'x', { duration: 0.28, ease: 'power3.out' }),
     y: gsap.quickTo(node, 'y', { duration: 0.28, ease: 'power3.out' }),
@@ -869,6 +879,8 @@ function initHeroGridLaserHover() {
   }));
   const xToDot = gsap.quickTo(dot, 'x', { duration: 0.36, ease: 'power3.out' });
   const yToDot = gsap.quickTo(dot, 'y', { duration: 0.36, ease: 'power3.out' });
+  const alphaToV = gsap.quickTo(vLine, 'opacity', { duration: 0.22, ease: 'power2.out' });
+  const alphaToH = gsap.quickTo(hLine, 'opacity', { duration: 0.22, ease: 'power2.out' });
   const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.24, ease: 'power2.out' });
   const pulseTl = gsap.timeline({ repeat: -1, paused: true });
 
@@ -920,8 +932,12 @@ function initHeroGridLaserHover() {
       nodeTweens[index].alpha(0.24);
     });
 
+    xToV(lineX);
+    yToH(lineY);
     xToDot(lineX);
     yToDot(lineY);
+    alphaToV(0.78);
+    alphaToH(0.78);
     alphaToDot(1);
     if (!pulseTl.isActive()) {
       pulseTl.play();
@@ -934,6 +950,8 @@ function initHeroGridLaserHover() {
       gsap.set(node, { scale: 1 });
       nodeTweens[index].alpha(0);
     });
+    alphaToV(0);
+    alphaToH(0);
     alphaToDot(0);
   };
 
