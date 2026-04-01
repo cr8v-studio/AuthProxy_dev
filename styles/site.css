@@ -863,25 +863,6 @@ a {
   overflow: hidden;
 }
 
-.hero-section__grid-laser-quad,
-.hero-section__grid-laser-fill {
-  position: absolute;
-  opacity: 0;
-  will-change: transform, opacity, width, height;
-}
-
-.hero-section__grid-laser-quad {
-  border: 1px solid rgb(237 88 90 / 0.72);
-  box-shadow:
-    0 0 12px rgb(237 88 90 / 0.24),
-    inset 0 0 14px rgb(237 88 90 / 0.08);
-}
-
-.hero-section__grid-laser-fill {
-  background:
-    radial-gradient(circle at 50% 50%, rgb(237 88 90 / 0.16) 0%, rgb(237 88 90 / 0.07) 36%, rgb(237 88 90 / 0) 82%);
-}
-
 .hero-section__grid-laser-dot {
   position: absolute;
   width: 8px;
@@ -895,6 +876,45 @@ a {
     0 0 0 3px rgb(237 88 90 / 0.2),
     0 0 12px rgb(237 88 90 / 0.5),
     0 0 20px rgb(237 88 90 / 0.25);
+}
+
+.hero-section__grid-laser-line {
+  position: absolute;
+  opacity: 0;
+  will-change: transform, opacity, width, height;
+}
+
+.hero-section__grid-laser-line--v {
+  width: 1px;
+  background:
+    linear-gradient(
+      180deg,
+      rgb(237 88 90 / 0) 0%,
+      rgb(237 88 90 / 0.58) 26%,
+      rgb(237 88 90 / 0.9) 50%,
+      rgb(237 88 90 / 0.58) 74%,
+      rgb(237 88 90 / 0) 100%
+    );
+  box-shadow: 0 0 12px rgb(237 88 90 / 0.28);
+}
+
+.hero-section__grid-laser-line--h {
+  height: 1px;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(237 88 90 / 0) 0%,
+      rgb(237 88 90 / 0.58) 26%,
+      rgb(237 88 90 / 0.9) 50%,
+      rgb(237 88 90 / 0.58) 74%,
+      rgb(237 88 90 / 0) 100%
+    );
+  box-shadow: 0 0 12px rgb(237 88 90 / 0.28);
+}
+
+.hero-section__grid-laser-line--ghost {
+  filter: blur(1px);
+  box-shadow: 0 0 18px rgb(237 88 90 / 0.2);
 }
 
 .hero-section__grid-bg::after {
