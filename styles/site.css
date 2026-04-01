@@ -1826,20 +1826,23 @@ a {
   position: absolute;
   width: var(--size-corner-width);
   height: var(--size-corner-height);
-  background: center / 100% 100% no-repeat;
+  background: none;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .solution-card::before {
   top: var(--space-24);
   right: var(--space-24);
-  background-image: var(--problem-item-corner-tr-asset);
+  border-top: 1px solid var(--figma-color-dark-base);
+  border-right: 1px solid var(--figma-color-dark-base);
 }
 
 .solution-card::after {
   left: var(--space-24);
   bottom: var(--space-24);
-  transform: rotate(180deg);
-  background-image: var(--problem-item-corner-bl-asset);
+  border-bottom: 1px solid var(--figma-color-dark-base);
+  border-left: 1px solid var(--figma-color-dark-base);
 }
 
 .solution-card--lead {
@@ -1853,14 +1856,15 @@ a {
 .solution-card--lead::before {
   top: var(--space-24);
   right: var(--space-24);
-  background-image: var(--header-button-v1-corner-tr-default);
+  border-top-color: var(--figma-color-off-white-base);
+  border-right-color: var(--figma-color-off-white-base);
 }
 
 .solution-card--lead::after {
   left: var(--space-24);
   bottom: var(--space-24);
-  transform: none;
-  background-image: var(--header-button-v1-corner-bl-default);
+  border-bottom-color: var(--figma-color-off-white-base);
+  border-left-color: var(--figma-color-off-white-base);
 }
 
 .solution-card__lead-copy {
