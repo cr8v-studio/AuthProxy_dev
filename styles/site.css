@@ -927,7 +927,7 @@ a {
   --header-button-v2-hover-color: var(--color-accent-alert);
   --header-button-v2-bg: transparent;
   --header-button-v2-icon-size: 9.8995px;
-  --header-button-v2-icon-shift-hover: var(--space-4);
+  --header-button-v2-icon-shift-hover: var(--space-8);
   text-transform: uppercase;
 }
 
