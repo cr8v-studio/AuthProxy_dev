@@ -1926,6 +1926,24 @@ a {
   text-shadow: none !important;
 }
 
+/* Safari-specific fallback for dark-card selection rendering. */
+@supports (-webkit-touch-callout: none) {
+  .solution-card__lead-copy::selection,
+  .solution-card__lead-copy *::selection {
+    background: #f4f4f4 !important;
+    color: #1f1f1f !important;
+    -webkit-text-fill-color: #1f1f1f !important;
+    text-shadow: none !important;
+  }
+
+  .solution-card__lead-copy::-moz-selection,
+  .solution-card__lead-copy *::-moz-selection {
+    background: #f4f4f4 !important;
+    color: #1f1f1f !important;
+    text-shadow: none !important;
+  }
+}
+
 .solution-card__number {
   font-size: 28px;
   line-height: 31px;
@@ -1962,7 +1980,7 @@ a {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border-inline: 1px solid var(--site-section-border);
-  border-top: 1px solid var(--site-section-border);
+  border-top: 0;
   border-bottom: 1px solid var(--site-section-border);
 }
 
