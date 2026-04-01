@@ -785,7 +785,7 @@ a {
 
 .hero-section__cta-row .site-header-button-v1,
 .hero-section__cta-row .site-header-button-v2 {
-  color: var(--figma-color-off-white-base);
+  color: var(--control-color, currentColor);
   font-size: var(--type-control-caps-size);
   line-height: var(--type-control-caps-line);
   letter-spacing: var(--type-control-caps-track);
@@ -804,7 +804,7 @@ a {
 .hero-section__cta-row .site-header-button-v2:hover,
 .hero-section__cta-row .site-header-button-v2.is-hover,
 .hero-section__cta-row .site-header-button-v2[aria-current="page"] {
-  color: var(--figma-color-off-white-alpha-1);
+  color: var(--control-color, currentColor);
 }
 
 .hero-section__cta-row .site-header-button-v2__icon {
