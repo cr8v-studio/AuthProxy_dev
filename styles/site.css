@@ -1928,6 +1928,8 @@ a {
 
 /* Safari-specific fallback for dark-card selection rendering. */
 @supports (-webkit-touch-callout: none) {
+  .solution-card--lead::selection,
+  .solution-card--lead *::selection,
   .solution-card__lead-copy::selection,
   .solution-card__lead-copy *::selection {
     background: #f4f4f4 !important;
@@ -1936,6 +1938,8 @@ a {
     text-shadow: none !important;
   }
 
+  .solution-card--lead::-moz-selection,
+  .solution-card--lead *::-moz-selection,
   .solution-card__lead-copy::-moz-selection,
   .solution-card__lead-copy *::-moz-selection {
     background: #f4f4f4 !important;
