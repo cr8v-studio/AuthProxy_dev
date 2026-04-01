@@ -1948,6 +1948,26 @@ a {
   }
 }
 
+/* Final override: dark cards keep dark selection background and light text (Safari-safe). */
+.solution-card--lead::selection,
+.solution-card--lead *::selection,
+.solution-card__lead-copy::selection,
+.solution-card__lead-copy *::selection {
+  background: #1f1f1f !important;
+  color: #f4f4f4 !important;
+  -webkit-text-fill-color: #f4f4f4 !important;
+  text-shadow: none !important;
+}
+
+.solution-card--lead::-moz-selection,
+.solution-card--lead *::-moz-selection,
+.solution-card__lead-copy::-moz-selection,
+.solution-card__lead-copy *::-moz-selection {
+  background: #1f1f1f !important;
+  color: #f4f4f4 !important;
+  text-shadow: none !important;
+}
+
 .solution-card__number {
   font-size: 28px;
   line-height: 31px;
