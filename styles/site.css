@@ -1850,6 +1850,19 @@ a {
   background: var(--figma-color-dark-base);
 }
 
+.solution-card--lead::before {
+  top: var(--space-24);
+  right: var(--space-24);
+  background-image: var(--header-button-v1-corner-tr-default);
+}
+
+.solution-card--lead::after {
+  left: var(--space-24);
+  bottom: var(--space-24);
+  transform: none;
+  background-image: var(--header-button-v1-corner-bl-default);
+}
+
 .solution-card__lead-copy {
   margin: 0;
   font-size: 18px;
