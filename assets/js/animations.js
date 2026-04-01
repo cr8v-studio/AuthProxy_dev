@@ -941,8 +941,7 @@ function initHeroMetricsCarousel() {
   if (
     !metricsWrap ||
     !sourceTrack ||
-    prefersReducedMotion ||
-    metricsWrap.classList.contains('hero-section__metrics-wrap--static')
+    prefersReducedMotion
   ) {
     return () => {};
   }
