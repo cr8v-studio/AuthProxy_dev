@@ -825,7 +825,7 @@ function initHeroGridImpulseFlow() {
   });
 }
 
-// Pointer-driven 4-cell focus around nearest grid intersection (Figma node 476:11902).
+// Pointer-driven dual cross-lines with delayed ghost trail (Figma node 476:11902).
 function initHeroGridLaserHover() {
   const panel = document.querySelector('.hero-section__panel');
   const grid = panel?.querySelector('.hero-section__grid-bg');
@@ -840,42 +840,53 @@ function initHeroGridLaserHover() {
     overlay = document.createElement('div');
     overlay.className = 'hero-section__grid-laser';
 
-    const fill = document.createElement('span');
-    fill.className = 'hero-section__grid-laser-fill';
-
-    const quad = document.createElement('span');
-    quad.className = 'hero-section__grid-laser-quad';
+    const vMain = document.createElement('span');
+    vMain.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--v';
+    const hMain = document.createElement('span');
+    hMain.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--h';
+    const vGhost = document.createElement('span');
+    vGhost.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--v hero-section__grid-laser-line--ghost';
+    const hGhost = document.createElement('span');
+    hGhost.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--h hero-section__grid-laser-line--ghost';
 
     const dot = document.createElement('span');
     dot.className = 'hero-section__grid-laser-dot';
 
-    overlay.append(fill, quad, dot);
+    overlay.append(vGhost, hGhost, vMain, hMain, dot);
     grid.append(overlay);
   }
 
-  const fill = overlay.querySelector('.hero-section__grid-laser-fill');
-  const quad = overlay.querySelector('.hero-section__grid-laser-quad');
+  const vMain = overlay.querySelector('.hero-section__grid-laser-line--v:not(.hero-section__grid-laser-line--ghost)');
+  const hMain = overlay.querySelector('.hero-section__grid-laser-line--h:not(.hero-section__grid-laser-line--ghost)');
+  const vGhost = overlay.querySelector('.hero-section__grid-laser-line--v.hero-section__grid-laser-line--ghost');
+  const hGhost = overlay.querySelector('.hero-section__grid-laser-line--h.hero-section__grid-laser-line--ghost');
   const dot = overlay.querySelector('.hero-section__grid-laser-dot');
 
-  if (!fill || !quad || !dot) {
+  if (!vMain || !hMain || !vGhost || !hGhost || !dot) {
     return;
   }
 
   const gridStep = 100;
   const gridOffset = 99;
-  const xToFill = gsap.quickTo(fill, 'x', { duration: 0.34, ease: 'power3.out' });
-  const yToFill = gsap.quickTo(fill, 'y', { duration: 0.34, ease: 'power3.out' });
-  const wToFill = gsap.quickTo(fill, 'width', { duration: 0.34, ease: 'power3.out' });
-  const hToFill = gsap.quickTo(fill, 'height', { duration: 0.34, ease: 'power3.out' });
-  const xToQuad = gsap.quickTo(quad, 'x', { duration: 0.34, ease: 'power3.out' });
-  const yToQuad = gsap.quickTo(quad, 'y', { duration: 0.34, ease: 'power3.out' });
-  const wToQuad = gsap.quickTo(quad, 'width', { duration: 0.34, ease: 'power3.out' });
-  const hToQuad = gsap.quickTo(quad, 'height', { duration: 0.34, ease: 'power3.out' });
-  const xToDot = gsap.quickTo(dot, 'x', { duration: 0.32, ease: 'power3.out' });
-  const yToDot = gsap.quickTo(dot, 'y', { duration: 0.32, ease: 'power3.out' });
-  const alphaToFill = gsap.quickTo(fill, 'opacity', { duration: 0.22, ease: 'power2.out' });
-  const alphaToQuad = gsap.quickTo(quad, 'opacity', { duration: 0.22, ease: 'power2.out' });
-  const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.22, ease: 'power2.out' });
+  const xToMainV = gsap.quickTo(vMain, 'x', { duration: 0.22, ease: 'power3.out' });
+  const yToMainV = gsap.quickTo(vMain, 'y', { duration: 0.22, ease: 'power3.out' });
+  const hToMainV = gsap.quickTo(vMain, 'height', { duration: 0.22, ease: 'power3.out' });
+  const xToMainH = gsap.quickTo(hMain, 'x', { duration: 0.22, ease: 'power3.out' });
+  const yToMainH = gsap.quickTo(hMain, 'y', { duration: 0.22, ease: 'power3.out' });
+  const wToMainH = gsap.quickTo(hMain, 'width', { duration: 0.22, ease: 'power3.out' });
+  const xToGhostV = gsap.quickTo(vGhost, 'x', { duration: 0.44, ease: 'power3.out' });
+  const yToGhostV = gsap.quickTo(vGhost, 'y', { duration: 0.44, ease: 'power3.out' });
+  const hToGhostV = gsap.quickTo(vGhost, 'height', { duration: 0.44, ease: 'power3.out' });
+  const xToGhostH = gsap.quickTo(hGhost, 'x', { duration: 0.44, ease: 'power3.out' });
+  const yToGhostH = gsap.quickTo(hGhost, 'y', { duration: 0.44, ease: 'power3.out' });
+  const wToGhostH = gsap.quickTo(hGhost, 'width', { duration: 0.44, ease: 'power3.out' });
+  const xToDot = gsap.quickTo(dot, 'x', { duration: 0.26, ease: 'power3.out' });
+  const yToDot = gsap.quickTo(dot, 'y', { duration: 0.26, ease: 'power3.out' });
+  const alphaToMainV = gsap.quickTo(vMain, 'opacity', { duration: 0.2, ease: 'power2.out' });
+  const alphaToMainH = gsap.quickTo(hMain, 'opacity', { duration: 0.2, ease: 'power2.out' });
+  const alphaToGhostV = gsap.quickTo(vGhost, 'opacity', { duration: 0.28, ease: 'power2.out' });
+  const alphaToGhostH = gsap.quickTo(hGhost, 'opacity', { duration: 0.28, ease: 'power2.out' });
+  const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.2, ease: 'power2.out' });
 
   const toNearestGridLine = (value, max) => {
     const snapped = gridOffset + Math.round((value - gridOffset) / gridStep) * gridStep;
@@ -901,25 +912,33 @@ function initHeroGridLaserHover() {
     const width = Math.max(0, right - left);
     const height = Math.max(0, bottom - top);
 
-    xToFill(left);
-    yToFill(top);
-    wToFill(width);
-    hToFill(height);
-    xToQuad(left);
-    yToQuad(top);
-    wToQuad(width);
-    hToQuad(height);
+    xToMainV(lineX);
+    yToMainV(top);
+    hToMainV(height);
+    xToMainH(left);
+    yToMainH(lineY);
+    wToMainH(width);
+    xToGhostV(lineX);
+    yToGhostV(top);
+    hToGhostV(height);
+    xToGhostH(left);
+    yToGhostH(lineY);
+    wToGhostH(width);
     xToDot(lineX);
     yToDot(lineY);
-    alphaToFill(1);
-    alphaToQuad(1);
-    alphaToDot(0.92);
+    alphaToMainV(0.9);
+    alphaToMainH(0.9);
+    alphaToGhostV(0.44);
+    alphaToGhostH(0.44);
+    alphaToDot(0.82);
   };
 
   const hideLaser = () => {
     document.body.classList.remove('is-hero-laser-cursor');
-    alphaToFill(0);
-    alphaToQuad(0);
+    alphaToMainV(0);
+    alphaToMainH(0);
+    alphaToGhostV(0);
+    alphaToGhostH(0);
     alphaToDot(0);
   };
 
