@@ -341,7 +341,7 @@ a {
   flex: 1 1 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--space-4);
   min-width: 0;
 }
@@ -353,11 +353,16 @@ a {
 }
 
 .site-header__nav {
-  position: static;
-  transform: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(
+    990px,
+    calc(100% - (var(--header-logo-width) * 2) - (var(--space-24) * 2))
+  );
   justify-content: center;
   gap: var(--header-nav-gap);
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
 }
 
