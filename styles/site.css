@@ -830,7 +830,7 @@ a {
   height: 600px;
   padding: var(--space-48);
   border-inline: 1px solid var(--site-section-border);
-  background: var(--figma-color-white-base);
+  background: var(--figma-color-off-white-base);
 }
 
 .hero-section__grid-bg {
