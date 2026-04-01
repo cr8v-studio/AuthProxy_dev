@@ -830,7 +830,7 @@ a {
   height: 600px;
   padding: var(--space-48);
   border-inline: 1px solid var(--site-section-border);
-  background: var(--figma-color-off-white-base);
+  background: var(--figma-color-white-base);
 }
 
 .hero-section__grid-bg {
@@ -849,7 +849,7 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(72px 30px at 50% 50%, rgb(255 255 255 / 0.95) 80.288%, rgb(255 255 255 / 0.4) 100%);
+  background: radial-gradient(72px 30px at 50% 50%, rgb(255 255 255 / 0.95) 80%, rgb(255 255 255 / 0.4) 100%);
 }
 
 .hero-section__content {
