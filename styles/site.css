@@ -817,6 +817,182 @@ a {
     transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
 }
 
+/* SECTION 01 — HERO (Figma 476:11898) */
+.hero-section__frame {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+}
+
+.hero-section__panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 600px;
+  padding: var(--space-48);
+  border-inline: 1px solid var(--site-section-border);
+  background: var(--figma-color-white-base);
+}
+
+.hero-section__grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(90deg, var(--site-section-border) 1px, transparent 1px),
+    linear-gradient(180deg, var(--site-section-border) 1px, transparent 1px);
+  background-size: 100px 100px;
+}
+
+.hero-section__grid-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(72px 30px at 50% 50%, rgb(255 255 255 / 0.95) 80.288%, rgb(255 255 255 / 0.4) 100%);
+}
+
+.hero-section__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.hero-section__kicker {
+  margin: 0;
+  color: var(--figma-color-dark-tint-2);
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 2px;
+}
+
+.hero-section__title {
+  margin: var(--space-24) 0 0;
+  width: 900px;
+  max-width: 100%;
+  color: var(--figma-color-dark-base);
+  font-size: 59px;
+  line-height: 59px;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  white-space: normal;
+}
+
+.hero-section__lead {
+  margin: var(--space-24) 0 0;
+  width: 780px;
+  max-width: 100%;
+  color: var(--figma-color-dark-tint-2);
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.18px;
+}
+
+.hero-section__cta-row {
+  padding-top: var(--space-24);
+  justify-content: center;
+}
+
+.hero-section__cta-row .site-header-button-v1 {
+  --control-height: 44px;
+  --control-padding-inline: var(--space-20);
+  --control-font-size: 18px;
+  --control-line-height: 26px;
+  --control-letter-spacing: 1px;
+  --control-font-weight: var(--font-weight-regular);
+  --control-color: var(--figma-color-dark-tint-1);
+  --header-button-v1-bg: transparent;
+  --header-button-v1-hover-color: var(--figma-color-dark-base);
+  --header-button-v1-corner-br-default: url("../assets/figma/hero/cta-corner-br.svg");
+  --header-button-v1-corner-bl-default: url("../assets/figma/hero/cta-corner-bl.svg");
+  --header-button-v1-corner-tr-default: url("../assets/figma/hero/cta-corner-tr.svg");
+  --header-button-v1-corner-tl-default: url("../assets/figma/hero/cta-corner-tl.svg");
+  --corner-inset: 5px;
+  text-transform: uppercase;
+}
+
+.hero-section__docs-link {
+  --control-height: 44px;
+  --control-padding-inline: var(--space-20);
+  --control-gap: var(--space-4);
+  --control-font-size: 18px;
+  --control-line-height: 26px;
+  --control-letter-spacing: 1px;
+  --control-font-weight: var(--font-weight-regular);
+  --control-color: var(--color-accent-alert);
+  --header-button-v2-hover-color: var(--color-accent-alert);
+  --header-button-v2-bg: transparent;
+  --header-button-v2-icon-size: 9.8995px;
+  --header-button-v2-icon-shift-hover: var(--space-4);
+  text-transform: uppercase;
+}
+
+.hero-section__docs-link .site-header-button-v2__icon-wrap {
+  width: 9.8995px;
+  height: 16.9706px;
+}
+
+.hero-section__docs-link .site-header-button-v2__icon {
+  width: 9.8995px;
+  height: 16.9706px;
+}
+
+.hero-section__metrics-wrap {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  border: 1px solid var(--site-section-border);
+  background: var(--figma-color-white-base);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  overflow: hidden;
+}
+
+.hero-section__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  background: var(--figma-color-white-base);
+}
+
+.hero-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-20);
+  padding: var(--space-48);
+  border-right: 1px solid var(--site-section-border);
+  background: var(--figma-color-white-base);
+}
+
+.hero-metric:last-child {
+  border-right: 0;
+}
+
+.hero-metric__icon {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+
+.hero-metric__line {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  color: var(--figma-color-dark-base);
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .how-section {
   border-top: 1px solid var(--site-section-border);
 }
