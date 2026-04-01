@@ -2011,7 +2011,7 @@ a {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-32);
+  gap: var(--space-48);
 }
 
 .solution-capability-item {
@@ -2020,8 +2020,8 @@ a {
 
 .solution-capability-item__title {
   margin: 0;
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 28px;
+  line-height: 31px;
   font-weight: 400;
   color: var(--figma-color-dark-base);
 }
@@ -2030,7 +2030,7 @@ a {
   margin: var(--space-8) 0 0;
   display: inline-flex;
   padding-inline: 4px;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 26px;
   font-weight: 400;
   letter-spacing: 1px;
