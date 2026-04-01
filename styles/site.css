@@ -939,6 +939,9 @@ a {
 .hero-section__docs-link .site-header-button-v2__icon {
   width: 9.8995px;
   height: 16.9706px;
+  transition:
+    left 0.56s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.56s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-section__metrics-wrap {
