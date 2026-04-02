@@ -10,7 +10,7 @@
 ## Active Architecture
 - Точка входа: `./index.html`
 - Основные стили: `./styles/tokens.css`, `./styles/icons.css`, `./styles/typography.css`, `./styles/components.css`, `./styles/site.css`
-- Runtime JS: `./scripts/site.js`, `./assets/js/animations.js`
+- Runtime JS: `./scripts/site.js`, `./assets/motion/animations.js`
 
 ## Token Layers
 - `--figma-*`: исходные значения, синхронизированные из дизайна.
@@ -57,7 +57,7 @@
 - `.hero-section__cta-bar`
 
 ## Icons
-- Активный слой иконок ограничен CSS-классом `.icon` и файлами из `./assets/icons/`.
+- Активный слой иконок ограничен CSS-классом `.icon` и файлами из `./assets/ui/icons/`.
 - Иконки используются напрямую из HTML; отдельный JS-реестр исключён из production-слоя.
 
 ## Reuse Rules
