@@ -1007,6 +1007,10 @@ a {
   white-space: normal;
 }
 
+.hero-section__title-line {
+  display: block;
+}
+
 .hero-section__lead {
   margin: 0;
   padding: 0;
