@@ -1293,63 +1293,6 @@ a {
   object-fit: contain;
 }
 
-.how-v2__services-icon {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  display: block;
-}
-
-.how-v2__services-layer {
-  position: absolute;
-  width: 55.876px;
-  height: 77.11px;
-  object-fit: contain;
-}
-
-.how-v2__services-layer--back {
-  left: 33.05px;
-  top: 5.25px;
-}
-
-.how-v2__services-layer--mid {
-  left: 22.18px;
-  top: 11.42px;
-}
-
-.how-v2__services-layer--front {
-  left: 11.3px;
-  top: 17.79px;
-}
-
-.how-v2__services-bar {
-  position: absolute;
-  left: 26.34px;
-  width: 26.705px;
-  height: 6.184px;
-  border-radius: 1.077px;
-  transform: skewX(-30deg) rotate(30deg);
-  transform-origin: center;
-}
-
-.how-v2__services-bar--dark {
-  top: 44.25px;
-  background: var(--figma-color-dark-base);
-}
-
-.how-v2__services-bar--light {
-  top: 52.65px;
-  background: var(--figma-color-dark-tint-9);
-  overflow: hidden;
-}
-
-.how-v2__services-bar-accent {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 2px;
-  background: var(--color-accent-alert);
-}
-
 .how-v2__endpoint-label {
   margin: 0;
   display: inline-flex;
