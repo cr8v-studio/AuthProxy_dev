@@ -2170,6 +2170,13 @@ a {
     );
 }
 
+.solution-section__stack {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
 .solution-section__visual-grid::after {
   content: "";
   position: absolute;
