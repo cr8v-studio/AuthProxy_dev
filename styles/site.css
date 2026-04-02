@@ -1467,7 +1467,7 @@ a {
   margin-top: 12px;
   width: fit-content;
   padding-left: 22px;
-  padding-right: 18px;
+  padding-right: 22px;
   font-family: "Lexend", sans-serif;
   font-size: 18px;
   line-height: 27px;
@@ -1482,7 +1482,7 @@ a {
   content: "";
   position: absolute;
   left: 22px;
-  right: 18px;
+  right: 22px;
   bottom: 0;
   height: 1px;
   background: currentColor;
