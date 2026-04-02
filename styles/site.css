@@ -3496,4 +3496,17 @@ a {
     height: auto;
     display: block;
   }
+
+}
+
+@media (min-width: 1264px) {
+  .how-v2__performance {
+    width: 1200px;
+    margin-inline: auto;
+    grid-template-columns: 600px 600px;
+  }
+
+  .how-v2__nodes {
+    grid-template-columns: 300px 300px;
+  }
 }
