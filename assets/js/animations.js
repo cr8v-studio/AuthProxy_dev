@@ -376,7 +376,7 @@ function createRevealSystem() {
 
 // Dedicated headline reveal for the Solution title copy.
 function initSolutionHeadlineMotion() {
-  const title = document.querySelector('#solution .solution-section__title');
+  const title = document.querySelector('.solution-section .solution-section__title');
 
   if (!title || prefersReducedMotion || title.dataset.motionSplitReady === 'true') {
     return;
@@ -424,7 +424,7 @@ function initSolutionHeadlineMotion() {
 
 // Sequenced reveal for Solution cards (lead + 01-05) with inner text hierarchy.
 function initSolutionCardsMotion() {
-  const cardsWrap = document.querySelector('#solution .solution-section__cards');
+  const cardsWrap = document.querySelector('.solution-section .solution-section__cards');
 
   if (!cardsWrap || prefersReducedMotion) {
     return;
@@ -484,7 +484,7 @@ function initSolutionCardsMotion() {
 
 // Text reveal for "AuthProxy replaces all five." and its capability list.
 function initSolutionSummaryMotion() {
-  const summary = document.querySelector('#solution .solution-section__summary');
+  const summary = document.querySelector('.solution-section .solution-section__summary');
 
   if (!summary || prefersReducedMotion || summary.dataset.motionSummaryReady === 'true') {
     return;
@@ -576,7 +576,7 @@ function initSolutionSummaryMotion() {
 
 // Keep Solution summary content aligned to Figma nodes 490:383, 491:655, 491:695.
 function syncSolutionSummaryWithFigma() {
-  const summary = document.querySelector('#solution .solution-section__summary');
+  const summary = document.querySelector('.solution-section .solution-section__summary');
   const title = summary?.querySelector('.solution-section__summary-title');
   const highlight = title?.querySelector('.text-highlight');
   const titleTail = title?.querySelector('span:not(.text-highlight)');
@@ -684,7 +684,7 @@ function syncSolutionSummaryWithFigma() {
 
 // Prevent double-thick seam between Solution bottom and the next section.
 function normalizeSolutionToAuthSeam() {
-  const solutionBottom = document.querySelector('#solution .solution-section__bottom');
+  const solutionBottom = document.querySelector('.solution-section .solution-section__bottom');
   const authLabelBar = document.querySelector('#auth .section-label-bar');
 
   if (!solutionBottom || !authLabelBar) {
