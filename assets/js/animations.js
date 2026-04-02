@@ -575,6 +575,114 @@ function initSolutionSummaryMotion() {
   summary.dataset.motionSummaryReady = 'true';
 }
 
+// Keep Solution summary content aligned to Figma nodes 490:383, 491:655, 491:695.
+function syncSolutionSummaryWithFigma() {
+  const summary = document.querySelector('#problem .solution-section__summary');
+  const title = summary?.querySelector('.solution-section__summary-title');
+  const highlight = title?.querySelector('.text-highlight');
+  const titleTail = title?.querySelector('span:not(.text-highlight)');
+  const list = summary?.querySelector('.solution-section__capability-list');
+  const items = list ? gsap.utils.toArray('.solution-capability-item', list) : [];
+  const docsLink = summary?.querySelector('.solution-section__docs-link');
+
+  if (!summary || !title || !list || !docsLink) {
+    return;
+  }
+
+  const desktop = !isMobileViewport();
+  const edgeX = desktop ? 48 : 24;
+  const edgeTop = desktop ? 48 : 24;
+  const edgeBottom = desktop ? 48 : 24;
+
+  summary.style.padding = `${edgeTop}px ${edgeX}px ${edgeBottom}px`;
+  summary.style.display = 'flex';
+  summary.style.flexDirection = 'column';
+  summary.style.alignItems = 'flex-start';
+
+  if (highlight) {
+    highlight.textContent = 'AuthProxy';
+  }
+  if (titleTail) {
+    titleTail.textContent = 'replaces all five.';
+  }
+
+  title.style.margin = '0';
+  title.style.display = 'flex';
+  title.style.flexDirection = 'column';
+  title.style.gap = desktop ? '12px' : '10px';
+  title.style.fontSize = desktop ? '59px' : '40px';
+  title.style.lineHeight = desktop ? '59px' : '40px';
+  title.style.fontWeight = '400';
+  title.style.letterSpacing = '0';
+
+  if (highlight) {
+    highlight.style.display = 'inline-flex';
+    highlight.style.width = 'fit-content';
+    highlight.style.paddingInline = '0';
+    highlight.style.background = '#1f1f1f';
+    highlight.style.color = '#ffffff';
+  }
+
+  list.style.margin = desktop ? '48px 0 0' : '32px 0 0';
+  list.style.padding = '0';
+  list.style.display = 'flex';
+  list.style.flexDirection = 'column';
+  list.style.gap = desktop ? '48px' : '36px';
+
+  const expectedTitles = [
+    'Authentication',
+    'Reverse Proxy',
+    'File Service',
+    'Notifications',
+    'Admin Panel'
+  ];
+  const expectedTags = [
+    '12 methods',
+    'Dynamic routing',
+    'Upload/Download/Images',
+    'SSE, Webhooks, Push',
+    '13 pages'
+  ];
+
+  items.forEach((item, index) => {
+    const itemTitle = item.querySelector('.solution-capability-item__title');
+    const itemTag = item.querySelector('.solution-capability-item__tag');
+
+    if (itemTitle) {
+      if (expectedTitles[index]) {
+        itemTitle.textContent = expectedTitles[index];
+      }
+      itemTitle.style.margin = '0';
+      itemTitle.style.fontSize = '28px';
+      itemTitle.style.lineHeight = '31px';
+      itemTitle.style.fontWeight = '400';
+      itemTitle.style.letterSpacing = '0';
+    }
+
+    if (itemTag) {
+      if (expectedTags[index]) {
+        itemTag.textContent = expectedTags[index];
+      }
+      itemTag.style.margin = '8px 0 0';
+      itemTag.style.display = 'inline-flex';
+      itemTag.style.paddingInline = '4px';
+      itemTag.style.fontSize = '18px';
+      itemTag.style.lineHeight = '26px';
+      itemTag.style.fontWeight = '400';
+      itemTag.style.letterSpacing = '1px';
+      itemTag.style.textTransform = 'uppercase';
+      itemTag.style.background = '#1f1f1f';
+      itemTag.style.color = '#ffffff';
+    }
+  });
+
+  docsLink.style.marginTop = desktop ? '48px' : '32px';
+  docsLink.style.alignSelf = 'flex-start';
+  docsLink.style.paddingInline = '0';
+  docsLink.style.paddingRight = '20px';
+  docsLink.style.height = '44px';
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -689,7 +797,7 @@ function initSystemNodeBDataFlow() {
 }
 
 function initSystemNodeApgImpulseFlow() {
-  const wrap = document.querySelector('.how-section__node-apg-impulse');
+  const wrap = document.querySelector('#how .how-section__node-apg-impulse');
   const orbitPaths = wrap ? gsap.utils.toArray('.how-section__apg-impulse-runner', wrap) : [];
 
   if (!wrap || orbitPaths.length === 0 || prefersReducedMotion) {
@@ -748,7 +856,7 @@ function initSystemNodeApgImpulseFlow() {
 }
 
 function initHowSystemNodeEllipsesFlow() {
-  const container = document.querySelector('.how-section__nodes-telemetry');
+  const container = document.querySelector('#how .how-section__nodes-telemetry');
   const indicators = container
     ? gsap.utils.toArray('.how-section__node-telemetry-indicator', container)
     : [];
@@ -805,7 +913,7 @@ function initHowSystemNodeEllipsesFlow() {
 }
 
 function initHowLayerStackReveal({ reduced = false } = {}) {
-  const group = document.querySelector('.how-section__layer-group');
+  const group = document.querySelector('#how .how-section__layer-group');
 
   if (!group) {
     return;
@@ -813,7 +921,7 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
 
   const layerNodes = gsap.utils.toArray('.how-section__layer-node', group);
   const telemetryNodes = gsap.utils.toArray('.how-section__node-telemetry', group);
-  const visual = document.querySelector('.how-section__visual');
+  const visual = document.querySelector('#how .how-section__visual');
 
   if (!layerNodes.length || !visual) {
     return;
@@ -2059,6 +2167,7 @@ async function initMotionSystem() {
   await runInitialPreloader(lenis);
   initHeroTimeline();
   mapRevealUtilities();
+  syncSolutionSummaryWithFigma();
   initSolutionHeadlineMotion();
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
