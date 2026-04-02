@@ -29,11 +29,7 @@ const REVEAL_ASSIGNMENTS = [
   ['.how-section__title-row, .how-section__intro', 'fade-up'],
   ['.how-v2__intro > *', 'fade-up'],
   ['.how-step-card', 'fade-up'],
-  ['.how-section__visual', 'scale-in'],
-  ['#auth .auth-section__intro', 'fade-up'],
-  ['#auth .auth-acc__group', 'fade-up'],
-  ['#auth .auth-section__technical', 'fade-up'],
-  ['#auth .auth-detail-card', 'fade-up']
+  ['.how-section__visual', 'scale-in']
 ];
 
 document.documentElement.style.scrollBehavior = 'auto';
@@ -571,19 +567,6 @@ function initSolutionSummaryMotion() {
   });
 
   summary.dataset.motionSummaryReady = 'true';
-}
-
-// Prevent double-thick seam between Solution bottom and the next section.
-function normalizeSolutionToAuthSeam() {
-  const solutionBottom = document.querySelector('.solution-section .solution-section__bottom');
-  const authLabelBar = document.querySelector('#auth .section-label-bar');
-
-  if (!solutionBottom || !authLabelBar) {
-    return;
-  }
-
-  solutionBottom.style.borderBottom = '0';
-  authLabelBar.style.borderTop = '1px solid var(--site-section-border)';
 }
 
 // Sequential reveal for How v2 metric rows (Auth check / Policy check / Route resolve).
@@ -1919,301 +1902,6 @@ function initHeroMetricsCarousel() {
   };
 }
 
-function initAuthAccordionMotion({ reduced = false } = {}) {
-  const groups = gsap.utils.toArray('.auth-acc__group');
-
-  if (!groups.length) {
-    return;
-  }
-
-  const itemState = groups
-    .map((group) => {
-      const header = group.querySelector('.auth-acc__header');
-      const table = group.querySelector('.auth-acc__table');
-      const chevron = group.querySelector('.auth-acc__chevron');
-      const title = group.querySelector('.auth-acc__title');
-      const topCorner = group.querySelector('.auth-acc__icon-corner--tr');
-      const bottomCorner = group.querySelector('.auth-acc__icon-corner--bl');
-      const revealItems = table
-        ? gsap.utils.toArray('.auth-acc__head, .auth-acc__row', table)
-        : [];
-
-      if (!header || !table || !chevron || !title) {
-        return null;
-      }
-
-      header.setAttribute('role', 'button');
-      header.setAttribute('tabindex', '0');
-      const contentId = table.id || `auth-acc-panel-${Math.random().toString(36).slice(2, 8)}`;
-      table.id = contentId;
-      header.setAttribute('aria-controls', contentId);
-
-      return {
-        group,
-        header,
-        table,
-        chevron,
-        title,
-        titleText: (title.textContent || '').trim(),
-        topCorner,
-        bottomCorner,
-        revealItems
-      };
-    })
-    .filter(Boolean);
-
-  if (!itemState.length) {
-    return;
-  }
-
-  const scrambleStateMap = new WeakMap();
-  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const randomScrambleChar = () =>
-    scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-
-  const playHeaderScramble = (label, finalText) => {
-    if (!label || !finalText || reduced) {
-      return;
-    }
-
-    const previousState = scrambleStateMap.get(label);
-    if (previousState?.tween) {
-      previousState.tween.kill();
-    }
-
-    const state = { progress: 0 };
-    const revealDelay = 0.08;
-    const totalFrames = Math.max(1, finalText.length);
-
-    const renderFrame = () => {
-      const normalized = gsap.utils.clamp(0, 1, state.progress);
-      const revealProgress =
-        normalized <= revealDelay ? 0 : (normalized - revealDelay) / (1 - revealDelay);
-      const revealCount = Math.floor(revealProgress * totalFrames);
-
-      label.textContent = finalText
-        .split('')
-        .map((character, index) => {
-          if (character === ' ') {
-            return ' ';
-          }
-          if (index < revealCount) {
-            return character;
-          }
-          return randomScrambleChar();
-        })
-        .join('');
-    };
-
-    renderFrame();
-
-    const tween = gsap.to(state, {
-      progress: 1,
-      duration: 0.58,
-      ease: 'power1.out',
-      overwrite: 'auto',
-      onUpdate: renderFrame,
-      onComplete: () => {
-        label.textContent = finalText;
-      }
-    });
-
-    scrambleStateMap.set(label, { tween });
-  };
-
-  const setOpenState = (item, isOpen) => {
-    item.group.classList.toggle('is-open', isOpen);
-    item.header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-
-    if (reduced) {
-      item.table.hidden = !isOpen;
-      item.table.style.height = '';
-      item.table.style.opacity = '';
-      gsap.set(item.chevron, { rotate: isOpen ? 180 : 0 });
-      return;
-    }
-
-    gsap.killTweensOf(item.chevron);
-    gsap.to(item.chevron, {
-      rotate: isOpen ? 180 : 0,
-      duration: 0.46,
-      ease: 'power3.out',
-      overwrite: true
-    });
-  };
-
-  const animateOpen = (item) => {
-    if (reduced) {
-      item.table.hidden = false;
-      setOpenState(item, true);
-      return;
-    }
-
-    item.table.hidden = false;
-    gsap.killTweensOf(item.table);
-    gsap.set(item.table, { height: item.table.offsetHeight, opacity: 1 });
-
-    const targetHeight = item.table.scrollHeight;
-    gsap.to(item.table, {
-      height: targetHeight,
-      opacity: 1,
-      duration: isMobileViewport() ? 0.44 : 0.52,
-      ease: 'power2.out',
-      overwrite: true,
-      onComplete: () => {
-        item.table.style.height = 'auto';
-      }
-    });
-
-    if (item.revealItems.length) {
-      gsap.fromTo(
-        item.revealItems,
-        { autoAlpha: 0, y: 8 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.4,
-          ease: 'power2.out',
-          stagger: 0.05,
-          overwrite: true
-        }
-      );
-    }
-  };
-
-  const animateClose = (item) => {
-    if (reduced) {
-      item.table.hidden = true;
-      setOpenState(item, false);
-      return;
-    }
-
-    gsap.killTweensOf(item.table);
-    gsap.set(item.table, { height: item.table.scrollHeight, opacity: 1 });
-    gsap.to(item.table, {
-      height: 0,
-      opacity: 0,
-      duration: isMobileViewport() ? 0.36 : 0.44,
-      ease: 'power2.out',
-      overwrite: true,
-      onComplete: () => {
-        item.table.hidden = true;
-        item.table.style.height = '';
-      }
-    });
-  };
-
-  const closeItem = (item) => {
-    setOpenState(item, false);
-    animateClose(item);
-  };
-
-  const openItem = (nextItem) => {
-    itemState.forEach((item) => {
-      if (item === nextItem) {
-        return;
-      }
-      closeItem(item);
-    });
-
-    setOpenState(nextItem, true);
-    animateOpen(nextItem);
-  };
-
-  itemState.forEach((item, index) => {
-    const isInitiallyOpen = item.group.classList.contains('is-open');
-    item.group.classList.toggle('is-open', isInitiallyOpen);
-    item.header.setAttribute('aria-expanded', isInitiallyOpen ? 'true' : 'false');
-    gsap.set(item.chevron, { rotate: isInitiallyOpen ? 180 : 0 });
-    item.table.hidden = !isInitiallyOpen;
-    if (!isInitiallyOpen && !reduced) {
-      gsap.set(item.table, { height: 0, opacity: 0 });
-    } else if (!reduced) {
-      gsap.set(item.table, { height: 'auto', opacity: 1 });
-    }
-
-    item.header.addEventListener('click', () => {
-      const isOpen = item.header.getAttribute('aria-expanded') === 'true';
-      if (isOpen) {
-        closeItem(item);
-        return;
-      }
-      openItem(item);
-    });
-
-    item.header.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' && event.key !== ' ') {
-        return;
-      }
-      event.preventDefault();
-      const isOpen = item.header.getAttribute('aria-expanded') === 'true';
-      if (isOpen) {
-        closeItem(item);
-        return;
-      }
-      openItem(item);
-    });
-
-    if (!reduced) {
-      gsap.set(item.chevron, {
-        transformOrigin: '50% 50%',
-        willChange: 'transform'
-      });
-
-      const trX = item.topCorner
-        ? gsap.quickTo(item.topCorner, 'x', { duration: 0.42, ease: 'power3.out' })
-        : null;
-      const trY = item.topCorner
-        ? gsap.quickTo(item.topCorner, 'y', { duration: 0.42, ease: 'power3.out' })
-        : null;
-      const blX = item.bottomCorner
-        ? gsap.quickTo(item.bottomCorner, 'x', { duration: 0.42, ease: 'power3.out' })
-        : null;
-      const blY = item.bottomCorner
-        ? gsap.quickTo(item.bottomCorner, 'y', { duration: 0.42, ease: 'power3.out' })
-        : null;
-
-      const onEnter = () => {
-        trX?.(3);
-        trY?.(-3);
-        blX?.(-3);
-        blY?.(3);
-        const isOpen = item.header.getAttribute('aria-expanded') === 'true';
-        if (!isOpen) {
-          playHeaderScramble(item.title, item.titleText);
-        } else {
-          item.title.textContent = item.titleText;
-        }
-
-        gsap.to(item.chevron, {
-          rotate: 180,
-          duration: 0.42,
-          ease: 'power3.out',
-          overwrite: true
-        });
-      };
-
-      const onLeave = () => {
-        trX?.(0);
-        trY?.(0);
-        blX?.(0);
-        blY?.(0);
-
-        const isOpen = item.header.getAttribute('aria-expanded') === 'true';
-        gsap.to(item.chevron, {
-          rotate: isOpen ? 180 : 0,
-          duration: 0.42,
-          ease: 'power3.out',
-          overwrite: true
-        });
-      };
-
-      item.header.addEventListener('mouseenter', onEnter);
-      item.header.addEventListener('mouseleave', onLeave);
-    }
-  });
-}
-
 // Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
 function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
@@ -2516,7 +2204,6 @@ async function initMotionSystem() {
     setReducedMotionState();
     initNavbarMotion(null);
     initHowLayerStackReveal({ reduced: true });
-    initAuthAccordionMotion({ reduced: true });
     initCustomCursor();
     return;
   }
@@ -2530,7 +2217,6 @@ async function initMotionSystem() {
   await runInitialPreloader(lenis);
   initHeroTimeline();
   mapRevealUtilities();
-  normalizeSolutionToAuthSeam();
   initSolutionHeadlineMotion();
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
@@ -2546,7 +2232,6 @@ async function initMotionSystem() {
   initHeroGridLaserHover();
   initSolutionGridLaserHover();
   initHowV2GridLaserHover();
-  initAuthAccordionMotion();
   initInteractiveHoverStates();
   initCustomCursor();
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
