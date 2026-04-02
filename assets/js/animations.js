@@ -706,6 +706,10 @@ function initSystemNodeApgImpulseFlow() {
   }
 
   wraps.forEach((wrap) => {
+    if (wrap.closest('.how-v2__pipeline')) {
+      return;
+    }
+
     const orbitPaths = gsap.utils.toArray('.how-section__apg-impulse-runner', wrap);
 
     if (!orbitPaths.length) {
