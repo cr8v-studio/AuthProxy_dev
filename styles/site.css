@@ -2176,7 +2176,14 @@ a {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgb(244 244 244 / 0) 34%, rgb(244 244 244 / 0.98) 100%);
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(244 244 244 / 0) 0%,
+      rgb(244 244 244 / 0) 68%,
+      rgb(244 244 244 / 1) 100%
+    ),
+    radial-gradient(circle at 50% 42%, rgb(244 244 244 / 0) 34%, rgb(244 244 244 / 0.98) 100%);
 }
 
 #auth .section-label-bar {
