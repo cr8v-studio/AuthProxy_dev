@@ -2135,8 +2135,8 @@ a {
 }
 
 .solution-section__visual::before {
-  left: 39px;
-  bottom: 12px;
+  left: 24px;
+  bottom: 24px;
   border-width: 0 0 1px 1px;
 }
 
@@ -2176,7 +2176,7 @@ a {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgb(244 244 244 / 0) 54%, rgb(244 244 244 / 0.88) 100%);
+  background: radial-gradient(circle at 50% 50%, rgb(244 244 244 / 0) 34%, rgb(244 244 244 / 0.98) 100%);
 }
 
 #auth .section-label-bar {
