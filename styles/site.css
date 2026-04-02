@@ -2129,7 +2129,7 @@ a {
   position: absolute;
   width: 15px;
   height: 12px;
-  border-color: var(--figma-color-dark-tint-5);
+  border-color: var(--figma-color-dark-base);
   border-style: solid;
   pointer-events: none;
 }
