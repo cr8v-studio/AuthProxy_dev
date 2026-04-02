@@ -2,7 +2,7 @@
 
 Дата: 2026-04-02  
 Режим: `safe-only`  
-Область: `index.html`, `platform/index.html`, `developers/index.html`, `styles/*`, `scripts/*`, `assets/*`
+Область: `index.html`, `styles/*`, `scripts/*`, `assets/*`
 
 ## Критерии удаления
 
@@ -32,3 +32,4 @@
 
 - Полное удаление функций анимаций из файла допускается во 2-й волне.
 - В 1-й волне удаляются только вызовы веток без DOM-target и orphan assets.
+- Multi-page (`platform/developers`) выведен из runtime и исключён из baseline.
