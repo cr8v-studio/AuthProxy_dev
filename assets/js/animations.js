@@ -615,171 +615,131 @@ function initHowV2StatsReveal() {
   });
 }
 
-// How v2 pipeline arrows: "input -> processing -> output" phased flow.
+// How v2 pipeline arrows: technical data-flow pulse.
 function initHowV2PipelineFlow() {
   const pipeline = document.querySelector('.how-v2__pipeline');
   const arrows = gsap.utils.toArray('.how-v2__pipeline-arrow', pipeline);
-  const gateway = pipeline?.querySelector('.how-v2__gateway');
-  const gatewayIcon = gateway?.querySelector('.how-v2__gateway-icon');
 
-  if (!pipeline || arrows.length < 2 || !gateway || prefersReducedMotion) {
+  if (!pipeline || arrows.length < 2 || prefersReducedMotion) {
     return;
   }
 
-  const createFlowLayer = (arrow) => {
-    let layer = arrow.querySelector('.how-v2__pipeline-flow');
+  const createMotionLayer = (arrow) => {
+    let layer = arrow.querySelector('.how-v2__pipeline-motion');
 
     if (layer) {
       return layer;
     }
 
     layer = document.createElement('span');
-    layer.className = 'how-v2__pipeline-flow';
+    layer.className = 'how-v2__pipeline-motion';
     layer.setAttribute('aria-hidden', 'true');
     layer.innerHTML = `
-      <span class="how-v2__pipeline-flow-dot how-v2__pipeline-flow-dot--ghost-a"></span>
-      <span class="how-v2__pipeline-flow-dot how-v2__pipeline-flow-dot--ghost-b"></span>
-      <span class="how-v2__pipeline-flow-dot how-v2__pipeline-flow-dot--core"></span>
+      <span class="how-v2__pipeline-dashflow"></span>
+      <span class="how-v2__pipeline-glow"></span>
+      <span class="how-v2__pipeline-arrowhead"></span>
     `;
     arrow.append(layer);
     return layer;
   };
 
-  const leftFlow = createFlowLayer(arrows[0]);
-  const rightFlow = createFlowLayer(arrows[1]);
-  const leftDots = Array.from(leftFlow.querySelectorAll('.how-v2__pipeline-flow-dot'));
-  const rightDots = Array.from(rightFlow.querySelectorAll('.how-v2__pipeline-flow-dot'));
-  const leftCore = leftFlow.querySelector('.how-v2__pipeline-flow-dot--core');
-  const rightCore = rightFlow.querySelector('.how-v2__pipeline-flow-dot--core');
-
-  if (!leftCore || !rightCore) {
-    return;
-  }
-
-  gsap.set([leftFlow, rightFlow], { autoAlpha: 0.96 });
-  gsap.set([leftCore, rightCore], { xPercent: -16, scale: 1, autoAlpha: 0.95 });
-  gsap.set([leftDots, rightDots], { transformOrigin: '50% 50%' });
-
   const isMobile = isMobileViewport();
-  const flowDuration = isMobile ? 0.86 : 0.96;
-  const ghostLagA = isMobile ? 0.1 : 0.12;
-  const ghostLagB = isMobile ? 0.18 : 0.22;
   const rightPhaseDelay = isMobile ? 0.12 : 0.15;
-  const baseOpacity = 0.92;
-  const idleOpacity = 0.48;
+  const dashDuration = isMobile ? 0.78 : 0.86;
+  const glowDuration = isMobile ? 0.88 : 0.98;
+  const baseOpacity = 1;
+  const idleOpacity = 0.55;
   const timings = {
     start: 'top 92%',
     end: 'bottom 8%'
   };
 
-  const animateFlow = (core, ghostA, ghostB, delay = 0) => {
-    const timeline = gsap.timeline({
+  const animatedTweens = [];
+  const animatedLayers = [];
+
+  const buildArrowFlow = (arrow, delay = 0) => {
+    const layer = createMotionLayer(arrow);
+    const dash = layer.querySelector('.how-v2__pipeline-dashflow');
+    const glow = layer.querySelector('.how-v2__pipeline-glow');
+    const head = layer.querySelector('.how-v2__pipeline-arrowhead');
+
+    if (!dash || !glow || !head) {
+      return;
+    }
+
+    animatedLayers.push(layer);
+    gsap.set(layer, { autoAlpha: 0.96 });
+    gsap.set(glow, { x: -12, autoAlpha: 0 });
+    gsap.set(head, { autoAlpha: 0.75 });
+
+    const dashTween = gsap.to(dash, {
+      backgroundPositionX: 20,
+      duration: dashDuration,
+      ease: 'none',
       repeat: -1,
-      delay,
-      defaults: { ease: 'none' }
+      delay
     });
 
-    timeline.fromTo(
-      core,
-      { xPercent: -18, autoAlpha: 0 },
-      {
-        keyframes: [
-          { xPercent: 20, autoAlpha: 1, duration: flowDuration * 0.28, ease: 'power2.in' },
-          { xPercent: 76, autoAlpha: 0.96, duration: flowDuration * 0.4, ease: 'power2.out' },
-          { xPercent: 112, autoAlpha: 0, duration: flowDuration * 0.32, ease: 'power1.in' }
-        ]
-      },
-      0
-    );
+    const glowTween = gsap.to(glow, {
+      keyframes: [
+        { autoAlpha: 1, duration: glowDuration * 0.12, ease: 'power2.out' },
+        {
+          x: () => Math.max(18, arrow.clientWidth - 16),
+          autoAlpha: 0.92,
+          duration: glowDuration * 0.66,
+          ease: 'power2.out'
+        },
+        { autoAlpha: 0, duration: glowDuration * 0.22, ease: 'power2.in' }
+      ],
+      repeat: -1,
+      delay,
+      repeatRefresh: true
+    });
 
-    timeline.fromTo(
-      ghostA,
-      { xPercent: -18, autoAlpha: 0 },
-      {
-        xPercent: 112,
-        autoAlpha: 0,
-        duration: flowDuration,
-        delay: ghostLagA,
-        ease: 'power2.out'
-      },
-      0
-    );
+    const headTween = gsap.to(head, {
+      autoAlpha: 1,
+      duration: isMobile ? 0.64 : 0.72,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+      delay
+    });
 
-    timeline.fromTo(
-      ghostB,
-      { xPercent: -18, autoAlpha: 0 },
-      {
-        xPercent: 112,
-        autoAlpha: 0,
-        duration: flowDuration,
-        delay: ghostLagB,
-        ease: 'power2.out'
-      },
-      0
-    );
-
-    return timeline;
+    animatedTweens.push(dashTween, glowTween, headTween);
   };
 
-  const leftTimeline = animateFlow(leftCore, leftDots[0], leftDots[1], 0);
-  const rightTimeline = animateFlow(rightCore, rightDots[0], rightDots[1], rightPhaseDelay);
+  buildArrowFlow(arrows[0], 0);
+  buildArrowFlow(arrows[1], rightPhaseDelay);
 
-  // Short "processing" response in the APG center when input pulse reaches gateway.
-  const gatewayPulse = gsap.timeline({
-    repeat: -1,
-    delay: flowDuration * 0.34,
-    defaults: { ease: 'power2.out' }
-  });
-
-  gatewayPulse.to(gateway, { scale: 1.02, duration: 0.18 });
-  gatewayPulse.to(gateway, { scale: 1, duration: 0.24, ease: 'power2.inOut' });
-  gatewayPulse.fromTo(
-    gatewayIcon,
-    {
-      filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0))'
-    },
-    {
-      filter: 'drop-shadow(0 0 11px rgb(237 88 90 / 0.24))',
-      duration: 0.18
-    },
-    0
-  );
-  gatewayPulse.to(
-    gatewayIcon,
-    {
-      filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0))',
-      duration: 0.26,
-      ease: 'power2.inOut'
-    },
-    0.16
-  );
-  gatewayPulse.to({}, { duration: rightPhaseDelay + 0.18 });
+  if (!animatedTweens.length) {
+    return;
+  }
 
   const setActiveIntensity = () => {
-    gsap.to([leftFlow, rightFlow], {
+    gsap.to(animatedLayers, {
       autoAlpha: baseOpacity,
       duration: 0.45,
       ease: 'power2.out',
       overwrite: true
     });
-    gsap.to([leftTimeline, rightTimeline, gatewayPulse], {
+    gsap.to(animatedTweens, {
       timeScale: 1,
-      duration: 0.6,
+      duration: 0.45,
       ease: 'power2.out',
       overwrite: true
     });
   };
 
   const setIdleIntensity = () => {
-    gsap.to([leftFlow, rightFlow], {
+    gsap.to(animatedLayers, {
       autoAlpha: idleOpacity,
       duration: 0.55,
       ease: 'power2.out',
       overwrite: true
     });
-    gsap.to([leftTimeline, rightTimeline, gatewayPulse], {
-      timeScale: 0.6,
-      duration: 0.65,
+    gsap.to(animatedTweens, {
+      timeScale: 0.7,
+      duration: 0.6,
       ease: 'power2.out',
       overwrite: true
     });

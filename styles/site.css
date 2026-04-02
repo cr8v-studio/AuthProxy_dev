@@ -1326,45 +1326,55 @@ a {
   overflow: hidden;
 }
 
-.how-v2__pipeline-flow {
+.how-v2__pipeline-motion {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 2;
 }
 
-.how-v2__pipeline-flow-dot {
+.how-v2__pipeline-dashflow {
+  position: absolute;
+  left: 0;
+  right: 10px;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(237 88 90 / 0.95) 0 7px,
+    rgb(237 88 90 / 0) 7px 13px
+  );
+  background-size: 20px 2px;
+  background-position-x: 0;
+  will-change: background-position, opacity;
+}
+
+.how-v2__pipeline-glow {
   position: absolute;
   left: 0;
   top: 50%;
-  width: 22px;
-  height: 4px;
-  border-radius: 999px;
+  width: 18px;
+  height: 2px;
   transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgb(255 195 196 / 0.95);
+  box-shadow:
+    0 0 6px rgb(237 88 90 / 0.65),
+    0 0 12px rgb(237 88 90 / 0.35);
   will-change: transform, opacity;
 }
 
-.how-v2__pipeline-flow-dot--core {
-  width: 24px;
-  height: 4px;
-  background: rgb(237 88 90 / 0.98);
-  box-shadow:
-    0 0 8px rgb(237 88 90 / 0.5),
-    0 0 14px rgb(237 88 90 / 0.25);
-}
-
-.how-v2__pipeline-flow-dot--ghost-a {
-  width: 20px;
-  height: 3px;
-  background: rgb(237 88 90 / 0.5);
-  filter: blur(0.6px);
-}
-
-.how-v2__pipeline-flow-dot--ghost-b {
-  width: 16px;
-  height: 2px;
-  background: rgb(237 88 90 / 0.3);
-  filter: blur(1px);
+.how-v2__pipeline-arrowhead {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 10px;
+  height: 12px;
+  transform: translateY(-50%);
+  background: rgb(237 88 90 / 0.95);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  will-change: opacity;
 }
 
 .how-v2__gateway {
