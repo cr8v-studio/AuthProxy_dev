@@ -508,91 +508,71 @@ function initSolutionSummaryMotion() {
     node.style.display = 'inline-block';
   });
 
-  const summaryItems = capabilityItems.map((item) => ({
-    title: item.querySelector('.solution-capability-item__title'),
-    tag: item.querySelector('.solution-capability-item__tag')
-  }));
-
-  const yTitle = isMobileViewport() ? 14 : 18;
-  const yItem = isMobileViewport() ? 10 : 12;
-  const yTag = isMobileViewport() ? 8 : 10;
-
-  if (titleTextNodes.length) {
-    gsap.set(titleTextNodes, { autoAlpha: 0, y: yTitle, force3D: true });
-  } else {
-    gsap.set(summaryTitle, { autoAlpha: 0, y: yTitle, force3D: true });
-  }
-
-  summaryItems.forEach(({ title, tag }) => {
-    if (title) {
-      gsap.set(title, { autoAlpha: 0, y: yItem, force3D: true });
-    }
-    if (tag) {
-      gsap.set(tag, { autoAlpha: 0, y: yTag, force3D: true });
-    }
-  });
-
   const timeline = gsap.timeline({
     scrollTrigger: {
       trigger: summary,
-      start: 'top 84%',
-      end: 'bottom 40%',
-      scrub: 0.9,
-      invalidateOnRefresh: true
+      start: 'top 82%',
+      once: true
     }
   });
 
   if (titleTextNodes.length) {
-    timeline.to(
+    timeline.from(
       titleTextNodes,
       {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.22,
-        ease: 'none',
-        stagger: isMobileViewport() ? 0.12 : 0.14
+        autoAlpha: 0,
+        y: isMobileViewport() ? 14 : 18,
+        duration: isMobileViewport() ? 0.5 : 0.58,
+        ease: 'power3.out',
+        stagger: isMobileViewport() ? 0.06 : 0.08,
+        force3D: true
       },
       0
     );
   } else {
-    timeline.to(
+    timeline.from(
       summaryTitle,
       {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.24,
-        ease: 'none'
+        autoAlpha: 0,
+        y: isMobileViewport() ? 14 : 18,
+        duration: isMobileViewport() ? 0.5 : 0.58,
+        ease: 'power3.out',
+        force3D: true
       },
       0
     );
   }
 
-  summaryItems.forEach(({ title, tag }, index) => {
-    const at = (isMobileViewport() ? 0.2 : 0.24) + index * (isMobileViewport() ? 0.16 : 0.18);
+  capabilityItems.forEach((item, index) => {
+    const title = item.querySelector('.solution-capability-item__title');
+    const tag = item.querySelector('.solution-capability-item__tag');
+    const at = (isMobileViewport() ? 0.14 : 0.18) + index * (isMobileViewport() ? 0.06 : 0.08);
 
     if (title) {
-      timeline.to(
+      timeline.from(
         title,
         {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.18,
-          ease: 'none'
+          autoAlpha: 0,
+          y: isMobileViewport() ? 10 : 12,
+          duration: isMobileViewport() ? 0.44 : 0.5,
+          ease: 'power3.out',
+          force3D: true
         },
         at
       );
     }
 
     if (tag) {
-      timeline.to(
+      timeline.from(
         tag,
         {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.16,
-          ease: 'none'
+          autoAlpha: 0,
+          y: isMobileViewport() ? 8 : 10,
+          duration: isMobileViewport() ? 0.42 : 0.48,
+          ease: 'power3.out',
+          force3D: true
         },
-        at + 0.08
+        at + 0.04
       );
     }
   });
