@@ -683,6 +683,19 @@ function syncSolutionSummaryWithFigma() {
   docsLink.style.height = '44px';
 }
 
+// Prevent double-thick seam between Solution bottom and the next section.
+function normalizeSolutionToAuthSeam() {
+  const solutionBottom = document.querySelector('#problem .solution-section__bottom');
+  const authLabelBar = document.querySelector('#auth .section-label-bar');
+
+  if (!solutionBottom || !authLabelBar) {
+    return;
+  }
+
+  solutionBottom.style.borderBottom = '0';
+  authLabelBar.style.borderTop = '1px solid var(--site-section-border)';
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -2168,6 +2181,7 @@ async function initMotionSystem() {
   initHeroTimeline();
   mapRevealUtilities();
   syncSolutionSummaryWithFigma();
+  normalizeSolutionToAuthSeam();
   initSolutionHeadlineMotion();
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
