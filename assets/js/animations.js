@@ -863,17 +863,19 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
     const compactGap = isMobileViewport() ? 44 : 52;
     const expandedGap = 73;
     const offsetStep = Math.max(0, expandedGap - compactGap);
+    const centerIndex = (layerNodes.length - 1) / 2;
 
     layerNodes.forEach((node, index) => {
       gsap.set(node, {
-        y: -(index * offsetStep),
+        // Start compressed around the middle, then expand up/down from center.
+        y: (centerIndex - index) * offsetStep,
         transformOrigin: '50% 50%'
       });
     });
 
     telemetryNodes.forEach((node, index) => {
       gsap.set(node, {
-        y: -(index * offsetStep),
+        y: (centerIndex - index) * offsetStep,
         transformOrigin: '50% 50%'
       });
     });
@@ -890,7 +892,11 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
       y: 0,
       duration: isMobileViewport() ? 0.84 : 1.06,
       ease: 'power3.out',
-      delay: isMobileViewport() ? 0.12 : 0.16
+      delay: isMobileViewport() ? 0.12 : 0.16,
+      stagger: {
+        each: isMobileViewport() ? 0.04 : 0.06,
+        from: 'center'
+      }
     });
 
     if (telemetryNodes.length) {
@@ -900,7 +906,11 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
           y: 0,
           duration: isMobileViewport() ? 0.84 : 1.06,
           ease: 'power3.out',
-          delay: isMobileViewport() ? 0.12 : 0.16
+          delay: isMobileViewport() ? 0.12 : 0.16,
+          stagger: {
+            each: isMobileViewport() ? 0.04 : 0.06,
+            from: 'center'
+          }
         },
         0
       );
