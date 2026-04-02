@@ -623,7 +623,7 @@ function initHowV2StatsReveal() {
   });
 }
 
-// How v2 pipeline arrows: technical data-flow pulse.
+// How v2 pipeline arrows: dash-flow with phased right-track delay.
 function initHowV2PipelineFlow() {
   const pipeline = document.querySelector('.how-v2__pipeline');
   const arrows = gsap.utils.toArray('.how-v2__pipeline-arrow', pipeline);
@@ -644,8 +644,6 @@ function initHowV2PipelineFlow() {
     layer.setAttribute('aria-hidden', 'true');
     layer.innerHTML = `
       <span class="how-v2__pipeline-dashflow"></span>
-      <span class="how-v2__pipeline-glow"></span>
-      <span class="how-v2__pipeline-arrowhead"></span>
     `;
     arrow.append(layer);
     return layer;
@@ -653,8 +651,7 @@ function initHowV2PipelineFlow() {
 
   const isMobile = isMobileViewport();
   const rightPhaseDelay = isMobile ? 0.12 : 0.15;
-  const dashDuration = isMobile ? 0.78 : 0.86;
-  const glowDuration = isMobile ? 0.88 : 0.98;
+  const dashDuration = isMobile ? 0.82 : 0.9;
   const baseOpacity = 1;
   const idleOpacity = 0.55;
   const timings = {
@@ -668,43 +665,23 @@ function initHowV2PipelineFlow() {
   const buildArrowFlow = (arrow, delay = 0) => {
     const layer = createMotionLayer(arrow);
     const dash = layer.querySelector('.how-v2__pipeline-dashflow');
-    const glow = layer.querySelector('.how-v2__pipeline-glow');
-    const head = layer.querySelector('.how-v2__pipeline-arrowhead');
 
-    if (!dash || !glow || !head) {
+    if (!dash) {
       return;
     }
 
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
-    gsap.set(glow, { x: -12, autoAlpha: 0 });
-    gsap.set(head, { autoAlpha: 0.9 });
 
     const dashTween = gsap.to(dash, {
-      backgroundPositionX: 20,
+      backgroundPositionX: 18,
       duration: dashDuration,
       ease: 'none',
       repeat: -1,
       delay
     });
 
-    const glowTween = gsap.to(glow, {
-      keyframes: [
-        { autoAlpha: 1, duration: glowDuration * 0.12, ease: 'power2.out' },
-        {
-          x: () => Math.max(16, arrow.clientWidth - 34),
-          autoAlpha: 0.62,
-          duration: glowDuration * 0.58,
-          ease: 'power2.out'
-        },
-        { autoAlpha: 0, duration: glowDuration * 0.3, ease: 'power2.in' }
-      ],
-      repeat: -1,
-      delay,
-      repeatRefresh: true
-    });
-
-    animatedTweens.push(dashTween, glowTween);
+    animatedTweens.push(dashTween);
   };
 
   buildArrowFlow(arrows[0], 0);
