@@ -699,186 +699,213 @@ function initSystemNodeBDataFlow() {
 }
 
 function initSystemNodeApgImpulseFlow() {
-  const wrap = document.querySelector('#how .how-section__node-apg-impulse');
-  const orbitPaths = wrap ? gsap.utils.toArray('.how-section__apg-impulse-runner', wrap) : [];
+  const wraps = gsap.utils.toArray('.how-section__node-apg-impulse');
 
-  if (!wrap || orbitPaths.length === 0 || prefersReducedMotion) {
+  if (!wraps.length || prefersReducedMotion) {
     return;
   }
 
-  const guidePaths = orbitPaths.filter((path) => typeof path.getTotalLength === 'function');
-  gsap.set(guidePaths, { autoAlpha: 0 });
+  wraps.forEach((wrap) => {
+    const orbitPaths = gsap.utils.toArray('.how-section__apg-impulse-runner', wrap);
 
-  const dots = guidePaths.map(() => {
-    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    dot.setAttribute('class', 'how-section__apg-impulse-dot');
-    dot.setAttribute('r', isMobileViewport() ? '2.6' : '3.2');
-    dot.setAttribute('cx', '0');
-    dot.setAttribute('cy', '0');
-    wrap.append(dot);
-    return dot;
-  });
+    if (!orbitPaths.length) {
+      return;
+    }
 
-  const tracks = guidePaths.map(() => ({ progress: 0 }));
-  const tweens = guidePaths.map((path, index) => {
-    const length = path.getTotalLength();
+    const guidePaths = orbitPaths.filter((path) => typeof path.getTotalLength === 'function');
+    gsap.set(guidePaths, { autoAlpha: 0 });
 
-    return gsap.to(tracks[index], {
-      progress: 1,
-      duration: isMobileViewport() ? 2.8 : 3.25,
-      ease: 'none',
-      repeat: -1,
-      paused: true,
-      delay: index * 0.36,
-      onUpdate: () => {
-        const point = path.getPointAtLength((tracks[index].progress % 1) * length);
-        dots[index].setAttribute('cx', `${point.x}`);
-        dots[index].setAttribute('cy', `${point.y}`);
+    const dots = guidePaths.map(() => {
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('class', 'how-section__apg-impulse-dot');
+      dot.setAttribute('r', isMobileViewport() ? '2.6' : '3.2');
+      dot.setAttribute('cx', '0');
+      dot.setAttribute('cy', '0');
+      wrap.append(dot);
+      return dot;
+    });
+
+    const tracks = guidePaths.map(() => ({ progress: 0 }));
+    const tweens = guidePaths.map((path, index) => {
+      const length = path.getTotalLength();
+
+      return gsap.to(tracks[index], {
+        progress: 1,
+        duration: isMobileViewport() ? 2.8 : 3.25,
+        ease: 'none',
+        repeat: -1,
+        paused: true,
+        delay: index * 0.36,
+        onUpdate: () => {
+          const point = path.getPointAtLength((tracks[index].progress % 1) * length);
+          dots[index].setAttribute('cx', `${point.x}`);
+          dots[index].setAttribute('cy', `${point.y}`);
+        }
+      });
+    });
+
+    const trigger =
+      wrap.closest('.how-section__visual, .solution-section__visual') ??
+      wrap.parentElement ??
+      wrap;
+
+    ScrollTrigger.create({
+      trigger,
+      start: 'top 88%',
+      end: 'bottom 12%',
+      onEnter: () => {
+        tweens.forEach((tween) => tween.play());
+      },
+      onEnterBack: () => {
+        tweens.forEach((tween) => tween.play());
+      },
+      onLeave: () => {
+        tweens.forEach((tween) => tween.pause());
+      },
+      onLeaveBack: () => {
+        tweens.forEach((tween) => tween.pause());
       }
     });
-  });
-
-  ScrollTrigger.create({
-    trigger: wrap,
-    start: 'top 88%',
-    end: 'bottom 12%',
-    onEnter: () => {
-      tweens.forEach((tween) => tween.play());
-    },
-    onEnterBack: () => {
-      tweens.forEach((tween) => tween.play());
-    },
-    onLeave: () => {
-      tweens.forEach((tween) => tween.pause());
-    },
-    onLeaveBack: () => {
-      tweens.forEach((tween) => tween.pause());
-    }
   });
 }
 
 function initHowSystemNodeEllipsesFlow() {
-  const container = document.querySelector('#how .how-section__nodes-telemetry');
-  const indicators = container
-    ? gsap.utils.toArray('.how-section__node-telemetry-indicator', container)
-    : [];
+  const containers = gsap.utils.toArray('.how-section__nodes-telemetry');
 
-  if (!container || indicators.length === 0 || prefersReducedMotion) {
+  if (!containers.length || prefersReducedMotion) {
     return;
   }
 
-  gsap.set(indicators, {
-    autoAlpha: 0.06,
-    scale: 0.82,
-    transformOrigin: '50% 50%'
-  });
+  containers.forEach((container) => {
+    const indicators = gsap.utils.toArray('.how-section__node-telemetry-indicator', container);
 
-  const timeline = gsap.timeline({ paused: true, repeat: -1 });
+    if (!indicators.length) {
+      return;
+    }
 
-  indicators.forEach((indicator, index) => {
-    const startAt = index * 0.16;
+    gsap.set(indicators, {
+      autoAlpha: 0.06,
+      scale: 0.82,
+      transformOrigin: '50% 50%'
+    });
 
-    timeline.to(
-      indicator,
-      {
-        autoAlpha: 1,
-        scale: 1,
-        duration: 0.2,
-        ease: 'power2.out'
-      },
-      startAt
-    );
+    const timeline = gsap.timeline({ paused: true, repeat: -1 });
 
-    timeline.to(
-      indicator,
-      {
-        autoAlpha: 0.08,
-        scale: 0.84,
-        duration: 0.34,
-        ease: 'power1.inOut'
-      },
-      startAt + 0.14
-    );
-  });
+    indicators.forEach((indicator, index) => {
+      const startAt = index * 0.16;
 
-  timeline.to({}, { duration: 0.18 });
+      timeline.to(
+        indicator,
+        {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 0.2,
+          ease: 'power2.out'
+        },
+        startAt
+      );
 
-  ScrollTrigger.create({
-    trigger: container,
-    start: 'top 88%',
-    end: 'bottom 12%',
-    onEnter: () => timeline.play(),
-    onEnterBack: () => timeline.play(),
-    onLeave: () => timeline.pause(),
-    onLeaveBack: () => timeline.pause()
+      timeline.to(
+        indicator,
+        {
+          autoAlpha: 0.08,
+          scale: 0.84,
+          duration: 0.34,
+          ease: 'power1.inOut'
+        },
+        startAt + 0.14
+      );
+    });
+
+    timeline.to({}, { duration: 0.18 });
+
+    const trigger =
+      container.closest('.how-section__visual, .solution-section__visual') ??
+      container.parentElement ??
+      container;
+
+    ScrollTrigger.create({
+      trigger,
+      start: 'top 88%',
+      end: 'bottom 12%',
+      onEnter: () => timeline.play(),
+      onEnterBack: () => timeline.play(),
+      onLeave: () => timeline.pause(),
+      onLeaveBack: () => timeline.pause()
+    });
   });
 }
 
 function initHowLayerStackReveal({ reduced = false } = {}) {
-  const group = document.querySelector('#how .how-section__layer-group');
+  const groups = gsap.utils.toArray('.how-section__layer-group');
 
-  if (!group) {
+  if (!groups.length) {
     return;
   }
 
-  const layerNodes = gsap.utils.toArray('.how-section__layer-node', group);
-  const telemetryNodes = gsap.utils.toArray('.how-section__node-telemetry', group);
-  const visual = document.querySelector('#how .how-section__visual');
+  groups.forEach((group) => {
+    const layerNodes = gsap.utils.toArray('.how-section__layer-node', group);
+    const telemetryNodes = gsap.utils.toArray('.how-section__node-telemetry', group);
+    const visual =
+      group.closest('.how-section__visual, .solution-section__visual') ??
+      group.parentElement ??
+      group;
 
-  if (!layerNodes.length || !visual) {
-    return;
-  }
+    if (!layerNodes.length || !visual) {
+      return;
+    }
 
-  if (reduced || prefersReducedMotion) {
-    gsap.set([...layerNodes, ...telemetryNodes], { clearProps: 'transform' });
-    return;
-  }
+    if (reduced || prefersReducedMotion) {
+      gsap.set([...layerNodes, ...telemetryNodes], { clearProps: 'transform' });
+      return;
+    }
 
-  const compactGap = isMobileViewport() ? 44 : 52;
-  const expandedGap = 73;
-  const offsetStep = Math.max(0, expandedGap - compactGap);
+    const compactGap = isMobileViewport() ? 44 : 52;
+    const expandedGap = 73;
+    const offsetStep = Math.max(0, expandedGap - compactGap);
 
-  layerNodes.forEach((node, index) => {
-    gsap.set(node, {
-      y: -(index * offsetStep),
-      transformOrigin: '50% 50%'
+    layerNodes.forEach((node, index) => {
+      gsap.set(node, {
+        y: -(index * offsetStep),
+        transformOrigin: '50% 50%'
+      });
     });
-  });
 
-  telemetryNodes.forEach((node, index) => {
-    gsap.set(node, {
-      y: -(index * offsetStep),
-      transformOrigin: '50% 50%'
+    telemetryNodes.forEach((node, index) => {
+      gsap.set(node, {
+        y: -(index * offsetStep),
+        transformOrigin: '50% 50%'
+      });
     });
-  });
 
-  const timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: visual,
-      start: 'top 78%',
-      once: true
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: visual,
+        start: 'top 78%',
+        once: true
+      }
+    });
+
+    timeline.to(layerNodes, {
+      y: 0,
+      duration: isMobileViewport() ? 0.84 : 1.06,
+      ease: 'power3.out',
+      delay: isMobileViewport() ? 0.12 : 0.16
+    });
+
+    if (telemetryNodes.length) {
+      timeline.to(
+        telemetryNodes,
+        {
+          y: 0,
+          duration: isMobileViewport() ? 0.84 : 1.06,
+          ease: 'power3.out',
+          delay: isMobileViewport() ? 0.12 : 0.16
+        },
+        0
+      );
     }
   });
-
-  timeline.to(layerNodes, {
-    y: 0,
-    duration: isMobileViewport() ? 0.84 : 1.06,
-    ease: 'power3.out',
-    delay: isMobileViewport() ? 0.12 : 0.16
-  });
-
-  if (telemetryNodes.length) {
-    timeline.to(
-      telemetryNodes,
-      {
-        y: 0,
-        duration: isMobileViewport() ? 0.84 : 1.06,
-        ease: 'power3.out',
-        delay: isMobileViewport() ? 0.12 : 0.16
-      },
-      0
-    );
-  }
 }
 
 function initProblemGridImpulseFlow() {
