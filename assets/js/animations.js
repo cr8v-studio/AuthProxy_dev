@@ -375,6 +375,54 @@ function createRevealSystem() {
   });
 }
 
+// Dedicated headline reveal for the Solution title copy.
+function initSolutionHeadlineMotion() {
+  const title = document.querySelector('#problem .solution-section__title');
+
+  if (!title || prefersReducedMotion || title.dataset.motionSplitReady === 'true') {
+    return;
+  }
+
+  const intro = title.closest('.solution-section__intro');
+  intro?.classList.remove('fade-up');
+
+  const sourceText = (title.textContent || '').trim();
+  if (!sourceText) {
+    return;
+  }
+
+  const words = sourceText.split(/\s+/);
+  title.innerHTML = words
+    .map((word) => `<span class="solution-section__title-word">${word}</span>`)
+    .join(' ');
+  title.dataset.motionSplitReady = 'true';
+
+  const wordNodes = gsap.utils.toArray('.solution-section__title-word', title);
+  if (!wordNodes.length) {
+    return;
+  }
+
+  gsap.set(wordNodes, {
+    display: 'inline-block',
+    autoAlpha: 0,
+    y: isMobileViewport() ? 10 : 14,
+    force3D: true
+  });
+
+  gsap.to(wordNodes, {
+    autoAlpha: 1,
+    y: 0,
+    duration: isMobileViewport() ? 0.5 : 0.58,
+    ease: 'power3.out',
+    stagger: isMobileViewport() ? 0.03 : 0.04,
+    scrollTrigger: {
+      trigger: title,
+      start: 'top 82%',
+      once: true
+    }
+  });
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -1859,6 +1907,7 @@ async function initMotionSystem() {
   await runInitialPreloader(lenis);
   initHeroTimeline();
   mapRevealUtilities();
+  initSolutionHeadlineMotion();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
