@@ -28,7 +28,6 @@ const REVEAL_ASSIGNMENTS = [
   ['.section-intro > *', 'fade-up'],
   ['.how-section__title-row, .how-section__intro', 'fade-up'],
   ['.how-v2__intro > *', 'fade-up'],
-  ['.how-v2__stats p', 'fade-up'],
   ['.how-step-card', 'fade-up'],
   ['.how-section__visual', 'scale-in'],
   ['#auth .auth-section__intro', 'fade-up'],
@@ -585,6 +584,35 @@ function normalizeSolutionToAuthSeam() {
 
   solutionBottom.style.borderBottom = '0';
   authLabelBar.style.borderTop = '1px solid var(--site-section-border)';
+}
+
+// Sequential reveal for How v2 metric rows (Auth check / Policy check / Route resolve).
+function initHowV2StatsReveal() {
+  const statsWrap = document.querySelector('.how-v2__stats');
+  const rows = statsWrap ? gsap.utils.toArray('p', statsWrap) : [];
+
+  if (!statsWrap || !rows.length || prefersReducedMotion) {
+    return;
+  }
+
+  rows.forEach((row) => row.classList.remove('fade-up'));
+
+  const timeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: statsWrap,
+      start: 'top 84%',
+      once: true
+    }
+  });
+
+  timeline.from(rows, {
+    autoAlpha: 0,
+    y: isMobileViewport() ? 14 : 18,
+    duration: isMobileViewport() ? 0.5 : 0.58,
+    ease: 'power3.out',
+    stagger: isMobileViewport() ? 0.16 : 0.2,
+    force3D: true
+  });
 }
 
 // Section label chevrons enter from left one-by-one on first viewport entry.
@@ -2239,6 +2267,7 @@ async function initMotionSystem() {
   initSolutionHeadlineMotion();
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
+  initHowV2StatsReveal();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
