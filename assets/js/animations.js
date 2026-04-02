@@ -423,6 +423,66 @@ function initSolutionHeadlineMotion() {
   });
 }
 
+// Sequenced reveal for Solution cards (lead + 01-05) with inner text hierarchy.
+function initSolutionCardsMotion() {
+  const cardsWrap = document.querySelector('#problem .solution-section__cards');
+
+  if (!cardsWrap || prefersReducedMotion) {
+    return;
+  }
+
+  cardsWrap.classList.remove('fade-up');
+  const cards = gsap.utils.toArray('.solution-card', cardsWrap);
+
+  if (!cards.length) {
+    return;
+  }
+
+  const timeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: cardsWrap,
+      start: 'top 80%',
+      once: true
+    }
+  });
+
+  cards.forEach((card, index) => {
+    const number = card.querySelector('.solution-card__number');
+    const leadCopy = card.querySelector('.solution-card__lead-copy');
+    const description = card.querySelector('.solution-card__desc');
+    const detail = card.querySelector('.solution-card__detail');
+    const bodyTargets = [number, leadCopy, description, detail].filter(Boolean);
+    const at = index * (isMobileViewport() ? 0.08 : 0.1);
+
+    timeline.from(
+      card,
+      {
+        autoAlpha: 0,
+        y: isMobileViewport() ? 16 : 22,
+        duration: isMobileViewport() ? 0.48 : 0.56,
+        ease: 'power3.out',
+        force3D: true
+      },
+      at
+    );
+
+    if (bodyTargets.length) {
+      timeline.from(
+        bodyTargets,
+        {
+          autoAlpha: 0,
+          y: isMobileViewport() ? 10 : 12,
+          duration: isMobileViewport() ? 0.44 : 0.5,
+          ease: 'power3.out',
+          stagger: 0.04,
+          force3D: true
+        },
+        at + 0.08
+      );
+    }
+  });
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -1908,6 +1968,7 @@ async function initMotionSystem() {
   initHeroTimeline();
   mapRevealUtilities();
   initSolutionHeadlineMotion();
+  initSolutionCardsMotion();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
