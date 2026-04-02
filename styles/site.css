@@ -1989,9 +1989,9 @@ a {
 }
 
 .solution-section__summary {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
+  grid-template-rows: 202px 565px 116px;
+  align-items: stretch;
   min-height: 883px;
   padding: 0;
   background: var(--figma-color-white-base);
@@ -2118,7 +2118,7 @@ a {
   align-items: center;
   justify-content: center;
   min-height: 883px;
-  padding: var(--space-48);
+  padding: 0;
   background: var(--figma-color-off-white-base);
   overflow: hidden;
 }
@@ -2135,14 +2135,14 @@ a {
 }
 
 .solution-section__visual::before {
-  left: 24px;
-  bottom: 23px;
+  left: 39px;
+  bottom: 12px;
   border-width: 0 0 1px 1px;
 }
 
 .solution-section__visual::after {
   top: 24px;
-  right: 23px;
+  right: 24px;
   border-width: 1px 1px 0 0;
 }
 
