@@ -1490,8 +1490,10 @@ a {
 
 .how-v2__learn-mark {
   display: block;
-  width: 56.304px;
-  height: 84.314px;
+  width: 84.314px;
+  height: 56.304px;
+  transform: rotate(-90deg);
+  transform-origin: center;
   flex-shrink: 0;
 }
 
