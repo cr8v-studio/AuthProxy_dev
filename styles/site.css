@@ -1341,10 +1341,7 @@ a {
   height: 125px;
   display: block;
   z-index: 7;
-  filter:
-    drop-shadow(0 4px 8px rgb(var(--figma-color-extra-2-rgb) / 0.05))
-    drop-shadow(0 6px 10px rgba(31, 31, 31, 0.1))
-    drop-shadow(0 10px 14px rgba(31, 31, 31, 0.08));
+  filter: none;
 }
 
 .how-section__node-apg-impulse {
@@ -1373,9 +1370,7 @@ a {
 
 .how-section__apg-impulse-dot {
   fill: var(--color-accent-alert);
-  filter:
-    drop-shadow(0 0 6px rgb(var(--figma-color-extra-2-rgb) / 0.78))
-    drop-shadow(0 0 14px rgb(var(--figma-color-extra-2-rgb) / 0.52));
+  filter: none;
 }
 
 .how-section__layer-group {
@@ -1478,8 +1473,7 @@ a {
 .how-section__layer-node--admin {
   top: 292px;
   z-index: 2;
-  filter: drop-shadow(0 7px 10px rgba(31, 31, 31, 0.11))
-    drop-shadow(0 3px 5px rgba(31, 31, 31, 0.06));
+  filter: none;
 }
 
 .how-section__foot {
