@@ -1342,7 +1342,7 @@ a {
   transform: translateY(-50%);
   background-image: repeating-linear-gradient(
     90deg,
-    rgb(237 88 90 / 0.95) 0 7px,
+    rgb(237 88 90 / 0.76) 0 7px,
     rgb(237 88 90 / 0) 7px 13px
   );
   background-size: 20px 2px;
@@ -1354,14 +1354,12 @@ a {
   position: absolute;
   left: 0;
   top: 50%;
-  width: 18px;
-  height: 2px;
+  width: 14px;
+  height: 1.5px;
   transform: translate(-50%, -50%);
   border-radius: 999px;
-  background: rgb(255 195 196 / 0.95);
-  box-shadow:
-    0 0 6px rgb(237 88 90 / 0.65),
-    0 0 12px rgb(237 88 90 / 0.35);
+  background: rgb(255 204 205 / 0.94);
+  box-shadow: none;
   will-change: transform, opacity;
 }
 
@@ -1433,7 +1431,6 @@ a {
 .how-v2__performance {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-bottom: 1px solid var(--site-section-border);
 }
 
 .how-v2__learn {
