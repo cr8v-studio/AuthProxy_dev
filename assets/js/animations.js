@@ -9,10 +9,23 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const mobileViewport = window.matchMedia('(max-width: 767px)');
 const isMobileViewport = () => mobileViewport.matches;
 const MOTION_BOOT_FLAG = '__apMotionBooted';
+const MOTION_HOVER_BIND_FLAG = '__apMotionHoverBound';
+const MOTION_CURSOR_BIND_FLAG = '__apMotionCursorBound';
+const MOTION_DEBUG_FLAG = '__AP_MOTION_DEBUG__';
 const rootStyles = getComputedStyle(document.documentElement);
 const accentAlertRgbToken = rootStyles.getPropertyValue('--figma-color-extra-2-rgb').trim();
 const ACCENT_ALERT_RGB = accentAlertRgbToken || '237 88 90';
 const accentAlert = (alpha) => `rgb(${ACCENT_ALERT_RGB} / ${alpha})`;
+const motionDebug = (...args) => {
+  if (window[MOTION_DEBUG_FLAG]) {
+    console.log('[ap-motion]', ...args);
+  }
+};
+const isMotionDisabled = (element) =>
+  Boolean(
+    element &&
+      (element.matches?.('[data-motion="off"]') || element.closest?.('[data-motion="off"]'))
+  );
 
 const getMotion = () => ({
   duration: isMobileViewport() ? 0.5 : 0.65,
@@ -25,17 +38,19 @@ const heroSection = document.querySelector('.hero-section');
 const header = document.querySelector('.site-header-shell');
 const REVEAL_ASSIGNMENTS = [
   ['.section-label', 'fade-in'],
-  ['.section-intro > *', 'fade-up'],
-  ['.how-section__title-row, .how-section__intro', 'fade-up'],
+  ['.solution-section__intro, .solution-section__cards, .solution-section__summary', 'fade-up'],
   ['.how-v2__intro > *', 'fade-up'],
-  ['.how-step-card', 'fade-up'],
-  ['.how-section__visual', 'scale-in']
+  ['.how-v2__stats, .how-v2__performance', 'fade-up'],
+  ['.how-v2__diagram', 'scale-in']
 ];
 
 document.documentElement.style.scrollBehavior = 'auto';
 
 function addClass(selector, className) {
   document.querySelectorAll(selector).forEach((element) => {
+    if (isMotionDisabled(element)) {
+      return;
+    }
     element.classList.add(className);
   });
 }
@@ -67,6 +82,10 @@ function mapRevealUtilities() {
 
   const sections = gsap.utils.toArray('main section:not(.hero-section)');
   sections.forEach((section) => {
+    if (isMotionDisabled(section)) {
+      return;
+    }
+
     const directChildren = Array.from(section.children).filter((child) => {
       if (!(child instanceof HTMLElement)) {
         return false;
@@ -75,6 +94,9 @@ function mapRevealUtilities() {
         return false;
       }
       if (child.getAttribute('aria-hidden') === 'true') {
+        return false;
+      }
+      if (isMotionDisabled(child)) {
         return false;
       }
       return true;
@@ -351,6 +373,9 @@ function createRevealSystem() {
   revealMap.forEach((fromVars, className) => {
     gsap.utils.toArray(`.${className}`).forEach((element) => {
       if (element.closest('.hero-section')) {
+        return;
+      }
+      if (isMotionDisabled(element)) {
         return;
       }
 
@@ -723,10 +748,22 @@ function initHowV2PipelineFlow() {
     trigger: pipeline,
     start: timings.start,
     end: timings.end,
-    onEnter: setActiveIntensity,
-    onEnterBack: setActiveIntensity,
-    onLeave: setIdleIntensity,
-    onLeaveBack: setIdleIntensity
+    onEnter: () => {
+      motionDebug('how-v2 pipeline trigger: enter');
+      setActiveIntensity();
+    },
+    onEnterBack: () => {
+      motionDebug('how-v2 pipeline trigger: enter-back');
+      setActiveIntensity();
+    },
+    onLeave: () => {
+      motionDebug('how-v2 pipeline trigger: leave');
+      setIdleIntensity();
+    },
+    onLeaveBack: () => {
+      motionDebug('how-v2 pipeline trigger: leave-back');
+      setIdleIntensity();
+    }
   });
 
   setIdleIntensity();
@@ -780,68 +817,6 @@ function initSectionLabelChevronMotion() {
       },
       0
     );
-  });
-}
-
-function initSystemNodeBDataFlow() {
-  const flowWrap = document.querySelector('.system-node-b-flow');
-  const lights = gsap.utils.toArray('.system-node-b-flow__light');
-
-  if (!flowWrap || lights.length === 0 || prefersReducedMotion) {
-    return;
-  }
-
-  gsap.set(lights, {
-    autoAlpha: 1,
-    scale: 1,
-    transformOrigin: '50% 50%',
-    backgroundColor: accentAlert(0),
-    borderColor: '#1f1f1f'
-  });
-
-  const flowTimeline = gsap.timeline({
-    paused: true,
-    repeat: -1,
-    defaults: { ease: 'power2.out' }
-  });
-
-  lights.forEach((light, index) => {
-    const startAt = index * 0.2;
-
-    flowTimeline.to(
-      light,
-      {
-        scale: 0.9,
-        backgroundColor: accentAlert(1),
-        boxShadow: 'none',
-        duration: 0.2
-      },
-      startAt
-    );
-
-    flowTimeline.to(
-      light,
-      {
-        scale: 1,
-        backgroundColor: accentAlert(0),
-        boxShadow: 'none',
-        duration: 0.34,
-        ease: 'power1.inOut'
-      },
-      startAt + 0.16
-    );
-  });
-
-  flowTimeline.to({}, { duration: 0.22 });
-
-  ScrollTrigger.create({
-    trigger: flowWrap,
-    start: 'top 90%',
-    end: 'bottom 10%',
-    onEnter: () => flowTimeline.play(),
-    onEnterBack: () => flowTimeline.play(),
-    onLeave: () => flowTimeline.pause(),
-    onLeaveBack: () => flowTimeline.pause()
   });
 }
 
@@ -905,15 +880,19 @@ function initSystemNodeApgImpulseFlow() {
       start: 'top 88%',
       end: 'bottom 12%',
       onEnter: () => {
+        motionDebug('apg impulse trigger: enter');
         tweens.forEach((tween) => tween.play());
       },
       onEnterBack: () => {
+        motionDebug('apg impulse trigger: enter-back');
         tweens.forEach((tween) => tween.play());
       },
       onLeave: () => {
+        motionDebug('apg impulse trigger: leave');
         tweens.forEach((tween) => tween.pause());
       },
       onLeaveBack: () => {
+        motionDebug('apg impulse trigger: leave-back');
         tweens.forEach((tween) => tween.pause());
       }
     });
@@ -979,10 +958,22 @@ function initHowSystemNodeEllipsesFlow() {
       trigger,
       start: 'top 88%',
       end: 'bottom 12%',
-      onEnter: () => timeline.play(),
-      onEnterBack: () => timeline.play(),
-      onLeave: () => timeline.pause(),
-      onLeaveBack: () => timeline.pause()
+      onEnter: () => {
+        motionDebug('how telemetry trigger: enter');
+        timeline.play();
+      },
+      onEnterBack: () => {
+        motionDebug('how telemetry trigger: enter-back');
+        timeline.play();
+      },
+      onLeave: () => {
+        motionDebug('how telemetry trigger: leave');
+        timeline.pause();
+      },
+      onLeaveBack: () => {
+        motionDebug('how telemetry trigger: leave-back');
+        timeline.pause();
+      }
     });
   });
 }
@@ -1056,100 +1047,6 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
         0
       );
     }
-  });
-}
-
-function initProblemGridImpulseFlow() {
-  const wrap = document.querySelector('.problem-grid__impulse');
-  const dot = wrap?.querySelector('.problem-grid__impulse-dot');
-  const nodes = wrap ? gsap.utils.toArray('.problem-grid__impulse-node', wrap) : [];
-
-  if (!wrap || !dot || nodes.length === 0 || prefersReducedMotion) {
-    return;
-  }
-
-  const nodeById = (id) => wrap.querySelector(`.problem-grid__impulse-node--${id}`);
-  const points = [
-    { x: 95, y: 96, node: 1 },
-    { x: 191, y: 96 },
-    { x: 191, y: 192 },
-    { x: 383, y: 192, node: 2 },
-    { x: 383, y: 288, node: 3 },
-    { x: 287, y: 288 },
-    { x: 287, y: 384, node: 4 }
-  ];
-  const segmentDuration = isMobileViewport() ? 0.36 : 0.42;
-
-  gsap.set(dot, { x: 0, y: 0, autoAlpha: 0 });
-  gsap.set(nodes, { autoAlpha: 0, scale: 0.72 });
-
-  const pulseNode = (timeline, nodeId, at) => {
-    const node = nodeById(nodeId);
-
-    if (!node) {
-      return;
-    }
-
-    timeline.to(
-      node,
-      {
-        autoAlpha: 1,
-        scale: 1.18,
-        boxShadow: `0 0 10px ${accentAlert(0.56)}, 0 0 18px ${accentAlert(0.32)}`,
-        duration: 0.14,
-        ease: 'power2.out'
-      },
-      at
-    );
-    timeline.to(
-      node,
-      {
-        autoAlpha: 0,
-        scale: 0.85,
-        boxShadow: `0 0 0 ${accentAlert(0)}`,
-        duration: 0.22,
-        ease: 'power1.inOut'
-      },
-      at + 0.14
-    );
-  };
-
-  const timeline = gsap.timeline({ paused: true, repeat: -1 });
-  timeline.set(dot, { x: points[0].x, y: points[0].y, autoAlpha: 1 }, 0);
-  pulseNode(timeline, 1, 0);
-
-  let currentTime = 0.05;
-  for (let index = 1; index < points.length; index += 1) {
-    const point = points[index];
-    timeline.to(
-      dot,
-      {
-        x: point.x,
-        y: point.y,
-        duration: segmentDuration,
-        ease: 'none'
-      },
-      currentTime
-    );
-
-    if (point.node) {
-      pulseNode(timeline, point.node, currentTime + 0.08);
-    }
-
-    currentTime += segmentDuration;
-  }
-
-  timeline.to(dot, { autoAlpha: 0, duration: 0.12, ease: 'power1.out' }, currentTime + 0.02);
-  timeline.to({}, { duration: isMobileViewport() ? 0.38 : 0.5 }, currentTime + 0.16);
-
-  ScrollTrigger.create({
-    trigger: wrap,
-    start: 'top 88%',
-    end: 'bottom 12%',
-    onEnter: () => timeline.play(),
-    onEnterBack: () => timeline.play(),
-    onLeave: () => timeline.pause(),
-    onLeaveBack: () => timeline.pause()
   });
 }
 
@@ -1907,6 +1804,10 @@ function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
     return;
   }
+  if (window[MOTION_HOVER_BIND_FLAG]) {
+    return;
+  }
+  window[MOTION_HOVER_BIND_FLAG] = true;
 
   const scrambleStateMap = new WeakMap();
   const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -1990,6 +1891,11 @@ function initInteractiveHoverStates() {
   );
 
   interactiveElements.forEach((element) => {
+    if (element.dataset.motionHoverBound === '1') {
+      return;
+    }
+    element.dataset.motionHoverBound = '1';
+
     const isBuildButton = element.classList.contains('site-header-link-m2');
     const isButtonV1 = element.classList.contains('site-header-button-v1');
     const isDropdownTrigger = element.classList.contains('site-header-dropdown');
@@ -2065,9 +1971,10 @@ function initInteractiveHoverStates() {
 function initCustomCursor() {
   const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
-  if (hasCoarsePointer || !document.body) {
+  if (hasCoarsePointer || !document.body || window[MOTION_CURSOR_BIND_FLAG]) {
     return;
   }
+  window[MOTION_CURSOR_BIND_FLAG] = true;
 
   const cursor = document.createElement('span');
   cursor.className = 'site-cursor';
