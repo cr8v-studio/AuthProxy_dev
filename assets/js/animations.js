@@ -28,6 +28,7 @@ const REVEAL_ASSIGNMENTS = [
   ['.section-intro > *', 'fade-up'],
   ['.how-section__title-row, .how-section__intro', 'fade-up'],
   ['.how-v2__intro > *', 'fade-up'],
+  ['.how-v2__stats p', 'fade-up'],
   ['.how-step-card', 'fade-up'],
   ['.how-section__visual', 'scale-in'],
   ['#auth .auth-section__intro', 'fade-up'],
@@ -584,80 +585,6 @@ function normalizeSolutionToAuthSeam() {
 
   solutionBottom.style.borderBottom = '0';
   authLabelBar.style.borderTop = '1px solid var(--site-section-border)';
-}
-
-// Count-up metrics in How v2 stats on scroll enter.
-function initHowV2StatsCounter() {
-  const statsWrap = document.querySelector('.how-v2__stats');
-  const valueNodes = statsWrap ? gsap.utils.toArray('p span', statsWrap) : [];
-
-  if (!statsWrap || !valueNodes.length) {
-    return;
-  }
-
-  const parseTarget = (node) => {
-    const raw = (node.textContent || '').trim();
-    const num = Number.parseInt(raw.replace(/[^\d]/g, ''), 10);
-    return Number.isFinite(num) ? num : null;
-  };
-
-  const targets = valueNodes.map(parseTarget);
-  if (targets.every((value) => value === null)) {
-    return;
-  }
-
-  if (prefersReducedMotion) {
-    valueNodes.forEach((node, index) => {
-      const target = targets[index];
-      if (target !== null) {
-        node.textContent = `${target}ms`;
-      }
-    });
-    return;
-  }
-
-  ScrollTrigger.create({
-    trigger: statsWrap,
-    start: 'top 92%',
-    once: true,
-    onEnter: () => {
-      valueNodes.forEach((node, index) => {
-        const target = targets[index];
-        if (target === null) {
-          return;
-        }
-
-        node.textContent = '0ms';
-        const counter = { value: 0 };
-
-        gsap.fromTo(
-          node,
-          { autoAlpha: 0.82, scale: 0.92 },
-          {
-            autoAlpha: 1,
-            scale: 1,
-            duration: isMobileViewport() ? 0.78 : 0.96,
-            ease: 'power3.out',
-            delay: 0.06 + index * 0.2
-          }
-        );
-
-        gsap.to(counter, {
-          value: target,
-          duration: isMobileViewport() ? 1.25 : 1.55,
-          ease: 'power2.out',
-          delay: 0.06 + index * 0.2,
-          snap: { value: 1 },
-          onUpdate: () => {
-            node.textContent = `${Math.round(counter.value)}ms`;
-          },
-          onComplete: () => {
-            node.textContent = `${target}ms`;
-          }
-        });
-      });
-    }
-  });
 }
 
 // Section label chevrons enter from left one-by-one on first viewport entry.
@@ -2312,7 +2239,6 @@ async function initMotionSystem() {
   initSolutionHeadlineMotion();
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
-  initHowV2StatsCounter();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
