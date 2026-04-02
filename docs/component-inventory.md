@@ -10,7 +10,7 @@
 ## Active Architecture
 - Точка входа: `/Users/alexander/Desktop/Codex/AuthProxy_dev/index.html`
 - Основные стили: `/Users/alexander/Desktop/Codex/AuthProxy_dev/styles/tokens.css`, `/Users/alexander/Desktop/Codex/AuthProxy_dev/styles/icons.css`, `/Users/alexander/Desktop/Codex/AuthProxy_dev/styles/typography.css`, `/Users/alexander/Desktop/Codex/AuthProxy_dev/styles/components.css`, `/Users/alexander/Desktop/Codex/AuthProxy_dev/styles/site.css`
-- Runtime JS: `/Users/alexander/Desktop/Codex/AuthProxy_dev/scripts/site.js`, `/Users/alexander/Desktop/Codex/AuthProxy_dev/assets/js/animations.js`
+- Runtime JS: `/Users/alexander/Desktop/Codex/AuthProxy_dev/scripts/site.js`, `/Users/alexander/Desktop/Codex/AuthProxy_dev/assets/motion/animations.js`
 
 ## Token Layers
 - `--figma-*`: исходные значения, синхронизированные из дизайна.
@@ -57,7 +57,7 @@
 - `.hero-section__cta-bar`
 
 ## Icons
-- Активный слой иконок ограничен CSS-классом `.icon` и файлами из `/Users/alexander/Desktop/Codex/AuthProxy_dev/assets/icons/`.
+- Активный слой иконок ограничен CSS-классом `.icon` и файлами из `/Users/alexander/Desktop/Codex/AuthProxy_dev/assets/ui/icons/`.
 - Иконки используются напрямую из HTML; отдельный JS-реестр исключён из production-слоя.
 
 ## Reuse Rules

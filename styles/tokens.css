@@ -218,10 +218,10 @@
   --landing-section-label-min-height: 3.1875rem;
   --landing-problem-visual-min-height: 33.4375rem;
 
-  --hero-cta-shell-corner-tr: url("../assets/header-button-v1-corner-tr-default.svg");
-  --hero-cta-shell-corner-br: url("../assets/header-button-v1-corner-br-default.svg");
-  --problem-item-corner-tr-asset: url("../assets/figma/problem/problem-step-corner-tr.svg");
-  --problem-item-corner-bl-asset: url("../assets/figma/problem/problem-step-corner-bl.svg");
+  --hero-cta-shell-corner-tr: url("../assets/ui/header/header-button-v1-corner-tr-default.svg");
+  --hero-cta-shell-corner-br: url("../assets/ui/header/header-button-v1-corner-br-default.svg");
+  --problem-item-corner-tr-asset: url("../assets/sections/solution/problem-step-corner-tr.svg");
+  --problem-item-corner-bl-asset: url("../assets/sections/solution/problem-step-corner-bl.svg");
 
   /* Semantic control typography */
   --type-control-caps-size: var(--type-heading-xs-caps-size);
@@ -249,10 +249,10 @@
   --header-link-corner-width: var(--size-corner-width);
   --header-link-corner-height: var(--size-corner-height);
   --header-link-corner-inset: var(--space-inline-sm);
-  --header-link-corner-bl-default: url("../assets/header-link-corner-bl-default.svg");
-  --header-link-corner-tr-default: url("../assets/header-link-corner-tr-default.svg");
-  --header-link-corner-bl-hover: url("../assets/header-link-corner-bl-hover.svg");
-  --header-link-corner-tr-hover: url("../assets/header-link-corner-tr-hover.svg");
+  --header-link-corner-bl-default: url("../assets/ui/header/header-link-corner-bl-default.svg");
+  --header-link-corner-tr-default: url("../assets/ui/header/header-link-corner-tr-default.svg");
+  --header-link-corner-bl-hover: url("../assets/ui/header/header-link-corner-bl-hover.svg");
+  --header-link-corner-tr-hover: url("../assets/ui/header/header-link-corner-tr-hover.svg");
 
   /* Component tokens: header link m2 */
   --header-link-m2-height: var(--size-control-md);
@@ -266,14 +266,14 @@
   --header-link-m2-corner-width: var(--size-corner-width);
   --header-link-m2-corner-height: var(--size-corner-height);
   --header-link-m2-corner-inset: var(--space-inline-sm);
-  --header-link-m2-corner-br-default: url("../assets/header-link-m2-corner-br-default.svg");
-  --header-link-m2-corner-bl-default: url("../assets/header-link-m2-corner-bl-default.svg");
-  --header-link-m2-corner-tr-default: url("../assets/header-link-m2-corner-tr-default.svg");
-  --header-link-m2-corner-tl-default: url("../assets/header-link-m2-corner-tl-default.svg");
-  --header-link-m2-corner-br-hover: url("../assets/header-link-m2-corner-br-hover.svg");
-  --header-link-m2-corner-bl-hover: url("../assets/header-link-m2-corner-bl-hover.svg");
-  --header-link-m2-corner-tr-hover: url("../assets/header-link-m2-corner-tr-hover.svg");
-  --header-link-m2-corner-tl-hover: url("../assets/header-link-m2-corner-tl-hover.svg");
+  --header-link-m2-corner-br-default: url("../assets/ui/header/header-link-m2-corner-br-default.svg");
+  --header-link-m2-corner-bl-default: url("../assets/ui/header/header-link-m2-corner-bl-default.svg");
+  --header-link-m2-corner-tr-default: url("../assets/ui/header/header-link-m2-corner-tr-default.svg");
+  --header-link-m2-corner-tl-default: url("../assets/ui/header/header-link-m2-corner-tl-default.svg");
+  --header-link-m2-corner-br-hover: url("../assets/ui/header/header-link-m2-corner-br-hover.svg");
+  --header-link-m2-corner-bl-hover: url("../assets/ui/header/header-link-m2-corner-bl-hover.svg");
+  --header-link-m2-corner-tr-hover: url("../assets/ui/header/header-link-m2-corner-tr-hover.svg");
+  --header-link-m2-corner-tl-hover: url("../assets/ui/header/header-link-m2-corner-tl-hover.svg");
 
   /* Component tokens: header dropdown link */
   --header-dropdown-height: var(--size-control-md);
@@ -288,10 +288,10 @@
   --header-dropdown-corner-width: var(--size-corner-width);
   --header-dropdown-corner-height: var(--size-corner-height);
   --header-dropdown-corner-inset: var(--space-inline-sm);
-  --header-dropdown-corner-tr-default: url("../assets/header-dropdown-corner-tr-default.svg");
-  --header-dropdown-corner-bl-default: url("../assets/header-dropdown-corner-bl-default.svg");
-  --header-dropdown-corner-tr-hover: url("../assets/header-dropdown-corner-tr-hover.svg");
-  --header-dropdown-corner-bl-hover: url("../assets/header-dropdown-corner-bl-hover.svg");
+  --header-dropdown-corner-tr-default: url("../assets/ui/header/header-dropdown-corner-tr-default.svg");
+  --header-dropdown-corner-bl-default: url("../assets/ui/header/header-dropdown-corner-bl-default.svg");
+  --header-dropdown-corner-tr-hover: url("../assets/ui/header/header-dropdown-corner-tr-hover.svg");
+  --header-dropdown-corner-bl-hover: url("../assets/ui/header/header-dropdown-corner-bl-hover.svg");
 
   /* Component tokens: header button v1 */
   --header-button-v1-height: var(--size-control-md);
@@ -307,14 +307,14 @@
   --header-button-v1-corner-width: var(--size-corner-width);
   --header-button-v1-corner-height: var(--size-corner-height);
   --header-button-v1-corner-inset: var(--space-inline-sm);
-  --header-button-v1-corner-br-default: url("../assets/header-button-v1-corner-br-default.svg");
-  --header-button-v1-corner-bl-default: url("../assets/header-button-v1-corner-bl-default.svg");
-  --header-button-v1-corner-tr-default: url("../assets/header-button-v1-corner-tr-default.svg");
-  --header-button-v1-corner-tl-default: url("../assets/header-button-v1-corner-tl-default.svg");
-  --header-button-v1-corner-br-hover: url("../assets/header-button-v1-corner-br-hover.svg");
-  --header-button-v1-corner-bl-hover: url("../assets/header-button-v1-corner-bl-hover.svg");
-  --header-button-v1-corner-tr-hover: url("../assets/header-button-v1-corner-tr-hover.svg");
-  --header-button-v1-corner-tl-hover: url("../assets/header-button-v1-corner-tl-hover.svg");
+  --header-button-v1-corner-br-default: url("../assets/ui/header/header-button-v1-corner-br-default.svg");
+  --header-button-v1-corner-bl-default: url("../assets/ui/header/header-button-v1-corner-bl-default.svg");
+  --header-button-v1-corner-tr-default: url("../assets/ui/header/header-button-v1-corner-tr-default.svg");
+  --header-button-v1-corner-tl-default: url("../assets/ui/header/header-button-v1-corner-tl-default.svg");
+  --header-button-v1-corner-br-hover: url("../assets/ui/header/header-button-v1-corner-br-hover.svg");
+  --header-button-v1-corner-bl-hover: url("../assets/ui/header/header-button-v1-corner-bl-hover.svg");
+  --header-button-v1-corner-tr-hover: url("../assets/ui/header/header-button-v1-corner-tr-hover.svg");
+  --header-button-v1-corner-tl-hover: url("../assets/ui/header/header-button-v1-corner-tl-hover.svg");
 
   /* Component tokens: header button v2 */
   --header-button-v2-height: var(--size-control-md);
