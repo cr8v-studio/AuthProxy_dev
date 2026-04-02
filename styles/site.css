@@ -1264,10 +1264,10 @@ a {
 .how-v2__diagram-grid::after {
   content: "";
   position: absolute;
-  inset: 100px 0;
+  inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 50%, rgb(255 255 255 / 0.9) 60%, rgb(255 255 255 / 0.4) 100%);
+  background: radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.9) 60%, rgb(255 255 255 / 0.4) 100%);
 }
 
 .how-v2__pipeline {
