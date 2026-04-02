@@ -1323,6 +1323,48 @@ a {
   min-width: 110px;
   height: 12px;
   background: center / 100% 12px no-repeat url("../assets/figma/how/pipeline-arrow.svg");
+  overflow: hidden;
+}
+
+.how-v2__pipeline-flow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.how-v2__pipeline-flow-dot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 22px;
+  height: 4px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+}
+
+.how-v2__pipeline-flow-dot--core {
+  width: 24px;
+  height: 4px;
+  background: rgb(237 88 90 / 0.98);
+  box-shadow:
+    0 0 8px rgb(237 88 90 / 0.5),
+    0 0 14px rgb(237 88 90 / 0.25);
+}
+
+.how-v2__pipeline-flow-dot--ghost-a {
+  width: 20px;
+  height: 3px;
+  background: rgb(237 88 90 / 0.5);
+  filter: blur(0.6px);
+}
+
+.how-v2__pipeline-flow-dot--ghost-b {
+  width: 16px;
+  height: 2px;
+  background: rgb(237 88 90 / 0.3);
+  filter: blur(1px);
 }
 
 .how-v2__gateway {
