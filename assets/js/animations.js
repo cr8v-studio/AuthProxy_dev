@@ -483,6 +483,98 @@ function initSolutionCardsMotion() {
   });
 }
 
+// Text reveal for "AuthProxy replaces all five." and its capability list.
+function initSolutionSummaryMotion() {
+  const summary = document.querySelector('#problem .solution-section__summary');
+
+  if (!summary || prefersReducedMotion || summary.dataset.motionSummaryReady === 'true') {
+    return;
+  }
+
+  const summaryTitle = summary.querySelector('.solution-section__summary-title');
+  const capabilityItems = gsap.utils.toArray('.solution-capability-item', summary);
+
+  if (!summaryTitle) {
+    return;
+  }
+
+  const titleTextNodes = gsap.utils.toArray('span', summaryTitle);
+  titleTextNodes.forEach((node) => {
+    node.style.display = 'inline-block';
+  });
+
+  const timeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: summary,
+      start: 'top 82%',
+      once: true
+    }
+  });
+
+  if (titleTextNodes.length) {
+    timeline.from(
+      titleTextNodes,
+      {
+        autoAlpha: 0,
+        y: isMobileViewport() ? 14 : 18,
+        duration: isMobileViewport() ? 0.5 : 0.58,
+        ease: 'power3.out',
+        stagger: isMobileViewport() ? 0.06 : 0.08,
+        force3D: true
+      },
+      0
+    );
+  } else {
+    timeline.from(
+      summaryTitle,
+      {
+        autoAlpha: 0,
+        y: isMobileViewport() ? 14 : 18,
+        duration: isMobileViewport() ? 0.5 : 0.58,
+        ease: 'power3.out',
+        force3D: true
+      },
+      0
+    );
+  }
+
+  capabilityItems.forEach((item, index) => {
+    const title = item.querySelector('.solution-capability-item__title');
+    const tag = item.querySelector('.solution-capability-item__tag');
+    const at = (isMobileViewport() ? 0.14 : 0.18) + index * (isMobileViewport() ? 0.06 : 0.08);
+
+    if (title) {
+      timeline.from(
+        title,
+        {
+          autoAlpha: 0,
+          y: isMobileViewport() ? 10 : 12,
+          duration: isMobileViewport() ? 0.44 : 0.5,
+          ease: 'power3.out',
+          force3D: true
+        },
+        at
+      );
+    }
+
+    if (tag) {
+      timeline.from(
+        tag,
+        {
+          autoAlpha: 0,
+          y: isMobileViewport() ? 8 : 10,
+          duration: isMobileViewport() ? 0.42 : 0.48,
+          ease: 'power3.out',
+          force3D: true
+        },
+        at + 0.04
+      );
+    }
+  });
+
+  summary.dataset.motionSummaryReady = 'true';
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -1969,6 +2061,7 @@ async function initMotionSystem() {
   mapRevealUtilities();
   initSolutionHeadlineMotion();
   initSolutionCardsMotion();
+  initSolutionSummaryMotion();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
