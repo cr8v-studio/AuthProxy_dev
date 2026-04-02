@@ -1358,8 +1358,10 @@ a {
   height: 2px;
   transform: translate(-50%, -50%);
   border-radius: 999px;
-  background: rgb(237 88 90 / 0.95);
-  box-shadow: none;
+  background: rgb(255 195 196 / 0.95);
+  box-shadow:
+    0 0 6px rgb(237 88 90 / 0.65),
+    0 0 12px rgb(237 88 90 / 0.35);
   will-change: transform, opacity;
 }
 
