@@ -1207,6 +1207,139 @@ function initHeroGridLaserHover() {
   panel.addEventListener('pointerleave', hideLaser, { passive: true });
 }
 
+// Reuse Hero laser-grid interaction for Solution grid (same motion language).
+function initSolutionGridLaserHover() {
+  const panel = document.querySelector('.solution-section__visual');
+  const grid = panel?.querySelector('.solution-section__visual-grid');
+  const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
+  if (!panel || !grid || prefersReducedMotion || hasCoarsePointer) {
+    return;
+  }
+
+  let overlay = grid.querySelector('.hero-section__grid-laser');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'hero-section__grid-laser';
+
+    const vMain = document.createElement('span');
+    vMain.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--v';
+    const hMain = document.createElement('span');
+    hMain.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--h';
+    const vGhost = document.createElement('span');
+    vGhost.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--v hero-section__grid-laser-line--ghost';
+    const hGhost = document.createElement('span');
+    hGhost.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--h hero-section__grid-laser-line--ghost';
+
+    const dot = document.createElement('span');
+    dot.className = 'hero-section__grid-laser-dot';
+
+    overlay.append(vGhost, hGhost, vMain, hMain, dot);
+    grid.append(overlay);
+  }
+
+  const vMain = overlay.querySelector('.hero-section__grid-laser-line--v:not(.hero-section__grid-laser-line--ghost)');
+  const hMain = overlay.querySelector('.hero-section__grid-laser-line--h:not(.hero-section__grid-laser-line--ghost)');
+  const vGhost = overlay.querySelector('.hero-section__grid-laser-line--v.hero-section__grid-laser-line--ghost');
+  const hGhost = overlay.querySelector('.hero-section__grid-laser-line--h.hero-section__grid-laser-line--ghost');
+  const dot = overlay.querySelector('.hero-section__grid-laser-dot');
+
+  if (!vMain || !hMain || !vGhost || !hGhost || !dot) {
+    return;
+  }
+
+  const gridStep = 100;
+  const gridOffset = 99;
+  const xToMainV = gsap.quickTo(vMain, 'x', { duration: 0.22, ease: 'power3.out' });
+  const yToMainV = gsap.quickTo(vMain, 'y', { duration: 0.22, ease: 'power3.out' });
+  const hToMainV = gsap.quickTo(vMain, 'height', { duration: 0.22, ease: 'power3.out' });
+  const xToMainH = gsap.quickTo(hMain, 'x', { duration: 0.22, ease: 'power3.out' });
+  const yToMainH = gsap.quickTo(hMain, 'y', { duration: 0.22, ease: 'power3.out' });
+  const wToMainH = gsap.quickTo(hMain, 'width', { duration: 0.22, ease: 'power3.out' });
+  const xToGhostV = gsap.quickTo(vGhost, 'x', { duration: 0.44, ease: 'power3.out' });
+  const yToGhostV = gsap.quickTo(vGhost, 'y', { duration: 0.44, ease: 'power3.out' });
+  const hToGhostV = gsap.quickTo(vGhost, 'height', { duration: 0.44, ease: 'power3.out' });
+  const xToGhostH = gsap.quickTo(hGhost, 'x', { duration: 0.44, ease: 'power3.out' });
+  const yToGhostH = gsap.quickTo(hGhost, 'y', { duration: 0.44, ease: 'power3.out' });
+  const wToGhostH = gsap.quickTo(hGhost, 'width', { duration: 0.44, ease: 'power3.out' });
+  const xToDot = gsap.quickTo(dot, 'x', { duration: 0.26, ease: 'power3.out' });
+  const yToDot = gsap.quickTo(dot, 'y', { duration: 0.26, ease: 'power3.out' });
+  const alphaToMainV = gsap.quickTo(vMain, 'opacity', { duration: 0.2, ease: 'power2.out' });
+  const alphaToMainH = gsap.quickTo(hMain, 'opacity', { duration: 0.2, ease: 'power2.out' });
+  const alphaToGhostV = gsap.quickTo(vGhost, 'opacity', { duration: 0.28, ease: 'power2.out' });
+  const alphaToGhostH = gsap.quickTo(hGhost, 'opacity', { duration: 0.28, ease: 'power2.out' });
+  const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.2, ease: 'power2.out' });
+  const dotPulse = gsap.timeline({ repeat: -1, paused: true });
+
+  const toNearestGridLine = (value, max) => {
+    const snapped = gridOffset + Math.round((value - gridOffset) / gridStep) * gridStep;
+    return gsap.utils.clamp(0, max, snapped);
+  };
+
+  dotPulse.to(dot, { scale: 1.22, duration: 0.18, ease: 'power2.out' });
+  dotPulse.to(dot, { scale: 0.94, duration: 0.22, ease: 'power1.inOut' });
+  dotPulse.to(dot, { scale: 1, duration: 0.18, ease: 'power2.out' });
+  dotPulse.to({}, { duration: 0.12 });
+
+  const updateLaser = (event) => {
+    const rect = grid.getBoundingClientRect();
+    const localX = event.clientX - rect.left;
+    const localY = event.clientY - rect.top;
+
+    if (localX < 0 || localX > rect.width || localY < 0 || localY > rect.height) {
+      return;
+    }
+    document.body.classList.add('is-hero-laser-cursor');
+
+    const lineX = toNearestGridLine(localX, rect.width);
+    const lineY = toNearestGridLine(localY, rect.height);
+    const left = gsap.utils.clamp(0, rect.width, lineX - gridStep);
+    const right = gsap.utils.clamp(0, rect.width, lineX + gridStep);
+    const top = gsap.utils.clamp(0, rect.height, lineY - gridStep);
+    const bottom = gsap.utils.clamp(0, rect.height, lineY + gridStep);
+    const width = Math.max(0, right - left);
+    const height = Math.max(0, bottom - top);
+
+    xToMainV(lineX);
+    yToMainV(top);
+    hToMainV(height);
+    xToMainH(left);
+    yToMainH(lineY);
+    wToMainH(width);
+    xToGhostV(lineX);
+    yToGhostV(top);
+    hToGhostV(height);
+    xToGhostH(left);
+    yToGhostH(lineY);
+    wToGhostH(width);
+    xToDot(lineX);
+    yToDot(lineY);
+    alphaToMainV(0.96);
+    alphaToMainH(0.96);
+    alphaToGhostV(0.52);
+    alphaToGhostH(0.52);
+    alphaToDot(0.88);
+    if (!dotPulse.isActive()) {
+      dotPulse.play();
+    }
+  };
+
+  const hideLaser = () => {
+    document.body.classList.remove('is-hero-laser-cursor');
+    dotPulse.pause(0);
+    gsap.set(dot, { scale: 1 });
+    alphaToMainV(0);
+    alphaToMainH(0);
+    alphaToGhostV(0);
+    alphaToGhostH(0);
+    alphaToDot(0);
+  };
+
+  panel.addEventListener('pointerenter', updateLaser, { passive: true });
+  panel.addEventListener('pointermove', updateLaser, { passive: true });
+  panel.addEventListener('pointerleave', hideLaser, { passive: true });
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2081,6 +2214,7 @@ async function initMotionSystem() {
   initHowLayerStackReveal();
   initHowSystemNodeEllipsesFlow();
   initHeroGridLaserHover();
+  initSolutionGridLaserHover();
   initAuthAccordionMotion();
   initInteractiveHoverStates();
   initCustomCursor();
