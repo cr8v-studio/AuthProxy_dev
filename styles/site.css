@@ -1037,10 +1037,10 @@ a {
   --control-color: var(--figma-color-dark-tint-1);
   --header-button-v1-bg: transparent;
   --header-button-v1-hover-color: var(--figma-color-dark-base);
-  --header-button-v1-corner-br-default: url("../assets/figma/hero/cta-corner-br.svg");
-  --header-button-v1-corner-bl-default: url("../assets/figma/hero/cta-corner-bl.svg");
-  --header-button-v1-corner-tr-default: url("../assets/figma/hero/cta-corner-tr.svg");
-  --header-button-v1-corner-tl-default: url("../assets/figma/hero/cta-corner-tl.svg");
+  --header-button-v1-corner-br-default: url("../assets/sections/hero/cta-corner-br.svg");
+  --header-button-v1-corner-bl-default: url("../assets/sections/hero/cta-corner-bl.svg");
+  --header-button-v1-corner-tr-default: url("../assets/sections/hero/cta-corner-tr.svg");
+  --header-button-v1-corner-tl-default: url("../assets/sections/hero/cta-corner-tl.svg");
   --corner-inset: 5px;
   text-transform: uppercase;
 }
@@ -1318,7 +1318,7 @@ a {
   width: 100%;
   min-width: 110px;
   height: 12px;
-  background: center / 100% 12px no-repeat url("../assets/figma/how/pipeline-arrow.svg");
+  background: center / 100% 12px no-repeat url("../assets/sections/how/pipeline-arrow.svg");
   overflow: hidden;
 }
 
@@ -1478,7 +1478,7 @@ a {
   display: inline-block;
   width: 9.899px;
   height: 16.971px;
-  background: center / 100% 100% no-repeat url("../assets/figma/how/learn-arrow.svg");
+  background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
 }
 
 .how-v2__learn-mark {

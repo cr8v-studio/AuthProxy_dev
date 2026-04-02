@@ -1,17 +1,33 @@
 # AuthProxy_dev
 
-Статический сайт AuthProxy на HTML, CSS и JavaScript (single-page), готовый к публикации на GitHub Pages.
+Статический одностраничный сайт AuthProxy на HTML, CSS и JavaScript, готовый к публикации на GitHub Pages.
 
-## Структура
+## Source of truth
+
+- Контент-истина: [`docs/LANDING-AUTHPROXY.md`](./docs/LANDING-AUTHPROXY.md)
+- Любые изменения текстов и иерархии секций сначала вносятся в `LANDING-AUTHPROXY.md`, затем в `index.html`.
+
+## Project structure
 
 - `index.html` — главная страница
-- `styles/` — стили, токены, типографика и page-level layout
-- `scripts/` — интерактивность сайта
-- `assets/` — изображения, иконки и motion-скрипт
-- `docs/` — служебная документация по компонентам
+- `styles/` — токены, типографика, компоненты и page-level стили
+- `scripts/` — базовая интерактивность страницы
+- `assets/` — визуальные ассеты и motion runtime
+  - `assets/brand/` — логотипы и favicon
+  - `assets/ui/header/` — corner-ассеты header controls
+  - `assets/ui/icons/` — системные UI-иконки
+  - `assets/sections/` — ассеты, привязанные к секциям (`hero`, `solution`, `how`)
+  - `assets/illustrations/system/` — иллюстрации system nodes
+  - `assets/motion/animations.js` — scroll/motion слой
+- `docs/` — рабочая документация для handoff
+  - `LANDING-AUTHPROXY.md` — canonical content/spec
+  - `component-inventory.md` — active/reserve policy и инвентарь
+  - `motion-smoke-check.md` — post-preloader motion-checklist
+  - `responsive-playbook.md` — адаптивные правила
+  - `archive/` — исторические документы (не runtime-истина)
 - `.github/workflows/deploy-pages.yml` — автодеплой в GitHub Pages
 
-## Контент и навигация
+## Runtime navigation
 
 - Главная навигация содержит:
   - `Solution`
@@ -61,8 +77,7 @@ git push origin main
 ## Примечания
 
 - Проект без сборки и зависимостей.
-- Все проверенные HTML/CSS/JS-ссылки и пути к ассетам валидны.
-- Основные иллюстрации подключены в формате `.webp`.
+- Все runtime-ссылки на HTML/CSS/JS/asssets должны оставаться валидными после рефакторинга.
 - Сайт использует Google Fonts и ESM-зависимости с jsDelivr для анимаций.
 
 ## Safe-Only Refactor Guardrails
