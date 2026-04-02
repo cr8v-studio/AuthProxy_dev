@@ -438,46 +438,51 @@ function initSolutionCardsMotion() {
     return;
   }
 
-  const timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: cardsWrap,
-      start: 'top 80%',
-      once: true
-    }
-  });
-
   cards.forEach((card, index) => {
+    const isLeadCard = card.classList.contains('solution-card--lead');
     const number = card.querySelector('.solution-card__number');
     const leadCopy = card.querySelector('.solution-card__lead-copy');
     const description = card.querySelector('.solution-card__desc');
     const detail = card.querySelector('.solution-card__detail');
     const bodyTargets = [number, leadCopy, description, detail].filter(Boolean);
-    const at = index * (isMobileViewport() ? 0.08 : 0.1);
+    const yCard = isMobileViewport() ? 14 : 20;
+    const yBody = isMobileViewport() ? 8 : 12;
+    const cardStart = isLeadCard ? 'top 88%' : 'top 92%';
+    const cardEnd = isLeadCard ? 'top 66%' : 'top 70%';
 
-    timeline.from(
-      card,
-      {
-        autoAlpha: 0,
-        y: isMobileViewport() ? 16 : 22,
-        duration: isMobileViewport() ? 0.48 : 0.56,
-        ease: 'power3.out',
-        force3D: true
-      },
-      at
-    );
+    gsap.set(card, { autoAlpha: 0, y: yCard, force3D: true });
+    if (bodyTargets.length) {
+      gsap.set(bodyTargets, { autoAlpha: 0, y: yBody, force3D: true });
+    }
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: card,
+        start: cardStart,
+        end: cardEnd,
+        scrub: 0.9,
+        invalidateOnRefresh: true
+      }
+    });
+
+    timeline.to(card, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.42,
+      ease: 'none'
+    });
 
     if (bodyTargets.length) {
-      timeline.from(
+      timeline.to(
         bodyTargets,
         {
-          autoAlpha: 0,
-          y: isMobileViewport() ? 10 : 12,
-          duration: isMobileViewport() ? 0.44 : 0.5,
-          ease: 'power3.out',
-          stagger: 0.04,
-          force3D: true
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.58,
+          ease: 'none',
+          stagger: 0.08
         },
-        at + 0.08
+        0.18 + index * 0.015
       );
     }
   });
@@ -689,7 +694,7 @@ function initSystemNodeBDataFlow() {
 }
 
 function initSystemNodeApgImpulseFlow() {
-  const wrap = document.querySelector('.how-section__node-apg-impulse');
+  const wrap = document.querySelector('#how .how-section__node-apg-impulse');
   const orbitPaths = wrap ? gsap.utils.toArray('.how-section__apg-impulse-runner', wrap) : [];
 
   if (!wrap || orbitPaths.length === 0 || prefersReducedMotion) {
@@ -748,7 +753,7 @@ function initSystemNodeApgImpulseFlow() {
 }
 
 function initHowSystemNodeEllipsesFlow() {
-  const container = document.querySelector('.how-section__nodes-telemetry');
+  const container = document.querySelector('#how .how-section__nodes-telemetry');
   const indicators = container
     ? gsap.utils.toArray('.how-section__node-telemetry-indicator', container)
     : [];
@@ -805,7 +810,7 @@ function initHowSystemNodeEllipsesFlow() {
 }
 
 function initHowLayerStackReveal({ reduced = false } = {}) {
-  const group = document.querySelector('.how-section__layer-group');
+  const group = document.querySelector('#how .how-section__layer-group');
 
   if (!group) {
     return;
@@ -813,7 +818,7 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
 
   const layerNodes = gsap.utils.toArray('.how-section__layer-node', group);
   const telemetryNodes = gsap.utils.toArray('.how-section__node-telemetry', group);
-  const visual = document.querySelector('.how-section__visual');
+  const visual = document.querySelector('#how .how-section__visual');
 
   if (!layerNodes.length || !visual) {
     return;
