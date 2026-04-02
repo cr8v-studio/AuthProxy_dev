@@ -2191,6 +2191,7 @@ async function initMotionSystem() {
   initSystemNodeApgImpulseFlow();
   initHowLayerStackReveal();
   initHowSystemNodeEllipsesFlow();
+  initHeroGridLaserHover();
   initAuthAccordionMotion();
   initInteractiveHoverStates();
   initCustomCursor();
