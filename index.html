@@ -16,7 +16,7 @@
     />
     <link rel="icon" type="image/svg+xml" href="./assets/favicon-figma.svg?v=20260323-figma" />
     <link rel="stylesheet" href="./styles/main.css?v=20260321-0004" />
-    <link rel="stylesheet" href="./styles/site.css?v=20260401-0037" />
+    <link rel="stylesheet" href="./styles/site.css?v=20260402-1246" />
   </head>
   <body class="site-page">
     <div class="site-grid-overlay" aria-hidden="true"></div>
@@ -257,62 +257,55 @@
 
         <div class="site-container solution-section__bottom">
           <div class="solution-section__summary">
-            <p class="solution-section__summary-title">
-              <span class="text-highlight">AuthProxy</span>
-              <span>replaces all five.</span>
-            </p>
+            <div class="solution-section__summary-head">
+              <p class="solution-section__summary-title">
+                <span class="text-highlight">AuthProxy</span>
+                <span>replaces all five.</span>
+              </p>
+            </div>
 
-            <ul class="solution-section__capability-list">
-              <li class="solution-capability-item">
-                <p class="solution-capability-item__title">Authentication</p>
-                <p class="solution-capability-item__tag">12 methods</p>
-              </li>
-              <li class="solution-capability-item">
-                <p class="solution-capability-item__title">Reverse Proxy</p>
-                <p class="solution-capability-item__tag">Dynamic routing</p>
-              </li>
-              <li class="solution-capability-item">
-                <p class="solution-capability-item__title">File Service</p>
-                <p class="solution-capability-item__tag">Upload/Download/Images</p>
-              </li>
-              <li class="solution-capability-item">
-                <p class="solution-capability-item__title">Notifications</p>
-                <p class="solution-capability-item__tag">SSE, Webhooks, Push</p>
-              </li>
-              <li class="solution-capability-item">
-                <p class="solution-capability-item__title">Admin Panel</p>
-                <p class="solution-capability-item__tag">13 pages</p>
-              </li>
-            </ul>
+            <div class="solution-section__summary-capabilities">
+              <ul class="solution-section__capability-list">
+                <li class="solution-capability-item">
+                  <p class="solution-capability-item__title">Authentication</p>
+                  <p class="solution-capability-item__tag">12 methods</p>
+                </li>
+                <li class="solution-capability-item">
+                  <p class="solution-capability-item__title">Reverse Proxy</p>
+                  <p class="solution-capability-item__tag">Dynamic routing</p>
+                </li>
+                <li class="solution-capability-item">
+                  <p class="solution-capability-item__title">File Service</p>
+                  <p class="solution-capability-item__tag">Upload/Download/Images</p>
+                </li>
+                <li class="solution-capability-item">
+                  <p class="solution-capability-item__title">Notifications</p>
+                  <p class="solution-capability-item__tag">SSE, Webhooks, Push</p>
+                </li>
+                <li class="solution-capability-item">
+                  <p class="solution-capability-item__title">Admin Panel</p>
+                  <p class="solution-capability-item__tag">13 pages</p>
+                </li>
+              </ul>
+            </div>
 
-            <a class="site-header-button-v2 solution-section__docs-link" href="https://docs.authproxy.tech/docs/intro">
-              <span class="site-header-button-v2__label">Explore docs</span>
-              <span class="site-header-button-v2__icon-wrap">
-                <img
-                  class="icon site-header-button-v2__icon"
-                  src="./assets/figma/hero/explore-docs-arrow.svg"
-                  alt=""
-                  aria-hidden="true"
-                  width="9.8995"
-                  height="16.9706"
-                />
-              </span>
-            </a>
-          </div>
-
-          <div class="solution-section__visual-col" aria-hidden="true">
-            <div class="solution-section__visual-grid"></div>
-            <div class="how-section__group-svg">
-              <img class="solution-section__node-apg" src="./assets/figma/System-node-apg.svg" alt="" />
-              <div class="solution-section__layer-group">
-                <img class="solution-section__layer-node solution-section__layer-node--auth" src="./assets/figma/System-node-auth.svg" alt="" />
-                <img class="solution-section__layer-node solution-section__layer-node--proxy" src="./assets/figma/System-node-proxy.svg" alt="" />
-                <img class="solution-section__layer-node solution-section__layer-node--file" src="./assets/figma/System-node-file.svg" alt="" />
-                <img class="solution-section__layer-node solution-section__layer-node--notifs" src="./assets/figma/System-node-notifs.svg" alt="" />
-                <img class="solution-section__layer-node solution-section__layer-node--admin" src="./assets/figma/System-node-admin.svg" alt="" />
-              </div>
+            <div class="solution-section__summary-footer">
+              <a class="site-header-button-v2 solution-section__docs-link" href="https://docs.authproxy.tech/docs/intro">
+                <span class="site-header-button-v2__label">Explore docs</span>
+                <span class="site-header-button-v2__icon-wrap">
+                  <img
+                    class="icon site-header-button-v2__icon"
+                    src="./assets/figma/hero/explore-docs-arrow.svg"
+                    alt=""
+                    aria-hidden="true"
+                    width="9.8995"
+                    height="16.9706"
+                  />
+                </span>
+              </a>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -750,6 +743,9 @@
         </div>
       </section>
 
+      <div id="capabilities" class="sr-only" aria-hidden="true"></div>
+      <div id="developers" class="sr-only" aria-hidden="true"></div>
+      <div id="operations" class="sr-only" aria-hidden="true"></div>
       <div id="security" class="sr-only" aria-hidden="true"></div>
       <div id="pricing" class="sr-only" aria-hidden="true"></div>
       <div id="quick-start" class="sr-only" aria-hidden="true"></div>
@@ -758,6 +754,6 @@
     </main>
 
     <script type="module" src="./scripts/site.js?v=20260321-0007"></script>
-    <script type="module" src="./assets/js/animations.js?v=20260402-0051"></script>
+    <script type="module" src="./assets/js/animations.js?v=20260402-0052"></script>
   </body>
 </html>
