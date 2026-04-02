@@ -29,9 +29,8 @@ const REVEAL_ASSIGNMENTS = [
   ['.how-section__title-row, .how-section__intro', 'fade-up'],
   ['.how-step-card', 'fade-up'],
   ['.how-section__visual', 'scale-in'],
-  ['.problem-grid__visual-wrap', 'scale-in'],
-  ['.problem-item', 'fade-up'],
-  ['.problem-statement > *', 'fade-up'],
+  ['.solution-card', 'fade-up'],
+  ['.solution-section__summary > *', 'fade-up'],
   ['#auth .auth-section__intro', 'fade-up'],
   ['#auth .auth-acc__group', 'fade-up'],
   ['#auth .auth-section__technical', 'fade-up'],
@@ -2189,13 +2188,9 @@ async function initMotionSystem() {
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
   initSectionLabelChevronMotion();
-  initSystemNodeBDataFlow();
   initSystemNodeApgImpulseFlow();
   initHowLayerStackReveal();
   initHowSystemNodeEllipsesFlow();
-  initHeroGridImpulseFlow();
-  initHeroGridLaserHover();
-  initProblemGridImpulseFlow();
   initAuthAccordionMotion();
   initInteractiveHoverStates();
   initCustomCursor();
