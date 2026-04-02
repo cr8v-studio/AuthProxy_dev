@@ -2179,6 +2179,11 @@ a {
   background:
     linear-gradient(
       to bottom,
+      rgb(244 244 244 / 1) 0%,
+      rgb(244 244 244 / 0) 24%
+    ),
+    linear-gradient(
+      to bottom,
       rgb(244 244 244 / 0) 0%,
       rgb(244 244 244 / 0) 68%,
       rgb(244 244 244 / 1) 100%
