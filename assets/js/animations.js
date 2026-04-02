@@ -618,7 +618,7 @@ function initHowV2StatsCounter() {
 
   ScrollTrigger.create({
     trigger: statsWrap,
-    start: 'top 84%',
+    start: 'top 70%',
     once: true,
     onEnter: () => {
       valueNodes.forEach((node, index) => {
@@ -635,17 +635,17 @@ function initHowV2StatsCounter() {
           {
             autoAlpha: 1,
             scale: 1,
-            duration: isMobileViewport() ? 0.42 : 0.5,
+            duration: isMobileViewport() ? 0.7 : 0.9,
             ease: 'power3.out',
-            delay: index * 0.08
+            delay: 0.12 + index * 0.16
           }
         );
 
         gsap.to(counter, {
           value: target,
-          duration: isMobileViewport() ? 0.48 : 0.58,
-          ease: 'power3.out',
-          delay: index * 0.08,
+          duration: isMobileViewport() ? 1.05 : 1.25,
+          ease: 'power2.out',
+          delay: 0.12 + index * 0.16,
           snap: { value: 1 },
           onUpdate: () => {
             node.textContent = `${Math.round(counter.value)}ms`;
