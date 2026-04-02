@@ -1794,6 +1794,7 @@ a {
   border-bottom: 0;
 }
 
+.section-label__chip,
 .solution-section__label-chip {
   display: inline-flex;
   align-items: center;
@@ -2947,6 +2948,7 @@ a {
     padding: var(--space-24);
   }
 
+  .section-label__chip,
   .solution-section__label-chip {
     font-size: 22px;
     line-height: 26px;
