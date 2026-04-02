@@ -623,7 +623,7 @@ function initHowV2StatsReveal() {
   });
 }
 
-// How v2 pipeline arrows: dash-flow with phased right-track delay.
+// How v2 pipeline arrows: traveling glow + dash-flow with phased right-track delay.
 function initHowV2PipelineFlow() {
   const pipeline = document.querySelector('.how-v2__pipeline');
   const arrows = gsap.utils.toArray('.how-v2__pipeline-arrow', pipeline);
@@ -644,6 +644,7 @@ function initHowV2PipelineFlow() {
     layer.setAttribute('aria-hidden', 'true');
     layer.innerHTML = `
       <span class="how-v2__pipeline-dashflow"></span>
+      <span class="how-v2__pipeline-glow"></span>
     `;
     arrow.append(layer);
     return layer;
@@ -652,6 +653,7 @@ function initHowV2PipelineFlow() {
   const isMobile = isMobileViewport();
   const rightPhaseDelay = isMobile ? 0.12 : 0.15;
   const dashDuration = isMobile ? 0.82 : 0.9;
+  const glowDuration = isMobile ? 0.88 : 0.96;
   const baseOpacity = 1;
   const idleOpacity = 0.55;
   const timings = {
@@ -665,13 +667,15 @@ function initHowV2PipelineFlow() {
   const buildArrowFlow = (arrow, delay = 0) => {
     const layer = createMotionLayer(arrow);
     const dash = layer.querySelector('.how-v2__pipeline-dashflow');
+    const glow = layer.querySelector('.how-v2__pipeline-glow');
 
-    if (!dash) {
+    if (!dash || !glow) {
       return;
     }
 
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
+    gsap.set(glow, { x: -14, autoAlpha: 0 });
 
     const dashTween = gsap.to(dash, {
       backgroundPositionX: 18,
@@ -681,7 +685,23 @@ function initHowV2PipelineFlow() {
       delay
     });
 
-    animatedTweens.push(dashTween);
+    const glowTween = gsap.to(glow, {
+      keyframes: [
+        { autoAlpha: 1, duration: glowDuration * 0.12, ease: 'power2.out' },
+        {
+          x: () => Math.max(16, arrow.clientWidth - 32),
+          autoAlpha: 0.86,
+          duration: glowDuration * 0.6,
+          ease: 'power2.out'
+        },
+        { autoAlpha: 0, duration: glowDuration * 0.28, ease: 'power2.in' }
+      ],
+      repeat: -1,
+      delay,
+      repeatRefresh: true
+    });
+
+    animatedTweens.push(dashTween, glowTween);
   };
 
   buildArrowFlow(arrows[0], 0);

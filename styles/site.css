@@ -1346,6 +1346,21 @@ a {
   will-change: background-position, opacity;
 }
 
+.how-v2__pipeline-glow {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 16px;
+  height: 2px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgb(255 217 218 / 0.98);
+  box-shadow:
+    0 0 6px rgb(237 88 90 / 0.48),
+    0 0 10px rgb(237 88 90 / 0.24);
+  will-change: transform, opacity;
+}
+
 .how-v2__gateway {
   position: relative;
   width: 214px;
