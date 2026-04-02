@@ -1459,6 +1459,7 @@ a {
 }
 
 .how-v2__learn-link {
+  --learn-link-arrow-inset: 2px;
   position: relative;
   display: inline-grid;
   grid-auto-flow: column;
@@ -1507,13 +1508,13 @@ a {
 }
 
 .how-v2__learn-link-arrow--left {
-  left: 0;
+  left: var(--learn-link-arrow-inset);
   transform: translateY(-50%) translateX(0);
   opacity: 1;
 }
 
 .how-v2__learn-link-arrow--right {
-  right: 0;
+  right: var(--learn-link-arrow-inset);
   transform: translateY(-50%) translateX(-8px);
   opacity: 0;
 }
