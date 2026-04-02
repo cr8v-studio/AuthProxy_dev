@@ -1284,13 +1284,16 @@ a {
   margin: 0;
   display: grid;
   justify-items: center;
-  gap: var(--space-12);
+  align-items: center;
+  gap: 12px;
 }
 
 .how-v2__endpoint-icon {
+  display: block;
   width: 100px;
   height: 100px;
   object-fit: contain;
+  object-position: center;
 }
 
 .how-v2__endpoint-label {
@@ -1298,12 +1301,15 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding-inline: var(--space-4);
+  padding-inline: 4px;
   background: var(--figma-color-dark-base);
   color: var(--figma-color-white-base);
+  font-family: "Lexend", sans-serif;
   font-size: 14px;
   line-height: 17px;
+  font-weight: 400;
   letter-spacing: 2px;
+  text-align: center;
   text-transform: uppercase;
 }
 
