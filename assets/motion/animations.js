@@ -692,12 +692,12 @@ function initHowV2PipelineFlow() {
       keyframes: [
         { autoAlpha: 1, duration: glowDuration * 0.12, ease: 'power2.out' },
         {
-          x: () => Math.max(16, arrow.clientWidth - 26),
-          autoAlpha: 0.74,
-          duration: glowDuration * 0.62,
+          x: () => Math.max(16, arrow.clientWidth - 34),
+          autoAlpha: 0.62,
+          duration: glowDuration * 0.58,
           ease: 'power2.out'
         },
-        { autoAlpha: 0, duration: glowDuration * 0.26, ease: 'power2.in' }
+        { autoAlpha: 0, duration: glowDuration * 0.3, ease: 'power2.in' }
       ],
       repeat: -1,
       delay,
