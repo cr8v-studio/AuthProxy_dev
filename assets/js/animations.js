@@ -670,7 +670,7 @@ function initHowV2PipelineFlow() {
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
     gsap.set(glow, { x: -12, autoAlpha: 0 });
-    gsap.set(head, { autoAlpha: 0.75 });
+    gsap.set(head, { autoAlpha: 0.9 });
 
     const dashTween = gsap.to(dash, {
       backgroundPositionX: 20,
@@ -684,28 +684,19 @@ function initHowV2PipelineFlow() {
       keyframes: [
         { autoAlpha: 1, duration: glowDuration * 0.12, ease: 'power2.out' },
         {
-          x: () => Math.max(18, arrow.clientWidth - 16),
-          autoAlpha: 0.92,
-          duration: glowDuration * 0.66,
+          x: () => Math.max(16, arrow.clientWidth - 26),
+          autoAlpha: 0.74,
+          duration: glowDuration * 0.62,
           ease: 'power2.out'
         },
-        { autoAlpha: 0, duration: glowDuration * 0.22, ease: 'power2.in' }
+        { autoAlpha: 0, duration: glowDuration * 0.26, ease: 'power2.in' }
       ],
       repeat: -1,
       delay,
       repeatRefresh: true
     });
 
-    const headTween = gsap.to(head, {
-      autoAlpha: 1,
-      duration: isMobile ? 0.64 : 0.72,
-      ease: 'sine.inOut',
-      yoyo: true,
-      repeat: -1,
-      delay
-    });
-
-    animatedTweens.push(dashTween, glowTween, headTween);
+    animatedTweens.push(dashTween, glowTween);
   };
 
   buildArrowFlow(arrows[0], 0);
