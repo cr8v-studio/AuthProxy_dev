@@ -2301,7 +2301,7 @@ a {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   border-inline: 1px solid var(--site-section-border);
   border-top: 0;
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
 }
 
 .solution-section__summary {
