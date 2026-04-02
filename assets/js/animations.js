@@ -63,6 +63,45 @@ function mapRevealUtilities() {
   REVEAL_ASSIGNMENTS.forEach(([selector, className]) => {
     addClass(selector, className);
   });
+
+  // Auto-assign base reveal classes for newly added sections.
+  // This keeps scroll motion consistent without requiring manual selector updates each time.
+  const hasRevealClass = (element) =>
+    element.classList.contains('fade-up') ||
+    element.classList.contains('fade-in') ||
+    element.classList.contains('scale-in');
+
+  const sections = gsap.utils.toArray('main section:not(.hero-section)');
+  sections.forEach((section) => {
+    const directChildren = Array.from(section.children).filter((child) => {
+      if (!(child instanceof HTMLElement)) {
+        return false;
+      }
+      if (child.classList.contains('sr-only')) {
+        return false;
+      }
+      if (child.getAttribute('aria-hidden') === 'true') {
+        return false;
+      }
+      return true;
+    });
+
+    directChildren.forEach((child) => {
+      if (hasRevealClass(child)) {
+        return;
+      }
+
+      const classSignature = `${child.className}`.toLowerCase();
+      const isVisualBlock =
+        classSignature.includes('visual') ||
+        classSignature.includes('mockup') ||
+        classSignature.includes('media') ||
+        classSignature.includes('image') ||
+        classSignature.includes('figure');
+
+      child.classList.add(isVisualBlock ? 'scale-in' : 'fade-up');
+    });
+  });
 }
 
 // Lenis owns scroll interpolation while GSAP stays synced through the shared RAF loop.
