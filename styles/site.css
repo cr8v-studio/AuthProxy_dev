@@ -1438,15 +1438,27 @@ a {
 
 .how-v2__learn {
   min-height: 244px;
-  padding: var(--space-40) var(--space-48);
+  padding: 40px 48px;
   border-right: 1px solid var(--site-section-border);
-  display: grid;
-  align-content: center;
-  gap: var(--space-24);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.how-v2__learn-content {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
 }
 
 .how-v2__learn-title {
   margin: 0;
+  font-family: "Lexend", sans-serif;
   font-size: 28px;
   line-height: 31px;
   font-weight: 400;
@@ -1454,10 +1466,14 @@ a {
 }
 
 .how-v2__learn-link {
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   width: fit-content;
-  font-size: 30px;
+  font-family: "Lexend", sans-serif;
+  font-size: 18px;
   line-height: 27px;
+  font-weight: 400;
   letter-spacing: 0.18px;
   color: var(--figma-color-dark-base);
   text-decoration: underline;
@@ -1469,9 +1485,14 @@ a {
   display: inline-block;
   width: 9.899px;
   height: 16.971px;
-  margin-right: var(--space-8);
-  background: center / 100% 100% no-repeat url("../assets/figma/hero/explore-docs-arrow.svg");
-  transform: rotate(180deg) translateY(2px);
+  background: center / 100% 100% no-repeat url("../assets/figma/how/learn-arrow.svg");
+}
+
+.how-v2__learn-mark {
+  display: block;
+  width: 56.304px;
+  height: 84.314px;
+  flex-shrink: 0;
 }
 
 .how-v2__nodes {
@@ -3401,10 +3422,15 @@ a {
     border-right: 0;
     border-bottom: 1px solid var(--site-section-border);
     padding: var(--space-24);
+    justify-content: flex-start;
   }
 
   .how-v2__learn-link {
     font-size: 18px;
+  }
+
+  .how-v2__learn-mark {
+    display: none;
   }
 
   .how-v2__nodes {
