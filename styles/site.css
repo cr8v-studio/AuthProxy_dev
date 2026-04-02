@@ -2152,6 +2152,7 @@ a {
   height: 600px;
   max-width: 100%;
   max-height: 100%;
+  background-color: var(--figma-color-off-white-base);
   background-image:
     repeating-linear-gradient(
       90deg,
@@ -2173,12 +2174,9 @@ a {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
-  background: radial-gradient(
-    circle at center,
-    rgba(244, 244, 244, 0) 0%,
-    rgba(244, 244, 244, 0.7) 100%
-  );
+  background: radial-gradient(circle at 50% 50%, rgb(244 244 244 / 0) 0%, rgb(244 244 244 / 0.7) 100%);
 }
 
 #auth .section-label-bar {
