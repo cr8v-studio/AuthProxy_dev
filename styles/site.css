@@ -1761,15 +1761,15 @@ a {
   max-width: 13ch;
 }
 
-#problem .section-label-bar,
-#problem .section-intro,
-#problem .problem-grid,
-#problem .problem-statement {
+#solution .section-label-bar,
+#solution .section-intro,
+#solution .problem-grid,
+#solution .problem-statement {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
 }
 
-#problem .section-label-bar {
+#solution .section-label-bar {
   position: relative;
   min-height: 149px;
   padding-top: var(--space-120);
@@ -1779,7 +1779,7 @@ a {
   border-bottom: 0;
 }
 
-#problem .section-label-bar::after {
+#solution .section-label-bar::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -1790,7 +1790,7 @@ a {
   pointer-events: none;
 }
 
-#problem .section-label {
+#solution .section-label {
   width: 100%;
   max-width: none;
   min-height: auto;
@@ -2458,7 +2458,7 @@ a {
   border-bottom: 1px solid var(--figma-color-dark-base);
 }
 
-#problem .section-intro {
+#solution .section-intro {
   padding: 0;
   border-top: 1px solid var(--site-section-border);
   background: var(--color-surface-overlay-strong);
@@ -2466,16 +2466,16 @@ a {
   -webkit-backdrop-filter: blur(var(--hero-metrics-wrap-blur));
 }
 
-#problem .section-intro__title {
+#solution .section-intro__title {
   padding: var(--space-48) var(--space-48) var(--space-12);
 }
 
-#problem .section-intro__kicker {
+#solution .section-intro__kicker {
   margin: 0;
   padding: var(--space-12) var(--space-48) var(--space-48);
 }
 
-#problem .problem-grid {
+#solution .problem-grid {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: var(--space-48);
@@ -2484,33 +2484,33 @@ a {
   border: 1px solid var(--site-section-border);
 }
 
-#problem .problem-grid__visual-wrap {
+#solution .problem-grid__visual-wrap {
   min-height: 535px;
 }
 
-#problem .problem-list {
+#solution .problem-list {
   height: 100%;
   overflow: hidden;
   border: 0;
   border-left: 1px solid var(--site-section-border);
 }
 
-#problem .problem-item {
+#solution .problem-item {
   gap: var(--space-24);
   padding: var(--space-40) var(--space-48);
 }
 
-#problem .problem-item::after {
+#solution .problem-item::after {
   left: var(--space-24);
   bottom: var(--space-24);
 }
 
-#problem .problem-item::before {
+#solution .problem-item::before {
   right: var(--space-24);
   top: var(--space-24);
 }
 
-#problem .problem-statement {
+#solution .problem-statement {
   padding: 0;
   border-top: 0;
   background: var(--color-surface-overlay-strong);
@@ -2518,12 +2518,12 @@ a {
   -webkit-backdrop-filter: blur(var(--hero-metrics-wrap-blur));
 }
 
-#problem .problem-statement__eyebrow {
+#solution .problem-statement__eyebrow {
   margin: 0;
   padding: var(--space-48) var(--space-48) var(--space-12);
 }
 
-#problem .problem-statement__quote {
+#solution .problem-statement__quote {
   max-width: none;
   padding: var(--space-12) var(--space-48) var(--space-48);
 }
