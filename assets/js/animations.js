@@ -27,6 +27,7 @@ const REVEAL_ASSIGNMENTS = [
   ['.section-label', 'fade-in'],
   ['.section-intro > *', 'fade-up'],
   ['.how-section__title-row, .how-section__intro', 'fade-up'],
+  ['.how-v2__intro > *', 'fade-up'],
   ['.how-step-card', 'fade-up'],
   ['.how-section__visual', 'scale-in'],
   ['#auth .auth-section__intro', 'fade-up'],
