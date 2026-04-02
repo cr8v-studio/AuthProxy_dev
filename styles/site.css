@@ -1459,27 +1459,80 @@ a {
 }
 
 .how-v2__learn-link {
-  display: inline-flex;
+  position: relative;
+  display: inline-grid;
+  grid-auto-flow: column;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-top: 12px;
   width: fit-content;
+  padding-left: 22px;
+  padding-right: 18px;
   font-family: "Lexend", sans-serif;
   font-size: 18px;
   line-height: 27px;
   font-weight: 400;
   letter-spacing: 0.18px;
   color: var(--figma-color-dark-base);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration: none;
+  overflow: hidden;
 }
 
-.how-v2__learn-link::before {
-  content: "";
+.how-v2__learn-link-text {
+  position: relative;
   display: inline-block;
+}
+
+.how-v2__learn-link-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right center;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.how-v2__learn-link-arrow {
+  position: absolute;
+  top: 50%;
   width: 9.899px;
   height: 16.971px;
   background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
+  transition:
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.24s ease-out;
+}
+
+.how-v2__learn-link-arrow--left {
+  left: 0;
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
+}
+
+.how-v2__learn-link-arrow--right {
+  right: 0;
+  transform: translateY(-50%) translateX(-8px);
+  opacity: 0;
+}
+
+.how-v2__learn-link:hover .how-v2__learn-link-text::after,
+.how-v2__learn-link:focus-visible .how-v2__learn-link-text::after {
+  transform: scaleX(0);
+}
+
+.how-v2__learn-link:hover .how-v2__learn-link-arrow--left,
+.how-v2__learn-link:focus-visible .how-v2__learn-link-arrow--left {
+  transform: translateY(-50%) translateX(14px);
+  opacity: 0;
+}
+
+.how-v2__learn-link:hover .how-v2__learn-link-arrow--right,
+.how-v2__learn-link:focus-visible .how-v2__learn-link-arrow--right {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
 }
 
 .how-v2__learn-mark {
@@ -2118,6 +2171,36 @@ a {
   padding: var(--space-12) var(--space-48);
   gap: var(--space-8);
   border-bottom: 0;
+}
+
+.capabilities-section .section-label-bar {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
+  position: relative;
+  min-height: 149px;
+  padding-top: var(--space-120);
+  display: flex;
+  align-items: flex-end;
+  border-inline: 1px solid var(--site-section-border);
+}
+
+.capabilities-section .section-label {
+  width: 100%;
+  max-width: none;
+  min-height: auto;
+  margin-inline: 0;
+  padding: var(--space-12) var(--space-48);
+  gap: var(--space-8);
+  border-bottom: 0;
+}
+
+.capabilities-section__label-chip {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 4px;
+  color: var(--figma-color-off-white-base);
+  background: var(--figma-color-dark-base);
+  text-transform: uppercase;
 }
 
 .section-label__chip,
