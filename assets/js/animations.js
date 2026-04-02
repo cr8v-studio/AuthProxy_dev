@@ -586,6 +586,79 @@ function normalizeSolutionToAuthSeam() {
   authLabelBar.style.borderTop = '1px solid var(--site-section-border)';
 }
 
+// Count-up metrics in How v2 stats on scroll enter.
+function initHowV2StatsCounter() {
+  const statsWrap = document.querySelector('.how-v2__stats');
+  const valueNodes = statsWrap ? gsap.utils.toArray('p span', statsWrap) : [];
+
+  if (!statsWrap || !valueNodes.length) {
+    return;
+  }
+
+  const parseTarget = (node) => {
+    const raw = (node.textContent || '').trim();
+    const num = Number.parseInt(raw.replace(/[^\d]/g, ''), 10);
+    return Number.isFinite(num) ? num : null;
+  };
+
+  const targets = valueNodes.map(parseTarget);
+  if (targets.every((value) => value === null)) {
+    return;
+  }
+
+  if (prefersReducedMotion) {
+    valueNodes.forEach((node, index) => {
+      const target = targets[index];
+      if (target !== null) {
+        node.textContent = `${target}ms`;
+      }
+    });
+    return;
+  }
+
+  ScrollTrigger.create({
+    trigger: statsWrap,
+    start: 'top 84%',
+    once: true,
+    onEnter: () => {
+      valueNodes.forEach((node, index) => {
+        const target = targets[index];
+        if (target === null) {
+          return;
+        }
+
+        const counter = { value: 0 };
+
+        gsap.fromTo(
+          node,
+          { autoAlpha: 0.82, scale: 0.92 },
+          {
+            autoAlpha: 1,
+            scale: 1,
+            duration: isMobileViewport() ? 0.42 : 0.5,
+            ease: 'power3.out',
+            delay: index * 0.08
+          }
+        );
+
+        gsap.to(counter, {
+          value: target,
+          duration: isMobileViewport() ? 0.48 : 0.58,
+          ease: 'power3.out',
+          delay: index * 0.08,
+          snap: { value: 1 },
+          onUpdate: () => {
+            node.textContent = `${Math.round(counter.value)}ms`;
+          },
+          onComplete: () => {
+            node.textContent = `${target}ms`;
+          }
+        });
+      });
+    }
+  });
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -2238,6 +2311,7 @@ async function initMotionSystem() {
   initSolutionHeadlineMotion();
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
+  initHowV2StatsCounter();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
