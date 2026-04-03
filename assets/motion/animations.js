@@ -143,6 +143,35 @@ function initLenis() {
 
   gsap.ticker.lagSmoothing(0);
 
+  const getHeaderOffset = () => {
+    if (header) {
+      return Math.round(header.getBoundingClientRect().height);
+    }
+
+    const tokenValue = Number.parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue('--site-header-height')
+    );
+    return Number.isFinite(tokenValue) ? Math.round(tokenValue) : 0;
+  };
+
+  const resolveAnchorTarget = (target) => {
+    if (!(target instanceof HTMLElement)) {
+      return target;
+    }
+
+    const section =
+      target.matches('section') ? target : target.closest('section');
+
+    if (!section) {
+      return target;
+    }
+
+    const sectionLabelBar =
+      section.querySelector(':scope > .site-wide.section-label-bar, :scope > .section-label-bar');
+
+    return sectionLabelBar || target;
+  };
+
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
       const targetId = link.getAttribute('href');
@@ -159,7 +188,7 @@ function initLenis() {
 
       event.preventDefault();
       const isHeaderLogo = link.classList.contains('site-header-logo');
-      const scrollTarget = isHeaderLogo ? 0 : target;
+      const scrollTarget = isHeaderLogo ? 0 : resolveAnchorTarget(target);
       const scrollDuration = isHeaderLogo
         ? (isMobileViewport() ? 1.15 : 1.45)
         : (isMobileViewport() ? 0.9 : 1.05);
@@ -167,7 +196,7 @@ function initLenis() {
         ? (value) => 1 - Math.pow(1 - value, 4)
         : (value) => 1 - Math.pow(1 - value, 3);
       lenis.scrollTo(scrollTarget, {
-        offset: isHeaderLogo ? 0 : -24,
+        offset: isHeaderLogo ? 0 : -getHeaderOffset(),
         duration: scrollDuration,
         easing: scrollEasing
       });
