@@ -1445,11 +1445,15 @@ a {
 }
 
 .how-v2__learn-link {
+  --how-learn-link-arrow-shift: 10px;
+  --how-learn-link-arrow-ease: cubic-bezier(0.19, 1, 0.22, 1);
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
   margin-top: 12px;
   width: fit-content;
+  padding-left: 17px;
   font-family: "Lexend", sans-serif;
   font-size: 18px;
   line-height: 27px;
@@ -1462,10 +1466,44 @@ a {
 
 .how-v2__learn-link::before {
   content: "";
-  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 50%;
   width: 9.899px;
   height: 16.971px;
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
   background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
+  transition:
+    transform 0.42s var(--how-learn-link-arrow-ease),
+    opacity 0.32s var(--how-learn-link-arrow-ease);
+}
+
+.how-v2__learn-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 9.899px;
+  height: 16.971px;
+  transform: translateY(-50%) translateX(calc(-1 * var(--how-learn-link-arrow-shift)));
+  opacity: 0;
+  background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
+  transition:
+    transform 0.42s var(--how-learn-link-arrow-ease),
+    opacity 0.32s var(--how-learn-link-arrow-ease);
+}
+
+.how-v2__learn-link:hover::before,
+.how-v2__learn-link:focus-visible::before {
+  transform: translateY(-50%) translateX(var(--how-learn-link-arrow-shift));
+  opacity: 0;
+}
+
+.how-v2__learn-link:hover::after,
+.how-v2__learn-link:focus-visible::after {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
 }
 
 .how-v2__learn-mark {
