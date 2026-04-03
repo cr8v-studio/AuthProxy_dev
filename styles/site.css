@@ -2565,11 +2565,11 @@ a {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   min-height: 600px;
   margin-inline: auto;
-  padding: 182px var(--space-48) 24px;
+  padding: var(--space-24) var(--space-48);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: var(--space-24);
   border-inline: 1px solid var(--site-section-border);
   border-bottom: 1px solid var(--site-section-border);
@@ -2595,6 +2595,7 @@ a {
 
 .developers-section__title {
   margin: 0;
+  width: min(100%, 580px);
   font-size: 59px;
   line-height: 59px;
   font-weight: 400;
@@ -2604,7 +2605,7 @@ a {
 
 .developers-section__copy {
   margin: 0;
-  max-width: 700px;
+  width: min(100%, 700px);
   text-align: center;
   color: var(--figma-color-dark-tint-2);
 }
