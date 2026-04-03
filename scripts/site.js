@@ -107,7 +107,7 @@ if (capabilitiesPanel) {
         'Docs available for deeper implementation details'
       ],
       ctaLabel: 'Explore Authentication',
-      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#authentication',
       markIcon: './assets/sections/capabilities/cap-icon-12.svg'
     },
     'reverse-proxy': {
@@ -121,7 +121,7 @@ if (capabilitiesPanel) {
         'Route-level security flags'
       ],
       ctaLabel: 'Explore Reverse Proxy',
-      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#reverse-proxy',
       markIcon: './assets/sections/capabilities/cap-icon-7.svg'
     },
     'file-service': {
@@ -135,7 +135,7 @@ if (capabilitiesPanel) {
         'Optimized asset delivery'
       ],
       ctaLabel: 'Explore File Service',
-      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#file-service',
       markIcon: './assets/sections/capabilities/cap-icon-file.svg'
     },
     notifications: {
@@ -144,7 +144,7 @@ if (capabilitiesPanel) {
         'Deliver real-time updates across browser, mobile, and external systems from one event architecture.',
       bullets: ['Server-Sent Events', 'Webhooks', 'Push Notifications', 'Unified Event Distribution'],
       ctaLabel: 'Explore Notifications',
-      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#notifications',
       markIcon: './assets/sections/capabilities/cap-icon-notifications.svg'
     },
     'admin-panel': {
@@ -152,7 +152,7 @@ if (capabilitiesPanel) {
       description: 'Operate users, sessions, routes, and event visibility from one operational interface.',
       bullets: ['User and session control', 'Route management', 'Event monitoring', 'Operational visibility'],
       ctaLabel: 'Explore Admin Panel',
-      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#admin-panel',
       markIcon: './assets/sections/capabilities/cap-icon-admin.svg'
     }
   };
