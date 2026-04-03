@@ -221,6 +221,11 @@ if (securitySlider) {
     maxIndex = Math.max(0, slides.length - visible);
     current = Math.min(current, maxIndex);
 
+    const trailingVisibleIndex = Math.min(current + visible - 1, slides.length - 1);
+    slides.forEach((slide, index) => {
+      slide.classList.toggle('is-trailing-visible', index === trailingVisibleIndex);
+    });
+
     const slideWidth = slides[0].getBoundingClientRect().width;
     const offset = -(slideWidth * current);
     track.style.transform = `translate3d(${offset}px, 0, 0)`;
