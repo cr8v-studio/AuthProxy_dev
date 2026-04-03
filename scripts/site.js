@@ -180,13 +180,12 @@ if (capabilitiesPanel) {
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', (event) => {
+      event.preventDefault();
       const hash = tab.getAttribute('href')?.replace('#', '') || '';
       const profile = tabProfiles[hash];
       if (!profile) {
         return;
       }
-
-      event.preventDefault();
       setActiveTab(tab);
       applyTabProfile(profile);
       history.replaceState(null, '', `#${hash}`);
