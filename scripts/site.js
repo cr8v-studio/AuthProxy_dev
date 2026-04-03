@@ -196,3 +196,65 @@ if (capabilitiesPanel) {
   const activeHash = activeTab?.getAttribute('href')?.replace('#', '') || 'authentication';
   applyTabProfile(tabProfiles[activeHash] ?? tabProfiles.authentication);
 }
+
+const securitySlider = document.querySelector('[data-security-slider]');
+
+if (securitySlider) {
+  const track = securitySlider.querySelector('[data-security-slider-track]');
+  const slides = Array.from(securitySlider.querySelectorAll('.security-slide'));
+  const dots = Array.from(securitySlider.querySelectorAll('[data-security-dot]'));
+  const prevBtn = securitySlider.querySelector('[data-security-prev]');
+  const nextBtn = securitySlider.querySelector('[data-security-next]');
+
+  let current = 0;
+  let maxIndex = 0;
+
+  const getVisibleCount = () => (window.matchMedia('(max-width: 1199px)').matches ? 1 : 2);
+
+  const update = () => {
+    if (!track || slides.length === 0) {
+      return;
+    }
+
+    const visible = getVisibleCount();
+    maxIndex = Math.max(0, slides.length - visible);
+    current = Math.min(current, maxIndex);
+
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    const offset = -(slideWidth * current);
+    track.style.transform = `translate3d(${offset}px, 0, 0)`;
+
+    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === current));
+
+    if (prevBtn) {
+      prevBtn.disabled = current <= 0;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = current >= maxIndex;
+    }
+  };
+
+  prevBtn?.addEventListener('click', () => {
+    current = Math.max(0, current - 1);
+    update();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    current = Math.min(maxIndex, current + 1);
+    update();
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const index = Number(dot.getAttribute('data-security-dot'));
+      if (Number.isNaN(index)) {
+        return;
+      }
+      current = Math.min(Math.max(0, index), maxIndex);
+      update();
+    });
+  });
+
+  window.addEventListener('resize', update, { passive: true });
+  update();
+}
