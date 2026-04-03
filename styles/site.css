@@ -2338,7 +2338,7 @@ a {
 }
 
 .security-performance-item {
-  min-height: 225px;
+  min-height: 134px;
   padding: var(--space-40);
   display: flex;
   align-items: flex-start;
