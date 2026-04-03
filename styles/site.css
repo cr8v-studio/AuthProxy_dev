@@ -2513,6 +2513,21 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition:
+    background-color 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.security-slider__nav-btn img {
+  transition: filter 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.security-slider__nav-btn:is(:hover, :focus-visible):not([disabled]) {
+  background: var(--figma-color-dark-base);
+}
+
+.security-slider__nav-btn:is(:hover, :focus-visible):not([disabled]) img {
+  filter: brightness(0) invert(1);
 }
 
 .security-slider__nav-btn:first-child img {
