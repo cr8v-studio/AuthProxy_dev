@@ -2145,14 +2145,15 @@ a {
 }
 
 .capabilities-section .section-label-bar {
-  width: 100%;
-  max-width: none;
-  margin-inline: 0;
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  max-width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
   position: relative;
   min-height: 149px;
   padding-top: var(--space-120);
   display: flex;
   align-items: flex-end;
+  border-inline: 1px solid var(--site-section-border);
   border-bottom: 1px solid var(--site-section-border);
 }
 
@@ -2161,14 +2162,13 @@ a {
 }
 
 .capabilities-section .section-label {
-  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
-  max-width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  width: 100%;
+  max-width: none;
   min-height: auto;
-  margin-inline: auto;
+  margin-inline: 0;
   padding: var(--space-12) var(--space-48);
   gap: var(--space-8);
   border-bottom: 0;
-  border-inline: 1px solid var(--site-section-border);
 }
 
 .capabilities-section__label-chip {
