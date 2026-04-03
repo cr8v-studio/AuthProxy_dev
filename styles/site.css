@@ -2214,7 +2214,7 @@ a {
 
 .security-section__panel {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
-  min-height: 438px;
+  min-height: 304px;
   margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
