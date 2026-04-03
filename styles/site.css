@@ -2204,6 +2204,10 @@ a {
   transform: none;
 }
 
+.security-section .section-label-bar {
+  border-bottom: 0;
+}
+
 .capabilities-section .section-label,
 .security-section .section-label {
   width: 100%;
