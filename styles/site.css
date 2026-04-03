@@ -1322,6 +1322,30 @@ a {
   overflow: hidden;
 }
 
+.how-v2__pipeline-motion {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.how-v2__pipeline-dashflow {
+  position: absolute;
+  left: 0;
+  right: 12px;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(237 88 90 / 0.84) 0 7px,
+    rgb(237 88 90 / 0) 7px 13px
+  );
+  background-size: 18px 2px;
+  background-position-x: 0;
+  will-change: background-position, opacity;
+}
+
 .how-v2__gateway {
   position: relative;
   width: 214px;

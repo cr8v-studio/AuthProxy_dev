@@ -623,6 +623,110 @@ function initHowV2StatsReveal() {
   });
 }
 
+// How v2 pipeline arrows: dash-flow only with phased right arrow delay.
+function initHowV2PipelineDashFlow() {
+  const pipeline = document.querySelector('.how-v2__pipeline');
+  const arrows = gsap.utils.toArray('.how-v2__pipeline-arrow', pipeline);
+
+  if (!pipeline || arrows.length < 2 || prefersReducedMotion) {
+    return;
+  }
+
+  const isMobile = isMobileViewport();
+  const rightPhaseDelay = isMobile ? 0.12 : 0.15;
+  const dashDuration = isMobile ? 0.8 : 0.9;
+  const activeOpacity = 1;
+  const idleOpacity = 0.55;
+  const animatedLayers = [];
+  const animatedTweens = [];
+
+  const createLayer = (arrow) => {
+    let layer = arrow.querySelector('.how-v2__pipeline-motion');
+
+    if (!layer) {
+      layer = document.createElement('span');
+      layer.className = 'how-v2__pipeline-motion';
+      layer.setAttribute('aria-hidden', 'true');
+      layer.innerHTML = '<span class="how-v2__pipeline-dashflow"></span>';
+      arrow.append(layer);
+    }
+
+    return layer;
+  };
+
+  const buildDashFlow = (arrow, delay = 0) => {
+    const layer = createLayer(arrow);
+    const dash = layer.querySelector('.how-v2__pipeline-dashflow');
+
+    if (!dash) {
+      return;
+    }
+
+    animatedLayers.push(layer);
+    gsap.set(layer, { autoAlpha: 0.96 });
+    gsap.set(dash, { backgroundPositionX: 0 });
+
+    const tween = gsap.to(dash, {
+      backgroundPositionX: 18,
+      duration: dashDuration,
+      ease: 'none',
+      repeat: -1,
+      delay
+    });
+
+    animatedTweens.push(tween);
+  };
+
+  buildDashFlow(arrows[0], 0);
+  buildDashFlow(arrows[1], rightPhaseDelay);
+
+  if (!animatedTweens.length) {
+    return;
+  }
+
+  const setActiveIntensity = () => {
+    gsap.to(animatedLayers, {
+      autoAlpha: activeOpacity,
+      duration: 0.42,
+      ease: 'power2.out',
+      overwrite: true
+    });
+    gsap.to(animatedTweens, {
+      timeScale: 1,
+      duration: 0.45,
+      ease: 'power2.out',
+      overwrite: true
+    });
+  };
+
+  const setIdleIntensity = () => {
+    gsap.to(animatedLayers, {
+      autoAlpha: idleOpacity,
+      duration: 0.5,
+      ease: 'power2.out',
+      overwrite: true
+    });
+    gsap.to(animatedTweens, {
+      timeScale: 0.7,
+      duration: 0.55,
+      ease: 'power2.out',
+      overwrite: true
+    });
+  };
+
+  ScrollTrigger.create({
+    trigger: pipeline,
+    start: 'top 92%',
+    end: 'bottom 8%',
+    onEnter: setActiveIntensity,
+    onEnterBack: setActiveIntensity,
+    onLeave: setIdleIntensity,
+    onLeaveBack: setIdleIntensity
+  });
+
+  setIdleIntensity();
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -2070,6 +2174,7 @@ async function initMotionSystem() {
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
   initHowV2StatsReveal();
+  initHowV2PipelineDashFlow();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
