@@ -1445,63 +1445,80 @@ a {
 }
 
 .how-v2__learn-link {
-  --how-learn-link-arrow-shift: 10px;
+  --how-learn-link-arrow-inset: 2px;
   --how-learn-link-arrow-ease: cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
-  display: inline-flex;
+  display: inline-grid;
+  grid-auto-flow: column;
   align-items: center;
-  gap: 0;
+  gap: 10px;
   margin-top: 12px;
   width: fit-content;
-  padding-left: 17px;
+  padding-left: 22px;
+  padding-right: 22px;
   font-family: "Lexend", sans-serif;
   font-size: 18px;
   line-height: 27px;
   font-weight: 400;
   letter-spacing: 0.18px;
   color: var(--figma-color-dark-base);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.how-v2__learn-link::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 9.899px;
-  height: 16.971px;
-  transform: translateY(-50%) translateX(0);
-  opacity: 1;
-  background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
-  transition:
-    transform 0.42s var(--how-learn-link-arrow-ease),
-    opacity 0.32s var(--how-learn-link-arrow-ease);
+  text-decoration: none;
+  overflow: hidden;
 }
 
 .how-v2__learn-link::after {
   content: "";
   position: absolute;
-  left: 0;
+  left: 22px;
+  right: 22px;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right center;
+  transition: transform 0.42s var(--how-learn-link-arrow-ease);
+}
+
+.how-v2__learn-link-text {
+  position: relative;
+  display: inline-block;
+}
+
+.how-v2__learn-link-arrow {
+  position: absolute;
   top: 50%;
   width: 9.899px;
   height: 16.971px;
-  transform: translateY(-50%) translateX(calc(-1 * var(--how-learn-link-arrow-shift)));
-  opacity: 0;
   background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
   transition:
     transform 0.42s var(--how-learn-link-arrow-ease),
     opacity 0.32s var(--how-learn-link-arrow-ease);
 }
 
-.how-v2__learn-link:hover::before,
-.how-v2__learn-link:focus-visible::before {
-  transform: translateY(-50%) translateX(var(--how-learn-link-arrow-shift));
+.how-v2__learn-link-arrow--left {
+  left: var(--how-learn-link-arrow-inset);
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
+}
+
+.how-v2__learn-link-arrow--right {
+  right: var(--how-learn-link-arrow-inset);
+  transform: translateY(-50%) translateX(-10px);
   opacity: 0;
 }
 
 .how-v2__learn-link:hover::after,
 .how-v2__learn-link:focus-visible::after {
+  transform: scaleX(0);
+}
+
+.how-v2__learn-link:hover .how-v2__learn-link-arrow--left,
+.how-v2__learn-link:focus-visible .how-v2__learn-link-arrow--left {
+  transform: translateY(-50%) translateX(11px);
+  opacity: 0;
+}
+
+.how-v2__learn-link:hover .how-v2__learn-link-arrow--right,
+.how-v2__learn-link:focus-visible .how-v2__learn-link-arrow--right {
   transform: translateY(-50%) translateX(0);
   opacity: 1;
 }
