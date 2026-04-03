@@ -2272,6 +2272,9 @@ a {
   text-transform: uppercase;
   color: var(--figma-color-dark-base);
   text-decoration: none;
+  transition:
+    background-color 0.34s cubic-bezier(0.19, 1, 0.22, 1),
+    color 0.28s ease-out;
 }
 
 .capabilities-section__nav-item:first-child {
@@ -2282,11 +2285,43 @@ a {
   width: 9.8995px;
   height: 16.9706px;
   flex-shrink: 0;
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.capabilities-section__nav-item > span {
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .capabilities-section__nav-item:is(:hover, :focus-visible),
 .capabilities-section__nav-item.is-active {
-  background: var(--figma-color-white-base);
+  background: #f4f4f4;
+}
+
+.capabilities-section__nav-item.is-active > span,
+.capabilities-section__nav-item.is-active img {
+  transform: none;
+}
+
+.capabilities-section__nav-item:is(:hover, :focus-visible) > span {
+  transform: translateX(5px);
+}
+
+.capabilities-section__nav-item:is(:hover, :focus-visible) img {
+  transform: translateX(8px);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .capabilities-section__nav-item > span,
+  .capabilities-section__nav-item img {
+    transform: none !important;
+    transition: none;
+  }
+
+  .capabilities-section__nav-item:active {
+    color: var(--color-accent-alert);
+  }
 }
 
 .capabilities-section__detail {
