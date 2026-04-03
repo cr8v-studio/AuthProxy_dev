@@ -196,7 +196,7 @@ function initLenis() {
         ? (value) => 1 - Math.pow(1 - value, 4)
         : (value) => 1 - Math.pow(1 - value, 3);
       lenis.scrollTo(scrollTarget, {
-        offset: isHeaderLogo ? 0 : -getHeaderOffset(),
+        offset: isHeaderLogo ? 0 : -(getHeaderOffset() + 1),
         duration: scrollDuration,
         easing: scrollEasing
       });
