@@ -2199,13 +2199,14 @@ a {
   padding: var(--space-40) var(--space-48);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-16);
+  justify-content: flex-start;
+  gap: var(--space-4);
   border-top: 1px solid var(--site-section-border);
-  font-size: 28px;
-  line-height: 31px;
+  font-size: 18px;
+  line-height: 26px;
   font-weight: 400;
-  letter-spacing: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   color: var(--figma-color-dark-base);
   text-decoration: none;
 }
@@ -2228,12 +2229,12 @@ a {
 .capabilities-section__detail {
   position: relative;
   overflow: hidden;
-  padding: var(--space-48);
+  padding: var(--space-48) var(--space-48) 38px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-24);
-  background-color: var(--figma-color-off-white-base);
+  background-color: var(--figma-color-white-base);
 }
 
 .capabilities-section__detail::before {
@@ -2265,11 +2266,7 @@ a {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse 84% 58% at 50% 52%,
-    rgb(var(--figma-color-white-rgb) / 0.95) 80%,
-    rgb(var(--figma-color-white-rgb) / 0.4) 100%
-  );
+  background: radial-gradient(circle 300px at 100% 50%, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 1) 100%);
 }
 
 .capabilities-section__detail > * {
@@ -2293,15 +2290,18 @@ a {
 
 .capabilities-section__detail-title {
   margin: 0;
-  font-size: 44px;
-  line-height: 48px;
+  font-size: 28px;
+  line-height: 31px;
   font-weight: 400;
   color: var(--figma-color-dark-base);
 }
 
 .capabilities-section__detail-copy {
   margin: 0;
-  max-width: 62ch;
+  max-width: none;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.18px;
   color: var(--figma-color-dark-tint-2);
 }
 
