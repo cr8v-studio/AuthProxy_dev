@@ -2145,36 +2145,30 @@ a {
 }
 
 .capabilities-section .section-label-bar {
-  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
-  margin-inline: auto;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
   position: relative;
   min-height: 149px;
   padding-top: var(--space-120);
   display: flex;
   align-items: flex-end;
-  border-inline: 1px solid var(--site-section-border);
-  border-bottom: 0;
+  border-bottom: 1px solid var(--site-section-border);
 }
 
 .capabilities-section .section-label-bar::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -1px;
-  width: 100vw;
-  border-bottom: 1px solid var(--site-section-border);
-  transform: translateX(-50%);
-  pointer-events: none;
+  content: none;
 }
 
 .capabilities-section .section-label {
-  width: 100%;
-  max-width: none;
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  max-width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   min-height: auto;
-  margin-inline: 0;
+  margin-inline: auto;
   padding: var(--space-12) var(--space-48);
   gap: var(--space-8);
   border-bottom: 0;
+  border-inline: 1px solid var(--site-section-border);
 }
 
 .capabilities-section__label-chip {
