@@ -2173,6 +2173,7 @@ a {
   align-items: flex-end;
   border-inline: 1px solid var(--site-section-border);
   border-bottom: 0;
+  z-index: 2;
 }
 
 .capabilities-section .section-label-bar::after,
@@ -2197,11 +2198,13 @@ a {
   height: 1px;
   background: var(--site-section-border);
   pointer-events: none;
+  z-index: 3;
 }
 
 .security-section .section-label-bar::after {
   left: calc(50% - 50vw);
   transform: none;
+  z-index: 3;
 }
 
 .security-section .section-label-bar {
