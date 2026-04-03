@@ -2234,6 +2234,7 @@ a {
   margin: 0;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--space-12);
   font-size: 59px;
   line-height: 59px;
@@ -2243,10 +2244,12 @@ a {
 
 .security-section__title-chip {
   display: inline-flex;
+  align-self: flex-start;
   width: fit-content;
   padding-inline: 0;
   background: var(--figma-color-dark-base);
   color: var(--figma-color-white-base);
+  white-space: nowrap;
 }
 
 .security-section__intro-copy {
@@ -2295,8 +2298,8 @@ a {
 
 .security-section__metric-kicker {
   margin: 0;
-  font-size: 53px;
-  line-height: 53px;
+  font-size: 39px;
+  line-height: 39px;
   font-weight: 400;
   color: var(--figma-color-off-white-alpha-2);
 }
@@ -2318,7 +2321,7 @@ a {
 }
 
 .security-section__metric-accent {
-  color: var(--figma-color-extras-2);
+  color: var(--figma-color-extra-2);
 }
 
 .security-section__metric-foot {
