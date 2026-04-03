@@ -2171,11 +2171,18 @@ a {
   display: flex;
   align-items: flex-end;
   border-inline: 1px solid var(--site-section-border);
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
 }
 
 .capabilities-section .section-label-bar::after {
-  content: none;
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  width: 100vw;
+  border-bottom: 1px solid var(--site-section-border);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .capabilities-section .section-label {
