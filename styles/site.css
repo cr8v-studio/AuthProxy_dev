@@ -2282,11 +2282,18 @@ a {
   width: 9.8995px;
   height: 16.9706px;
   flex-shrink: 0;
+  transform: translateX(0);
+  transition: transform 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .capabilities-section__nav-item:is(:hover, :focus-visible),
 .capabilities-section__nav-item.is-active {
   background: var(--figma-color-white-base);
+}
+
+.capabilities-section__nav-item:is(:hover, :focus-visible) img {
+  transform: translateX(var(--space-8));
 }
 
 .capabilities-section__detail {
