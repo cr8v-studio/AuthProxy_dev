@@ -2375,6 +2375,7 @@ a {
 
 .security-slider__viewport {
   overflow: hidden;
+  touch-action: pan-y;
 }
 
 .security-slider__track {
