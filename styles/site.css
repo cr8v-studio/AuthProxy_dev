@@ -2191,17 +2191,13 @@ a {
 .security-section .section-label-bar::before {
   content: "";
   position: absolute;
-  left: calc(50% - 50vw);
+  left: 50%;
   top: 0;
   width: 100vw;
   height: 1px;
   background: var(--site-section-border);
+  transform: translateX(-50%);
   pointer-events: none;
-}
-
-.security-section .section-label-bar::after {
-  left: calc(50% - 50vw);
-  transform: none;
 }
 
 .capabilities-section .section-label,
