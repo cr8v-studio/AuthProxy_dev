@@ -2208,6 +2208,10 @@ a {
   text-transform: uppercase;
 }
 
+.security-section {
+  border-top: 0;
+}
+
 .security-section__panel {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   min-height: 438px;
