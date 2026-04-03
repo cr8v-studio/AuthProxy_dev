@@ -2162,7 +2162,8 @@ a {
 }
 
 .capabilities-section .section-label-bar,
-.security-section .section-label-bar {
+.security-section .section-label-bar,
+.developers-section .section-label-bar {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   max-width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
@@ -2176,7 +2177,8 @@ a {
 }
 
 .capabilities-section .section-label-bar::after,
-.security-section .section-label-bar::after {
+.security-section .section-label-bar::after,
+.developers-section .section-label-bar::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -2189,7 +2191,8 @@ a {
 }
 
 .capabilities-section .section-label,
-.security-section .section-label {
+.security-section .section-label,
+.developers-section .section-label {
   width: 100%;
   max-width: none;
   min-height: auto;
