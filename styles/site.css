@@ -2374,8 +2374,22 @@ a {
 }
 
 .security-slider__viewport {
+  position: relative;
   overflow: hidden;
   touch-action: pan-y;
+}
+
+.security-slider__viewport::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--site-section-border);
+  transform: translateX(-0.5px);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .security-slider__track {
@@ -3439,6 +3453,10 @@ a {
     flex-basis: 100%;
     min-height: 210px;
     padding: var(--space-24);
+  }
+
+  .security-slider__viewport::after {
+    display: none;
   }
 
   .security-slide__row {
