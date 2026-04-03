@@ -788,10 +788,11 @@ function initSecurityMetricCounter() {
 
       timeline.to(state, {
         value: 5,
-        duration: isMobileViewport() ? 1.8 : 2.2,
-        ease: 'power1.out',
+        duration: isMobileViewport() ? 2 : 2.35,
+        ease: 'sine.inOut',
+        snap: { value: 1 },
         onUpdate: () => {
-          accent.textContent = `${state.value.toFixed(1)}x`;
+          accent.textContent = `${Math.round(state.value)}x`;
         },
         onComplete: () => {
           accent.textContent = '5x';
