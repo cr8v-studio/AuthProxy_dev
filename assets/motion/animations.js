@@ -2183,7 +2183,6 @@ async function initMotionSystem() {
   initHowLayerStackReveal();
   initHowSystemNodeEllipsesFlow();
   initHeroGridLaserHover();
-  initSolutionGridLaserHover();
   initHowV2GridLaserHover();
   initInteractiveHoverStates();
   initCustomCursor();
