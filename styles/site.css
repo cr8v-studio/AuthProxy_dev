@@ -1318,8 +1318,20 @@ a {
   width: 100%;
   min-width: 110px;
   height: 12px;
-  background: center / 100% 12px no-repeat url("../assets/sections/how/pipeline-arrow.svg");
+  background: none;
   overflow: hidden;
+}
+
+.how-v2__pipeline-arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 10px;
+  height: 12px;
+  transform: translateY(-50%);
+  background: rgb(237 88 90 / 0.95);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 
 .how-v2__pipeline-motion {
@@ -1333,15 +1345,14 @@ a {
   position: absolute;
   left: 0;
   right: 12px;
-  top: 50%;
+  top: 5px;
   height: 2px;
-  transform: translateY(-50%);
+  transform: none;
   background-image: repeating-linear-gradient(
     90deg,
     rgb(237 88 90 / 0.84) 0 7px,
     rgb(237 88 90 / 0) 7px 13px
   );
-  background-size: 18px 2px;
   background-position-x: 0;
   will-change: background-position, opacity;
 }
