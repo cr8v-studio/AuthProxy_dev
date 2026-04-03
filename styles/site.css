@@ -2188,6 +2188,18 @@ a {
   pointer-events: none;
 }
 
+.security-section .section-label-bar::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 100vw;
+  height: 1px;
+  background: var(--site-section-border);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .capabilities-section .section-label,
 .security-section .section-label {
   width: 100%;
@@ -2197,10 +2209,6 @@ a {
   padding: var(--space-12) var(--space-48);
   gap: var(--space-8);
   border-bottom: 0;
-}
-
-.security-section .section-label-bar {
-  border-top: 1px solid var(--site-section-border);
 }
 
 .capabilities-section__label-chip {
