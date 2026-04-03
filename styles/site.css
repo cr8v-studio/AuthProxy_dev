@@ -2545,6 +2545,10 @@ a {
   border-right: 0;
 }
 
+.security-slider__nav-btn:last-child {
+  border-right: 0;
+}
+
 .security-slider__nav-btn:first-child .security-slider__nav-icon {
   transform: scaleX(-1);
 }
