@@ -195,8 +195,9 @@ function initLenis() {
       const scrollEasing = isHeaderLogo
         ? (value) => 1 - Math.pow(1 - value, 4)
         : (value) => 1 - Math.pow(1 - value, 3);
+      const headerSnapCompensation = -1;
       lenis.scrollTo(scrollTarget, {
-        offset: isHeaderLogo ? 0 : -(getHeaderOffset() + 1),
+        offset: isHeaderLogo ? 0 : -getHeaderOffset() + headerSnapCompensation,
         duration: scrollDuration,
         easing: scrollEasing
       });
