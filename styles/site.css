@@ -2481,7 +2481,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
 }
 
 .security-slider__dots {
@@ -2517,7 +2517,7 @@ a {
   border: 0;
   border-right: 1px solid var(--site-section-border);
   border-left: 1px solid var(--site-section-border);
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
   border-top: 0;
   background: var(--figma-color-white-base);
   display: inline-flex;
