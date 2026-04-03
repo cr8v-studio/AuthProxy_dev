@@ -2161,7 +2161,8 @@ a {
   border-bottom: 0;
 }
 
-.capabilities-section .section-label-bar {
+.capabilities-section .section-label-bar,
+.security-section .section-label-bar {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   max-width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
@@ -2174,7 +2175,8 @@ a {
   border-bottom: 0;
 }
 
-.capabilities-section .section-label-bar::after {
+.capabilities-section .section-label-bar::after,
+.security-section .section-label-bar::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -2186,7 +2188,8 @@ a {
   pointer-events: none;
 }
 
-.capabilities-section .section-label {
+.capabilities-section .section-label,
+.security-section .section-label {
   width: 100%;
   max-width: none;
   min-height: auto;
