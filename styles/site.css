@@ -2409,6 +2409,8 @@ a {
   left: -1px;
   bottom: -1px;
   background: center / 100% 100% no-repeat url("../assets/sections/capabilities/cap-corner-bl.svg");
+  transform: rotate(180deg);
+  transform-origin: center;
 }
 
 .capability-benefit::after {
