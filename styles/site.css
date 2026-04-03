@@ -2604,7 +2604,23 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   border-inline: 1px solid var(--site-section-border);
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
+}
+
+.capabilities-section {
+  position: relative;
+}
+
+.capabilities-section::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100vw;
+  height: 1px;
+  background: var(--site-section-border);
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .capabilities-section__nav {
