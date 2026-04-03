@@ -757,6 +757,52 @@ function initHowV2PipelineDashFlow() {
   setIdleIntensity();
 }
 
+function initSecurityMetricCounter() {
+  const metric = document.querySelector('.security-section__metric');
+  const accent = metric?.querySelector('.security-section__metric-accent');
+
+  if (!metric || !accent || prefersReducedMotion) {
+    return;
+  }
+
+  const state = { value: 10 };
+  let played = false;
+
+  gsap.set(accent, {
+    filter: 'blur(3px)',
+    autoAlpha: 0.72
+  });
+  accent.textContent = '10x';
+
+  ScrollTrigger.create({
+    trigger: metric,
+    start: 'top 82%',
+    once: true,
+    onEnter: () => {
+      if (played) {
+        return;
+      }
+      played = true;
+
+      gsap.to(state, {
+        value: 5,
+        duration: isMobileViewport() ? 0.9 : 1.1,
+        ease: 'power3.out',
+        onUpdate: () => {
+          accent.textContent = `${Math.round(state.value)}x`;
+        }
+      });
+
+      gsap.to(accent, {
+        filter: 'blur(0px)',
+        autoAlpha: 1,
+        duration: isMobileViewport() ? 0.72 : 0.86,
+        ease: 'power2.out'
+      });
+    }
+  });
+}
+
 // Section label chevrons enter from left one-by-one on first viewport entry.
 function initSectionLabelChevronMotion() {
   const labels = gsap.utils.toArray('.section-label');
@@ -2205,6 +2251,7 @@ async function initMotionSystem() {
   initSolutionSummaryMotion();
   initHowV2StatsReveal();
   initHowV2PipelineDashFlow();
+  initSecurityMetricCounter();
   initNavbarMotion(lenis);
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
   createRevealSystem();
