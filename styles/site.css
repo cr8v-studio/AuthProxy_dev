@@ -2208,6 +2208,120 @@ a {
   text-transform: uppercase;
 }
 
+.security-section__panel {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  min-height: 438px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border-inline: 1px solid var(--site-section-border);
+  border-bottom: 1px solid var(--site-section-border);
+}
+
+.security-section__intro {
+  padding: var(--space-48);
+  background: var(--figma-color-white-base);
+  border-right: 1px solid var(--site-section-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.security-section__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  font-size: 59px;
+  line-height: 59px;
+  font-weight: 400;
+  color: var(--figma-color-dark-base);
+}
+
+.security-section__title-chip {
+  display: inline-flex;
+  width: fit-content;
+  padding-inline: 0;
+  background: var(--figma-color-dark-base);
+  color: var(--figma-color-white-base);
+}
+
+.security-section__intro-copy {
+  margin: var(--space-24) 0 0;
+  max-width: 41ch;
+  color: var(--figma-color-dark-tint-2);
+}
+
+.security-section__metric {
+  position: relative;
+  padding: var(--space-48);
+  background: var(--figma-color-dark-base);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.security-section__metric::before,
+.security-section__metric::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 12px;
+  pointer-events: none;
+}
+
+.security-section__metric::before {
+  top: 24px;
+  right: 23px;
+  border-top: 1px solid var(--site-section-border);
+  border-right: 1px solid var(--site-section-border);
+}
+
+.security-section__metric::after {
+  right: 23px;
+  bottom: 23px;
+  border-bottom: 1px solid var(--site-section-border);
+  border-right: 1px solid var(--site-section-border);
+}
+
+.security-section__metric-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.security-section__metric-kicker {
+  margin: 0;
+  font-size: 53px;
+  line-height: 53px;
+  font-weight: 400;
+  color: var(--figma-color-off-white-alpha-2);
+}
+
+.security-section__metric-main {
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-24);
+  font-size: 80px;
+  line-height: 80px;
+  font-weight: 400;
+  color: var(--figma-color-off-white-base);
+}
+
+.security-section__metric-main > span:first-child {
+  font-size: 59px;
+  line-height: 59px;
+}
+
+.security-section__metric-accent {
+  color: var(--figma-color-extras-2);
+}
+
+.security-section__metric-foot {
+  margin: 0;
+  color: var(--figma-color-off-white-alpha-2);
+}
+
 .capabilities-section__intro {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
@@ -3069,6 +3183,51 @@ a {
     line-height: clamp(2.125rem, 4.8vw, 3.125rem);
   }
 
+  .security-section__title {
+    font-size: clamp(2.125rem, 4.8vw, 3.125rem);
+    line-height: clamp(2.125rem, 4.8vw, 3.125rem);
+  }
+
+  .security-section__panel {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .security-section__intro {
+    border-right: 0;
+    border-bottom: 1px solid var(--site-section-border);
+  }
+
+  .security-section__intro,
+  .security-section__metric {
+    padding: var(--space-24);
+  }
+
+  .security-section__metric-kicker {
+    font-size: 39px;
+    line-height: 39px;
+  }
+
+  .security-section__metric-main {
+    font-size: 64px;
+    line-height: 64px;
+  }
+
+  .security-section__metric-main > span:first-child {
+    font-size: 46px;
+    line-height: 46px;
+  }
+
+  .security-section__metric::before {
+    top: 24px;
+    right: 24px;
+  }
+
+  .security-section__metric::after {
+    right: 24px;
+    bottom: 24px;
+  }
+
   .capabilities-section__panel {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -3375,7 +3534,33 @@ a {
     padding: var(--space-24);
   }
 
+  .security-section__intro,
+  .security-section__metric {
+    padding: var(--space-24);
+  }
+
   .capabilities-section__title {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .security-section__title {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .security-section__metric-kicker {
+    font-size: 32px;
+    line-height: 32px;
+  }
+
+  .security-section__metric-main {
+    gap: var(--space-16);
+    font-size: 52px;
+    line-height: 52px;
+  }
+
+  .security-section__metric-main > span:first-child {
     font-size: 40px;
     line-height: 40px;
   }
