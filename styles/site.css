@@ -2178,9 +2178,10 @@ a {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -1px;
+  bottom: 0;
   width: 100vw;
-  border-bottom: 1px solid var(--site-section-border);
+  height: 1px;
+  background: var(--site-section-border);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -2192,7 +2193,7 @@ a {
   margin-inline: 0;
   padding: var(--space-12) var(--space-48);
   gap: var(--space-8);
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
 }
 
 .capabilities-section__label-chip {
