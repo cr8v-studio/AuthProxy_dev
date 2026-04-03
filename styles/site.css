@@ -2241,19 +2241,12 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   border-inline: 1px solid var(--site-section-border);
+  border-top: 1px solid var(--site-section-border);
   border-bottom: 1px solid var(--site-section-border);
 }
 
 .security-section__panel::before {
-  content: "";
-  position: absolute;
-  left: calc(50% - 50vw);
-  top: 0;
-  width: 100vw;
-  height: 1px;
-  background: var(--site-section-border);
-  pointer-events: none;
-  z-index: 3;
+  content: none;
 }
 
 .security-section__intro {
