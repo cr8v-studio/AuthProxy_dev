@@ -1417,11 +1417,11 @@ a {
 
 .how-v2__learn {
   min-height: 244px;
-  padding: 48px;
+  padding: 40px 48px;
   border-right: 1px solid var(--site-section-border);
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
 }
 
@@ -1429,45 +1429,52 @@ a {
   display: flex;
   flex: 1 0 0;
   min-width: 0;
-  width: 100%;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-end;
-  gap: 12px;
+  justify-content: center;
+  gap: 0;
 }
 
 .how-v2__learn-title {
   margin: 0;
   font-family: "Lexend", sans-serif;
-  font-size: 59px;
-  line-height: 59px;
+  font-size: 28px;
+  line-height: 31px;
   font-weight: 400;
-  letter-spacing: 0;
   color: var(--figma-color-dark-base);
 }
 
-.how-v2__learn-chip {
-  margin: 0;
-  display: inline-block;
-  background: var(--figma-color-dark-base);
-  font-family: "Lexend", sans-serif;
-  font-size: 59px;
-  line-height: 59px;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--figma-color-white-base);
-}
-
-.how-v2__learn-copy {
-  margin: 0;
-  padding-top: 12px;
-  max-width: 100%;
+.how-v2__learn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  width: fit-content;
   font-family: "Lexend", sans-serif;
   font-size: 18px;
   line-height: 27px;
   font-weight: 400;
   letter-spacing: 0.18px;
-  color: var(--figma-color-dark-tint-2);
+  color: var(--figma-color-dark-base);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.how-v2__learn-link::before {
+  content: "";
+  display: inline-block;
+  width: 9.899px;
+  height: 16.971px;
+  background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
+}
+
+.how-v2__learn-mark {
+  display: block;
+  width: 84.314px;
+  height: 56.304px;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  flex-shrink: 0;
 }
 
 .how-v2__nodes {
@@ -3416,16 +3423,12 @@ a {
     justify-content: flex-start;
   }
 
-  .how-v2__learn-title,
-  .how-v2__learn-chip {
-    font-size: 40px;
-    line-height: 40px;
+  .how-v2__learn-link {
+    font-size: 18px;
   }
 
-  .how-v2__learn-copy {
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0.16px;
+  .how-v2__learn-mark {
+    display: none;
   }
 
   .how-v2__nodes {
