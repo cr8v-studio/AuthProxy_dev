@@ -2371,7 +2371,8 @@ a {
 .security-slider {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
-  border-inline: 1px solid var(--site-section-border);
+  border-left: 1px solid var(--site-section-border);
+  border-right: 0;
   border-top: 0;
 }
 
