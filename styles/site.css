@@ -2453,19 +2453,17 @@ a {
   position: absolute;
   right: 39px;
   bottom: 39px;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-8);
+  margin-top: 0;
+  color: var(--figma-color-dark-base);
+}
+
+.security-slide__read.how-v2__learn-link {
+  --how-learn-link-arrow-inset: 2px;
+  padding-left: 22px;
+  padding-right: 22px;
   font-size: 18px;
   line-height: 27px;
   letter-spacing: 0.18px;
-  color: var(--figma-color-dark-base);
-  text-decoration: underline;
-}
-
-.security-slide__read img {
-  width: 9.8995px;
-  height: 16.9706px;
 }
 
 .security-slider__pagination {
