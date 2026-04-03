@@ -2192,7 +2192,7 @@ a {
   margin-inline: 0;
   padding: var(--space-12) var(--space-48);
   gap: var(--space-8);
-  border-bottom: 0;
+  border-bottom: 1px solid var(--site-section-border);
 }
 
 .capabilities-section__label-chip {
