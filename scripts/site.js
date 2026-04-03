@@ -200,6 +200,7 @@ if (capabilitiesPanel) {
 const securitySlider = document.querySelector('[data-security-slider]');
 
 if (securitySlider) {
+  const viewport = securitySlider.querySelector('.security-slider__viewport');
   const track = securitySlider.querySelector('[data-security-slider-track]');
   const slides = Array.from(securitySlider.querySelectorAll('.security-slide'));
   const dots = Array.from(securitySlider.querySelectorAll('[data-security-dot]'));
@@ -254,6 +255,61 @@ if (securitySlider) {
       update();
     });
   });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+  const swipeThreshold = 48;
+
+  viewport?.addEventListener(
+    'touchstart',
+    (event) => {
+      if (event.touches.length !== 1) {
+        return;
+      }
+
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+      touchEndX = touchStartX;
+      touchEndY = touchStartY;
+    },
+    { passive: true }
+  );
+
+  viewport?.addEventListener(
+    'touchmove',
+    (event) => {
+      if (event.touches.length !== 1) {
+        return;
+      }
+
+      touchEndX = event.touches[0].clientX;
+      touchEndY = event.touches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  viewport?.addEventListener(
+    'touchend',
+    () => {
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      if (Math.abs(deltaX) <= Math.abs(deltaY) || Math.abs(deltaX) < swipeThreshold) {
+        return;
+      }
+
+      if (deltaX < 0) {
+        current = Math.min(maxIndex, current + 1);
+      } else {
+        current = Math.max(0, current - 1);
+      }
+
+      update();
+    },
+    { passive: true }
+  );
 
   window.addEventListener('resize', update, { passive: true });
   update();
