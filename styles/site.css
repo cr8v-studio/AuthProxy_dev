@@ -2329,6 +2329,43 @@ a {
   color: var(--figma-color-off-white-alpha-2);
 }
 
+.security-section__performance {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-inline: 1px solid var(--site-section-border);
+}
+
+.security-performance-item {
+  min-height: 225px;
+  padding: var(--space-40);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+}
+
+.security-performance-item:not(:last-child) {
+  border-right: 1px solid var(--site-section-border);
+}
+
+.security-performance-item__num {
+  font-size: 28px;
+  line-height: 31px;
+  font-weight: 400;
+  color: var(--figma-color-dark-base);
+}
+
+.security-performance-item__text {
+  margin: 0;
+  max-width: 13ch;
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 400;
+  letter-spacing: 0.18px;
+  color: var(--figma-color-dark-tint-2);
+}
+
 .capabilities-section__intro {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
@@ -3200,6 +3237,22 @@ a {
     min-height: auto;
   }
 
+  .security-section__performance {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .security-performance-item {
+    min-height: 150px;
+  }
+
+  .security-performance-item:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .security-performance-item:nth-child(n + 3) {
+    border-top: 1px solid var(--site-section-border);
+  }
+
   .security-section__intro {
     border-right: 0;
     border-bottom: 1px solid var(--site-section-border);
@@ -3570,6 +3623,24 @@ a {
   .security-section__metric-main > span:first-child {
     font-size: 40px;
     line-height: 40px;
+  }
+
+  .security-section__performance {
+    grid-template-columns: 1fr;
+  }
+
+  .security-performance-item {
+    min-height: auto;
+    padding: var(--space-24);
+  }
+
+  .security-performance-item,
+  .security-performance-item:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .security-performance-item:not(:first-child) {
+    border-top: 1px solid var(--site-section-border);
   }
 
   .capabilities-section__detail-title {
