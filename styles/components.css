@@ -164,9 +164,16 @@
     [aria-current="page"],
     [aria-expanded="true"]
   )::after {
-  top: 0;
   right: 0;
   opacity: 1;
+}
+
+.site-header-link:is(:hover, .is-hover, [aria-current="page"])::after {
+  top: 1px;
+}
+
+.site-header-dropdown:is(:hover, .is-hover, [aria-expanded="true"])::after {
+  top: 0;
 }
 
 .site-header-link-m2 {
