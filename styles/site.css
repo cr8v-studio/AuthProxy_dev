@@ -2199,6 +2199,10 @@ a {
   border-bottom: 0;
 }
 
+.security-section .section-label-bar {
+  border-top: 1px solid var(--site-section-border);
+}
+
 .capabilities-section__label-chip {
   display: inline-flex;
   align-items: center;
