@@ -769,8 +769,8 @@ function initSecurityMetricCounter() {
   let played = false;
 
   gsap.set(accent, {
-    filter: 'blur(3px)',
-    autoAlpha: 0.72
+    filter: 'blur(1.5px)',
+    autoAlpha: 0.78
   });
   accent.textContent = '10x';
 
@@ -784,21 +784,30 @@ function initSecurityMetricCounter() {
       }
       played = true;
 
-      gsap.to(state, {
+      const timeline = gsap.timeline({ delay: 0.22 });
+
+      timeline.to(state, {
         value: 5,
-        duration: isMobileViewport() ? 0.9 : 1.1,
-        ease: 'power3.out',
+        duration: isMobileViewport() ? 1.8 : 2.2,
+        ease: 'power1.out',
         onUpdate: () => {
-          accent.textContent = `${Math.round(state.value)}x`;
+          accent.textContent = `${state.value.toFixed(1)}x`;
+        },
+        onComplete: () => {
+          accent.textContent = '5x';
         }
       });
 
-      gsap.to(accent, {
-        filter: 'blur(0px)',
-        autoAlpha: 1,
-        duration: isMobileViewport() ? 0.72 : 0.86,
-        ease: 'power2.out'
-      });
+      timeline.to(
+        accent,
+        {
+          filter: 'blur(0px)',
+          autoAlpha: 1,
+          duration: isMobileViewport() ? 1.2 : 1.35,
+          ease: 'power1.out'
+        },
+        0
+      );
     }
   });
 }
