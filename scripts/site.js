@@ -123,6 +123,37 @@ if (capabilitiesPanel) {
       ctaLabel: 'Explore Reverse Proxy',
       ctaHref: 'https://docs.authproxy.tech/docs/intro',
       markIcon: './assets/sections/capabilities/cap-icon-7.svg'
+    },
+    'file-service': {
+      title: 'File Service',
+      description:
+        'Handle uploads, downloads, and media delivery without adding separate storage control infrastructure.',
+      bullets: [
+        'Secure uploads',
+        'Ownership-aware file handling',
+        'Integrity and optimization support',
+        'Optimized asset delivery'
+      ],
+      ctaLabel: 'Explore File Service',
+      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      markIcon: './assets/sections/capabilities/cap-icon-file.svg'
+    },
+    notifications: {
+      title: 'Notifications',
+      description:
+        'Deliver real-time updates across browser, mobile, and external systems from one event architecture.',
+      bullets: ['Server-Sent Events', 'Webhooks', 'Push Notifications', 'Unified Event Distribution'],
+      ctaLabel: 'Explore Notifications',
+      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      markIcon: './assets/sections/capabilities/cap-icon-notifications.svg'
+    },
+    'admin-panel': {
+      title: 'Admin Panel',
+      description: 'Operate users, sessions, routes, and event visibility from one operational interface.',
+      bullets: ['User and session control', 'Route management', 'Event monitoring', 'Operational visibility'],
+      ctaLabel: 'Explore Admin Panel',
+      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      markIcon: './assets/sections/capabilities/cap-icon-admin.svg'
     }
   };
 
