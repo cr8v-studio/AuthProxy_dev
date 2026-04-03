@@ -667,7 +667,7 @@ function initHowV2PipelineDashFlow() {
     gsap.set(dash, { backgroundPositionX: 0 });
 
     const tween = gsap.to(dash, {
-      backgroundPositionX: 18,
+      backgroundPositionX: 13,
       duration: dashDuration,
       ease: 'none',
       repeat: -1,
