@@ -2411,15 +2411,15 @@ a {
 .security-slide::before {
   top: 23px;
   right: 23px;
-  border-top: 1px solid var(--site-section-border);
-  border-right: 1px solid var(--site-section-border);
+  background: center / 100% 100% no-repeat url("../assets/sections/security-slider/sec-corner-tr.svg");
 }
 
 .security-slide::after {
   bottom: 23px;
   left: 23px;
-  border-bottom: 1px solid var(--site-section-border);
-  border-left: 1px solid var(--site-section-border);
+  background: center / 100% 100% no-repeat url("../assets/sections/security-slider/sec-corner-bl.svg");
+  transform: rotate(180deg);
+  transform-origin: center;
 }
 
 .security-slide__row {
