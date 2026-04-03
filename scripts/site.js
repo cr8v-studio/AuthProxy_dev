@@ -225,7 +225,8 @@ if (securitySlider) {
     const offset = -(slideWidth * current);
     track.style.transform = `translate3d(${offset}px, 0, 0)`;
 
-    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === current));
+    const activeDotIndex = Math.min(current, Math.max(0, dots.length - 1));
+    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === activeDotIndex));
 
     if (prevBtn) {
       prevBtn.disabled = current <= 0;
