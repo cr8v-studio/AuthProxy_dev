@@ -2358,7 +2358,8 @@ a {
 
 .security-performance-item__text {
   margin: 0;
-  max-width: 13ch;
+  flex: 1 1 auto;
+  min-width: 0;
   font-size: 18px;
   line-height: 27px;
   font-weight: 400;
