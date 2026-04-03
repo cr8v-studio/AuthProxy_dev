@@ -83,3 +83,86 @@ document.addEventListener('keydown', (event) => {
     closeMenu();
   }
 });
+
+const capabilitiesPanel = document.querySelector('.capabilities-section__panel');
+
+if (capabilitiesPanel) {
+  const tabs = Array.from(capabilitiesPanel.querySelectorAll('.capabilities-section__nav-item'));
+  const titleEl = capabilitiesPanel.querySelector('.capabilities-section__detail-title');
+  const descriptionEl = capabilitiesPanel.querySelector('.capabilities-section__detail-copy');
+  const bulletEls = Array.from(capabilitiesPanel.querySelectorAll('.capability-benefit__text'));
+  const ctaLabelEl = capabilitiesPanel.querySelector('.capabilities-section__link .site-header-button-v2__label');
+  const ctaLinkEl = capabilitiesPanel.querySelector('.capabilities-section__link');
+  const markIconEl = capabilitiesPanel.querySelector('.capabilities-section__detail-mark');
+
+  const tabProfiles = {
+    authentication: {
+      title: 'Authentication',
+      description:
+        'Support modern login flows with built-in methods including PassKey, OTP, OAuth, and AI-facing access patterns.',
+      bullets: [
+        '12 built-in auth methods',
+        'Cryptographic verification by default',
+        'In-memory sessions and instant revocation',
+        'Docs available for deeper implementation details'
+      ],
+      ctaLabel: 'Explore Authentication',
+      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      markIcon: './assets/sections/capabilities/cap-icon-12.svg'
+    },
+    'reverse-proxy': {
+      title: 'Reverse Proxy',
+      description:
+        'Route requests through one edge layer with policy enforcement, header injection, and dynamic route control.',
+      bullets: [
+        'Dynamic routing',
+        'Zero-downtime config updates',
+        'Built-in rate limiting',
+        'Route-level security flags'
+      ],
+      ctaLabel: 'Explore Reverse Proxy',
+      ctaHref: 'https://docs.authproxy.tech/docs/intro',
+      markIcon: './assets/sections/capabilities/cap-icon-7.svg'
+    }
+  };
+
+  const applyTabProfile = (profile) => {
+    if (!profile || !titleEl || !descriptionEl || !ctaLabelEl || !ctaLinkEl || !markIconEl) {
+      return;
+    }
+
+    titleEl.textContent = profile.title;
+    descriptionEl.textContent = profile.description;
+    bulletEls.forEach((el, index) => {
+      if (profile.bullets[index]) {
+        el.textContent = profile.bullets[index];
+      }
+    });
+    ctaLabelEl.textContent = profile.ctaLabel;
+    ctaLinkEl.setAttribute('href', profile.ctaHref);
+    markIconEl.setAttribute('src', profile.markIcon);
+  };
+
+  const setActiveTab = (tab) => {
+    tabs.forEach((item) => item.classList.toggle('is-active', item === tab));
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', (event) => {
+      const hash = tab.getAttribute('href')?.replace('#', '') || '';
+      const profile = tabProfiles[hash];
+      if (!profile) {
+        return;
+      }
+
+      event.preventDefault();
+      setActiveTab(tab);
+      applyTabProfile(profile);
+      history.replaceState(null, '', `#${hash}`);
+    });
+  });
+
+  const activeTab = tabs.find((tab) => tab.classList.contains('is-active')) ?? tabs[0];
+  const activeHash = activeTab?.getAttribute('href')?.replace('#', '') || 'authentication';
+  applyTabProfile(tabProfiles[activeHash] ?? tabProfiles.authentication);
+}
