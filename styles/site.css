@@ -2586,15 +2586,14 @@ a {
   width: min(1000px, 100%);
   min-height: 399px;
   padding: var(--space-24) var(--space-48);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-24);
   background: var(--figma-color-white-base);
-  box-shadow:
-    inset 1px 0 0 var(--site-section-border),
-    inset -1px 0 0 var(--site-section-border);
+  border-inline: 1px solid var(--site-section-border);
 }
 
 .developers-section__title {
