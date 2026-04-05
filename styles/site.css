@@ -2704,6 +2704,7 @@ a {
 .developers-highlight-card__corner--bl {
   left: 24px;
   bottom: 24px;
+  transform: rotate(180deg);
 }
 
 .developers-highlight-card__corner--tr {
