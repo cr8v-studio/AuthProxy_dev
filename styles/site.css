@@ -2609,6 +2609,15 @@ a {
   text-align: center;
 }
 
+.developers-section__title-chip {
+  display: inline-flex;
+  width: fit-content;
+  padding-inline: 0;
+  background: var(--figma-color-dark-base);
+  color: var(--figma-color-white-base);
+  white-space: nowrap;
+}
+
 .developers-section__copy {
   margin: 0;
   width: min(100%, 700px);
