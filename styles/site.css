@@ -2588,7 +2588,6 @@ a {
   min-height: 399px;
   padding: var(--space-24) var(--space-48);
   box-sizing: border-box;
-  transform: translateX(1px);
   position: relative;
   z-index: 4;
   display: flex;
