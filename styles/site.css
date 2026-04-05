@@ -2579,7 +2579,7 @@ a {
     linear-gradient(var(--site-section-border) 1px, transparent 1px),
     linear-gradient(90deg, var(--site-section-border) 1px, transparent 1px);
   background-size: 100px 100px;
-  background-position: 0 99px, 99px 0;
+  background-position: 0 99px, 100px 0;
 }
 
 .developers-section__intro-inner {
