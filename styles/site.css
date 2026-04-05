@@ -2597,6 +2597,50 @@ a {
   justify-content: center;
   gap: var(--space-24);
   background: var(--figma-color-white-base);
+  overflow: hidden;
+}
+
+.developers-section__soft-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 24%;
+  width: min(560px, 84%);
+  height: 148px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      68% 60% at 50% 50%,
+      rgb(var(--figma-color-extra-2-rgb) / 0.16) 0%,
+      rgb(var(--figma-color-extra-2-rgb) / 0.1) 35%,
+      rgb(var(--figma-color-extra-2-rgb) / 0.04) 62%,
+      rgb(var(--figma-color-extra-2-rgb) / 0) 100%
+    );
+  filter: blur(16px);
+  will-change: transform, opacity, filter;
+}
+
+.developers-section__soft-glow::after {
+  content: "";
+  position: absolute;
+  inset: 24% 18% 18%;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      62% 50% at 50% 48%,
+      rgb(var(--figma-color-extra-2-rgb) / 0.22) 0%,
+      rgb(var(--figma-color-extra-2-rgb) / 0.05) 60%,
+      rgb(var(--figma-color-extra-2-rgb) / 0) 100%
+    );
+  filter: blur(12px);
+}
+
+.developers-section__intro-inner > *:not(.developers-section__soft-glow) {
+  position: relative;
+  z-index: 2;
 }
 
 .developers-section__title {
@@ -4175,6 +4219,13 @@ a {
     padding: var(--space-24);
   }
 
+  .developers-section__soft-glow {
+    bottom: 18%;
+    width: min(480px, 92%);
+    height: 124px;
+    filter: blur(14px);
+  }
+
   .developers-section__title {
     font-size: clamp(2.125rem, 4.8vw, 3.125rem);
     line-height: clamp(2.125rem, 4.8vw, 3.125rem);
@@ -4193,6 +4244,12 @@ a {
 
   .developers-section__intro-inner {
     padding: var(--space-16);
+  }
+
+  .developers-section__soft-glow {
+    bottom: 12%;
+    height: 106px;
+    filter: blur(12px);
   }
 
   .developers-section__copy {
