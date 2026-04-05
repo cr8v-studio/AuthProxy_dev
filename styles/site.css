@@ -2564,6 +2564,7 @@ a {
 }
 
 .developers-section__intro {
+  position: relative;
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   min-height: 600px;
   margin-inline: auto;
@@ -2589,6 +2590,8 @@ a {
   box-sizing: border-box;
   transform: translateX(-1px);
   border-left: 1px solid var(--site-section-border);
+  position: relative;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
