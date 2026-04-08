@@ -67,7 +67,7 @@ const getMotion = () => ({
 const HOW_SECURITY_MOTION = {
   pipeline: {
     phaseDelay: { mobile: 0.12, desktop: 0.15 },
-    duration: { mobile: 1.9, desktop: 2.3 },
+    duration: { mobile: 2.5, desktop: 3.1 },
     layerAlpha: { active: 1, idle: 0.55 },
     intensityTransition: {
       active: { duration: 0.42, ease: 'power2.out' },
