@@ -8,6 +8,14 @@
   --site-line-soft: var(--color-grid-line-soft);
   --site-section-border: var(--color-border-soft);
   --site-text-body: var(--figma-color-dark-tint-2);
+  --motion-duration-reveal-mobile: 0.5;
+  --motion-duration-reveal-desktop: 0.65;
+  --motion-distance-reveal-mobile: 18;
+  --motion-distance-reveal-desktop: 28;
+  --motion-scale-start-mobile: 0.985;
+  --motion-scale-start-desktop: 0.965;
+  --motion-duration-hover: 0.5;
+  --motion-scale-button: 1;
 }
 
 * {
