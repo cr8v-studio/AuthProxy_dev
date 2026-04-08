@@ -729,7 +729,7 @@ function initHowV2PipelineDashFlow() {
 
   const isMobile = isMobileViewport();
   const rightPhaseDelay = isMobile ? 0.12 : 0.15;
-  const flowDuration = isMobile ? 0.9 : 1.05;
+  const flowDuration = isMobile ? 1.15 : 1.35;
   const activeOpacity = 1;
   const idleOpacity = 0.55;
   const animatedLayers = [];
@@ -786,10 +786,10 @@ function initHowV2PipelineDashFlow() {
 
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
-    gsap.set(track, { x: 0 });
+    gsap.set(track, { x: -cycleShift });
 
     const tween = gsap.to(track, {
-      x: -cycleShift,
+      x: 0,
       duration: flowDuration,
       ease: 'none',
       repeat: -1,
