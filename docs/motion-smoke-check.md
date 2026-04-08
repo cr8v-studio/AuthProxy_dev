@@ -15,6 +15,8 @@ python3 scripts/motion_smoke_check.py
 - вызовы критичных init-функций в `assets/motion/animations.js`;
 - отсутствие ранее удалённых dead-маркеров в JS/CSS.
 
+Статический smoke-check обновлён под `chevron-flow` baseline.
+
 1. Hero metrics marquee
 - Блок метрик в hero движется непрерывно.
 - На hover движение замедляется/останавливается и возвращается после ухода курсора.
