@@ -761,17 +761,22 @@ function initHowV2PipelineDashFlow() {
   const buildChevronFlow = (arrow, delay = 0) => {
     const layer = createLayer(arrow);
     const chevrons = layer.querySelector('.how-v2__pipeline-chevrons');
+    const firstChevron = layer.querySelector('.how-v2__pipeline-chevron');
 
-    if (!chevrons) {
+    if (!chevrons || !firstChevron) {
       return;
     }
+
+    const chevronWidth = firstChevron.getBoundingClientRect().width || 9;
+    const chevronGap = parseFloat(getComputedStyle(chevrons).gap) || 10;
+    const cycleShift = chevronWidth + chevronGap;
 
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
     gsap.set(chevrons, { x: 0 });
 
     const tween = gsap.to(chevrons, {
-      x: 14,
+      x: cycleShift,
       duration: flowDuration,
       ease: 'none',
       repeat: -1,
