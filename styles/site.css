@@ -1271,21 +1271,9 @@ a {
 
 .how-v2__pipeline-motion {
   position: absolute;
-  inset: 0;
+  inset: 0 8px;
   pointer-events: none;
   z-index: 2;
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    #000 0,
-    #000 calc(100% - 12px),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    #000 0,
-    #000 calc(100% - 12px),
-    transparent 100%
-  );
 }
 
 .how-v2__pipeline-chevrons {
