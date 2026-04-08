@@ -1262,44 +1262,48 @@ a {
   display: block;
   width: 100%;
   min-width: 110px;
-  height: 12px;
+  height: 16px;
   background: none;
   overflow: hidden;
 }
 
-.how-v2__pipeline-arrow::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 10px;
-  height: 12px;
-  transform: translateY(-50%);
-  background: rgb(237 88 90 / 0.95);
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-
 .how-v2__pipeline-motion {
   position: absolute;
-  inset: 0;
+  inset: 0 4px;
   pointer-events: none;
   z-index: 2;
 }
 
-.how-v2__pipeline-dashflow {
+.how-v2__pipeline-chevrons {
   position: absolute;
   left: 0;
-  right: 12px;
-  top: 5px;
-  height: 2px;
-  transform: none;
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgb(237 88 90 / 0.84) 0 7px,
-    rgb(237 88 90 / 0) 7px 13px
-  );
-  background-position-x: 0;
-  will-change: background-position, opacity;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(-50%);
+  will-change: transform, opacity;
+}
+
+.how-v2__pipeline-chevron {
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid rgb(237 88 90 / 0.7);
+  border-bottom: 2px solid rgb(237 88 90 / 0.7);
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.how-v2__pipeline-chevron:nth-child(3n + 1) {
+  opacity: 0.3;
+}
+
+.how-v2__pipeline-chevron:nth-child(3n + 2) {
+  opacity: 0.5;
+}
+
+.how-v2__pipeline-chevron:nth-child(3n + 3) {
+  opacity: 0.7;
 }
 
 .how-v2__gateway {

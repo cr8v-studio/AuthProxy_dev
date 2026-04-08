@@ -718,7 +718,7 @@ function initHowV2StatsReveal() {
   });
 }
 
-// How v2 pipeline arrows: dash-flow only with phased right arrow delay.
+// How v2 pipeline arrows: chevron-flow with phased right arrow delay.
 function initHowV2PipelineDashFlow() {
   const pipeline = document.querySelector('.how-v2__pipeline');
   const arrows = gsap.utils.toArray('.how-v2__pipeline-arrow', pipeline);
@@ -729,7 +729,7 @@ function initHowV2PipelineDashFlow() {
 
   const isMobile = isMobileViewport();
   const rightPhaseDelay = isMobile ? 0.12 : 0.15;
-  const dashDuration = isMobile ? 0.8 : 0.9;
+  const flowDuration = isMobile ? 0.8 : 0.9;
   const activeOpacity = 1;
   const idleOpacity = 0.55;
   const animatedLayers = [];
@@ -742,28 +742,37 @@ function initHowV2PipelineDashFlow() {
       layer = document.createElement('span');
       layer.className = 'how-v2__pipeline-motion';
       layer.setAttribute('aria-hidden', 'true');
-      layer.innerHTML = '<span class="how-v2__pipeline-dashflow"></span>';
+      layer.innerHTML = `
+        <span class="how-v2__pipeline-chevrons">
+          <span class="how-v2__pipeline-chevron"></span>
+          <span class="how-v2__pipeline-chevron"></span>
+          <span class="how-v2__pipeline-chevron"></span>
+          <span class="how-v2__pipeline-chevron"></span>
+          <span class="how-v2__pipeline-chevron"></span>
+          <span class="how-v2__pipeline-chevron"></span>
+        </span>
+      `;
       arrow.append(layer);
     }
 
     return layer;
   };
 
-  const buildDashFlow = (arrow, delay = 0) => {
+  const buildChevronFlow = (arrow, delay = 0) => {
     const layer = createLayer(arrow);
-    const dash = layer.querySelector('.how-v2__pipeline-dashflow');
+    const chevrons = layer.querySelector('.how-v2__pipeline-chevrons');
 
-    if (!dash) {
+    if (!chevrons) {
       return;
     }
 
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
-    gsap.set(dash, { backgroundPositionX: 0 });
+    gsap.set(chevrons, { x: 0 });
 
-    const tween = gsap.to(dash, {
-      backgroundPositionX: 13,
-      duration: dashDuration,
+    const tween = gsap.to(chevrons, {
+      x: 18,
+      duration: flowDuration,
       ease: 'none',
       repeat: -1,
       delay
@@ -772,8 +781,8 @@ function initHowV2PipelineDashFlow() {
     animatedTweens.push(tween);
   };
 
-  buildDashFlow(arrows[0], 0);
-  buildDashFlow(arrows[1], rightPhaseDelay);
+  buildChevronFlow(arrows[0], 0);
+  buildChevronFlow(arrows[1], rightPhaseDelay);
 
   if (!animatedTweens.length) {
     return;
