@@ -13,6 +13,7 @@ const MOTION_BOOT_FLAG = '__apMotionBooted';
 const MOTION_HOVER_BIND_FLAG = '__apMotionHoverBound';
 const MOTION_CURSOR_BIND_FLAG = '__apMotionCursorBound';
 const MOTION_DEBUG_FLAG = '__AP_MOTION_DEBUG__';
+const MOTION_RUNTIME_CLEANUPS = [];
 const rootStyles = getComputedStyle(document.documentElement);
 const motionDebug = (...args) => {
   if (window[MOTION_DEBUG_FLAG]) {
@@ -24,6 +25,23 @@ const isMotionDisabled = (element) =>
     element &&
       (element.matches?.('[data-motion="off"]') || element.closest?.('[data-motion="off"]'))
   );
+
+const registerMotionCleanup = (cleanup) => {
+  if (typeof cleanup === 'function') {
+    MOTION_RUNTIME_CLEANUPS.push(cleanup);
+  }
+};
+
+const cleanupMotionRuntime = () => {
+  while (MOTION_RUNTIME_CLEANUPS.length) {
+    const cleanup = MOTION_RUNTIME_CLEANUPS.pop();
+    try {
+      cleanup?.();
+    } catch (error) {
+      motionDebug('cleanup error', error);
+    }
+  }
+};
 
 const readMotionToken = (tokenName, fallback) => {
   const rawValue = rootStyles.getPropertyValue(tokenName).trim();
@@ -48,7 +66,11 @@ const getMotion = () => ({
 
 const handleReducedMotionChange = (event) => {
   prefersReducedMotion = event.matches;
-  window.location.reload();
+  cleanupMotionRuntime();
+  ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  document.body.classList.remove('is-hero-laser-cursor');
+  window[MOTION_BOOT_FLAG] = false;
+  initMotionSystem();
 };
 
 if (typeof reducedMotionMedia.addEventListener === 'function') {
@@ -157,12 +179,15 @@ function initLenis() {
     touchMultiplier: 1
   });
 
-  lenis.on('scroll', ScrollTrigger.update);
-  ScrollTrigger.addEventListener('refresh', () => lenis.resize());
-
-  gsap.ticker.add((time) => {
+  const onLenisScroll = () => ScrollTrigger.update();
+  const onRefresh = () => lenis.resize();
+  const onTick = (time) => {
     lenis.raf(time * 1000);
-  });
+  };
+
+  lenis.on('scroll', onLenisScroll);
+  ScrollTrigger.addEventListener('refresh', onRefresh);
+  gsap.ticker.add(onTick);
 
   gsap.ticker.lagSmoothing(0);
 
@@ -231,7 +256,19 @@ function initLenis() {
     });
   });
 
-  return lenis;
+  const destroy = () => {
+    lenis.stop();
+    if (typeof lenis.off === 'function') {
+      lenis.off('scroll', onLenisScroll);
+    }
+    ScrollTrigger.removeEventListener('refresh', onRefresh);
+    gsap.ticker.remove(onTick);
+    if (typeof lenis.destroy === 'function') {
+      lenis.destroy();
+    }
+  };
+
+  return { lenis, destroy };
 }
 
 function runInitialPreloader(lenis) {
@@ -389,7 +426,7 @@ function runInitialPreloader(lenis) {
 // Header scroll-state stays centralized here so the rest of the motion system can stay declarative.
 function initNavbarMotion(lenis) {
   if (!header) {
-    return;
+    return () => {};
   }
 
   const syncHeaderState = (scrollY) => {
@@ -399,19 +436,24 @@ function initNavbarMotion(lenis) {
   syncHeaderState(window.scrollY);
 
   if (lenis) {
-    lenis.on('scroll', ({ scroll }) => {
+    const onLenisScroll = ({ scroll }) => {
       syncHeaderState(scroll);
-    });
-    return;
+    };
+    lenis.on('scroll', onLenisScroll);
+    return () => {
+      if (typeof lenis.off === 'function') {
+        lenis.off('scroll', onLenisScroll);
+      }
+    };
   }
 
-  window.addEventListener(
-    'scroll',
-    () => {
-      syncHeaderState(window.scrollY);
-    },
-    { passive: true }
-  );
+  const onWindowScroll = () => {
+    syncHeaderState(window.scrollY);
+  };
+  window.addEventListener('scroll', onWindowScroll, { passive: true });
+  return () => {
+    window.removeEventListener('scroll', onWindowScroll);
+  };
 }
 
 // Shared utility reveal presets used across non-hero sections.
@@ -1122,10 +1164,10 @@ function initGridLaserHover({ panelSelector, gridSelector = null, bindToken }) {
   const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
   if (!panel || !grid || prefersReducedMotion || hasCoarsePointer) {
-    return;
+    return () => {};
   }
   if (bindToken && panel.dataset[bindToken] === '1') {
-    return;
+    return () => {};
   }
   if (bindToken) {
     panel.dataset[bindToken] = '1';
@@ -1201,6 +1243,9 @@ function initGridLaserHover({ panelSelector, gridSelector = null, bindToken }) {
   dotPulse.to({}, { duration: 0.12 });
 
   const updateLaser = (event) => {
+    if (prefersReducedMotion) {
+      return;
+    }
     const rect = grid.getBoundingClientRect();
     const localX = event.clientX - rect.left;
     const localY = event.clientY - rect.top;
@@ -1257,11 +1302,21 @@ function initGridLaserHover({ panelSelector, gridSelector = null, bindToken }) {
   panel.addEventListener('pointerenter', updateLaser, { passive: true });
   panel.addEventListener('pointermove', updateLaser, { passive: true });
   panel.addEventListener('pointerleave', hideLaser, { passive: true });
+
+  return () => {
+    panel.removeEventListener('pointerenter', updateLaser);
+    panel.removeEventListener('pointermove', updateLaser);
+    panel.removeEventListener('pointerleave', hideLaser);
+    hideLaser();
+    if (bindToken) {
+      delete panel.dataset[bindToken];
+    }
+  };
 }
 
 // Pointer-driven dual cross-lines with delayed ghost trail (Figma node 476:11902).
 function initHeroGridLaserHover() {
-  initGridLaserHover({
+  return initGridLaserHover({
     panelSelector: '.hero-section__panel',
     gridSelector: '.hero-section__grid-bg',
     bindToken: 'motionLaserHeroBound'
@@ -1270,7 +1325,7 @@ function initHeroGridLaserHover() {
 
 // Reuse Hero laser-grid interaction for How v2 diagram grid.
 function initHowV2GridLaserHover() {
-  initGridLaserHover({
+  return initGridLaserHover({
     panelSelector: '.how-v2__diagram',
     gridSelector: '.how-v2__diagram-grid',
     bindToken: 'motionLaserHowBound'
@@ -1279,7 +1334,7 @@ function initHowV2GridLaserHover() {
 
 // Reuse Hero laser-grid interaction for Developers intro grid.
 function initDevelopersGridLaserHover() {
-  initGridLaserHover({
+  return initGridLaserHover({
     panelSelector: '.developers-section__intro',
     bindToken: 'motionLaserDevelopersBound'
   });
@@ -1641,12 +1696,13 @@ function initHeroMetricsCarousel() {
 // Shared interactive motion for buttons and controls, including the BUILD scramble treatment.
 function initInteractiveHoverStates() {
   if (prefersReducedMotion) {
-    return;
+    return () => {};
   }
   if (window[MOTION_HOVER_BIND_FLAG]) {
-    return;
+    return () => {};
   }
   window[MOTION_HOVER_BIND_FLAG] = true;
+  const boundElements = [];
 
   const scrambleStateMap = new WeakMap();
   const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -1765,6 +1821,9 @@ function initInteractiveHoverStates() {
     }
 
     const pointerEnter = () => {
+      if (prefersReducedMotion) {
+        return;
+      }
       const nextMotion = getMotion();
       if ('disabled' in element && element.disabled) {
         return;
@@ -1802,14 +1861,24 @@ function initInteractiveHoverStates() {
 
     element.addEventListener('mouseenter', pointerEnter);
     element.addEventListener('mouseleave', pointerLeave);
+    boundElements.push({ element, pointerEnter, pointerLeave });
   });
+
+  return () => {
+    boundElements.forEach(({ element, pointerEnter, pointerLeave }) => {
+      element.removeEventListener('mouseenter', pointerEnter);
+      element.removeEventListener('mouseleave', pointerLeave);
+      delete element.dataset.motionHoverBound;
+    });
+    window[MOTION_HOVER_BIND_FLAG] = false;
+  };
 }
 
 function initCustomCursor() {
   const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
   if (hasCoarsePointer || !document.body || window[MOTION_CURSOR_BIND_FLAG]) {
-    return;
+    return () => {};
   }
   window[MOTION_CURSOR_BIND_FLAG] = true;
 
@@ -1917,22 +1986,38 @@ function initCustomCursor() {
     ringPulseB.play();
   };
 
+  const onPointerLeave = () => alphaTo(0);
+  const onWindowBlur = () => alphaTo(0);
+  const onPointerEnter = (event) => {
+    move(event);
+    alphaTo(1);
+  };
+
   window.addEventListener('pointermove', move, { passive: true });
   window.addEventListener('pointerdown', onPress, { passive: true });
   window.addEventListener('pointerup', onRelease, { passive: true });
   window.addEventListener('pointercancel', onRelease, { passive: true });
-  window.addEventListener('pointerleave', () => alphaTo(0), { passive: true });
-  window.addEventListener('blur', () => alphaTo(0), { passive: true });
+  window.addEventListener('pointerleave', onPointerLeave, { passive: true });
+  window.addEventListener('blur', onWindowBlur, { passive: true });
 
   // Ensure cursor is visible even before first movement after tab focus.
-  window.addEventListener(
-    'pointerenter',
-    (event) => {
-      move(event);
-      alphaTo(1);
-    },
-    { passive: true }
-  );
+  window.addEventListener('pointerenter', onPointerEnter, { passive: true });
+
+  return () => {
+    window.removeEventListener('pointermove', move);
+    window.removeEventListener('pointerdown', onPress);
+    window.removeEventListener('pointerup', onRelease);
+    window.removeEventListener('pointercancel', onRelease);
+    window.removeEventListener('pointerleave', onPointerLeave);
+    window.removeEventListener('blur', onWindowBlur);
+    window.removeEventListener('pointerenter', onPointerEnter);
+    ringPulseA.kill();
+    ringPulseB.kill();
+    corePulse.kill();
+    cursor.remove();
+    document.body.classList.remove('has-custom-cursor', 'is-hero-laser-cursor');
+    window[MOTION_CURSOR_BIND_FLAG] = false;
+  };
 }
 
 // One base motion system for the whole page.
@@ -1946,7 +2031,7 @@ async function initMotionSystem() {
     await runInitialPreloader(null);
     mapRevealUtilities();
     setReducedMotionState();
-    initNavbarMotion(null);
+    registerMotionCleanup(initNavbarMotion(null));
     initHowLayerStackReveal({ reduced: true });
     return;
   }
@@ -1955,7 +2040,9 @@ async function initMotionSystem() {
     ignoreMobileResize: true
   });
 
-  const lenis = initLenis();
+  const lenisRuntime = initLenis();
+  const lenis = lenisRuntime?.lenis ?? null;
+  registerMotionCleanup(lenisRuntime?.destroy);
   prepareHeroIntroState();
   await runInitialPreloader(lenis);
   initHeroTimeline();
@@ -1966,18 +2053,19 @@ async function initMotionSystem() {
   initHowV2StatsReveal();
   initHowV2PipelineDashFlow();
   initSecurityMetricCounter();
-  initNavbarMotion(lenis);
+  registerMotionCleanup(initNavbarMotion(lenis));
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
+  registerMotionCleanup(destroyHeroMetricsCarousel);
   createRevealSystem();
   initSectionLabelChevronMotion();
   initSystemNodeApgImpulseFlow();
   initHowLayerStackReveal();
   initHowSystemNodeEllipsesFlow();
-  initHeroGridLaserHover();
-  initHowV2GridLaserHover();
-  initDevelopersGridLaserHover();
-  initInteractiveHoverStates();
-  initCustomCursor();
+  registerMotionCleanup(initHeroGridLaserHover());
+  registerMotionCleanup(initHowV2GridLaserHover());
+  registerMotionCleanup(initDevelopersGridLaserHover());
+  registerMotionCleanup(initInteractiveHoverStates());
+  registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
