@@ -5,7 +5,8 @@ import Lenis from 'https://cdn.jsdelivr.net/npm/lenis@1.3.11/+esm';
 // Base motion stack: GSAP + ScrollTrigger + Lenis.
 gsap.registerPlugin(ScrollTrigger);
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+let prefersReducedMotion = reducedMotionMedia.matches;
 const mobileViewport = window.matchMedia('(max-width: 767px)');
 const isMobileViewport = () => mobileViewport.matches;
 const MOTION_BOOT_FLAG = '__apMotionBooted';
@@ -24,12 +25,37 @@ const isMotionDisabled = (element) =>
       (element.matches?.('[data-motion="off"]') || element.closest?.('[data-motion="off"]'))
   );
 
+const readMotionToken = (tokenName, fallback) => {
+  const rawValue = rootStyles.getPropertyValue(tokenName).trim();
+  const parsedValue = Number.parseFloat(rawValue);
+  return Number.isFinite(parsedValue) ? parsedValue : fallback;
+};
+
 const getMotion = () => ({
-  duration: isMobileViewport() ? 0.5 : 0.65,
-  distance: isMobileViewport() ? 18 : 28,
-  scaleStart: isMobileViewport() ? 0.985 : 0.965,
+  duration: isMobileViewport()
+    ? readMotionToken('--motion-duration-reveal-mobile', 0.5)
+    : readMotionToken('--motion-duration-reveal-desktop', 0.65),
+  distance: isMobileViewport()
+    ? readMotionToken('--motion-distance-reveal-mobile', 18)
+    : readMotionToken('--motion-distance-reveal-desktop', 28),
+  scaleStart: isMobileViewport()
+    ? readMotionToken('--motion-scale-start-mobile', 0.985)
+    : readMotionToken('--motion-scale-start-desktop', 0.965),
+  hoverDuration: readMotionToken('--motion-duration-hover', 0.5),
+  buttonScale: readMotionToken('--motion-scale-button', 1),
   ease: 'power3.out'
 });
+
+const handleReducedMotionChange = (event) => {
+  prefersReducedMotion = event.matches;
+  window.location.reload();
+};
+
+if (typeof reducedMotionMedia.addEventListener === 'function') {
+  reducedMotionMedia.addEventListener('change', handleReducedMotionChange);
+} else if (typeof reducedMotionMedia.addListener === 'function') {
+  reducedMotionMedia.addListener(handleReducedMotionChange);
+}
 
 const heroSection = document.querySelector('.hero-section');
 const header = document.querySelector('.site-header-shell');
@@ -764,6 +790,7 @@ function initSecurityMetricCounter() {
 
   const state = { value: 10 };
   let played = false;
+  let renderedValue = 10;
 
   gsap.set(accent, {
     filter: 'blur(1.5px)',
@@ -773,7 +800,7 @@ function initSecurityMetricCounter() {
 
   ScrollTrigger.create({
     trigger: metric,
-    start: 'top 82%',
+    start: isMobileViewport() ? 'top 72%' : 'top 68%',
     once: true,
     onEnter: () => {
       if (played) {
@@ -781,17 +808,20 @@ function initSecurityMetricCounter() {
       }
       played = true;
 
-      const timeline = gsap.timeline({ delay: 0.22 });
+      const timeline = gsap.timeline({ delay: isMobileViewport() ? 0.2 : 0.28 });
 
       timeline.to(state, {
         value: 5,
-        duration: isMobileViewport() ? 1.8 : 2.2,
-        ease: 'power1.out',
+        duration: isMobileViewport() ? 2.2 : 2.7,
+        ease: 'power2.out',
+        snap: { value: 1 },
         onUpdate: () => {
-          accent.textContent = `${state.value.toFixed(1)}x`;
-        },
-        onComplete: () => {
-          accent.textContent = '5x';
+          const nextValue = Math.round(state.value);
+          if (nextValue === renderedValue) {
+            return;
+          }
+          renderedValue = nextValue;
+          accent.textContent = `${nextValue}x`;
         }
       });
 
@@ -1505,6 +1535,8 @@ function initHeroMetricsCarousel() {
 
   let tween = null;
   let resizeFrame = 0;
+  let resizeTimeout = 0;
+  let resizeObserver = null;
   let isHovered = false;
   let destroyed = false;
   const playbackState = { value: 1 };
@@ -1576,20 +1608,32 @@ function initHeroMetricsCarousel() {
     if (destroyed) {
       return;
     }
-    cancelAnimationFrame(resizeFrame);
-    resizeFrame = window.requestAnimationFrame(applyMarqueeLayout);
+    window.clearTimeout(resizeTimeout);
+    resizeTimeout = window.setTimeout(() => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(applyMarqueeLayout);
+    }, 96);
   };
 
   metricsWrap.addEventListener('mouseenter', handleMouseEnter);
   metricsWrap.addEventListener('mouseleave', handleMouseLeave);
   window.addEventListener('resize', handleResize, { passive: true });
 
+  if (typeof window.ResizeObserver === 'function') {
+    resizeObserver = new ResizeObserver(() => {
+      handleResize();
+    });
+    resizeObserver.observe(metricsWrap);
+  }
+
   return () => {
     if (destroyed) {
       return;
     }
     destroyed = true;
+    window.clearTimeout(resizeTimeout);
     cancelAnimationFrame(resizeFrame);
+    resizeObserver?.disconnect();
     window.removeEventListener('resize', handleResize);
     metricsWrap.removeEventListener('mouseenter', handleMouseEnter);
     metricsWrap.removeEventListener('mouseleave', handleMouseLeave);
