@@ -790,7 +790,6 @@ function initSecurityMetricCounter() {
 
   const state = { value: 10 };
   let played = false;
-  let renderedValue = 10;
 
   gsap.set(accent, {
     filter: 'blur(1.5px)',
@@ -800,7 +799,7 @@ function initSecurityMetricCounter() {
 
   ScrollTrigger.create({
     trigger: metric,
-    start: isMobileViewport() ? 'top 72%' : 'top 68%',
+    start: 'top 82%',
     once: true,
     onEnter: () => {
       if (played) {
@@ -808,20 +807,17 @@ function initSecurityMetricCounter() {
       }
       played = true;
 
-      const timeline = gsap.timeline({ delay: isMobileViewport() ? 0.2 : 0.28 });
+      const timeline = gsap.timeline({ delay: 0.22 });
 
       timeline.to(state, {
         value: 5,
-        duration: isMobileViewport() ? 2.2 : 2.7,
-        ease: 'power2.out',
-        snap: { value: 1 },
+        duration: isMobileViewport() ? 1.8 : 2.2,
+        ease: 'power1.out',
         onUpdate: () => {
-          const nextValue = Math.round(state.value);
-          if (nextValue === renderedValue) {
-            return;
-          }
-          renderedValue = nextValue;
-          accent.textContent = `${nextValue}x`;
+          accent.textContent = `${state.value.toFixed(1)}x`;
+        },
+        onComplete: () => {
+          accent.textContent = '5x';
         }
       });
 
