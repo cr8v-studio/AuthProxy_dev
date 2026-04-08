@@ -24,6 +24,7 @@
   - `AUTHPROXY-SKILL.md` — project execution standard (design-to-code/motion/safe-batches)
   - `component-inventory.md` — active/reserve policy и инвентарь
   - `motion-smoke-check.md` — post-preloader motion-checklist
+  - `BASELINE-VISUAL-2026-04-08.md` — baseline freeze/check matrix for Capabilities/Security/Developers
   - `responsive-playbook.md` — адаптивные правила
   - `archive/` — исторические документы (не runtime-истина)
 - `.github/workflows/deploy-pages.yml` — автодеплой в GitHub Pages
@@ -80,6 +81,16 @@ git push origin main
 - Проект без сборки и зависимостей.
 - Все runtime-ссылки на HTML/CSS/JS/asssets должны оставаться валидными после рефакторинга.
 - Сайт использует Google Fonts и ESM-зависимости с jsDelivr для анимаций.
+
+## Motion smoke-check
+
+Быстрая статическая проверка motion-связности:
+
+```bash
+python3 scripts/motion_smoke_check.py
+```
+
+Ручной post-preloader checklist: `docs/motion-smoke-check.md`.
 
 ## Safe-Only Refactor Guardrails
 
