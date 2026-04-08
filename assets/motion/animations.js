@@ -752,7 +752,7 @@ function initHowV2StatsReveal() {
 }
 
 // How v2 pipeline arrows: chevron-flow with phased right arrow delay.
-function initHowV2PipelineDashFlow() {
+function initHowV2PipelineChevronFlow() {
   const pipeline = document.querySelector('.how-v2__pipeline');
   const arrows = gsap.utils.toArray('.how-v2__pipeline-arrow', pipeline);
 
@@ -2103,7 +2103,7 @@ async function initMotionSystem() {
   initSolutionCardsMotion();
   initSolutionSummaryMotion();
   initHowV2StatsReveal();
-  initHowV2PipelineDashFlow();
+  initHowV2PipelineChevronFlow();
   initSecurityMetricCounter();
   registerMotionCleanup(initNavbarMotion(lenis));
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();

@@ -16,7 +16,7 @@
   - `assets/brand/` — логотипы и favicon
   - `assets/ui/header/` — corner-ассеты header controls
   - `assets/ui/icons/` — системные UI-иконки
-  - `assets/sections/` — ассеты, привязанные к секциям (`hero`, `solution`, `how`)
+  - `assets/sections/` — ассеты, привязанные к секциям (`hero`, `solution`, `how`, `capabilities`, `security`, `developers`)
   - `assets/illustrations/system/` — иллюстрации system nodes
   - `assets/motion/animations.js` — scroll/motion слой
 - `docs/` — рабочая документация для handoff
@@ -81,6 +81,7 @@ git push origin main
 - Проект без сборки и зависимостей.
 - Все runtime-ссылки на HTML/CSS/JS/asssets должны оставаться валидными после рефакторинга.
 - Сайт использует Google Fonts и ESM-зависимости с jsDelivr для анимаций.
+- Pipeline в секции How использует горизонтальный chevron-flow (GSAP), синхронизированный с current motion baseline.
 
 ## Motion smoke-check
 
