@@ -35,7 +35,7 @@ REQUIRED_ANIMATION_CALLS = [
     "initHeroMetricsCarousel()",
     "initSolutionCardsMotion()",
     "initHowV2StatsReveal()",
-    "initHowV2PipelineDashFlow()",
+    "initHowV2PipelineChevronFlow()",
     "initNavbarMotion(",
 ]
 
