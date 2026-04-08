@@ -742,14 +742,29 @@ function initHowV2PipelineDashFlow() {
       layer = document.createElement('span');
       layer.className = 'how-v2__pipeline-motion';
       layer.setAttribute('aria-hidden', 'true');
+      const chevronIcon = `
+        <svg class="how-v2__pipeline-chevron-icon" viewBox="373 187 15 15" aria-hidden="true" focusable="false">
+          <path d="M374.795 188.316a1.124 1.124 0 1 0-1.59 1.591l6 6c.435.435 1.14.44 1.581.01l6-5.854a1.126 1.126 0 0 0-1.572-1.611l-5.204 5.078-5.215-5.214Z"></path>
+        </svg>
+      `;
       layer.innerHTML = `
-        <span class="how-v2__pipeline-chevrons">
-          <span class="how-v2__pipeline-chevron"></span>
-          <span class="how-v2__pipeline-chevron"></span>
-          <span class="how-v2__pipeline-chevron"></span>
-          <span class="how-v2__pipeline-chevron"></span>
-          <span class="how-v2__pipeline-chevron"></span>
-          <span class="how-v2__pipeline-chevron"></span>
+        <span class="how-v2__pipeline-track">
+          <span class="how-v2__pipeline-chevrons">
+            <span class="how-v2__pipeline-chevron is-opacity-3">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-7">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-3">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-7">${chevronIcon}</span>
+          </span>
+          <span class="how-v2__pipeline-chevrons" aria-hidden="true">
+            <span class="how-v2__pipeline-chevron is-opacity-3">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-7">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-3">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="how-v2__pipeline-chevron is-opacity-7">${chevronIcon}</span>
+          </span>
         </span>
       `;
       arrow.append(layer);
@@ -760,23 +775,21 @@ function initHowV2PipelineDashFlow() {
 
   const buildChevronFlow = (arrow, delay = 0) => {
     const layer = createLayer(arrow);
-    const chevrons = layer.querySelector('.how-v2__pipeline-chevrons');
-    const firstChevron = layer.querySelector('.how-v2__pipeline-chevron');
+    const track = layer.querySelector('.how-v2__pipeline-track');
+    const firstGroup = layer.querySelector('.how-v2__pipeline-chevrons');
 
-    if (!chevrons || !firstChevron) {
+    if (!track || !firstGroup) {
       return;
     }
 
-    const chevronWidth = firstChevron.getBoundingClientRect().width || 9;
-    const chevronGap = parseFloat(getComputedStyle(chevrons).gap) || 10;
-    const cycleShift = chevronWidth + chevronGap;
+    const cycleShift = Math.round(firstGroup.getBoundingClientRect().width) || 120;
 
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
-    gsap.set(chevrons, { x: 0 });
+    gsap.set(track, { x: 0 });
 
-    const tween = gsap.to(chevrons, {
-      x: cycleShift,
+    const tween = gsap.to(track, {
+      x: -cycleShift,
       duration: flowDuration,
       ease: 'none',
       repeat: -1,
