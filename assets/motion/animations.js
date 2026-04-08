@@ -771,7 +771,7 @@ function initHowV2PipelineDashFlow() {
     gsap.set(chevrons, { x: 0 });
 
     const tween = gsap.to(chevrons, {
-      x: 14,
+      x: 18,
       duration: flowDuration,
       ease: 'none',
       repeat: -1,
