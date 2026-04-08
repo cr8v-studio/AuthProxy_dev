@@ -2177,7 +2177,6 @@ a {
 }
 
 .capabilities-section .section-label-bar::after,
-.security-section .section-label-bar::after,
 .developers-section .section-label-bar::after {
   content: "";
   position: absolute;
@@ -2186,6 +2185,17 @@ a {
   width: 100vw;
   height: 1px;
   background: var(--site-section-border);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.security-section .section-label-bar::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  width: 100vw;
+  border-bottom: 1px solid var(--site-section-border);
   transform: translateX(-50%);
   pointer-events: none;
 }

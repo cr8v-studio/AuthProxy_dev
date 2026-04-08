@@ -227,7 +227,7 @@ if (securitySlider) {
     });
 
     const slideWidth = slides[0].getBoundingClientRect().width;
-    const offset = -(slideWidth * current);
+    const offset = -Math.round(slideWidth * current);
     track.style.transform = `translate3d(${offset}px, 0, 0)`;
 
     const activeDotIndex = Math.min(current, Math.max(0, dots.length - 1));
