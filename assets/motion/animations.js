@@ -64,6 +64,39 @@ const getMotion = () => ({
   ease: 'power3.out'
 });
 
+const HOW_SECURITY_MOTION = {
+  pipeline: {
+    phaseDelay: { mobile: 0.12, desktop: 0.15 },
+    duration: { mobile: 1.9, desktop: 2.3 },
+    layerAlpha: { active: 1, idle: 0.55 },
+    intensityTransition: {
+      active: { duration: 0.42, ease: 'power2.out' },
+      idle: { duration: 0.5, ease: 'power2.out' }
+    },
+    timescale: { active: 1, idle: 0.7 },
+    timescaleTransition: {
+      active: { duration: 0.45, ease: 'power2.out' },
+      idle: { duration: 0.55, ease: 'power2.out' }
+    }
+  },
+  securityMetric: {
+    startValue: 10,
+    endValue: 5,
+    timelineDelay: 0.22,
+    counterDuration: { mobile: 1.8, desktop: 2.2 },
+    blurDuration: { mobile: 1.2, desktop: 1.35 },
+    counterEase: 'power1.out',
+    blurEase: 'power1.out',
+    initialBlur: 'blur(1.5px)',
+    finalBlur: 'blur(0px)',
+    initialAlpha: 0.78,
+    finalAlpha: 1
+  }
+};
+
+const getResponsiveMotionValue = (valueMap) =>
+  isMobileViewport() ? valueMap.mobile : valueMap.desktop;
+
 const handleReducedMotionChange = (event) => {
   prefersReducedMotion = event.matches;
   cleanupMotionRuntime();
@@ -727,11 +760,10 @@ function initHowV2PipelineDashFlow() {
     return;
   }
 
-  const isMobile = isMobileViewport();
-  const rightPhaseDelay = isMobile ? 0.12 : 0.15;
-  const flowDuration = isMobile ? 1.9 : 2.3;
-  const activeOpacity = 1;
-  const idleOpacity = 0.55;
+  const rightPhaseDelay = getResponsiveMotionValue(HOW_SECURITY_MOTION.pipeline.phaseDelay);
+  const flowDuration = getResponsiveMotionValue(HOW_SECURITY_MOTION.pipeline.duration);
+  const activeOpacity = HOW_SECURITY_MOTION.pipeline.layerAlpha.active;
+  const idleOpacity = HOW_SECURITY_MOTION.pipeline.layerAlpha.idle;
   const animatedLayers = [];
   const animatedTweens = [];
 
@@ -809,14 +841,14 @@ function initHowV2PipelineDashFlow() {
   const setActiveIntensity = () => {
     gsap.to(animatedLayers, {
       autoAlpha: activeOpacity,
-      duration: 0.42,
-      ease: 'power2.out',
+      duration: HOW_SECURITY_MOTION.pipeline.intensityTransition.active.duration,
+      ease: HOW_SECURITY_MOTION.pipeline.intensityTransition.active.ease,
       overwrite: true
     });
     gsap.to(animatedTweens, {
-      timeScale: 1,
-      duration: 0.45,
-      ease: 'power2.out',
+      timeScale: HOW_SECURITY_MOTION.pipeline.timescale.active,
+      duration: HOW_SECURITY_MOTION.pipeline.timescaleTransition.active.duration,
+      ease: HOW_SECURITY_MOTION.pipeline.timescaleTransition.active.ease,
       overwrite: true
     });
   };
@@ -824,14 +856,14 @@ function initHowV2PipelineDashFlow() {
   const setIdleIntensity = () => {
     gsap.to(animatedLayers, {
       autoAlpha: idleOpacity,
-      duration: 0.5,
-      ease: 'power2.out',
+      duration: HOW_SECURITY_MOTION.pipeline.intensityTransition.idle.duration,
+      ease: HOW_SECURITY_MOTION.pipeline.intensityTransition.idle.ease,
       overwrite: true
     });
     gsap.to(animatedTweens, {
-      timeScale: 0.7,
-      duration: 0.55,
-      ease: 'power2.out',
+      timeScale: HOW_SECURITY_MOTION.pipeline.timescale.idle,
+      duration: HOW_SECURITY_MOTION.pipeline.timescaleTransition.idle.duration,
+      ease: HOW_SECURITY_MOTION.pipeline.timescaleTransition.idle.ease,
       overwrite: true
     });
   };
@@ -857,14 +889,14 @@ function initSecurityMetricCounter() {
     return;
   }
 
-  const state = { value: 10 };
+  const state = { value: HOW_SECURITY_MOTION.securityMetric.startValue };
   let played = false;
 
   gsap.set(accent, {
-    filter: 'blur(1.5px)',
-    autoAlpha: 0.78
+    filter: HOW_SECURITY_MOTION.securityMetric.initialBlur,
+    autoAlpha: HOW_SECURITY_MOTION.securityMetric.initialAlpha
   });
-  accent.textContent = '10x';
+  accent.textContent = `${HOW_SECURITY_MOTION.securityMetric.startValue}x`;
 
   ScrollTrigger.create({
     trigger: metric,
@@ -876,27 +908,27 @@ function initSecurityMetricCounter() {
       }
       played = true;
 
-      const timeline = gsap.timeline({ delay: 0.22 });
+      const timeline = gsap.timeline({ delay: HOW_SECURITY_MOTION.securityMetric.timelineDelay });
 
       timeline.to(state, {
-        value: 5,
-        duration: isMobileViewport() ? 1.8 : 2.2,
-        ease: 'power1.out',
+        value: HOW_SECURITY_MOTION.securityMetric.endValue,
+        duration: getResponsiveMotionValue(HOW_SECURITY_MOTION.securityMetric.counterDuration),
+        ease: HOW_SECURITY_MOTION.securityMetric.counterEase,
         onUpdate: () => {
           accent.textContent = `${state.value.toFixed(1)}x`;
         },
         onComplete: () => {
-          accent.textContent = '5x';
+          accent.textContent = `${HOW_SECURITY_MOTION.securityMetric.endValue}x`;
         }
       });
 
       timeline.to(
         accent,
         {
-          filter: 'blur(0px)',
-          autoAlpha: 1,
-          duration: isMobileViewport() ? 1.2 : 1.35,
-          ease: 'power1.out'
+          filter: HOW_SECURITY_MOTION.securityMetric.finalBlur,
+          autoAlpha: HOW_SECURITY_MOTION.securityMetric.finalAlpha,
+          duration: getResponsiveMotionValue(HOW_SECURITY_MOTION.securityMetric.blurDuration),
+          ease: HOW_SECURITY_MOTION.securityMetric.blurEase
         },
         0
       );
@@ -1809,7 +1841,7 @@ function initInteractiveHoverStates() {
   };
 
   const interactiveElements = document.querySelectorAll(
-    '.site-header-button-v1, .site-header-link-m2, .site-header-dropdown'
+    '.site-header-button-v1, .site-header-link-m2'
   );
 
   interactiveElements.forEach((element) => {
@@ -1820,7 +1852,6 @@ function initInteractiveHoverStates() {
 
     const isBuildButton = element.classList.contains('site-header-link-m2');
     const isButtonV1 = element.classList.contains('site-header-button-v1');
-    const isDropdownTrigger = element.classList.contains('site-header-dropdown');
     const buildLabel = isBuildButton ? element.querySelector('.site-header-link-m2__label') : null;
     const buttonV1Label = isButtonV1 ? element.querySelector('.site-header-button-v1__label') : null;
     const scrambleTarget = isBuildButton ? buildLabel : buttonV1Label;
@@ -1860,14 +1891,8 @@ function initInteractiveHoverStates() {
         ? isMobileViewport()
           ? 1.008
           : 1.012
-        : isDropdownTrigger
-          ? 1
-          : (nextMotion.buttonScale ?? 1);
-      const targetY = isBuildButton || isButtonV1
-        ? 0
-        : isDropdownTrigger
-          ? 0
-          : 0;
+        : (nextMotion.buttonScale ?? 1);
+      const targetY = 0;
 
       scaleTo(targetScale);
       yTo(targetY);
