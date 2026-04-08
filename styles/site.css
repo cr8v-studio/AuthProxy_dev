@@ -1110,14 +1110,22 @@ a {
   margin: 0;
 }
 
-#how .section-label-bar {
+/* Shared section-label bar shell used by Solution / How / Capabilities / Security / Developers. */
+.solution-section .section-label-bar,
+#how .section-label-bar,
+.capabilities-section .section-label-bar,
+.security-section .section-label-bar,
+.developers-section .section-label-bar {
   position: relative;
-  width: 100%;
-  margin-inline: 0;
   min-height: 149px;
   padding-top: var(--space-120);
   display: flex;
   align-items: flex-end;
+}
+
+#how .section-label-bar {
+  width: 100%;
+  margin-inline: 0;
   border-bottom: 1px solid var(--site-section-border);
 }
 
@@ -1133,7 +1141,11 @@ a {
   z-index: 1;
 }
 
-#how .section-label {
+.solution-section .section-label,
+#how .section-label,
+.capabilities-section .section-label,
+.security-section .section-label,
+.developers-section .section-label {
   width: 100%;
   max-width: none;
   min-height: auto;
@@ -2098,11 +2110,6 @@ a {
 }
 
 .solution-section .section-label-bar {
-  position: relative;
-  min-height: 149px;
-  padding-top: var(--space-120);
-  display: flex;
-  align-items: flex-end;
   border-inline: 1px solid var(--site-section-border);
   border-bottom: 0;
 }
@@ -2134,11 +2141,6 @@ a {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   max-width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
-  position: relative;
-  min-height: 149px;
-  padding-top: var(--space-120);
-  display: flex;
-  align-items: flex-end;
   border-inline: 1px solid var(--site-section-border);
   border-bottom: 0;
 }
@@ -2165,27 +2167,6 @@ a {
   border-bottom: 1px solid var(--site-section-border);
   transform: translateX(-50%);
   pointer-events: none;
-}
-
-.capabilities-section .section-label,
-.security-section .section-label,
-.developers-section .section-label {
-  width: 100%;
-  max-width: none;
-  min-height: auto;
-  margin-inline: 0;
-  padding: var(--space-12) var(--space-48);
-  gap: var(--space-8);
-  border-bottom: 0;
-}
-
-.capabilities-section__label-chip {
-  display: inline-flex;
-  align-items: center;
-  padding-inline: 4px;
-  color: var(--figma-color-off-white-base);
-  background: var(--figma-color-dark-base);
-  text-transform: uppercase;
 }
 
 .security-section {
@@ -3033,7 +3014,7 @@ a {
 .solution-section__label-chip {
   display: inline-flex;
   align-items: center;
-  padding-inline: 4px;
+  padding-inline: var(--space-4);
   color: var(--figma-color-off-white-base);
   background: var(--figma-color-dark-base);
   text-transform: uppercase;
