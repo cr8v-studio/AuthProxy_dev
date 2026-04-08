@@ -47,6 +47,10 @@
 
 Все header controls используют общий токенизированный control-layer для typography, hover и corner-pattern состояний.
 
+## Safe Cleanup Applied
+- Удалён orphan class-маркер `capabilities-section__label-chip` из runtime-разметки (используется единый `.section-label__chip`).
+- Пайплайн-анимация How использует актуальный `chevron-flow` naming в motion runtime (без legacy `dash` semantics).
+
 ## Hero Structure
 - `.hero-section__viewport`: desktop layout-shell для контролируемой высоты hero.
 - `.hero-section__frame`: внешний контейнер hero на ширину страницы.
