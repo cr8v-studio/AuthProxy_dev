@@ -729,7 +729,7 @@ function initHowV2PipelineDashFlow() {
 
   const isMobile = isMobileViewport();
   const rightPhaseDelay = isMobile ? 0.12 : 0.15;
-  const flowDuration = isMobile ? 1.15 : 1.35;
+  const flowDuration = isMobile ? 1.45 : 1.75;
   const activeOpacity = 1;
   const idleOpacity = 0.55;
   const animatedLayers = [];
