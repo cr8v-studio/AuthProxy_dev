@@ -1258,13 +1258,13 @@ a {
 }
 
 .how-v2__pipeline-arrow {
-  --how-pipeline-chevron-size: 9px;
-  --how-pipeline-chevron-gap: 10px;
+  --how-pipeline-chevron-size: 12px;
+  --how-pipeline-chevron-gap: 8px;
   position: relative;
   display: block;
   width: 100%;
   min-width: 110px;
-  height: 16px;
+  height: 18px;
   background: none;
   overflow: hidden;
 }
@@ -1274,37 +1274,53 @@ a {
   inset: 0 8px;
   pointer-events: none;
   z-index: 2;
+  overflow: hidden;
 }
 
-.how-v2__pipeline-chevrons {
+.how-v2__pipeline-track {
   position: absolute;
   left: 0;
   top: 50%;
   display: inline-flex;
   align-items: center;
-  gap: var(--how-pipeline-chevron-gap);
+  width: max-content;
   transform: translateY(-50%);
   will-change: transform, opacity;
 }
 
-.how-v2__pipeline-chevron {
-  width: var(--how-pipeline-chevron-size);
-  height: var(--how-pipeline-chevron-size);
-  border-right: 2px solid rgb(237 88 90 / 0.7);
-  border-bottom: 2px solid rgb(237 88 90 / 0.7);
-  transform: rotate(-45deg);
-  transform-origin: center;
+.how-v2__pipeline-chevrons {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--how-pipeline-chevron-gap);
+  padding-right: var(--how-pipeline-chevron-gap);
 }
 
-.how-v2__pipeline-chevron:nth-child(3n + 1) {
+.how-v2__pipeline-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--how-pipeline-chevron-size);
+  height: var(--how-pipeline-chevron-size);
+  color: rgb(237 88 90);
+}
+
+.how-v2__pipeline-chevron-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: rotate(-90deg);
+  fill: currentColor;
+}
+
+.how-v2__pipeline-chevron.is-opacity-3 {
   opacity: 0.3;
 }
 
-.how-v2__pipeline-chevron:nth-child(3n + 2) {
+.how-v2__pipeline-chevron.is-opacity-5 {
   opacity: 0.5;
 }
 
-.how-v2__pipeline-chevron:nth-child(3n + 3) {
+.how-v2__pipeline-chevron.is-opacity-7 {
   opacity: 0.7;
 }
 
@@ -4150,8 +4166,8 @@ a {
   }
 
   .how-v2__pipeline-arrow {
-    --how-pipeline-chevron-size: 8px;
-    --how-pipeline-chevron-gap: 8px;
+    --how-pipeline-chevron-size: 11px;
+    --how-pipeline-chevron-gap: 7px;
     width: 120px;
   }
 
