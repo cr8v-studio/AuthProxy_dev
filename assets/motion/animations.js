@@ -769,7 +769,9 @@ function initHowV2PipelineDashFlow() {
 
     const chevronWidth = firstChevron.getBoundingClientRect().width || 9;
     const chevronGap = parseFloat(getComputedStyle(chevrons).gap) || 10;
-    const cycleShift = chevronWidth + chevronGap;
+    // Opacity cadence repeats every 3 chevrons (0.3 / 0.5 / 0.7),
+    // so the loop must advance by a full 3-chevron period to avoid seam jitter.
+    const cycleShift = (chevronWidth + chevronGap) * 3;
 
     animatedLayers.push(layer);
     gsap.set(layer, { autoAlpha: 0.96 });
