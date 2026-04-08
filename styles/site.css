@@ -1269,9 +1269,24 @@ a {
 
 .how-v2__pipeline-motion {
   position: absolute;
-  inset: 0 4px;
+  inset: 0;
   pointer-events: none;
   z-index: 2;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 8px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 8px,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
 }
 
 .how-v2__pipeline-chevrons {
