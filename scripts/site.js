@@ -86,7 +86,8 @@ document.addEventListener('keydown', (event) => {
 
 const capabilitiesPanel = document.querySelector('.capabilities-section__panel');
 
-if (capabilitiesPanel) {
+if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
+  capabilitiesPanel.dataset.tabsBound = '1';
   const tabs = Array.from(capabilitiesPanel.querySelectorAll('.capabilities-section__nav-item'));
   const titleEl = capabilitiesPanel.querySelector('.capabilities-section__detail-title');
   const descriptionEl = capabilitiesPanel.querySelector('.capabilities-section__detail-copy');
@@ -188,18 +189,24 @@ if (capabilitiesPanel) {
       }
       setActiveTab(tab);
       applyTabProfile(profile);
-      history.replaceState(null, '', `#${hash}`);
+      if (window.location.hash !== `#${hash}`) {
+        history.replaceState(null, '', `#${hash}`);
+      }
     });
   });
 
-  const activeTab = tabs.find((tab) => tab.classList.contains('is-active')) ?? tabs[0];
+  const hashTab =
+    tabs.find((tab) => tab.getAttribute('href')?.replace('#', '') === window.location.hash.replace('#', '')) ?? null;
+  const activeTab = hashTab ?? tabs.find((tab) => tab.classList.contains('is-active')) ?? tabs[0];
   const activeHash = activeTab?.getAttribute('href')?.replace('#', '') || 'authentication';
+  setActiveTab(activeTab);
   applyTabProfile(tabProfiles[activeHash] ?? tabProfiles.authentication);
 }
 
 const securitySlider = document.querySelector('[data-security-slider]');
 
-if (securitySlider) {
+if (securitySlider && securitySlider.dataset.sliderBound !== '1') {
+  securitySlider.dataset.sliderBound = '1';
   const viewport = securitySlider.querySelector('.security-slider__viewport');
   const track = securitySlider.querySelector('[data-security-slider-track]');
   const slides = Array.from(securitySlider.querySelectorAll('.security-slide'));
