@@ -21,6 +21,7 @@
   - `assets/motion/animations.js` — scroll/motion слой
 - `docs/` — рабочая документация для handoff
   - `LANDING-AUTHPROXY.md` — canonical content/spec
+  - `AUTHPROXY-SKILL.md` — project execution standard (design-to-code/motion/safe-batches)
   - `component-inventory.md` — active/reserve policy и инвентарь
   - `motion-smoke-check.md` — post-preloader motion-checklist
   - `responsive-playbook.md` — адаптивные правила
