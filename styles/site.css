@@ -1258,6 +1258,8 @@ a {
 }
 
 .how-v2__pipeline-arrow {
+  --how-pipeline-chevron-size: 9px;
+  --how-pipeline-chevron-gap: 10px;
   position: relative;
   display: block;
   width: 100%;
@@ -1269,9 +1271,21 @@ a {
 
 .how-v2__pipeline-motion {
   position: absolute;
-  inset: 0 4px;
+  inset: 0;
   pointer-events: none;
   z-index: 2;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(100% - 12px),
+    transparent 100%
+  );
 }
 
 .how-v2__pipeline-chevrons {
@@ -1280,14 +1294,14 @@ a {
   top: 50%;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--how-pipeline-chevron-gap);
   transform: translateY(-50%);
   will-change: transform, opacity;
 }
 
 .how-v2__pipeline-chevron {
-  width: 9px;
-  height: 9px;
+  width: var(--how-pipeline-chevron-size);
+  height: var(--how-pipeline-chevron-size);
   border-right: 2px solid rgb(237 88 90 / 0.7);
   border-bottom: 2px solid rgb(237 88 90 / 0.7);
   transform: rotate(-45deg);
@@ -4148,6 +4162,8 @@ a {
   }
 
   .how-v2__pipeline-arrow {
+    --how-pipeline-chevron-size: 8px;
+    --how-pipeline-chevron-gap: 8px;
     width: 120px;
   }
 
