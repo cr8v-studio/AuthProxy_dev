@@ -2532,12 +2532,12 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-inline: 1px solid var(--site-section-border);
-  border-bottom: 1px solid var(--site-section-border);
-  background-color: var(--figma-color-off-white-base);
+  border-inline: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  background-color: #f4f4f4;
   background-image:
-    linear-gradient(var(--site-section-border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--site-section-border) 1px, transparent 1px);
+    linear-gradient(#d7d7d7 1px, transparent 1px),
+    linear-gradient(90deg, #d7d7d7 1px, transparent 1px);
   background-size: 100px 100px;
   background-position: 0 99px, 99px 0;
 }
@@ -2555,7 +2555,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: var(--space-24);
-  background: var(--figma-color-off-white-base);
+  background: #f4f4f4;
 }
 
 .developers-section__title {
@@ -2564,7 +2564,7 @@ a {
   font-size: 59px;
   line-height: 59px;
   font-weight: 400;
-  color: var(--figma-color-dark-base);
+  color: #1f1f1f;
   text-align: center;
 }
 
@@ -2572,8 +2572,8 @@ a {
   display: inline-flex;
   width: fit-content;
   padding-inline: 0;
-  background: var(--figma-color-dark-base);
-  color: var(--figma-color-white-base);
+  background: #1f1f1f;
+  color: #f4f4f4;
   white-space: nowrap;
 }
 
@@ -2581,7 +2581,7 @@ a {
   margin: 0;
   width: min(100%, 700px);
   text-align: center;
-  color: var(--figma-color-dark-tint-2);
+  color: #595959;
   letter-spacing: 0.18px;
 }
 
