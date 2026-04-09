@@ -2670,15 +2670,6 @@ a {
   top: 24px;
 }
 
-/* Keep corner marks only on outer perimeter; inner vertical separators stay clean. */
-.developers-highlights__column--left .developers-highlight-card__corner--tr {
-  display: none;
-}
-
-.developers-highlights__column--right .developers-highlight-card__corner--bl {
-  display: none;
-}
-
 .developers-section__ship {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   min-height: 213px;
