@@ -2612,6 +2612,32 @@ a {
 .developers-highlights__center {
   position: relative;
   min-height: 369px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.developers-highlights__center::before {
+  content: '';
+  position: absolute;
+  inset: 15px 0;
+  background: url('../assets/sections/developers/dev-perspective-grid.svg') center / 100% 100% no-repeat;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.developers-highlights__center::after {
+  content: '';
+  position: absolute;
+  inset: 15px 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(244, 244, 244, 0) 0%,
+    rgba(244, 244, 244, 0.58) 68%,
+    rgba(244, 244, 244, 1) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
 }
 
 .developers-highlights__node {
@@ -2622,6 +2648,7 @@ a {
   height: 174px;
   transform: translate(-50%, -50%);
   display: block;
+  z-index: 3;
 }
 
 .developers-highlight-card {
