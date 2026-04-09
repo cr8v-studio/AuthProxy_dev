@@ -1399,6 +1399,141 @@ function initDevelopersGridLaserHover() {
   });
 }
 
+function initDevelopersCenterDashGridFlow() {
+  const center = document.querySelector('.developers-highlights__center');
+  if (!center || prefersReducedMotion) {
+    return () => {};
+  }
+
+  let overlay = center.querySelector('.developers-highlights__dash-grid');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'developers-highlights__dash-grid';
+    overlay.setAttribute('aria-hidden', 'true');
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'developers-highlights__dash-grid-svg');
+    overlay.append(svg);
+    center.append(overlay);
+  }
+
+  const svg = overlay.querySelector('.developers-highlights__dash-grid-svg');
+  if (!svg) {
+    return () => {};
+  }
+
+  let paths = [];
+  let tweenA = null;
+  let tweenB = null;
+
+  const buildGrid = () => {
+    const rect = overlay.getBoundingClientRect();
+    const width = Math.max(0, Math.round(rect.width));
+    const height = Math.max(0, Math.round(rect.height));
+    const step = 100;
+
+    if (width < 20 || height < 20) {
+      return;
+    }
+
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.textContent = '';
+
+    const localPaths = [];
+    const createPath = (d) => {
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('class', 'developers-highlights__dash-grid-line');
+      path.setAttribute('d', d);
+      svg.append(path);
+      localPaths.push(path);
+    };
+
+    for (let x = 0; x <= width; x += step) {
+      createPath(`M${x} 0V${height}`);
+    }
+
+    for (let y = 0; y <= height; y += step) {
+      createPath(`M0 ${y}H${width}`);
+    }
+
+    paths = localPaths;
+    gsap.set(paths, { strokeDashoffset: 0 });
+  };
+
+  const startFlow = () => {
+    if (!paths.length) {
+      return;
+    }
+
+    tweenA?.kill();
+    tweenB?.kill();
+
+    const evenPaths = paths.filter((_, index) => index % 2 === 0);
+    const oddPaths = paths.filter((_, index) => index % 2 === 1);
+
+    tweenA = gsap.to(evenPaths, {
+      strokeDashoffset: -8,
+      duration: isMobileViewport() ? 1.55 : 1.3,
+      repeat: -1,
+      ease: 'none'
+    });
+
+    tweenB = gsap.to(oddPaths, {
+      strokeDashoffset: 8,
+      duration: isMobileViewport() ? 1.55 : 1.3,
+      repeat: -1,
+      ease: 'none'
+    });
+  };
+
+  buildGrid();
+  startFlow();
+
+  const resizeObserver = new ResizeObserver(() => {
+    buildGrid();
+    startFlow();
+  });
+  resizeObserver.observe(overlay);
+
+  const trigger = ScrollTrigger.create({
+    trigger: center,
+    start: 'top 85%',
+    end: 'bottom 20%',
+    onEnter: () => {
+      tweenA?.play();
+      tweenB?.play();
+    },
+    onEnterBack: () => {
+      tweenA?.play();
+      tweenB?.play();
+    },
+    onLeave: () => {
+      tweenA?.pause();
+      tweenB?.pause();
+    },
+    onLeaveBack: () => {
+      tweenA?.pause();
+      tweenB?.pause();
+    }
+  });
+
+  if (trigger.isActive) {
+    tweenA?.play();
+    tweenB?.play();
+  } else {
+    tweenA?.pause();
+    tweenB?.pause();
+  }
+
+  return () => {
+    trigger.kill();
+    resizeObserver.disconnect();
+    tweenA?.kill();
+    tweenB?.kill();
+    overlay?.remove();
+  };
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2116,6 +2251,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
+  registerMotionCleanup(initDevelopersCenterDashGridFlow());
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
