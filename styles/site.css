@@ -2180,6 +2180,7 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   border-inline: 1px solid var(--site-section-border);
+  border-top: 1px solid var(--site-section-border);
   border-bottom: 1px solid var(--site-section-border);
 }
 
