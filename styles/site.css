@@ -2624,63 +2624,6 @@ a {
   display: block;
 }
 
-.developers-highlights__node-handshake-layer {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 224px;
-  height: 174px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 3;
-}
-
-.developers-highlights__node-handshake-tile {
-  position: absolute;
-  width: 66px;
-  height: 45px;
-  border-radius: 13px;
-  opacity: 0;
-  background: transparent;
-  border: 1px solid rgb(255 255 255 / 0.2);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
-  will-change: transform, opacity;
-}
-
-.developers-highlights__node-handshake-tile--left {
-  left: 27px;
-  top: 31px;
-}
-
-.developers-highlights__node-handshake-tile--right {
-  left: 129px;
-  top: 31px;
-}
-
-.developers-highlights__node-symbol-accent {
-  position: absolute;
-  opacity: 0;
-  background: rgb(255 255 255 / 0.85);
-  box-shadow: 0 0 5px rgb(255 255 255 / 0.26);
-  will-change: opacity;
-}
-
-.developers-highlights__node-symbol-accent--left {
-  left: 48px;
-  top: 50px;
-  width: 26px;
-  height: 8px;
-  border-radius: 999px;
-}
-
-.developers-highlights__node-symbol-accent--right {
-  left: 148px;
-  top: 49px;
-  width: 22px;
-  height: 10px;
-  clip-path: polygon(0 0, 76% 0, 100% 50%, 76% 100%, 0 100%, 16% 50%);
-}
-
 .developers-highlight-card {
   position: relative;
   display: flex;
