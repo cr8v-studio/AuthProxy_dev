@@ -2637,29 +2637,31 @@ a {
 
 .developers-highlights__node-handshake-tile {
   position: absolute;
-  width: 68px;
-  height: 48px;
-  border-radius: 14px;
-  opacity: 0.22;
-  background: rgb(237 88 90 / 0.38);
+  width: 66px;
+  height: 45px;
+  border-radius: 13px;
+  opacity: 0;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
   will-change: transform, opacity;
 }
 
 .developers-highlights__node-handshake-tile--left {
-  left: 26px;
-  top: 29px;
+  left: 27px;
+  top: 31px;
 }
 
 .developers-highlights__node-handshake-tile--right {
-  left: 128px;
-  top: 29px;
+  left: 129px;
+  top: 31px;
 }
 
 .developers-highlights__node-symbol-accent {
   position: absolute;
-  opacity: 0.05;
+  opacity: 0;
   background: rgb(255 255 255 / 0.85);
-  box-shadow: 0 0 8px rgb(255 255 255 / 0.3);
+  box-shadow: 0 0 5px rgb(255 255 255 / 0.26);
   will-change: opacity;
 }
 

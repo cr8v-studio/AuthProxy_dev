@@ -1446,13 +1446,13 @@ function initDevelopersNodeSequentialPulse() {
     return () => {};
   }
 
-  gsap.set([leftTile, rightTile], { y: 0, autoAlpha: 0.22 });
-  gsap.set([leftAccent, rightAccent], { autoAlpha: 0.06 });
+  gsap.set([leftTile, rightTile], { y: 0, autoAlpha: 0 });
+  gsap.set([leftAccent, rightAccent], { autoAlpha: 0 });
 
   const timeline = gsap.timeline({
     paused: true,
     repeat: -1,
-    repeatDelay: isMobileViewport() ? 0.95 : 1.1
+    repeatDelay: isMobileViewport() ? 1.15 : 1.35
   });
 
   const addHandshakeStep = (tile, accent, at) => {
@@ -1460,8 +1460,8 @@ function initDevelopersNodeSequentialPulse() {
       tile,
       {
         y: -2,
-        autoAlpha: 0.4,
-        duration: 0.34,
+        autoAlpha: 0.34,
+        duration: 0.42,
         ease: 'power3.out'
       },
       at
@@ -1469,27 +1469,26 @@ function initDevelopersNodeSequentialPulse() {
     timeline.to(
       accent,
       {
-        autoAlpha: 0.34,
-        duration: 0.26,
+        autoAlpha: 0.26,
+        duration: 0.34,
         ease: 'power2.out'
       },
-      at + 0.04
+      at + 0.06
     );
     timeline.to(
       [tile, accent],
       {
         y: 0,
-        autoAlpha: (index, target) =>
-          target === tile ? 0.22 : 0.06,
-        duration: 0.52,
+        autoAlpha: 0,
+        duration: 0.58,
         ease: 'power2.inOut'
       },
-      at + 0.34
+      at + 0.42
     );
   };
 
   addHandshakeStep(leftTile, leftAccent, 0);
-  addHandshakeStep(rightTile, rightAccent, 0.56);
+  addHandshakeStep(rightTile, rightAccent, 0.68);
 
   const trigger = ScrollTrigger.create({
     trigger: center,
