@@ -1399,115 +1399,6 @@ function initDevelopersGridLaserHover() {
   });
 }
 
-function initDevelopersNodeSequentialPulse() {
-  const center = document.querySelector('.developers-highlights__center');
-  const node = center?.querySelector('.developers-highlights__node');
-
-  if (!center || !node || prefersReducedMotion) {
-    return () => {};
-  }
-
-  const legacyLayer = center.querySelector('.developers-highlights__node-signal-layer');
-  if (legacyLayer) {
-    legacyLayer.remove();
-  }
-
-  let layer = center.querySelector('.developers-highlights__node-handshake-layer');
-  if (!layer) {
-    layer = document.createElement('div');
-    layer.className = 'developers-highlights__node-handshake-layer';
-    layer.setAttribute('aria-hidden', 'true');
-
-    const leftTile = document.createElement('span');
-    leftTile.className =
-      'developers-highlights__node-handshake-tile developers-highlights__node-handshake-tile--left';
-    const rightTile = document.createElement('span');
-    rightTile.className =
-      'developers-highlights__node-handshake-tile developers-highlights__node-handshake-tile--right';
-    const leftAccent = document.createElement('span');
-    leftAccent.className =
-      'developers-highlights__node-symbol-accent developers-highlights__node-symbol-accent--left';
-    const rightAccent = document.createElement('span');
-    rightAccent.className =
-      'developers-highlights__node-symbol-accent developers-highlights__node-symbol-accent--right';
-
-    layer.append(leftTile, rightTile, leftAccent, rightAccent);
-
-    center.append(layer);
-  }
-
-  const leftTile = layer.querySelector('.developers-highlights__node-handshake-tile--left');
-  const rightTile = layer.querySelector('.developers-highlights__node-handshake-tile--right');
-  const leftAccent = layer.querySelector('.developers-highlights__node-symbol-accent--left');
-  const rightAccent = layer.querySelector('.developers-highlights__node-symbol-accent--right');
-  const animItems = [leftTile, rightTile, leftAccent, rightAccent].filter(Boolean);
-
-  if (animItems.length < 4) {
-    return () => {};
-  }
-
-  gsap.set([leftTile, rightTile], { y: 0, autoAlpha: 0 });
-  gsap.set([leftAccent, rightAccent], { autoAlpha: 0 });
-
-  const timeline = gsap.timeline({
-    paused: true,
-    repeat: -1,
-    repeatDelay: isMobileViewport() ? 1.15 : 1.35
-  });
-
-  const addHandshakeStep = (tile, accent, at) => {
-    timeline.to(
-      tile,
-      {
-        y: -2,
-        autoAlpha: 0.34,
-        duration: 0.42,
-        ease: 'power3.out'
-      },
-      at
-    );
-    timeline.to(
-      accent,
-      {
-        autoAlpha: 0.26,
-        duration: 0.34,
-        ease: 'power2.out'
-      },
-      at + 0.06
-    );
-    timeline.to(
-      [tile, accent],
-      {
-        y: 0,
-        autoAlpha: 0,
-        duration: 0.58,
-        ease: 'power2.inOut'
-      },
-      at + 0.42
-    );
-  };
-
-  addHandshakeStep(leftTile, leftAccent, 0);
-  addHandshakeStep(rightTile, rightAccent, 0.68);
-
-  const trigger = ScrollTrigger.create({
-    trigger: center,
-    start: 'top 82%',
-    end: 'bottom 18%',
-    onEnter: () => timeline.play(0),
-    onEnterBack: () => timeline.play(0),
-    onLeave: () => timeline.pause(0),
-    onLeaveBack: () => timeline.pause(0)
-  });
-
-  return () => {
-    trigger.kill();
-    timeline.kill();
-    gsap.killTweensOf(animItems);
-    layer?.remove();
-  };
-}
-
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2225,7 +2116,6 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
-  registerMotionCleanup(initDevelopersNodeSequentialPulse());
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
