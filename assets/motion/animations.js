@@ -1399,69 +1399,6 @@ function initDevelopersGridLaserHover() {
   });
 }
 
-// Subtle sequential activity blink for Developers feature bullets.
-function initDevelopersHighlightDotsBlink() {
-  const section = document.querySelector('.developers-section__highlights');
-  const dots = Array.from(section?.querySelectorAll('.developers-highlight-card__dot') ?? []);
-
-  if (!section || dots.length === 0 || prefersReducedMotion) {
-    return () => {};
-  }
-
-  gsap.set(dots, {
-    transformOrigin: '50% 50%',
-    autoAlpha: 0.88,
-    scale: 1
-  });
-
-  const pulseTl = gsap.timeline({
-    repeat: -1,
-    paused: true
-  });
-
-  dots.forEach((dot) => {
-    pulseTl.to(
-      dot,
-      {
-        autoAlpha: 1,
-        scale: 1.16,
-        duration: 0.22,
-        ease: 'power2.out'
-      },
-      '>'
-    );
-
-    pulseTl.to(dot, {
-      autoAlpha: 0.82,
-      scale: 1,
-      duration: 0.3,
-      ease: 'power2.inOut'
-    });
-  });
-
-  pulseTl.to({}, { duration: 0.28 });
-
-  const trigger = ScrollTrigger.create({
-    trigger: section,
-    start: 'top 85%',
-    end: 'bottom 20%',
-    onEnter: () => pulseTl.play(),
-    onEnterBack: () => pulseTl.play(),
-    onLeave: () => pulseTl.pause(),
-    onLeaveBack: () => pulseTl.pause()
-  });
-
-  if (trigger.isActive) {
-    pulseTl.play();
-  }
-
-  return () => {
-    trigger.kill();
-    pulseTl.kill();
-    gsap.set(dots, { clearProps: 'opacity,visibility,transform' });
-  };
-}
-
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2179,7 +2116,6 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
-  registerMotionCleanup(initDevelopersHighlightDotsBlink());
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
