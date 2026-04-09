@@ -2614,6 +2614,29 @@ a {
   min-height: 369px;
 }
 
+.developers-highlights__dash-grid {
+  position: absolute;
+  inset: 48px;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.developers-highlights__dash-grid-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.developers-highlights__dash-grid-line {
+  fill: none;
+  stroke: #ed585a;
+  stroke-width: 1.4;
+  stroke-dasharray: 2 6;
+  stroke-linecap: round;
+  opacity: 0.76;
+}
+
 .developers-highlights__node {
   position: absolute;
   left: 50%;
@@ -4358,4 +4381,5 @@ a {
     right: 12px;
     top: 12px;
   }
+
 }
