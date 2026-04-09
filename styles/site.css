@@ -2702,7 +2702,7 @@ a {
 .developers-section__ship-cta {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   padding: var(--space-48);
 }
 
