@@ -1427,36 +1427,38 @@ function initDevelopersNodeSequentialPulse() {
     return () => {};
   }
 
-  const pulseIntensity = isMobileViewport() ? 0.92 : 1;
-  gsap.set(signals, { autoAlpha: 0.22 * pulseIntensity, scale: 1 });
+  const pulseIntensity = isMobileViewport() ? 0.88 : 1;
+  gsap.set(signals, { autoAlpha: 0.16 * pulseIntensity, scaleY: 1, scaleX: 1 });
 
   const timeline = gsap.timeline({
     paused: true,
     repeat: -1,
-    repeatDelay: isMobileViewport() ? 0.9 : 1.1
+    repeatDelay: isMobileViewport() ? 1.2 : 1.45
   });
 
   signals.forEach((signal, index) => {
-    const slot = index * 0.22;
+    const slot = index * 0.3;
     timeline.to(
       signal,
       {
-        autoAlpha: 1,
-        scale: 1.08,
-        duration: 0.18,
-        ease: 'power2.out'
+        autoAlpha: 0.98 * pulseIntensity,
+        scaleY: 1.06,
+        scaleX: 1.02,
+        duration: 0.26,
+        ease: 'power3.out'
       },
       slot
     );
     timeline.to(
       signal,
       {
-        autoAlpha: 0.22 * pulseIntensity,
-        scale: 1,
-        duration: 0.28,
-        ease: 'power2.in'
+        autoAlpha: 0.16 * pulseIntensity,
+        scaleY: 1,
+        scaleX: 1,
+        duration: 0.44,
+        ease: 'power2.inOut'
       },
-      slot + 0.18
+      slot + 0.26
     );
   });
 
