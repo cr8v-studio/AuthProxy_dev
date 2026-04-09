@@ -2632,31 +2632,34 @@ a {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 3;
+  /* Limit pulses strictly to the left indicator face area. */
+  clip-path: polygon(22% 56%, 47% 56%, 47% 87%, 22% 83%);
 }
 
 .developers-highlights__node-signal {
   position: absolute;
-  width: 11px;
-  height: 43px;
+  width: 9px;
+  height: 37px;
   border-radius: 999px;
   opacity: 0.2;
   background: #ed585a;
-  box-shadow: 0 0 10px rgb(237 88 90 / 0.26);
+  box-shadow: 0 0 8px rgb(237 88 90 / 0.2);
+  transform-origin: 50% 100%;
   will-change: transform, opacity;
 }
 
 .developers-highlights__node-signal--1 {
-  left: 37px;
+  left: 53px;
   top: 96px;
 }
 
 .developers-highlights__node-signal--2 {
-  left: 53px;
+  left: 67px;
   top: 100px;
 }
 
 .developers-highlights__node-signal--3 {
-  left: 69px;
+  left: 81px;
   top: 104px;
 }
 
