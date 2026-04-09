@@ -2606,6 +2606,7 @@ a {
 
 .developers-highlights__column--right {
   border-left: 1px solid var(--site-section-border);
+  margin-left: -1px;
 }
 
 .developers-highlights__center {
@@ -4317,6 +4318,7 @@ a {
   .developers-highlights__column--right {
     border-left: 0;
     border-right: 0;
+    margin-left: 0;
   }
 
   .developers-highlights__center {
