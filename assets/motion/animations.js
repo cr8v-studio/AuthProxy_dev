@@ -1399,6 +1399,72 @@ function initDevelopersGridLaserHover() {
   });
 }
 
+// Developers side bullets: sequential pulse in the same visual language as grid dots.
+function initDevelopersHighlightDotsBlink() {
+  const section = document.querySelector('.developers-section__highlights');
+  const dots = Array.from(section?.querySelectorAll('.developers-highlight-card__dot') ?? []);
+
+  if (!section || dots.length === 0 || prefersReducedMotion) {
+    return () => {};
+  }
+
+  gsap.set(dots, {
+    transformOrigin: '50% 50%',
+    autoAlpha: 0.82,
+    scale: 1,
+    filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0)) drop-shadow(0 0 2px rgb(237 88 90 / 0.22))'
+  });
+
+  const pulseTl = gsap.timeline({ repeat: -1, paused: true });
+
+  dots.forEach((dot) => {
+    pulseTl.to(dot, {
+      autoAlpha: 1,
+      scale: 1.32,
+      filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0.24)) drop-shadow(0 0 9px rgb(237 88 90 / 0.65))',
+      duration: 0.2,
+      ease: 'power2.out'
+    }, '+=0.06');
+
+    pulseTl.to(dot, {
+      autoAlpha: 0.9,
+      scale: 0.96,
+      duration: 0.2,
+      ease: 'power1.inOut'
+    });
+
+    pulseTl.to(dot, {
+      autoAlpha: 0.82,
+      scale: 1,
+      filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0)) drop-shadow(0 0 2px rgb(237 88 90 / 0.22))',
+      duration: 0.24,
+      ease: 'power2.out'
+    });
+  });
+
+  pulseTl.to({}, { duration: 0.16 });
+
+  const trigger = ScrollTrigger.create({
+    trigger: section,
+    start: 'top 85%',
+    end: 'bottom 20%',
+    onEnter: () => pulseTl.play(),
+    onEnterBack: () => pulseTl.play(),
+    onLeave: () => pulseTl.pause(),
+    onLeaveBack: () => pulseTl.pause()
+  });
+
+  if (trigger.isActive) {
+    pulseTl.play();
+  }
+
+  return () => {
+    trigger.kill();
+    pulseTl.kill();
+    gsap.set(dots, { clearProps: 'opacity,visibility,transform,filter' });
+  };
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2116,6 +2182,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
+  registerMotionCleanup(initDevelopersHighlightDotsBlink());
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
