@@ -2691,7 +2691,8 @@ a {
 }
 
 .developers-section__ship-copy {
-  border-right: 1px solid var(--site-section-border);
+  border-right: 0;
+  box-shadow: 1px 0 0 var(--site-section-border);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -4310,6 +4311,7 @@ a {
 
   .developers-section__ship-copy {
     border-right: 0;
+    box-shadow: none;
     border-bottom: 1px solid var(--site-section-border);
   }
 
