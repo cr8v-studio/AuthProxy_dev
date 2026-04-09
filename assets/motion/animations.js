@@ -1399,6 +1399,85 @@ function initDevelopersGridLaserHover() {
   });
 }
 
+function initDevelopersNodeSequentialPulse() {
+  const center = document.querySelector('.developers-highlights__center');
+  const node = center?.querySelector('.developers-highlights__node');
+
+  if (!center || !node || prefersReducedMotion) {
+    return () => {};
+  }
+
+  let layer = center.querySelector('.developers-highlights__node-signal-layer');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.className = 'developers-highlights__node-signal-layer';
+    layer.setAttribute('aria-hidden', 'true');
+
+    ['1', '2', '3'].forEach((index) => {
+      const signal = document.createElement('span');
+      signal.className = `developers-highlights__node-signal developers-highlights__node-signal--${index}`;
+      layer.append(signal);
+    });
+
+    center.append(layer);
+  }
+
+  const signals = Array.from(layer.querySelectorAll('.developers-highlights__node-signal'));
+  if (!signals.length) {
+    return () => {};
+  }
+
+  const pulseIntensity = isMobileViewport() ? 0.92 : 1;
+  gsap.set(signals, { autoAlpha: 0.22 * pulseIntensity, scale: 1 });
+
+  const timeline = gsap.timeline({
+    paused: true,
+    repeat: -1,
+    repeatDelay: isMobileViewport() ? 0.9 : 1.1
+  });
+
+  signals.forEach((signal, index) => {
+    const slot = index * 0.22;
+    timeline.to(
+      signal,
+      {
+        autoAlpha: 1,
+        scale: 1.08,
+        duration: 0.18,
+        ease: 'power2.out'
+      },
+      slot
+    );
+    timeline.to(
+      signal,
+      {
+        autoAlpha: 0.22 * pulseIntensity,
+        scale: 1,
+        duration: 0.28,
+        ease: 'power2.in'
+      },
+      slot + 0.18
+    );
+  });
+
+  const trigger = ScrollTrigger.create({
+    trigger: center,
+    start: 'top 82%',
+    end: 'bottom 18%',
+    onEnter: () => timeline.play(0),
+    onEnterBack: () => timeline.play(0),
+    onLeave: () => timeline.pause(0),
+    onLeaveBack: () => timeline.pause(0)
+  });
+
+  return () => {
+    trigger.kill();
+    timeline.kill();
+    gsap.killTweensOf(signals);
+    layer?.remove();
+  };
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2116,6 +2195,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
+  registerMotionCleanup(initDevelopersNodeSequentialPulse());
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
