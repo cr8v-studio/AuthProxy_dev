@@ -2621,7 +2621,7 @@ a {
   position: absolute;
   inset: 15px 0;
   background: url('../assets/sections/developers/dev-perspective-grid.svg') center / 100% 100% no-repeat;
-  opacity: 0.95;
+  opacity: 1;
   mix-blend-mode: multiply;
   pointer-events: none;
   z-index: 1;
@@ -2635,6 +2635,7 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  opacity: 0.72;
   pointer-events: none;
   z-index: 2;
 }
