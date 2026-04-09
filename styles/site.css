@@ -2692,12 +2692,12 @@ a {
 
 .developers-section__ship-title {
   margin: 0;
+  width: 100%;
   color: var(--figma-color-dark-base);
   font-size: 39px;
   line-height: 39px;
   font-weight: 400;
   letter-spacing: 0;
-  max-width: 21ch;
 }
 
 .developers-section__ship-cta {
