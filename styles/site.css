@@ -2601,17 +2601,16 @@ a {
 }
 
 .developers-highlights__column--left {
-  border-right: 0;
+  border-right: 1px solid var(--site-section-border);
 }
 
 .developers-highlights__column--right {
-  border-left: 0;
+  border-left: 1px solid var(--site-section-border);
 }
 
 .developers-highlights__center {
   position: relative;
   min-height: 369px;
-  border-inline: 1px solid var(--site-section-border);
 }
 
 .developers-highlights__node {
