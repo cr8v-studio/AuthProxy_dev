@@ -2795,14 +2795,14 @@ a {
 
 .developers-section__ship-button {
   --header-button-v1-bg: transparent;
-  --header-button-v1-corner-br-default: url("../assets/header/button/v1/v1-vector-br-default.svg");
-  --header-button-v1-corner-bl-default: url("../assets/header/button/v1/v1-vector-bl-default.svg");
-  --header-button-v1-corner-tr-default: url("../assets/header/button/v1/v1-vector-tr-default.svg");
-  --header-button-v1-corner-tl-default: url("../assets/header/button/v1/v1-vector-tl-default.svg");
-  --header-button-v1-corner-br-hover: url("../assets/header/button/v1/v1-vector-br-hover.svg");
-  --header-button-v1-corner-bl-hover: url("../assets/header/button/v1/v1-vector-bl-hover.svg");
-  --header-button-v1-corner-tr-hover: url("../assets/header/button/v1/v1-vector-tr-hover.svg");
-  --header-button-v1-corner-tl-hover: url("../assets/header/button/v1/v1-vector-tl-hover.svg");
+  --header-button-v1-corner-br-default: url("../assets/ui/header/header-button-v1-corner-br-default.svg");
+  --header-button-v1-corner-bl-default: url("../assets/ui/header/header-button-v1-corner-bl-default.svg");
+  --header-button-v1-corner-tr-default: url("../assets/ui/header/header-button-v1-corner-tr-default.svg");
+  --header-button-v1-corner-tl-default: url("../assets/ui/header/header-button-v1-corner-tl-default.svg");
+  --header-button-v1-corner-br-hover: url("../assets/ui/header/header-button-v1-corner-br-hover.svg");
+  --header-button-v1-corner-bl-hover: url("../assets/ui/header/header-button-v1-corner-bl-hover.svg");
+  --header-button-v1-corner-tr-hover: url("../assets/ui/header/header-button-v1-corner-tr-hover.svg");
+  --header-button-v1-corner-tl-hover: url("../assets/ui/header/header-button-v1-corner-tl-hover.svg");
   --header-button-v1-hover-color: var(--figma-color-dark-base);
   min-height: 44px;
   padding-inline: var(--space-20);
