@@ -2621,7 +2621,7 @@ a {
   position: absolute;
   inset: 15px 0;
   background: url('../assets/sections/developers/dev-perspective-grid.svg') center / 100% 100% no-repeat;
-  opacity: 0.28;
+  opacity: 0.4;
   pointer-events: none;
   z-index: 1;
 }
@@ -2633,7 +2633,7 @@ a {
   background: radial-gradient(
     ellipse at center,
     rgba(244, 244, 244, 0) 0%,
-    rgba(244, 244, 244, 0.34) 72%,
+    rgba(244, 244, 244, 0.2) 76%,
     rgba(244, 244, 244, 1) 100%
   );
   pointer-events: none;
