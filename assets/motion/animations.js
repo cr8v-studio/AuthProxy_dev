@@ -1399,6 +1399,146 @@ function initDevelopersGridLaserHover() {
   });
 }
 
+function initDevelopersNodeMicroIdle() {
+  const center = document.querySelector('.developers-highlights__center');
+  const node = center?.querySelector('.developers-highlights__node');
+
+  if (!center || !node || prefersReducedMotion) {
+    return () => {};
+  }
+
+  let shadow = center.querySelector('.developers-highlights__node-shadow');
+  if (!shadow) {
+    shadow = document.createElement('span');
+    shadow.className = 'developers-highlights__node-shadow';
+    shadow.setAttribute('aria-hidden', 'true');
+    center.append(shadow);
+  }
+
+  let overlay = center.querySelector('.developers-highlights__node-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'developers-highlights__node-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    center.append(overlay);
+  }
+
+  if (!overlay.querySelector('.developers-highlights__node-hotspot')) {
+    ['tile-t', 'tile-l', 'tile-r', 'led-1', 'led-2', 'led-3'].forEach((name) => {
+      const hotspot = document.createElement('span');
+      hotspot.className = `developers-highlights__node-hotspot developers-highlights__node-hotspot--${name}`;
+      overlay.append(hotspot);
+    });
+  }
+
+  const tileHotspots = Array.from(
+    overlay.querySelectorAll(
+      '.developers-highlights__node-hotspot--tile-t, .developers-highlights__node-hotspot--tile-l, .developers-highlights__node-hotspot--tile-r'
+    )
+  );
+  const ledHotspots = Array.from(
+    overlay.querySelectorAll(
+      '.developers-highlights__node-hotspot--led-1, .developers-highlights__node-hotspot--led-2, .developers-highlights__node-hotspot--led-3'
+    )
+  );
+  const allHotspots = [...tileHotspots, ...ledHotspots];
+
+  gsap.set(node, {
+    transformOrigin: '50% 62%',
+    yPercent: 6,
+    autoAlpha: 0
+  });
+  gsap.set(shadow, { autoAlpha: 0, scaleX: 0.9, scaleY: 0.86 });
+  gsap.set(allHotspots, { autoAlpha: 0, scale: 0.9 });
+
+  const reveal = gsap.timeline({
+    paused: true,
+    defaults: { ease: 'power3.out' }
+  });
+  reveal.to(node, { yPercent: 0, autoAlpha: 1, duration: 0.72 }, 0);
+  reveal.to(shadow, { autoAlpha: 0.72, scaleX: 1, scaleY: 1, duration: 0.68 }, 0.06);
+
+  const idle = gsap.timeline({
+    paused: true,
+    repeat: -1,
+    defaults: { ease: 'power2.inOut' }
+  });
+  idle
+    .to(node, { y: -4, duration: 1.35 }, 0)
+    .to(shadow, { scaleX: 1.06, scaleY: 0.92, autoAlpha: 0.62, duration: 1.35 }, 0)
+    .to(
+      tileHotspots,
+      {
+        autoAlpha: 0.74,
+        scale: 1.03,
+        duration: 0.44,
+        ease: 'power2.out',
+        stagger: 0.14
+      },
+      0.12
+    )
+    .to(
+      tileHotspots,
+      {
+        autoAlpha: 0,
+        scale: 0.96,
+        duration: 0.46,
+        ease: 'power2.in',
+        stagger: 0.14
+      },
+      0.66
+    )
+    .to(
+      ledHotspots,
+      {
+        autoAlpha: 0.86,
+        scale: 1.05,
+        duration: 0.3,
+        ease: 'power2.out',
+        stagger: 0.09
+      },
+      0.34
+    )
+    .to(
+      ledHotspots,
+      {
+        autoAlpha: 0.06,
+        scale: 0.9,
+        duration: 0.38,
+        ease: 'power2.in',
+        stagger: 0.09
+      },
+      0.74
+    )
+    .to(node, { y: 0, duration: 1.45 }, 1.36)
+    .to(shadow, { scaleX: 1, scaleY: 1, autoAlpha: 0.72, duration: 1.45 }, 1.36)
+    .to({}, { duration: 0.55 });
+
+  const trigger = ScrollTrigger.create({
+    trigger: center,
+    start: 'top 82%',
+    onEnter: () =>
+      reveal.restart(true).eventCallback('onComplete', () => {
+        idle.play(0);
+      }),
+    onEnterBack: () =>
+      reveal.restart(true).eventCallback('onComplete', () => {
+        idle.play(0);
+      }),
+    onLeave: () => idle.pause(0),
+    onLeaveBack: () => idle.pause(0)
+  });
+
+  return () => {
+    trigger.kill();
+    reveal.kill();
+    idle.kill();
+    gsap.killTweensOf([node, shadow, ...allHotspots]);
+    shadow?.remove();
+    overlay?.remove();
+  };
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2116,6 +2256,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
+  registerMotionCleanup(initDevelopersNodeMicroIdle());
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
