@@ -1407,58 +1407,89 @@ function initDevelopersNodeSequentialPulse() {
     return () => {};
   }
 
-  let layer = center.querySelector('.developers-highlights__node-signal-layer');
+  const legacyLayer = center.querySelector('.developers-highlights__node-signal-layer');
+  if (legacyLayer) {
+    legacyLayer.remove();
+  }
+
+  let layer = center.querySelector('.developers-highlights__node-handshake-layer');
   if (!layer) {
     layer = document.createElement('div');
-    layer.className = 'developers-highlights__node-signal-layer';
+    layer.className = 'developers-highlights__node-handshake-layer';
     layer.setAttribute('aria-hidden', 'true');
 
-    ['1', '2', '3'].forEach((index) => {
-      const signal = document.createElement('span');
-      signal.className = `developers-highlights__node-signal developers-highlights__node-signal--${index}`;
-      layer.append(signal);
-    });
+    const leftTile = document.createElement('span');
+    leftTile.className =
+      'developers-highlights__node-handshake-tile developers-highlights__node-handshake-tile--left';
+    const rightTile = document.createElement('span');
+    rightTile.className =
+      'developers-highlights__node-handshake-tile developers-highlights__node-handshake-tile--right';
+    const leftAccent = document.createElement('span');
+    leftAccent.className =
+      'developers-highlights__node-symbol-accent developers-highlights__node-symbol-accent--left';
+    const rightAccent = document.createElement('span');
+    rightAccent.className =
+      'developers-highlights__node-symbol-accent developers-highlights__node-symbol-accent--right';
+
+    layer.append(leftTile, rightTile, leftAccent, rightAccent);
 
     center.append(layer);
   }
 
-  const signals = Array.from(layer.querySelectorAll('.developers-highlights__node-signal'));
-  if (!signals.length) {
+  const leftTile = layer.querySelector('.developers-highlights__node-handshake-tile--left');
+  const rightTile = layer.querySelector('.developers-highlights__node-handshake-tile--right');
+  const leftAccent = layer.querySelector('.developers-highlights__node-symbol-accent--left');
+  const rightAccent = layer.querySelector('.developers-highlights__node-symbol-accent--right');
+  const animItems = [leftTile, rightTile, leftAccent, rightAccent].filter(Boolean);
+
+  if (animItems.length < 4) {
     return () => {};
   }
 
-  gsap.set(signals, {
-    autoAlpha: 1,
-    backgroundColor: '#ED585A'
-  });
+  gsap.set([leftTile, rightTile], { y: 0, autoAlpha: 0.22 });
+  gsap.set([leftAccent, rightAccent], { autoAlpha: 0.06 });
 
   const timeline = gsap.timeline({
     paused: true,
     repeat: -1,
-    repeatDelay: isMobileViewport() ? 1.05 : 1.3
+    repeatDelay: isMobileViewport() ? 0.95 : 1.1
   });
 
-  signals.forEach((signal, index) => {
-    const slot = index * 0.34;
+  const addHandshakeStep = (tile, accent, at) => {
     timeline.to(
-      signal,
+      tile,
       {
-        backgroundColor: '#FF9FA0',
-        duration: 0.32,
+        y: -2,
+        autoAlpha: 0.4,
+        duration: 0.34,
         ease: 'power3.out'
       },
-      slot
+      at
     );
     timeline.to(
-      signal,
+      accent,
       {
-        backgroundColor: '#ED585A',
+        autoAlpha: 0.34,
+        duration: 0.26,
+        ease: 'power2.out'
+      },
+      at + 0.04
+    );
+    timeline.to(
+      [tile, accent],
+      {
+        y: 0,
+        autoAlpha: (index, target) =>
+          target === tile ? 0.22 : 0.06,
         duration: 0.52,
         ease: 'power2.inOut'
       },
-      slot + 0.32
+      at + 0.34
     );
-  });
+  };
+
+  addHandshakeStep(leftTile, leftAccent, 0);
+  addHandshakeStep(rightTile, rightAccent, 0.56);
 
   const trigger = ScrollTrigger.create({
     trigger: center,
@@ -1473,7 +1504,7 @@ function initDevelopersNodeSequentialPulse() {
   return () => {
     trigger.kill();
     timeline.kill();
-    gsap.killTweensOf(signals);
+    gsap.killTweensOf(animItems);
     layer?.remove();
   };
 }
