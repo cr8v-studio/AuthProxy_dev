@@ -2611,7 +2611,6 @@ a {
 .developers-highlights__center {
   position: relative;
   min-height: 369px;
-  overflow: hidden;
 }
 
 .developers-highlights__node {
@@ -2622,92 +2621,6 @@ a {
   height: 174px;
   transform: translate(-50%, -50%);
   display: block;
-  z-index: 2;
-  will-change: transform, opacity, filter;
-}
-
-.developers-highlights__node-shadow {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 154px;
-  height: 34px;
-  transform: translate(-50%, 56px);
-  border-radius: 999px;
-  pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(
-    58% 76% at 50% 50%,
-    rgb(var(--figma-color-dark-rgb) / 0.17) 0%,
-    rgb(var(--figma-color-dark-rgb) / 0.07) 54%,
-    rgb(var(--figma-color-dark-rgb) / 0) 100%
-  );
-  filter: blur(4px);
-  will-change: transform, opacity;
-}
-
-.developers-highlights__node-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.developers-highlights__node-hotspot {
-  position: absolute;
-  opacity: 0;
-  border-radius: 8px;
-  background: rgb(var(--figma-color-extra-2-rgb) / 0.32);
-  box-shadow:
-    0 0 0 1px rgb(var(--figma-color-extra-2-rgb) / 0.24),
-    0 0 18px rgb(var(--figma-color-extra-2-rgb) / 0.32);
-  filter: blur(0.2px);
-  will-change: transform, opacity;
-}
-
-.developers-highlights__node-hotspot--tile-t {
-  left: 41.5%;
-  top: 20.5%;
-  width: 17%;
-  height: 8.5%;
-}
-
-.developers-highlights__node-hotspot--tile-l {
-  left: 26%;
-  top: 32%;
-  width: 14%;
-  height: 8%;
-}
-
-.developers-highlights__node-hotspot--tile-r {
-  left: 60%;
-  top: 32.5%;
-  width: 14%;
-  height: 8%;
-}
-
-.developers-highlights__node-hotspot--led-1,
-.developers-highlights__node-hotspot--led-2,
-.developers-highlights__node-hotspot--led-3 {
-  width: 3.2%;
-  height: 4.2%;
-  border-radius: 999px;
-}
-
-.developers-highlights__node-hotspot--led-1 {
-  left: 65.5%;
-  top: 58.5%;
-}
-
-.developers-highlights__node-hotspot--led-2 {
-  left: 70%;
-  top: 57.2%;
-}
-
-.developers-highlights__node-hotspot--led-3 {
-  left: 74.3%;
-  top: 55%;
-}
 }
 
 .developers-highlight-card {
