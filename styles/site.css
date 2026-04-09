@@ -2623,6 +2623,43 @@ a {
   display: block;
 }
 
+.developers-highlights__node-signal-layer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 224px;
+  height: 174px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.developers-highlights__node-signal {
+  position: absolute;
+  width: 11px;
+  height: 43px;
+  border-radius: 999px;
+  opacity: 0.2;
+  background: #ed585a;
+  box-shadow: 0 0 10px rgb(237 88 90 / 0.26);
+  will-change: transform, opacity;
+}
+
+.developers-highlights__node-signal--1 {
+  left: 37px;
+  top: 96px;
+}
+
+.developers-highlights__node-signal--2 {
+  left: 53px;
+  top: 100px;
+}
+
+.developers-highlights__node-signal--3 {
+  left: 69px;
+  top: 104px;
+}
+
 .developers-highlight-card {
   position: relative;
   display: flex;
