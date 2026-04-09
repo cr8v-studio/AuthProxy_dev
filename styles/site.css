@@ -2606,7 +2606,6 @@ a {
 
 .developers-highlights__column--right {
   border-left: 1px solid var(--site-section-border);
-  margin-left: -1px;
 }
 
 .developers-highlights__center {
