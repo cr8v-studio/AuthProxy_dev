@@ -2639,29 +2639,27 @@ a {
 
 .developers-highlights__node-signal {
   position: absolute;
-  width: 9px;
-  height: 37px;
+  width: 7px;
+  height: 32px;
   border-radius: 999px;
-  opacity: 0.2;
+  opacity: 1;
   background: #ed585a;
-  box-shadow: 0 0 8px rgb(237 88 90 / 0.2);
-  transform-origin: 50% 100%;
-  will-change: transform, opacity;
+  will-change: background-color, opacity;
 }
 
 .developers-highlights__node-signal--1 {
-  left: 53px;
-  top: 96px;
+  left: 54px;
+  top: 99px;
 }
 
 .developers-highlights__node-signal--2 {
-  left: 67px;
-  top: 100px;
+  left: 68px;
+  top: 103px;
 }
 
 .developers-highlights__node-signal--3 {
-  left: 81px;
-  top: 104px;
+  left: 82px;
+  top: 107px;
 }
 
 .developers-highlight-card {

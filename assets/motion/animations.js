@@ -1427,24 +1427,24 @@ function initDevelopersNodeSequentialPulse() {
     return () => {};
   }
 
-  const pulseIntensity = isMobileViewport() ? 0.88 : 1;
-  gsap.set(signals, { autoAlpha: 0.16 * pulseIntensity, scaleY: 1, scaleX: 1 });
+  gsap.set(signals, {
+    autoAlpha: 1,
+    backgroundColor: '#ED585A'
+  });
 
   const timeline = gsap.timeline({
     paused: true,
     repeat: -1,
-    repeatDelay: isMobileViewport() ? 1.2 : 1.45
+    repeatDelay: isMobileViewport() ? 1.05 : 1.3
   });
 
   signals.forEach((signal, index) => {
-    const slot = index * 0.3;
+    const slot = index * 0.34;
     timeline.to(
       signal,
       {
-        autoAlpha: 0.98 * pulseIntensity,
-        scaleY: 1.06,
-        scaleX: 1.02,
-        duration: 0.26,
+        backgroundColor: '#FF9FA0',
+        duration: 0.32,
         ease: 'power3.out'
       },
       slot
@@ -1452,13 +1452,11 @@ function initDevelopersNodeSequentialPulse() {
     timeline.to(
       signal,
       {
-        autoAlpha: 0.16 * pulseIntensity,
-        scaleY: 1,
-        scaleX: 1,
-        duration: 0.44,
+        backgroundColor: '#ED585A',
+        duration: 0.52,
         ease: 'power2.inOut'
       },
-      slot + 0.26
+      slot + 0.32
     );
   });
 
