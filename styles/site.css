@@ -3195,6 +3195,275 @@ a {
   background-image: url("../assets/sections/operations/ops-corner-tr.svg");
 }
 
+.pricing-section__hero,
+.pricing-section__plans,
+.pricing-section__free-title,
+.pricing-section__benefits {
+  width: min(1200px, calc(100% - (var(--page-inline) * 2)));
+  margin-inline: auto;
+  border-inline: 1px solid var(--site-section-border);
+}
+
+.pricing-section__hero {
+  position: relative;
+  min-height: 500px;
+  border-bottom: 1px solid var(--site-section-border);
+  background: var(--figma-color-white-base);
+  overflow: hidden;
+}
+
+.pricing-section__hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 99px,
+      var(--site-section-border) 99px,
+      var(--site-section-border) 100px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 99px,
+      var(--site-section-border) 99px,
+      var(--site-section-border) 100px
+    );
+  background-size: 100px 100px;
+}
+
+.pricing-section__hero-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 600px 250px at 50% 50%,
+    rgb(244 244 244 / 0.9) 60%,
+    rgb(244 244 244 / 0.4) 100%
+  );
+}
+
+.pricing-section__headline-wrap,
+.pricing-section__subheadline-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.pricing-section__headline-wrap {
+  padding: var(--space-24) var(--space-48);
+  margin-top: 150px;
+}
+
+.pricing-section__headline {
+  margin: 0;
+  width: 580px;
+  max-width: 100%;
+  text-align: center;
+  color: var(--color-accent-alert);
+  font-size: 59px;
+  line-height: 59px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.pricing-section__subheadline-wrap {
+  padding: var(--space-24) var(--space-48);
+}
+
+.pricing-section__subheadline {
+  margin: 0;
+  width: 700px;
+  max-width: 100%;
+  text-align: center;
+  color: var(--figma-color-dark-tint-2);
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 400;
+  letter-spacing: 0.18px;
+}
+
+.pricing-section__plans {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-height: 362px;
+  border-bottom: 1px solid var(--site-section-border);
+  background: rgb(var(--figma-color-off-white-rgb) / 0.85);
+}
+
+.pricing-plan-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
+  padding: var(--space-48);
+  border-right: 1px solid var(--site-section-border);
+  overflow: hidden;
+}
+
+.pricing-plan-card:last-child {
+  border-right: 0;
+}
+
+.pricing-plan-card--popular {
+  background: var(--figma-color-white-base);
+}
+
+.pricing-plan-card__badge {
+  position: absolute;
+  left: 0;
+  top: -31px;
+  width: 100px;
+  min-height: 31px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--figma-color-dark-base);
+  color: var(--figma-color-white-base);
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.pricing-plan-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+.pricing-plan-card__title {
+  margin: 0;
+  color: var(--figma-color-dark-base);
+  font-size: 28px;
+  line-height: 31px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.pricing-plan-card__title--accent {
+  color: var(--color-accent-alert);
+}
+
+.pricing-plan-card__price {
+  margin: 0;
+  color: var(--figma-color-dark-base);
+  font-size: 41px;
+  line-height: 41px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.pricing-plan-card__price-main {
+  color: inherit;
+}
+
+.pricing-plan-card__price-period {
+  margin-left: var(--space-4);
+  color: var(--figma-color-dark-tint-2);
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.18px;
+}
+
+.pricing-plan-card__desc {
+  margin: 0;
+  color: var(--figma-color-dark-tint-2);
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 400;
+  letter-spacing: 0.18px;
+}
+
+.pricing-plan-card__button {
+  --control-height: 44px;
+  --control-padding-inline: var(--space-20);
+  --control-font-size: 18px;
+  --control-line-height: 26px;
+  --control-letter-spacing: 1px;
+  --control-font-weight: var(--font-weight-regular);
+  --control-color: var(--figma-color-dark-base);
+  --header-button-v1-bg: transparent;
+  --header-button-v1-hover-color: var(--figma-color-dark-base);
+  --header-button-v1-corner-br-default: url("../assets/sections/hero/cta-corner-br.svg");
+  --header-button-v1-corner-bl-default: url("../assets/sections/hero/cta-corner-bl.svg");
+  --header-button-v1-corner-tr-default: url("../assets/sections/hero/cta-corner-tr.svg");
+  --header-button-v1-corner-tl-default: url("../assets/sections/hero/cta-corner-tl.svg");
+  --corner-inset: 5px;
+  width: 304px;
+  align-self: flex-start;
+  margin-top: auto;
+  text-transform: uppercase;
+}
+
+.pricing-section__free-title {
+  padding: var(--space-48);
+  border-bottom: 1px solid var(--site-section-border);
+  background: rgb(var(--figma-color-off-white-rgb) / 0.85);
+}
+
+.pricing-section__free-chip {
+  margin: 0;
+  width: fit-content;
+  padding-inline: var(--space-4);
+  background: var(--figma-color-dark-base);
+  color: var(--figma-color-white-base);
+  font-size: 59px;
+  line-height: 59px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.pricing-section__benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  background: rgb(var(--figma-color-off-white-rgb) / 0.85);
+  border-bottom: 1px solid var(--site-section-border);
+}
+
+.pricing-benefit-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  min-height: 148px;
+  padding: var(--space-48);
+  border-right: 1px solid var(--site-section-border);
+  border-bottom: 1px solid var(--site-section-border);
+  background: var(--figma-color-white-base);
+}
+
+.pricing-benefit-item:nth-child(3n) {
+  border-right: 0;
+}
+
+.pricing-benefit-item:nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+
+.pricing-benefit-item__icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+}
+
+.pricing-benefit-item__text {
+  margin: 0;
+  color: var(--figma-color-dark-base);
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 .capabilities-section__intro {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
@@ -4806,6 +5075,47 @@ a {
     min-height: 560px;
   }
 
+  .pricing-section__headline-wrap {
+    margin-top: 96px;
+  }
+
+  .pricing-section__headline {
+    font-size: clamp(2.125rem, 4.8vw, 3.125rem);
+    line-height: clamp(2.125rem, 4.8vw, 3.125rem);
+  }
+
+  .pricing-section__plans {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .pricing-plan-card {
+    min-height: 300px;
+    border-right: 0;
+    border-bottom: 1px solid var(--site-section-border);
+  }
+
+  .pricing-plan-card:last-child {
+    border-bottom: 0;
+  }
+
+  .pricing-plan-card__badge {
+    top: 0;
+  }
+
+  .pricing-section__benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-benefit-item {
+    border-right: 0;
+    border-bottom: 1px solid var(--site-section-border);
+  }
+
+  .pricing-benefit-item:last-child {
+    border-bottom: 0;
+  }
+
 }
 
 @media (max-width: 809px) {
@@ -4943,5 +5253,59 @@ a {
   .operations-step-card__corner--tr {
     right: 12px;
     top: 12px;
+  }
+
+  .pricing-section__hero {
+    min-height: 420px;
+  }
+
+  .pricing-section__headline-wrap {
+    margin-top: 72px;
+    padding: var(--space-24);
+  }
+
+  .pricing-section__headline {
+    width: min(320px, 100%);
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .pricing-section__subheadline-wrap {
+    padding: var(--space-16) var(--space-24) var(--space-24);
+  }
+
+  .pricing-section__subheadline {
+    width: min(320px, 100%);
+  }
+
+  .pricing-plan-card {
+    padding: var(--space-24);
+    min-height: 260px;
+    gap: var(--space-24);
+  }
+
+  .pricing-plan-card__button {
+    width: auto;
+  }
+
+  .pricing-section__free-title {
+    padding: var(--space-24);
+  }
+
+  .pricing-section__free-chip {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .pricing-benefit-item {
+    min-height: 112px;
+    padding: var(--space-24);
+    gap: var(--space-16);
+  }
+
+  .pricing-benefit-item__text {
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.8px;
   }
 }
