@@ -2847,6 +2847,15 @@ a {
   overflow: hidden;
 }
 
+.operations-visual__scene {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+}
+
 .operations-visual__grid {
   position: absolute;
   inset: 0;
@@ -3003,6 +3012,8 @@ a {
 .operations-section__docs-link .site-header-button-v2__icon {
   width: 9.8995px;
   height: 16.9706px;
+  transform: translateY(-50%);
+  left: 0;
 }
 
 .operations-section__steps {
@@ -4717,8 +4728,13 @@ a {
     padding: var(--space-24);
   }
 
+  .operations-visual__scene {
+    width: 500px;
+    height: 500px;
+  }
+
   .operations-visual__grid {
-    inset: var(--space-24);
+    inset: 0;
   }
 
   .operations-visual__icon--robot {
