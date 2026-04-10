@@ -2644,10 +2644,15 @@ a {
 .developers-highlights__beam-path {
   fill: none;
   stroke: #ed585a;
-  stroke-width: 1.35;
+  stroke-width: 1.2;
   stroke-linecap: round;
-  opacity: 0.62;
-  filter: drop-shadow(0 0 4px rgb(237 88 90 / 0.34));
+  opacity: 0.88;
+  filter: drop-shadow(0 0 8px rgb(237 88 90 / 0.44));
+}
+
+.developers-highlights__beam-path--ghost {
+  opacity: 0.46;
+  filter: blur(0.8px) drop-shadow(0 0 10px rgb(237 88 90 / 0.36));
 }
 
 .developers-highlights__center::after {

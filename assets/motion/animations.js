@@ -1485,11 +1485,17 @@ function initDevelopersPerspectiveBeams() {
       const outer = distStart >= distEnd ? start : end;
       const inner = distStart >= distEnd ? end : start;
 
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('class', 'developers-highlights__beam-path');
-      path.setAttribute('d', `M${outer.x} ${outer.y}L${inner.x} ${inner.y}`);
-      svg.append(path);
-      tracks.push(path);
+      const mainPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      mainPath.setAttribute('class', 'developers-highlights__beam-path developers-highlights__beam-path--main');
+      mainPath.setAttribute('d', `M${outer.x} ${outer.y}L${inner.x} ${inner.y}`);
+      svg.append(mainPath);
+
+      const ghostPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      ghostPath.setAttribute('class', 'developers-highlights__beam-path developers-highlights__beam-path--ghost');
+      ghostPath.setAttribute('d', `M${outer.x} ${outer.y}L${inner.x} ${inner.y}`);
+      svg.append(ghostPath);
+
+      tracks.push({ mainPath, ghostPath });
     });
 
     return tracks;
@@ -1497,19 +1503,37 @@ function initDevelopersPerspectiveBeams() {
 
   const startAnimation = (tracks) => {
     beamTweens.forEach((tween) => tween.kill());
-    beamTweens = tracks.map((path, index) => {
-      const length = Math.max(1, path.getTotalLength());
-      const segment = Math.min(26, Math.max(10, length * 0.14));
-      path.setAttribute('stroke-dasharray', `${segment} ${length + segment + 30}`);
-      path.setAttribute('stroke-dashoffset', '0');
+    beamTweens = tracks.flatMap(({ mainPath, ghostPath }, index) => {
+      const length = Math.max(1, mainPath.getTotalLength());
+      const segmentMain = Math.min(28, Math.max(10, length * 0.14));
+      const segmentGhost = Math.min(44, Math.max(16, length * 0.22));
+      const gap = length + 56;
+      const startOffset = Math.max(0, length * 0.12);
 
-      return gsap.to(path, {
-        attr: { 'stroke-dashoffset': -length },
-        duration: isMobileViewport() ? 2.2 : 1.85,
-        ease: 'none',
-        repeat: -1,
-        delay: index * 0.055
-      });
+      mainPath.setAttribute('stroke-dasharray', `${segmentMain} ${gap}`);
+      ghostPath.setAttribute('stroke-dasharray', `${segmentGhost} ${gap}`);
+      mainPath.setAttribute('stroke-dashoffset', `${startOffset}`);
+      ghostPath.setAttribute('stroke-dashoffset', `${startOffset + 12}`);
+
+      const duration = isMobileViewport() ? 2.35 : 2.0;
+      const baseDelay = index * 0.05;
+
+      return [
+        gsap.to(mainPath, {
+          attr: { 'stroke-dashoffset': -length },
+          duration,
+          ease: 'none',
+          repeat: -1,
+          delay: baseDelay
+        }),
+        gsap.to(ghostPath, {
+          attr: { 'stroke-dashoffset': -length - 10 },
+          duration,
+          ease: 'none',
+          repeat: -1,
+          delay: baseDelay + 0.08
+        })
+      ];
     });
   };
 
