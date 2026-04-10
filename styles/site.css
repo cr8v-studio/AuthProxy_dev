@@ -2627,6 +2627,29 @@ a {
   z-index: 1;
 }
 
+.developers-highlights__beams {
+  position: absolute;
+  inset: 15px 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.developers-highlights__beams-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.developers-highlights__beam-path {
+  fill: none;
+  stroke: #ed585a;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  opacity: 0.62;
+  filter: drop-shadow(0 0 4px rgb(237 88 90 / 0.34));
+}
+
 .developers-highlights__center::after {
   content: '';
   position: absolute;
@@ -2635,7 +2658,7 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  opacity: 0.72;
+  opacity: 0.68;
   pointer-events: none;
   z-index: 2;
 }
