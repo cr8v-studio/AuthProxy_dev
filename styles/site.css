@@ -3472,6 +3472,7 @@ a {
   display: flex;
   align-items: center;
   gap: var(--space-24);
+  height: 148px;
   min-height: 148px;
   padding: var(--space-48);
   border-right: 1px solid var(--site-section-border);
@@ -3495,6 +3496,9 @@ a {
 
 .pricing-benefit-item__text {
   margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
   color: var(--figma-color-dark-base);
   font-size: 18px;
   line-height: 26px;
