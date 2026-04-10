@@ -3627,9 +3627,11 @@ a {
   background: var(--figma-color-dark-base);
   color: var(--figma-color-off-white-base);
   border-left: 1px solid var(--site-section-border);
-  padding: var(--space-48) var(--space-48) 38px;
+  padding: var(--space-48);
+  padding-bottom: calc(38px + 44px + var(--space-24));
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .faq-section__docs-shortcuts {
@@ -3667,10 +3669,9 @@ a {
 }
 
 .faq-section__docs-mark-wrap {
-  margin-top: auto;
-  margin-bottom: auto;
+  flex: 1 1 auto;
   width: 100%;
-  min-height: 320px;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3695,6 +3696,9 @@ a {
   --header-button-v2-bg: transparent;
   --header-button-v2-icon-size: 9.8995px;
   --header-button-v2-icon-shift-hover: var(--space-8);
+  position: absolute;
+  left: 48px;
+  bottom: 38px;
   text-transform: uppercase;
 }
 
@@ -5642,6 +5646,7 @@ a {
 
   .faq-section__docs-panel {
     padding: var(--space-24);
+    padding-bottom: calc(24px + 44px + var(--space-16));
   }
 
   .faq-section__docs-title {
@@ -5658,6 +5663,11 @@ a {
   .faq-section__docs-mark-wrap {
     min-height: 200px;
     padding-block: var(--space-24);
+  }
+
+  .faq-section__docs-site-link {
+    left: 24px;
+    bottom: 24px;
   }
 
   .faq-section__docs-corner--tr {
