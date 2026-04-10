@@ -3392,7 +3392,10 @@ a {
   left: var(--space-48);
   bottom: 39px;
   width: 304px;
+  height: 44px;
   display: flex;
+  align-items: center;
+  gap: 0;
   justify-content: center;
 }
 
