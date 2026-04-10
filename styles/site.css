@@ -3515,13 +3515,12 @@ a {
   margin: 0;
   flex: 1 1 auto;
   min-width: 0;
-  max-width: 250px;
   display: block;
   color: var(--figma-color-dark-base);
   font-size: 18px;
   line-height: 26px;
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
 }
 
@@ -5385,7 +5384,6 @@ a {
   }
 
   .pricing-benefit-item__text {
-    max-width: none;
     font-size: 16px;
     line-height: 22px;
     letter-spacing: 0.8px;
