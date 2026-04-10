@@ -2202,6 +2202,10 @@ a {
   pointer-events: none;
 }
 
+.faq-section .section-label-bar {
+  background: var(--figma-color-off-white-base);
+}
+
 .security-section .section-label-bar::after {
   content: "";
   position: absolute;
