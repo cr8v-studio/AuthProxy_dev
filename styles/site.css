@@ -3425,6 +3425,7 @@ a {
   display: inline-flex;
   align-items: center;
   padding-inline: var(--space-4);
+  letter-spacing: 0.5px;
   color: var(--figma-color-off-white-base);
   background: var(--figma-color-dark-base);
   text-transform: uppercase;
@@ -4648,6 +4649,11 @@ a {
     --page-inline: var(--container-padding-desktop);
     --layout-grid-gap: var(--grid-gap-desktop);
     --layout-grid-columns: var(--grid-columns-desktop);
+  }
+
+  .section-label__chip,
+  .solution-section__label-chip {
+    letter-spacing: 0.75px;
   }
 
   .hero-section {
