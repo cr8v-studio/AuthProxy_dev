@@ -3429,6 +3429,10 @@ a {
   width: 274px;
 }
 
+.pricing-section__plans .pricing-plan-card:last-child .pricing-plan-card__button {
+  width: 199px;
+}
+
 .pricing-section__free-title {
   padding: var(--space-48);
   border-bottom: 1px solid var(--site-section-border);
@@ -5327,6 +5331,10 @@ a {
   }
 
   .pricing-section__plans .pricing-plan-card--popular .pricing-plan-card__button {
+    width: auto;
+  }
+
+  .pricing-section__plans .pricing-plan-card:last-child .pricing-plan-card__button {
     width: auto;
   }
 
