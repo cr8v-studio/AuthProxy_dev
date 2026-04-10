@@ -240,6 +240,10 @@ function initLenis() {
       return target;
     }
 
+    if (target.matches('.site-wide.section-label-bar, .section-label-bar')) {
+      return target;
+    }
+
     const section =
       target.matches('section') ? target : target.closest('section');
 
@@ -261,7 +265,9 @@ function initLenis() {
         return;
       }
 
-      const target = document.querySelector(targetId);
+      const sectionTarget = document.querySelector(`section${targetId}`);
+      const fallbackTarget = document.querySelector(targetId);
+      const target = sectionTarget || fallbackTarget;
 
       if (!target) {
         return;
