@@ -1850,6 +1850,10 @@ a {
   border-top: 1px solid var(--site-section-border);
 }
 
+.pricing-section {
+  border-top: 0;
+}
+
 .section-label-bar {
   border-bottom: 1px solid var(--site-section-border);
 }
