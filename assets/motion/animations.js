@@ -1399,7 +1399,7 @@ function initDevelopersGridLaserHover() {
   });
 }
 
-// Perspective data-beams over Developers center grid: inward/outward phased flow.
+// Perspective data-beams over Developers center grid: exact SVG tracks, one-way to center.
 function initDevelopersPerspectiveBeams() {
   const center = document.querySelector('.developers-highlights__center');
   if (!center || prefersReducedMotion) {
@@ -1422,81 +1422,101 @@ function initDevelopersPerspectiveBeams() {
     return () => {};
   }
 
-  let beams = [];
+  const beamTrackPaths = [
+    'M199.624 231.257V399.116',
+    'M183.731 231.257L99.755 399.116',
+    'M215.293 231.257L298.981 399.116',
+    'M136.343 231.257L0.125231 299.353',
+    'M152.167 231.257L0.125013 332.679',
+    'M167.948 231.257L0.135015 399.125',
+    'M0.125231 249.63L136.343 215.507',
+    'M262.818 231.257L399.125 299.346',
+    'M246.857 231.257L399.125 332.946',
+    'M399.125 249.67L262.818 215.497',
+    'M231.076 231.257L398.593 399.116',
+    'M0.125231 149.934L136.343 183.883',
+    'M136.343 167.986L0.125231 99.8872',
+    'M152.026 167.986L0.125231 66.918',
+    'M215.453 167.986L299.347 0.125027',
+    'M167.884 167.985L0.125231 0.606435',
+    'M183.741 167.986L99.5441 0.125027',
+    'M199.624 0.125462V167.986',
+    'M247.166 167.986L399.125 66.7593',
+    'M231.31 167.985L399.125 0.248967',
+    'M262.818 168.03L399.125 99.8863',
+    'M399.125 149.888L262.818 183.891'
+  ];
+
+  const viewBoxWidth = 399.25;
+  const viewBoxHeight = 399.25;
+  const centerX = 199.624;
+  const centerY = 199.625;
+
   let beamTweens = [];
-
-  const createBeam = (d, amplitude, delay = 0) => {
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('class', 'developers-highlights__beam-path');
-    path.setAttribute('d', d);
-    svg.append(path);
-    beams.push({ path, amplitude, delay });
-  };
-
   const buildBeams = () => {
-    const rect = layer.getBoundingClientRect();
-    const width = Math.max(0, Math.round(rect.width));
-    const height = Math.max(0, Math.round(rect.height));
-    const cx = width / 2;
-    const cy = height / 2;
-
-    if (width < 120 || height < 120) {
-      return;
-    }
-
-    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.setAttribute('viewBox', `0 0 ${viewBoxWidth} ${viewBoxHeight}`);
     svg.textContent = '';
-    beams = [];
 
-    const ySteps = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
-    ySteps.forEach((step, index) => {
-      const y = cy + step * 24;
-      const inset = Math.abs(step) * 20;
-      const left = inset + 8;
-      const right = width - inset - 8;
-      if (right - left < 60) {
+    const tracks = [];
+    beamTrackPaths.forEach((d) => {
+      const sourcePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      sourcePath.setAttribute('d', d);
+      svg.append(sourcePath);
+
+      const length = sourcePath.getTotalLength();
+      if (length < 12) {
+        sourcePath.remove();
         return;
       }
-      createBeam(`M${left} ${y}H${cx}`, 34 + Math.abs(step) * 8, index * 0.05);
-      createBeam(`M${right} ${y}H${cx}`, -(34 + Math.abs(step) * 8), index * 0.05 + 0.03);
+
+      const start = sourcePath.getPointAtLength(0);
+      const end = sourcePath.getPointAtLength(length);
+      sourcePath.remove();
+
+      // Remove horizontal tracks; keep only perspective rays.
+      if (Math.abs(end.y - start.y) <= 0.9) {
+        return;
+      }
+
+      const distStart = Math.hypot(start.x - centerX, start.y - centerY);
+      const distEnd = Math.hypot(end.x - centerX, end.y - centerY);
+      const outer = distStart >= distEnd ? start : end;
+      const inner = distStart >= distEnd ? end : start;
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('class', 'developers-highlights__beam-path');
+      path.setAttribute('d', `M${outer.x} ${outer.y}L${inner.x} ${inner.y}`);
+      svg.append(path);
+      tracks.push(path);
     });
 
-    const xSteps = [0.14, 0.27, 0.38, 0.62, 0.73, 0.86];
-    xSteps.forEach((ratio, index) => {
-      const x = Math.round(width * ratio);
-      const amp = 30 + Math.abs((ratio - 0.5) * 120);
-      createBeam(`M${x} 0L${cx} ${cy}`, amp, index * 0.06 + 0.05);
-      createBeam(`M${x} ${height}L${cx} ${cy}`, -amp, index * 0.06 + 0.08);
-    });
-
-    beams.forEach(({ path, amplitude }) => {
-      const length = Math.max(1, Math.round(path.getTotalLength()));
-      const segment = Math.min(32, Math.max(12, Math.round(length * 0.2)));
-      path.setAttribute('stroke-dasharray', `${segment} ${length + 40}`);
-      path.setAttribute('stroke-dashoffset', `${-amplitude}`);
-    });
+    return tracks;
   };
 
-  const startAnimation = () => {
+  const startAnimation = (tracks) => {
     beamTweens.forEach((tween) => tween.kill());
-    beamTweens = beams.map(({ path, amplitude, delay }) =>
-      gsap.to(path, {
-        attr: { 'stroke-dashoffset': amplitude },
-        duration: isMobileViewport() ? 2.2 : 1.9,
-        ease: 'sine.inOut',
-        yoyo: true,
+    beamTweens = tracks.map((path, index) => {
+      const length = Math.max(1, path.getTotalLength());
+      const segment = Math.min(26, Math.max(10, length * 0.14));
+      path.setAttribute('stroke-dasharray', `${segment} ${length + segment + 30}`);
+      path.setAttribute('stroke-dashoffset', '0');
+
+      return gsap.to(path, {
+        attr: { 'stroke-dashoffset': -length },
+        duration: isMobileViewport() ? 2.2 : 1.85,
+        ease: 'none',
         repeat: -1,
-        delay
-      })
-    );
+        delay: index * 0.055
+      });
+    });
   };
 
-  buildBeams();
-  startAnimation();
+  let tracks = buildBeams();
+  startAnimation(tracks);
 
   const resizeObserver = new ResizeObserver(() => {
-    buildBeams();
-    startAnimation();
+    tracks = buildBeams();
+    startAnimation(tracks);
   });
   resizeObserver.observe(layer);
 
