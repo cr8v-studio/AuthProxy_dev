@@ -2887,6 +2887,7 @@ a {
 .operations-visual__icon,
 .operations-visual__stack,
 .operations-visual__arrow,
+.operations-visual__arrow-flow,
 .operations-section__docs-link,
 .operations-visual__corner {
   position: absolute;
@@ -2962,6 +2963,71 @@ a {
   width: 12px;
   height: 110px;
   transform: rotate(180deg);
+}
+
+.operations-visual__arrow.is-motion-hidden {
+  opacity: 0;
+}
+
+.operations-visual__arrow-flow {
+  width: 110px;
+  height: 12px;
+  pointer-events: none;
+  overflow: hidden;
+  transform-origin: 50% 50%;
+}
+
+.operations-visual__arrow-flow-motion {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.operations-visual__arrow-flow-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  transform: translateY(-50%);
+  will-change: transform;
+}
+
+.operations-visual__arrow-flow-chevrons {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 8px;
+}
+
+.operations-visual__arrow-flow-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  color: rgb(237 88 90);
+}
+
+.operations-visual__arrow-flow-chevron svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: rotate(-90deg);
+  fill: currentColor;
+}
+
+.operations-visual__arrow-flow-chevron.is-opacity-3 {
+  opacity: 0.3;
+}
+
+.operations-visual__arrow-flow-chevron.is-opacity-5 {
+  opacity: 0.5;
+}
+
+.operations-visual__arrow-flow-chevron.is-opacity-7 {
+  opacity: 0.7;
 }
 
 .operations-visual__corner {
