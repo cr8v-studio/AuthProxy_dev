@@ -3400,7 +3400,13 @@ a {
 }
 
 .pricing-plan-card__button-frame--popular {
+  left: var(--space-48);
   bottom: 39px;
+  width: 304px;
+  height: 44px;
+  align-items: center;
+  gap: 0;
+  justify-content: center;
 }
 
 .pricing-plan-card__button {
