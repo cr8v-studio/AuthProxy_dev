@@ -898,9 +898,9 @@ function initOperationsChevronFlow() {
 
   const flowConfigs = [
     { key: 'operations-visual__arrow--top', angle: 0, delay: 0 },
-    { key: 'operations-visual__arrow--right', angle: -90, delay: 0.12 },
-    { key: 'operations-visual__arrow--bottom', angle: 180, delay: 0.24 },
-    { key: 'operations-visual__arrow--left', angle: 90, delay: 0.36 }
+    { key: 'operations-visual__arrow--right', angle: -90, delay: 0 },
+    { key: 'operations-visual__arrow--bottom', angle: 180, delay: 0 },
+    { key: 'operations-visual__arrow--left', angle: 90, delay: 0 }
   ];
 
   const chevronIcon = `
@@ -911,6 +911,7 @@ function initOperationsChevronFlow() {
 
   const flows = [];
   const tweens = [];
+  const flowDuration = isMobileViewport() ? 1.72 : 1.52;
 
   const createFlow = (arrow, config) => {
     const flow = document.createElement('span');
@@ -974,7 +975,7 @@ function initOperationsChevronFlow() {
 
       const tween = gsap.to(entry.track, {
         x: 0,
-        duration: isMobileViewport() ? 1.55 : 1.35,
+        duration: flowDuration,
         ease: 'none',
         repeat: -1,
         delay: entry.delay
