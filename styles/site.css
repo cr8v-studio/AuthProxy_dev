@@ -3208,7 +3208,7 @@ a {
   position: relative;
   min-height: 500px;
   border-bottom: 1px solid var(--site-section-border);
-  background: var(--figma-color-white-base);
+  background: rgb(var(--figma-color-off-white-rgb) / 0.85);
   overflow: hidden;
 }
 
@@ -3240,7 +3240,7 @@ a {
   inset: 0;
   background: radial-gradient(
     ellipse 600px 250px at 50% 50%,
-    rgb(244 244 244 / 0.9) 60%,
+    rgb(244 244 244 / 0.9) 60.096%,
     rgb(244 244 244 / 0.4) 100%
   );
 }
