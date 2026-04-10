@@ -1413,6 +1413,7 @@ function initDevelopersPerspectiveBeams() {
     layer.setAttribute('aria-hidden', 'true');
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'developers-highlights__beams-svg');
+    svg.setAttribute('preserveAspectRatio', 'none');
     layer.append(svg);
     center.append(layer);
   }
@@ -1421,6 +1422,7 @@ function initDevelopersPerspectiveBeams() {
   if (!svg) {
     return () => {};
   }
+  svg.setAttribute('preserveAspectRatio', 'none');
 
   const beamTrackPaths = [
     'M199.624 231.257V399.116',
