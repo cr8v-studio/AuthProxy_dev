@@ -1399,6 +1399,130 @@ function initDevelopersGridLaserHover() {
   });
 }
 
+// Perspective data-beams over Developers center grid: inward/outward phased flow.
+function initDevelopersPerspectiveBeams() {
+  const center = document.querySelector('.developers-highlights__center');
+  if (!center || prefersReducedMotion) {
+    return () => {};
+  }
+
+  let layer = center.querySelector('.developers-highlights__beams');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.className = 'developers-highlights__beams';
+    layer.setAttribute('aria-hidden', 'true');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'developers-highlights__beams-svg');
+    layer.append(svg);
+    center.append(layer);
+  }
+
+  const svg = layer.querySelector('.developers-highlights__beams-svg');
+  if (!svg) {
+    return () => {};
+  }
+
+  let beams = [];
+  let beamTweens = [];
+
+  const createBeam = (d, amplitude, delay = 0) => {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('class', 'developers-highlights__beam-path');
+    path.setAttribute('d', d);
+    svg.append(path);
+    beams.push({ path, amplitude, delay });
+  };
+
+  const buildBeams = () => {
+    const rect = layer.getBoundingClientRect();
+    const width = Math.max(0, Math.round(rect.width));
+    const height = Math.max(0, Math.round(rect.height));
+    const cx = width / 2;
+    const cy = height / 2;
+
+    if (width < 120 || height < 120) {
+      return;
+    }
+
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.textContent = '';
+    beams = [];
+
+    const ySteps = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
+    ySteps.forEach((step, index) => {
+      const y = cy + step * 24;
+      const inset = Math.abs(step) * 20;
+      const left = inset + 8;
+      const right = width - inset - 8;
+      if (right - left < 60) {
+        return;
+      }
+      createBeam(`M${left} ${y}H${cx}`, 34 + Math.abs(step) * 8, index * 0.05);
+      createBeam(`M${right} ${y}H${cx}`, -(34 + Math.abs(step) * 8), index * 0.05 + 0.03);
+    });
+
+    const xSteps = [0.14, 0.27, 0.38, 0.62, 0.73, 0.86];
+    xSteps.forEach((ratio, index) => {
+      const x = Math.round(width * ratio);
+      const amp = 30 + Math.abs((ratio - 0.5) * 120);
+      createBeam(`M${x} 0L${cx} ${cy}`, amp, index * 0.06 + 0.05);
+      createBeam(`M${x} ${height}L${cx} ${cy}`, -amp, index * 0.06 + 0.08);
+    });
+
+    beams.forEach(({ path, amplitude }) => {
+      const length = Math.max(1, Math.round(path.getTotalLength()));
+      const segment = Math.min(32, Math.max(12, Math.round(length * 0.2)));
+      path.setAttribute('stroke-dasharray', `${segment} ${length + 40}`);
+      path.setAttribute('stroke-dashoffset', `${-amplitude}`);
+    });
+  };
+
+  const startAnimation = () => {
+    beamTweens.forEach((tween) => tween.kill());
+    beamTweens = beams.map(({ path, amplitude, delay }) =>
+      gsap.to(path, {
+        attr: { 'stroke-dashoffset': amplitude },
+        duration: isMobileViewport() ? 2.2 : 1.9,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay
+      })
+    );
+  };
+
+  buildBeams();
+  startAnimation();
+
+  const resizeObserver = new ResizeObserver(() => {
+    buildBeams();
+    startAnimation();
+  });
+  resizeObserver.observe(layer);
+
+  const trigger = ScrollTrigger.create({
+    trigger: center,
+    start: 'top 85%',
+    end: 'bottom 20%',
+    onEnter: () => beamTweens.forEach((tween) => tween.play()),
+    onEnterBack: () => beamTweens.forEach((tween) => tween.play()),
+    onLeave: () => beamTweens.forEach((tween) => tween.pause()),
+    onLeaveBack: () => beamTweens.forEach((tween) => tween.pause())
+  });
+
+  if (!trigger.isActive) {
+    beamTweens.forEach((tween) => tween.pause());
+  }
+
+  return () => {
+    trigger.kill();
+    resizeObserver.disconnect();
+    beamTweens.forEach((tween) => tween.kill());
+    beamTweens = [];
+    layer?.remove();
+  };
+}
+
 // Developers side bullets: sequential pulse in the same visual language as grid dots.
 function initDevelopersHighlightDotsBlink() {
   const section = document.querySelector('.developers-section__highlights');
@@ -2182,6 +2306,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
+  registerMotionCleanup(initDevelopersPerspectiveBeams());
   registerMotionCleanup(initDevelopersHighlightDotsBlink());
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
