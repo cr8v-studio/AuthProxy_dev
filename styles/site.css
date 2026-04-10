@@ -3254,11 +3254,17 @@ a {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 2;
+  pointer-events: none;
   background: radial-gradient(
     ellipse 600px 250px at 50% 50%,
     rgb(244 244 244 / 0.9) 60.096%,
     rgb(244 244 244 / 0.4) 100%
   );
+}
+
+.pricing-section__hero-grid .hero-section__grid-laser {
+  z-index: 1;
 }
 
 .pricing-section__headline-wrap,
