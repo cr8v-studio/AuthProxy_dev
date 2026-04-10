@@ -1628,6 +1628,15 @@ function initDevelopersGridLaserHover() {
   });
 }
 
+// Reuse Hero laser-grid interaction for Pricing hero grid.
+function initPricingGridLaserHover() {
+  return initGridLaserHover({
+    panelSelector: '.pricing-section__hero',
+    gridSelector: '.pricing-section__hero-grid',
+    bindToken: 'motionLaserPricingBound'
+  });
+}
+
 // Perspective data-beams over Developers center grid: exact SVG tracks, one-way to center.
 function initDevelopersPerspectiveBeams() {
   const center = document.querySelector('.developers-highlights__center');
@@ -2577,6 +2586,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
   registerMotionCleanup(initDevelopersGridLaserHover());
+  registerMotionCleanup(initPricingGridLaserHover());
   registerMotionCleanup(initDevelopersPerspectiveBeams());
   registerMotionCleanup(initDevelopersHighlightDotsBlink());
   registerMotionCleanup(initInteractiveHoverStates());
