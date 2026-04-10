@@ -887,6 +887,171 @@ function initHowV2PipelineChevronFlow() {
   setIdleIntensity();
 }
 
+// Operations workflow arrows: animated chevron streams on horizontal and vertical links.
+function initOperationsChevronFlow() {
+  const scene = document.querySelector('.operations-visual__scene');
+  const arrows = scene ? gsap.utils.toArray('.operations-visual__arrow', scene) : [];
+
+  if (!scene || arrows.length < 4 || prefersReducedMotion) {
+    return () => {};
+  }
+
+  const flowConfigs = [
+    { key: 'operations-visual__arrow--top', angle: 0, delay: 0 },
+    { key: 'operations-visual__arrow--right', angle: -90, delay: 0.12 },
+    { key: 'operations-visual__arrow--bottom', angle: 180, delay: 0.24 },
+    { key: 'operations-visual__arrow--left', angle: 90, delay: 0.36 }
+  ];
+
+  const chevronIcon = `
+    <svg viewBox="373 187 15 15" aria-hidden="true" focusable="false">
+      <path d="M374.795 188.316a1.124 1.124 0 1 0-1.59 1.591l6 6c.435.435 1.14.44 1.581.01l6-5.854a1.126 1.126 0 0 0-1.572-1.611l-5.204 5.078-5.215-5.214Z"></path>
+    </svg>
+  `;
+
+  const flows = [];
+  const tweens = [];
+
+  const createFlow = (arrow, config) => {
+    const flow = document.createElement('span');
+    flow.className = `operations-visual__arrow-flow operations-visual__arrow-flow--${config.key.split('--')[1]}`;
+    flow.setAttribute('aria-hidden', 'true');
+    flow.innerHTML = `
+      <span class="operations-visual__arrow-flow-motion">
+        <span class="operations-visual__arrow-flow-track">
+          <span class="operations-visual__arrow-flow-chevrons">
+            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-7">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
+          </span>
+          <span class="operations-visual__arrow-flow-chevrons" aria-hidden="true">
+            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-7">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
+            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
+          </span>
+        </span>
+      </span>
+    `;
+
+    scene.append(flow);
+    arrow.classList.add('is-motion-hidden');
+
+    const track = flow.querySelector('.operations-visual__arrow-flow-track');
+    const group = flow.querySelector('.operations-visual__arrow-flow-chevrons');
+    if (!track || !group) {
+      return null;
+    }
+
+    return { arrow, flow, track, group, angle: config.angle, delay: config.delay, tween: null };
+  };
+
+  flowConfigs.forEach((config) => {
+    const arrow = arrows.find((item) => item.classList.contains(config.key));
+    if (!arrow) {
+      return;
+    }
+    const flow = createFlow(arrow, config);
+    if (flow) {
+      flows.push(flow);
+    }
+  });
+
+  if (!flows.length) {
+    return () => {};
+  }
+
+  const buildTweens = () => {
+    tweens.forEach((tween) => tween.kill());
+    tweens.length = 0;
+
+    flows.forEach((entry) => {
+      const cycleShift = Math.round(entry.group.getBoundingClientRect().width) || 88;
+      gsap.set(entry.track, { x: -cycleShift });
+
+      const tween = gsap.to(entry.track, {
+        x: 0,
+        duration: isMobileViewport() ? 1.55 : 1.35,
+        ease: 'none',
+        repeat: -1,
+        delay: entry.delay
+      });
+      entry.tween = tween;
+      tweens.push(tween);
+    });
+  };
+
+  const positionFlows = () => {
+    const sceneRect = scene.getBoundingClientRect();
+
+    flows.forEach((entry) => {
+      const rect = entry.arrow.getBoundingClientRect();
+      const cx = rect.left - sceneRect.left + rect.width / 2;
+      const cy = rect.top - sceneRect.top + rect.height / 2;
+      const length = Math.max(rect.width, rect.height);
+      const thickness = Math.max(10, Math.min(rect.width, rect.height));
+
+      entry.flow.style.width = `${Math.round(length)}px`;
+      entry.flow.style.height = `${Math.round(thickness)}px`;
+      entry.flow.style.left = `${Math.round(cx - length / 2)}px`;
+      entry.flow.style.top = `${Math.round(cy - thickness / 2)}px`;
+      entry.flow.style.transform = `rotate(${entry.angle}deg)`;
+    });
+  };
+
+  let resizeFrame = 0;
+  const onResize = () => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => {
+      positionFlows();
+      buildTweens();
+    });
+  };
+
+  positionFlows();
+  buildTweens();
+
+  const trigger = ScrollTrigger.create({
+    trigger: scene,
+    start: 'top 90%',
+    end: 'bottom 12%',
+    onEnter: () => {
+      gsap.to(flows.map((entry) => entry.flow), { autoAlpha: 0.98, duration: 0.35, ease: 'power2.out' });
+      gsap.to(tweens, { timeScale: 1, duration: 0.4, ease: 'power2.out', overwrite: true });
+    },
+    onEnterBack: () => {
+      gsap.to(flows.map((entry) => entry.flow), { autoAlpha: 0.98, duration: 0.35, ease: 'power2.out' });
+      gsap.to(tweens, { timeScale: 1, duration: 0.4, ease: 'power2.out', overwrite: true });
+    },
+    onLeave: () => {
+      gsap.to(flows.map((entry) => entry.flow), { autoAlpha: 0.65, duration: 0.35, ease: 'power2.out' });
+      gsap.to(tweens, { timeScale: 0.45, duration: 0.4, ease: 'power2.out', overwrite: true });
+    },
+    onLeaveBack: () => {
+      gsap.to(flows.map((entry) => entry.flow), { autoAlpha: 0.65, duration: 0.35, ease: 'power2.out' });
+      gsap.to(tweens, { timeScale: 0.45, duration: 0.4, ease: 'power2.out', overwrite: true });
+    }
+  });
+
+  window.addEventListener('resize', onResize, { passive: true });
+  gsap.set(flows.map((entry) => entry.flow), { autoAlpha: 0.65 });
+  gsap.to(tweens, { timeScale: 0.45, duration: 0.01 });
+
+  return () => {
+    cancelAnimationFrame(resizeFrame);
+    window.removeEventListener('resize', onResize);
+    trigger.kill();
+    tweens.forEach((tween) => tween.kill());
+    flows.forEach((entry) => {
+      entry.arrow.classList.remove('is-motion-hidden');
+      entry.flow.remove();
+    });
+  };
+}
+
 function initSecurityMetricCounter() {
   const metric = document.querySelector('.security-section__metric');
   const accent = metric?.querySelector('.security-section__metric-accent');
@@ -2341,6 +2506,7 @@ async function initMotionSystem() {
   initSolutionSummaryMotion();
   initHowV2StatsReveal();
   initHowV2PipelineChevronFlow();
+  registerMotionCleanup(initOperationsChevronFlow());
   initSecurityMetricCounter();
   registerMotionCleanup(initNavbarMotion(lenis));
   const destroyHeroMetricsCarousel = initHeroMetricsCarousel();
