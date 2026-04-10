@@ -3421,6 +3421,10 @@ a {
   text-transform: uppercase;
 }
 
+.pricing-section__plans .pricing-plan-card:first-child .pricing-plan-card__button {
+  width: 202px;
+}
+
 .pricing-section__free-title {
   padding: var(--space-48);
   border-bottom: 1px solid var(--site-section-border);
@@ -5311,6 +5315,10 @@ a {
   }
 
   .pricing-plan-card__button {
+    width: auto;
+  }
+
+  .pricing-section__plans .pricing-plan-card:first-child .pricing-plan-card__button {
     width: auto;
   }
 
