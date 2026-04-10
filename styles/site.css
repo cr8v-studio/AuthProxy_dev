@@ -3745,7 +3745,7 @@ a {
 
 .faq-section__docs-corner--br {
   right: 24px;
-  bottom: 24px;
+  bottom: 32px;
   transform: rotate(180deg);
 }
 
