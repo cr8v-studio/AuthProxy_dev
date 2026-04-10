@@ -2847,7 +2847,7 @@ a {
   margin-inline: auto;
   min-height: 696px;
   border-inline: 1px solid var(--site-section-border);
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   background: var(--figma-color-off-white-base);
