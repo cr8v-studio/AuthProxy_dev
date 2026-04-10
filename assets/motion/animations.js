@@ -911,8 +911,8 @@ function initOperationsChevronFlow() {
 
   const flows = [];
   const tweens = [];
-  const horizontalFlowDuration = isMobileViewport() ? 2.1 : 1.9;
-  const verticalFlowDuration = isMobileViewport() ? 1.72 : 1.52;
+  const horizontalFlowDuration = isMobileViewport() ? 3.15 : 2.85;
+  const verticalFlowDuration = isMobileViewport() ? 0.96 : 0.84;
 
   const createChevronGroup = (direction) => `
     <span class="operations-visual__arrow-flow-chevrons operations-visual__arrow-flow-chevrons--${direction}">
