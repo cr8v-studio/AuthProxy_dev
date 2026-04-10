@@ -1160,7 +1160,152 @@
         </div>
       </section>
       <div id="quick-start" class="sr-only" aria-hidden="true"></div>
-      <div id="faq" class="sr-only" aria-hidden="true"></div>
+      <section class="content-section faq-section" id="faq">
+        <div class="site-wide section-label-bar fade-up">
+          <div class="section-label">
+            <span class="section-label__chevrons" aria-hidden="true">
+              <img src="./assets/sections/security-slider/sec-pagination-arrow.svg" alt="" width="11.1298" height="16.6667" />
+              <img src="./assets/sections/security-slider/sec-pagination-arrow.svg" alt="" width="11.1298" height="16.6667" />
+              <img src="./assets/sections/security-slider/sec-pagination-arrow.svg" alt="" width="11.1298" height="16.6667" />
+            </span>
+            <span class="heading-md section-label__chip">FAQ</span>
+          </div>
+        </div>
+
+        <div class="site-container faq-section__intro fade-up">
+          <h2 class="faq-section__title">Frequently asked questions and documentation.</h2>
+          <p class="faq-section__copy">Key implementation questions answered with direct links to technical docs for deeper detail.</p>
+        </div>
+
+        <div class="site-container faq-section__panel fade-up">
+          <div class="faq-section__accordion" aria-label="FAQ accordion">
+            <article class="faq-item faq-item--open">
+              <div class="faq-item__question-row">
+                <h3 class="faq-item__question">How quickly can we deploy AuthProxy in production?</h3>
+                <img
+                  class="faq-item__toggle"
+                  src="./assets/sections/faq/faq-item-toggle-open.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="64"
+                  height="44"
+                />
+              </div>
+              <p class="faq-item__answer">
+                Most teams can launch with Docker in under an hour. Start with the quick start flow, then add route and security policies incrementally.
+              </p>
+            </article>
+
+            <article class="faq-item">
+              <div class="faq-item__question-row">
+                <h3 class="faq-item__question">Can we keep our existing backend services and auth flows?</h3>
+                <img
+                  class="faq-item__toggle"
+                  src="./assets/sections/faq/faq-item-toggle-closed.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="64"
+                  height="44"
+                />
+              </div>
+              <p class="faq-item__answer">
+                Yes. AuthProxy sits in front of existing services as an edge gateway, so you can keep current backends and migrate auth/routing policies progressively.
+              </p>
+            </article>
+
+            <article class="faq-item">
+              <div class="faq-item__question-row">
+                <h3 class="faq-item__question">How does AuthProxy handle performance and rate limiting?</h3>
+                <img
+                  class="faq-item__toggle"
+                  src="./assets/sections/faq/faq-item-toggle-closed.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="64"
+                  height="44"
+                />
+              </div>
+              <p class="faq-item__answer">
+                AuthProxy uses a lightweight single-process model with PWA-optimized delivery and built-in request controls, including rate limiting at the gateway layer.
+              </p>
+            </article>
+
+            <article class="faq-item">
+              <div class="faq-item__question-row">
+                <h3 class="faq-item__question">Does AuthProxy support AI/MCP integrations securely?</h3>
+                <img
+                  class="faq-item__toggle"
+                  src="./assets/sections/faq/faq-item-toggle-closed.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="64"
+                  height="44"
+                />
+              </div>
+              <p class="faq-item__answer">
+                Yes. AuthProxy includes MCP-oriented integration patterns with edge authentication, scoped access, and centralized policy enforcement for AI-connected flows.
+              </p>
+            </article>
+          </div>
+
+          <aside class="faq-section__docs-panel" aria-label="Docs shortcuts">
+            <div class="faq-section__docs-shortcuts">
+              <h3 class="faq-section__docs-title">Docs shortcuts</h3>
+
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/quick-start">
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
+                <span class="how-v2__learn-link-text">Quick Start</span>
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
+              </a>
+
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/architecture">
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
+                <span class="how-v2__learn-link-text">Architecture</span>
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
+              </a>
+
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/security/encryption">
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
+                <span class="how-v2__learn-link-text">Security</span>
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
+              </a>
+
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/deployment/docker-deployment">
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
+                <span class="how-v2__learn-link-text">Deployment</span>
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
+              </a>
+
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/mcp">
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
+                <span class="how-v2__learn-link-text">MCP Protocol</span>
+                <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
+              </a>
+            </div>
+
+            <div class="faq-section__docs-mark-wrap" aria-hidden="true">
+              <img class="faq-section__docs-mark" src="./assets/sections/faq/faq-panel-mark.svg" alt="" width="84.3145" height="56.3044" />
+            </div>
+
+            <a class="site-header-button-v2 faq-section__docs-site-link" href="https://docs.authproxy.tech/">
+              <span class="site-header-button-v2__label">docs.authproxy.tech</span>
+              <span class="site-header-button-v2__icon-wrap">
+                <img
+                  class="icon site-header-button-v2__icon"
+                  src="./assets/sections/faq/faq-link-arrow-light.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width="9.8995"
+                  height="16.9706"
+                />
+              </span>
+            </a>
+
+            <span class="faq-section__docs-corner faq-section__docs-corner--tr" aria-hidden="true"></span>
+            <span class="faq-section__docs-corner faq-section__docs-corner--br" aria-hidden="true"></span>
+          </aside>
+        </div>
+      </section>
 
     </main>
 
