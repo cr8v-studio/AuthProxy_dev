@@ -2740,7 +2740,7 @@ a {
   min-height: 213px;
   margin-inline: auto;
   border-inline: 1px solid var(--site-section-border);
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
   background: var(--figma-color-white-base);
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
