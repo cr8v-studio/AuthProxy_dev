@@ -911,7 +911,8 @@ function initOperationsChevronFlow() {
 
   const flows = [];
   const tweens = [];
-  const flowDuration = isMobileViewport() ? 1.72 : 1.52;
+  const horizontalFlowDuration = isMobileViewport() ? 2.1 : 1.9;
+  const verticalFlowDuration = isMobileViewport() ? 1.72 : 1.52;
 
   const createChevronGroup = (direction) => `
     <span class="operations-visual__arrow-flow-chevrons operations-visual__arrow-flow-chevrons--${direction}">
@@ -1005,7 +1006,7 @@ function initOperationsChevronFlow() {
         gsap.set(entry.track, { attr: { 'stroke-dashoffset': startOffset } });
         const tween = gsap.to(entry.track, {
           attr: { 'stroke-dashoffset': endOffset },
-          duration: flowDuration,
+          duration: verticalFlowDuration,
           ease: 'none',
           repeat: -1,
           delay: entry.delay
@@ -1029,7 +1030,7 @@ function initOperationsChevronFlow() {
 
       const tween = gsap.to(entry.track, {
         ...toVars,
-        duration: flowDuration,
+        duration: horizontalFlowDuration,
         ease: 'none',
         repeat: -1,
         delay: entry.delay
@@ -1048,11 +1049,14 @@ function initOperationsChevronFlow() {
       const cy = rect.top - sceneRect.top + rect.height / 2;
       const length = Math.max(rect.width, rect.height);
       const thickness = Math.max(10, Math.min(rect.width, rect.height));
+      const isVertical = entry.axis === 'y';
+      const flowWidth = isVertical ? thickness : length;
+      const flowHeight = isVertical ? length : thickness;
 
-      entry.flow.style.width = `${Math.round(length)}px`;
-      entry.flow.style.height = `${Math.round(thickness)}px`;
-      entry.flow.style.left = `${Math.round(cx - length / 2)}px`;
-      entry.flow.style.top = `${Math.round(cy - thickness / 2)}px`;
+      entry.flow.style.width = `${Math.round(flowWidth)}px`;
+      entry.flow.style.height = `${Math.round(flowHeight)}px`;
+      entry.flow.style.left = `${Math.round(cx - flowWidth / 2)}px`;
+      entry.flow.style.top = `${Math.round(cy - flowHeight / 2)}px`;
     });
   };
 
