@@ -897,10 +897,10 @@ function initOperationsChevronFlow() {
   }
 
   const flowConfigs = [
-    { key: 'operations-visual__arrow--top', axis: 'x', direction: 'right', delay: 0 },
-    { key: 'operations-visual__arrow--right', axis: 'y', direction: 'up', delay: 0 },
-    { key: 'operations-visual__arrow--bottom', axis: 'x', direction: 'left', delay: 0 },
-    { key: 'operations-visual__arrow--left', axis: 'y', direction: 'down', delay: 0 }
+    { key: 'operations-visual__arrow--top', axis: 'x', direction: 'right', delay: 0, mode: 'chevrons' },
+    { key: 'operations-visual__arrow--right', axis: 'y', direction: 'up', delay: 0, mode: 'dash' },
+    { key: 'operations-visual__arrow--bottom', axis: 'x', direction: 'left', delay: 0, mode: 'chevrons' },
+    { key: 'operations-visual__arrow--left', axis: 'y', direction: 'down', delay: 0, mode: 'dash' }
   ];
 
   const chevronIcon = `
@@ -927,23 +927,42 @@ function initOperationsChevronFlow() {
     const flow = document.createElement('span');
     flow.className = `operations-visual__arrow-flow operations-visual__arrow-flow--${config.key.split('--')[1]} ${
       config.axis === 'y' ? 'is-vertical' : 'is-horizontal'
-    }`;
+    } ${config.mode === 'dash' ? 'is-dash' : 'is-chevrons'}`;
     flow.setAttribute('aria-hidden', 'true');
-    flow.innerHTML = `
-      <span class="operations-visual__arrow-flow-motion">
-        <span class="operations-visual__arrow-flow-track operations-visual__arrow-flow-track--${config.axis}">
-          ${createChevronGroup(config.direction)}
-          ${createChevronGroup(config.direction)}
+    if (config.mode === 'dash') {
+      flow.innerHTML = `
+        <span class="operations-visual__arrow-flow-motion">
+          <svg class="operations-visual__arrow-flow-dash-svg" viewBox="0 0 12 110" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path
+              class="operations-visual__arrow-flow-dash-path"
+              d="M6 0 V110"
+              stroke="#ED585A"
+              stroke-dasharray="2 6"
+              stroke-linecap="round"
+            ></path>
+          </svg>
         </span>
-      </span>
-    `;
+      `;
+    } else {
+      flow.innerHTML = `
+        <span class="operations-visual__arrow-flow-motion">
+          <span class="operations-visual__arrow-flow-track operations-visual__arrow-flow-track--${config.axis}">
+            ${createChevronGroup(config.direction)}
+            ${createChevronGroup(config.direction)}
+          </span>
+        </span>
+      `;
+    }
 
     scene.append(flow);
     arrow.classList.add('is-motion-hidden');
 
-    const track = flow.querySelector('.operations-visual__arrow-flow-track');
+    const track =
+      config.mode === 'dash'
+        ? flow.querySelector('.operations-visual__arrow-flow-dash-path')
+        : flow.querySelector('.operations-visual__arrow-flow-track');
     const group = flow.querySelector('.operations-visual__arrow-flow-chevrons');
-    if (!track || !group) {
+    if (!track) {
       return null;
     }
 
@@ -954,6 +973,7 @@ function initOperationsChevronFlow() {
       group,
       axis: config.axis,
       direction: config.direction,
+      mode: config.mode,
       delay: config.delay,
       tween: null
     };
@@ -979,6 +999,22 @@ function initOperationsChevronFlow() {
     tweens.length = 0;
 
     flows.forEach((entry) => {
+      if (entry.mode === 'dash') {
+        const startOffset = entry.direction === 'up' ? 0 : 8;
+        const endOffset = entry.direction === 'up' ? -8 : 0;
+        gsap.set(entry.track, { attr: { 'stroke-dashoffset': startOffset } });
+        const tween = gsap.to(entry.track, {
+          attr: { 'stroke-dashoffset': endOffset },
+          duration: flowDuration,
+          ease: 'none',
+          repeat: -1,
+          delay: entry.delay
+        });
+        entry.tween = tween;
+        tweens.push(tween);
+        return;
+      }
+
       const groupRect = entry.group.getBoundingClientRect();
       const cycleShift =
         Math.round(entry.axis === 'x' ? groupRect.width : groupRect.height) || 88;
