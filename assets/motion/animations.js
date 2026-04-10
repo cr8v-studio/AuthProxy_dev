@@ -897,10 +897,10 @@ function initOperationsChevronFlow() {
   }
 
   const flowConfigs = [
-    { key: 'operations-visual__arrow--top', angle: 0, delay: 0 },
-    { key: 'operations-visual__arrow--right', angle: -90, delay: 0 },
-    { key: 'operations-visual__arrow--bottom', angle: 180, delay: 0 },
-    { key: 'operations-visual__arrow--left', angle: 90, delay: 0 }
+    { key: 'operations-visual__arrow--top', axis: 'x', direction: 'right', delay: 0 },
+    { key: 'operations-visual__arrow--right', axis: 'y', direction: 'up', delay: 0 },
+    { key: 'operations-visual__arrow--bottom', axis: 'x', direction: 'left', delay: 0 },
+    { key: 'operations-visual__arrow--left', axis: 'y', direction: 'down', delay: 0 }
   ];
 
   const chevronIcon = `
@@ -913,27 +913,27 @@ function initOperationsChevronFlow() {
   const tweens = [];
   const flowDuration = isMobileViewport() ? 1.72 : 1.52;
 
+  const createChevronGroup = (direction) => `
+    <span class="operations-visual__arrow-flow-chevrons operations-visual__arrow-flow-chevrons--${direction}">
+      <span class="operations-visual__arrow-flow-chevron is-opacity-3 is-dir-${direction}">${chevronIcon}</span>
+      <span class="operations-visual__arrow-flow-chevron is-opacity-5 is-dir-${direction}">${chevronIcon}</span>
+      <span class="operations-visual__arrow-flow-chevron is-opacity-7 is-dir-${direction}">${chevronIcon}</span>
+      <span class="operations-visual__arrow-flow-chevron is-opacity-5 is-dir-${direction}">${chevronIcon}</span>
+      <span class="operations-visual__arrow-flow-chevron is-opacity-3 is-dir-${direction}">${chevronIcon}</span>
+    </span>
+  `;
+
   const createFlow = (arrow, config) => {
     const flow = document.createElement('span');
-    flow.className = `operations-visual__arrow-flow operations-visual__arrow-flow--${config.key.split('--')[1]}`;
+    flow.className = `operations-visual__arrow-flow operations-visual__arrow-flow--${config.key.split('--')[1]} ${
+      config.axis === 'y' ? 'is-vertical' : 'is-horizontal'
+    }`;
     flow.setAttribute('aria-hidden', 'true');
     flow.innerHTML = `
       <span class="operations-visual__arrow-flow-motion">
-        <span class="operations-visual__arrow-flow-track">
-          <span class="operations-visual__arrow-flow-chevrons">
-            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-7">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
-          </span>
-          <span class="operations-visual__arrow-flow-chevrons" aria-hidden="true">
-            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-7">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-5">${chevronIcon}</span>
-            <span class="operations-visual__arrow-flow-chevron is-opacity-3">${chevronIcon}</span>
-          </span>
+        <span class="operations-visual__arrow-flow-track operations-visual__arrow-flow-track--${config.axis}">
+          ${createChevronGroup(config.direction)}
+          ${createChevronGroup(config.direction)}
         </span>
       </span>
     `;
@@ -947,7 +947,16 @@ function initOperationsChevronFlow() {
       return null;
     }
 
-    return { arrow, flow, track, group, angle: config.angle, delay: config.delay, tween: null };
+    return {
+      arrow,
+      flow,
+      track,
+      group,
+      axis: config.axis,
+      direction: config.direction,
+      delay: config.delay,
+      tween: null
+    };
   };
 
   flowConfigs.forEach((config) => {
@@ -970,11 +979,20 @@ function initOperationsChevronFlow() {
     tweens.length = 0;
 
     flows.forEach((entry) => {
-      const cycleShift = Math.round(entry.group.getBoundingClientRect().width) || 88;
-      gsap.set(entry.track, { x: -cycleShift });
+      const groupRect = entry.group.getBoundingClientRect();
+      const cycleShift =
+        Math.round(entry.axis === 'x' ? groupRect.width : groupRect.height) || 88;
+      const startOffset =
+        entry.direction === 'right' || entry.direction === 'down' ? -cycleShift : 0;
+      const endOffset =
+        entry.direction === 'right' || entry.direction === 'down' ? 0 : -cycleShift;
+      const fromVars = entry.axis === 'x' ? { x: startOffset, y: 0 } : { y: startOffset, x: 0 };
+      const toVars = entry.axis === 'x' ? { x: endOffset } : { y: endOffset };
+
+      gsap.set(entry.track, fromVars);
 
       const tween = gsap.to(entry.track, {
-        x: 0,
+        ...toVars,
         duration: flowDuration,
         ease: 'none',
         repeat: -1,
@@ -999,7 +1017,6 @@ function initOperationsChevronFlow() {
       entry.flow.style.height = `${Math.round(thickness)}px`;
       entry.flow.style.left = `${Math.round(cx - length / 2)}px`;
       entry.flow.style.top = `${Math.round(cy - thickness / 2)}px`;
-      entry.flow.style.transform = `rotate(${entry.angle}deg)`;
     });
   };
 
