@@ -3302,10 +3302,9 @@ a {
   flex-direction: column;
   gap: var(--space-48);
   padding: var(--space-48);
-  padding-bottom: 120px;
   min-height: 362px;
   border-right: 1px solid var(--site-section-border);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .pricing-plan-card:last-child {
@@ -3314,6 +3313,7 @@ a {
 
 .pricing-plan-card--popular {
   background: var(--figma-color-white-base);
+  overflow: visible;
 }
 
 .pricing-plan-card__badge {
@@ -3357,6 +3357,8 @@ a {
 
 .pricing-plan-card__price {
   margin: 0;
+  display: inline-flex;
+  align-items: flex-start;
   color: var(--figma-color-dark-base);
   font-size: 41px;
   line-height: 41px;
@@ -3395,7 +3397,7 @@ a {
 }
 
 .pricing-plan-card__button-frame--popular {
-  bottom: 38px;
+  bottom: 39px;
 }
 
 .pricing-plan-card__button {
