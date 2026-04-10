@@ -2899,28 +2899,28 @@ a {
 
 .operations-visual__icon--robot {
   left: 100px;
-  top: 148px;
+  top: 100px;
   width: 100px;
   height: 100px;
 }
 
 .operations-visual__icon--cube {
   right: 100px;
-  top: 148px;
+  top: 100px;
   width: 100px;
   height: 100px;
 }
 
 .operations-visual__icon--files {
   left: 100px;
-  bottom: 94px;
+  bottom: 100px;
   width: 100px;
   height: 100px;
 }
 
 .operations-visual__icon--browser {
   right: 100px;
-  bottom: 94px;
+  bottom: 100px;
   width: 100px;
   height: 100px;
 }
@@ -2935,30 +2935,30 @@ a {
 }
 
 .operations-visual__arrow--top {
-  left: 246px;
-  top: 192px;
+  left: 245px;
+  top: 144px;
   width: 110px;
   height: 12px;
 }
 
 .operations-visual__arrow--right {
-  right: 145px;
-  top: 272px;
+  right: 144px;
+  top: 245px;
   width: 12px;
   height: 110px;
 }
 
 .operations-visual__arrow--bottom {
-  left: 246px;
-  bottom: 138px;
+  left: 245px;
+  bottom: 144px;
   width: 110px;
   height: 12px;
   transform: rotate(180deg);
 }
 
 .operations-visual__arrow--left {
-  left: 145px;
-  top: 272px;
+  left: 144px;
+  top: 245px;
   width: 12px;
   height: 110px;
   transform: rotate(180deg);
