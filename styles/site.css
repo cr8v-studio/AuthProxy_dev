@@ -3303,8 +3303,9 @@ a {
   gap: var(--space-48);
   padding: var(--space-48);
   padding-bottom: 120px;
+  min-height: 362px;
   border-right: 1px solid var(--site-section-border);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .pricing-plan-card:last-child {
@@ -3331,6 +3332,7 @@ a {
   font-weight: 400;
   letter-spacing: 2px;
   text-transform: uppercase;
+  z-index: 2;
 }
 
 .pricing-plan-card__content {
@@ -3389,7 +3391,7 @@ a {
   bottom: 39px;
   width: 304px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .pricing-plan-card__button-frame--popular {
@@ -3411,6 +3413,8 @@ a {
   --header-button-v1-corner-tr-default: url("../assets/sections/hero/cta-corner-tr.svg");
   --header-button-v1-corner-tl-default: url("../assets/sections/hero/cta-corner-tl.svg");
   --corner-inset: 5px;
+  display: inline-flex;
+  min-width: 0;
   width: auto;
   text-transform: uppercase;
 }
