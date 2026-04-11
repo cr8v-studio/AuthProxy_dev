@@ -1624,7 +1624,6 @@ function initHowV2GridLaserHover() {
 function initDevelopersGridLaserHover() {
   return initGridLaserHover({
     panelSelector: '.developers-section__intro',
-    gridSelector: '.developers-section__intro-inner',
     bindToken: 'motionLaserDevelopersBound'
   });
 }
