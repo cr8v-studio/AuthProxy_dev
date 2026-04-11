@@ -3511,7 +3511,7 @@ a {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
   background: rgb(var(--figma-color-off-white-rgb) / 0.85);
-  border-bottom: 1px solid var(--site-section-border);
+  border-bottom: 0;
 }
 
 .pricing-benefit-item {
