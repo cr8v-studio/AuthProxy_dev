@@ -2588,7 +2588,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initDevelopersGridLaserHover());
   registerMotionCleanup(initPricingGridLaserHover());
   registerMotionCleanup(initDevelopersPerspectiveBeams());
-  registerMotionCleanup(initDevelopersHighlightDotsBlink());
+  // Developers side red dots should stay static (no pulse animation).
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
   window.addEventListener('pagehide', destroyHeroMetricsCarousel, { once: true });
