@@ -3746,7 +3746,7 @@ a {
 .faq-section__docs-corner--br {
   right: 24px;
   bottom: 24px;
-  transform: scaleX(-1);
+  transform: rotate(180deg) scaleX(-1);
 }
 
 .capabilities-section__intro {
