@@ -1446,7 +1446,7 @@ function initHowLayerStackReveal({ reduced = false } = {}) {
   });
 }
 
-function initGridLaserHover({ panelSelector, gridSelector = null, bindToken }) {
+function initGridLaserHover({ panelSelector, gridSelector = null, bindToken, motionMode = 'cross' }) {
   const panel = document.querySelector(panelSelector);
   const grid = gridSelector ? panel?.querySelector(gridSelector) : panel;
   const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
@@ -1519,6 +1519,8 @@ function initGridLaserHover({ panelSelector, gridSelector = null, bindToken }) {
   const alphaToGhostH = gsap.quickTo(hGhost, 'opacity', { duration: 0.28, ease: 'power2.out' });
   const alphaToDot = gsap.quickTo(dot, 'opacity', { duration: 0.2, ease: 'power2.out' });
   const dotPulse = gsap.timeline({ repeat: -1, paused: true });
+  let walkX = null;
+  let walkY = null;
 
   const toNearestGridLine = (value, max) => {
     const snapped = gridOffset + Math.round((value - gridOffset) / gridStep) * gridStep;
@@ -1545,31 +1547,65 @@ function initGridLaserHover({ panelSelector, gridSelector = null, bindToken }) {
 
     const lineX = toNearestGridLine(localX, rect.width);
     const lineY = toNearestGridLine(localY, rect.height);
-    const left = gsap.utils.clamp(0, rect.width, lineX - gridStep);
-    const right = gsap.utils.clamp(0, rect.width, lineX + gridStep);
-    const top = gsap.utils.clamp(0, rect.height, lineY - gridStep);
-    const bottom = gsap.utils.clamp(0, rect.height, lineY + gridStep);
-    const width = Math.max(0, right - left);
-    const height = Math.max(0, bottom - top);
 
-    xToMainV(lineX);
-    yToMainV(top);
-    hToMainV(height);
-    xToMainH(left);
-    yToMainH(lineY);
-    wToMainH(width);
-    xToGhostV(lineX);
-    yToGhostV(top);
-    hToGhostV(height);
-    xToGhostH(left);
-    yToGhostH(lineY);
-    wToGhostH(width);
+    let mainV = { x: lineX, y: 0, size: 0 };
+    let mainH = { x: 0, y: lineY, size: 0 };
+    let alphaV = 0.96;
+    let alphaH = 0.96;
+    let alphaVGhost = 0.52;
+    let alphaHGhost = 0.52;
+
+    if (motionMode === 'grid-walk') {
+      if (walkX == null || walkY == null) {
+        walkX = toNearestGridLine(rect.width * 0.5, rect.width);
+        walkY = toNearestGridLine(rect.height * 0.5, rect.height);
+      }
+
+      const vTop = Math.min(walkY, lineY);
+      const vHeight = Math.abs(lineY - walkY);
+      const hLeft = Math.min(walkX, lineX);
+      const hWidth = Math.abs(lineX - walkX);
+
+      mainV = { x: walkX, y: vTop, size: vHeight };
+      mainH = { x: hLeft, y: lineY, size: hWidth };
+
+      alphaV = vHeight > 0 ? 0.96 : 0;
+      alphaH = hWidth > 0 ? 0.96 : 0;
+      alphaVGhost = vHeight > 0 ? 0.52 : 0;
+      alphaHGhost = hWidth > 0 ? 0.52 : 0;
+
+      walkX = lineX;
+      walkY = lineY;
+    } else {
+      const left = gsap.utils.clamp(0, rect.width, lineX - gridStep);
+      const right = gsap.utils.clamp(0, rect.width, lineX + gridStep);
+      const top = gsap.utils.clamp(0, rect.height, lineY - gridStep);
+      const bottom = gsap.utils.clamp(0, rect.height, lineY + gridStep);
+      const width = Math.max(0, right - left);
+      const height = Math.max(0, bottom - top);
+
+      mainV = { x: lineX, y: top, size: height };
+      mainH = { x: left, y: lineY, size: width };
+    }
+
+    xToMainV(mainV.x);
+    yToMainV(mainV.y);
+    hToMainV(mainV.size);
+    xToMainH(mainH.x);
+    yToMainH(mainH.y);
+    wToMainH(mainH.size);
+    xToGhostV(mainV.x);
+    yToGhostV(mainV.y);
+    hToGhostV(mainV.size);
+    xToGhostH(mainH.x);
+    yToGhostH(mainH.y);
+    wToGhostH(mainH.size);
     xToDot(lineX);
     yToDot(lineY);
-    alphaToMainV(0.96);
-    alphaToMainH(0.96);
-    alphaToGhostV(0.52);
-    alphaToGhostH(0.52);
+    alphaToMainV(alphaV);
+    alphaToMainH(alphaH);
+    alphaToGhostV(alphaVGhost);
+    alphaToGhostH(alphaHGhost);
     alphaToDot(0.88);
     if (!dotPulse.isActive()) {
       dotPulse.play();
@@ -1578,6 +1614,8 @@ function initGridLaserHover({ panelSelector, gridSelector = null, bindToken }) {
 
   const hideLaser = () => {
     document.body.classList.remove('is-hero-laser-cursor');
+    walkX = null;
+    walkY = null;
     dotPulse.pause(0);
     gsap.set(dot, { scale: 1 });
     alphaToMainV(0);
@@ -1624,6 +1662,7 @@ function initHowV2GridLaserHover() {
 function initDevelopersGridLaserHover() {
   return initGridLaserHover({
     panelSelector: '.developers-section__intro',
+    motionMode: 'grid-walk',
     bindToken: 'motionLaserDevelopersBound'
   });
 }
