@@ -1661,7 +1661,7 @@ function initHowV2GridLaserHover() {
 // Reuse Hero laser-grid interaction for Developers intro grid.
 function initDevelopersGridLaserHover() {
   return initGridLaserHover({
-    panelSelector: '.developers-section__intro-inner',
+    panelSelector: '.developers-section__intro',
     motionMode: 'grid-walk',
     bindToken: 'motionLaserDevelopersBound'
   });
