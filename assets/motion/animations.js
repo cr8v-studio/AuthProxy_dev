@@ -1774,6 +1774,8 @@ function initDevelopersPerspectiveBeams() {
 
   let tracks = buildBeams();
   startAnimation(tracks);
+  let lastCenterWidth = center.clientWidth;
+  let lastCenterHeight = center.clientHeight;
 
   const scheduleRebuild = () => {
     if (rebuildRaf) {
@@ -1781,6 +1783,15 @@ function initDevelopersPerspectiveBeams() {
     }
     rebuildRaf = requestAnimationFrame(() => {
       rebuildRaf = 0;
+      const nextWidth = center.clientWidth;
+      const nextHeight = center.clientHeight;
+
+      if (nextWidth === lastCenterWidth && nextHeight === lastCenterHeight) {
+        return;
+      }
+
+      lastCenterWidth = nextWidth;
+      lastCenterHeight = nextHeight;
       tracks = buildBeams();
       startAnimation(tracks);
     });
@@ -1791,14 +1802,8 @@ function initDevelopersPerspectiveBeams() {
   });
   resizeObserver.observe(center);
 
-  const onWindowResize = () => {
-    scheduleRebuild();
-  };
-  window.addEventListener('resize', onWindowResize, { passive: true });
-
   const onRefresh = () => {
-    tracks = buildBeams();
-    startAnimation(tracks);
+    scheduleRebuild();
   };
   ScrollTrigger.addEventListener('refresh', onRefresh);
 
@@ -1819,7 +1824,6 @@ function initDevelopersPerspectiveBeams() {
   return () => {
     trigger.kill();
     resizeObserver.disconnect();
-    window.removeEventListener('resize', onWindowResize);
     ScrollTrigger.removeEventListener('refresh', onRefresh);
     if (rebuildRaf) {
       cancelAnimationFrame(rebuildRaf);
