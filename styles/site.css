@@ -2606,15 +2606,6 @@ a {
   background: #ffffff;
 }
 
-.developers-section__intro-inner > * {
-  position: relative;
-  z-index: 2;
-}
-
-.developers-section__intro-inner .hero-section__grid-laser {
-  z-index: 1;
-}
-
 .developers-section__title {
   margin: 0;
   width: min(100%, 580px);
