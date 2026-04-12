@@ -134,6 +134,19 @@ body.site-page.is-preloading {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .security-slider__track,
+  .capabilities-section__nav-item img,
+  .how-v2__learn-link::after,
+  .how-v2__learn-link-arrow,
+  .hero-section__docs-link .site-header-button-v2__icon,
+  .solution-section__docs-link .site-header-button-v2__icon,
+  .security-slider__nav-btn,
+  .security-slider__nav-icon {
+    transition: none !important;
+  }
+}
+
 .site-preloader {
   position: fixed;
   inset: 0;
@@ -1015,8 +1028,8 @@ a {
   width: 9.8995px;
   height: 16.9706px;
   transition:
-    left 0.56s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+    left var(--motion-duration-control-emphasis) var(--motion-ease-emphasized),
+    transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
 }
 
 .hero-section__metrics-wrap {
@@ -1431,7 +1444,6 @@ a {
 
 .how-v2__learn-link {
   --how-learn-link-arrow-inset: 2px;
-  --how-learn-link-arrow-ease: cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
   display: inline-grid;
   grid-auto-flow: column;
@@ -1460,7 +1472,7 @@ a {
   height: 1px;
   background: currentColor;
   transform-origin: right center;
-  transition: transform 0.42s var(--how-learn-link-arrow-ease);
+  transition: transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
 }
 
 .how-v2__learn-link-text {
@@ -1475,8 +1487,8 @@ a {
   height: 16.971px;
   background: center / 100% 100% no-repeat url("../assets/sections/how/learn-arrow.svg");
   transition:
-    transform 0.42s var(--how-learn-link-arrow-ease),
-    opacity 0.32s var(--how-learn-link-arrow-ease);
+    transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized),
+    opacity var(--motion-duration-control) var(--motion-ease-emphasized);
 }
 
 .how-v2__learn-link-arrow--left {
@@ -1596,7 +1608,7 @@ a {
   background: var(--figma-color-white-base);
   border-bottom: 1px solid var(--site-section-border);
   cursor: pointer;
-  transition: background-color 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background-color var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
 }
 
 .how-step-card:hover,
@@ -2395,7 +2407,7 @@ a {
 .security-slider__track {
   display: flex;
   width: 100%;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
   will-change: transform;
 }
 
@@ -2534,15 +2546,15 @@ a {
   justify-content: center;
   cursor: pointer;
   transition:
-    background-color 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    color 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    background-color var(--motion-duration-control) var(--motion-ease-emphasized),
+    color var(--motion-duration-control) var(--motion-ease-emphasized);
 }
 
 .security-slider__nav-icon {
   width: 11.1298px;
   height: 16.6667px;
   display: block;
-  transition: filter 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: filter var(--motion-duration-control) var(--motion-ease-emphasized);
 }
 
 .security-slider__nav-btn:is(:hover, :focus-visible):not([disabled]) {
@@ -3840,7 +3852,7 @@ a {
   height: 16.9706px;
   flex-shrink: 0;
   transform: translateX(0);
-  transition: transform 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
   will-change: transform;
 }
 
@@ -4335,8 +4347,8 @@ a {
   width: 9.8995px;
   height: 16.9706px;
   transition:
-    left 0.56s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+    left var(--motion-duration-control-emphasis) var(--motion-ease-emphasized),
+    transform var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
 }
 
 .solution-section__visual {
