@@ -1661,6 +1661,7 @@ function initDevelopersPerspectiveBeams() {
     return () => {};
   }
   svg.setAttribute('preserveAspectRatio', 'none');
+  svg.setAttribute('shape-rendering', 'geometricPrecision');
 
   // Reduced track set: 2-3 rays per side to avoid visual noise.
   const beamTrackPaths = [
@@ -1688,6 +1689,7 @@ function initDevelopersPerspectiveBeams() {
   const centerY = 199.625;
 
   let beamTweens = [];
+  let rebuildRaf = 0;
   const buildBeams = () => {
     svg.setAttribute('viewBox', `0 0 ${viewBoxWidth} ${viewBoxHeight}`);
     svg.textContent = '';
@@ -1773,11 +1775,32 @@ function initDevelopersPerspectiveBeams() {
   let tracks = buildBeams();
   startAnimation(tracks);
 
+  const scheduleRebuild = () => {
+    if (rebuildRaf) {
+      cancelAnimationFrame(rebuildRaf);
+    }
+    rebuildRaf = requestAnimationFrame(() => {
+      rebuildRaf = 0;
+      tracks = buildBeams();
+      startAnimation(tracks);
+    });
+  };
+
   const resizeObserver = new ResizeObserver(() => {
+    scheduleRebuild();
+  });
+  resizeObserver.observe(center);
+
+  const onWindowResize = () => {
+    scheduleRebuild();
+  };
+  window.addEventListener('resize', onWindowResize, { passive: true });
+
+  const onRefresh = () => {
     tracks = buildBeams();
     startAnimation(tracks);
-  });
-  resizeObserver.observe(layer);
+  };
+  ScrollTrigger.addEventListener('refresh', onRefresh);
 
   const trigger = ScrollTrigger.create({
     trigger: center,
@@ -1796,6 +1819,12 @@ function initDevelopersPerspectiveBeams() {
   return () => {
     trigger.kill();
     resizeObserver.disconnect();
+    window.removeEventListener('resize', onWindowResize);
+    ScrollTrigger.removeEventListener('refresh', onRefresh);
+    if (rebuildRaf) {
+      cancelAnimationFrame(rebuildRaf);
+      rebuildRaf = 0;
+    }
     beamTweens.forEach((tween) => tween.kill());
     beamTweens = [];
     layer?.remove();
@@ -1814,8 +1843,7 @@ function initDevelopersHighlightDotsBlink() {
   gsap.set(dots, {
     transformOrigin: '50% 50%',
     autoAlpha: 0.82,
-    scale: 1,
-    filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0)) drop-shadow(0 0 2px rgb(237 88 90 / 0.22))'
+    scale: 1
   });
 
   const pulseTl = gsap.timeline({ repeat: -1, paused: true });
@@ -1824,7 +1852,6 @@ function initDevelopersHighlightDotsBlink() {
     pulseTl.to(dot, {
       autoAlpha: 1,
       scale: 1.32,
-      filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0.24)) drop-shadow(0 0 9px rgb(237 88 90 / 0.65))',
       duration: 0.2,
       ease: 'power2.out'
     }, '+=0.06');
@@ -1839,7 +1866,6 @@ function initDevelopersHighlightDotsBlink() {
     pulseTl.to(dot, {
       autoAlpha: 0.82,
       scale: 1,
-      filter: 'drop-shadow(0 0 0 rgb(237 88 90 / 0)) drop-shadow(0 0 2px rgb(237 88 90 / 0.22))',
       duration: 0.24,
       ease: 'power2.out'
     });
@@ -1864,7 +1890,7 @@ function initDevelopersHighlightDotsBlink() {
   return () => {
     trigger.kill();
     pulseTl.kill();
-    gsap.set(dots, { clearProps: 'opacity,visibility,transform,filter' });
+    gsap.set(dots, { clearProps: 'opacity,visibility,transform' });
   };
 }
 
