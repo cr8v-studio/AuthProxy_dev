@@ -1836,7 +1836,7 @@ function initDevelopersHighlightDotsBlink() {
   const section = document.querySelector('.developers-section__highlights');
   const dots = Array.from(section?.querySelectorAll('.developers-highlight-card__dot') ?? []);
 
-  if (!section || dots.length === 0 || prefersReducedMotion) {
+  if (!section || dots.length === 0 || prefersReducedMotion || isMobileViewport()) {
     return () => {};
   }
 
@@ -1851,27 +1851,27 @@ function initDevelopersHighlightDotsBlink() {
   dots.forEach((dot) => {
     pulseTl.to(dot, {
       autoAlpha: 1,
-      scale: 1.32,
-      duration: 0.2,
+      scale: 1.22,
+      duration: 0.26,
       ease: 'power2.out'
     }, '+=0.06');
 
     pulseTl.to(dot, {
       autoAlpha: 0.9,
-      scale: 0.96,
-      duration: 0.2,
+      scale: 0.98,
+      duration: 0.24,
       ease: 'power1.inOut'
     });
 
     pulseTl.to(dot, {
       autoAlpha: 0.82,
       scale: 1,
-      duration: 0.24,
+      duration: 0.3,
       ease: 'power2.out'
     });
   });
 
-  pulseTl.to({}, { duration: 0.16 });
+  pulseTl.to({}, { duration: 0.34 });
 
   const trigger = ScrollTrigger.create({
     trigger: section,

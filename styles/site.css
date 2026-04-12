@@ -2674,6 +2674,8 @@ a {
   min-height: 369px;
   overflow: hidden;
   isolation: isolate;
+  contain: paint;
+  transform: translateZ(0);
 }
 
 .developers-highlights__center::before {
@@ -2693,6 +2695,8 @@ a {
   pointer-events: none;
   z-index: 2;
   overflow: hidden;
+  contain: paint;
+  transform: translateZ(0);
 }
 
 .developers-highlights__beams-svg {
@@ -2736,6 +2740,7 @@ a {
   transform: translate(-50%, -50%);
   display: block;
   z-index: 3;
+  will-change: transform;
 }
 
 .developers-highlight-card {
@@ -2758,6 +2763,7 @@ a {
   flex: 0 0 auto;
   transform-origin: 50% 50%;
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .developers-highlight-card__text {
