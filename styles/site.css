@@ -2615,16 +2615,6 @@ a {
   z-index: 1;
 }
 
-.developers-section__intro-inner .hero-section__grid-laser-line--v {
-  width: 2px;
-  box-shadow: 0 0 16px rgb(237 88 90 / 0.4);
-}
-
-.developers-section__intro-inner .hero-section__grid-laser-line--h {
-  height: 2px;
-  box-shadow: 0 0 16px rgb(237 88 90 / 0.4);
-}
-
 .developers-section__title {
   margin: 0;
   width: min(100%, 580px);
