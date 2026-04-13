@@ -1929,18 +1929,28 @@ function initDevelopersIntroDissolveBurst() {
     const cy = gsap.utils.clamp(64, rect.height - 64, y);
     const glyphCount = 34;
 
-    const glyphs = Array.from({ length: glyphCount }, (_, i) => {
+    const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
+      const angle = Math.random() * Math.PI * 2;
+      const nearRadius = 8 + Math.random() * 20;
+      const farRadius = 58 + Math.random() * 92;
+      const startX = cx + Math.cos(angle) * (2 + Math.random() * 6) + (Math.random() - 0.5) * 6;
+      const startY = cy + Math.sin(angle) * (2 + Math.random() * 6) + (Math.random() - 0.5) * 6;
+      const midX = cx + Math.cos(angle) * nearRadius;
+      const midY = cy + Math.sin(angle) * nearRadius;
+      const endX = cx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 20;
+      const endY = cy + Math.sin(angle) * farRadius + (Math.random() - 0.5) * 20;
       const glyph = document.createElement('span');
       glyph.className = `developers-section__dissolve-glyph${i % 3 === 0 ? ' is-accent' : ''}`;
       glyph.textContent = glyphChars[(i + ticker) % glyphChars.length];
       layer.append(glyph);
       gsap.set(glyph, {
-        x: cx - 34 + Math.random() * 68,
-        y: cy - 74 + Math.random() * 148,
+        x: startX,
+        y: startY,
         opacity: 0
       });
-      return glyph;
+      return { glyph, midX, midY, endX, endY };
     });
+    const glyphs = glyphEntries.map((entry) => entry.glyph);
     ticker += 1;
 
     const tl = gsap.timeline({
@@ -1951,19 +1961,20 @@ function initDevelopersIntroDissolveBurst() {
 
     tl.to(glyphs, {
       opacity: (_, el) => el.classList.contains('is-accent') ? 0.98 : 0.68,
-      x: `+=${44}`,
-      duration: 0.22,
+      x: (i) => glyphEntries[i].midX,
+      y: (i) => glyphEntries[i].midY,
+      duration: 0.2,
       stagger: 0.006,
       ease: 'power2.out'
     }, '<');
     tl.to(glyphs, {
       opacity: 0,
-      x: () => `+=${114 + Math.random() * 36}`,
-      y: () => `+=${Math.round((Math.random() - 0.5) * 56)}`,
-      duration: 0.72,
+      x: (i) => glyphEntries[i].endX,
+      y: (i) => glyphEntries[i].endY,
+      duration: 0.66,
       stagger: 0.008,
       ease: 'power3.out'
-    }, '<+0.08');
+    }, '<+0.06');
   };
 
   const triggerBurstFromEvent = (event, force = false) => {
