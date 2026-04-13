@@ -4079,13 +4079,6 @@ a {
 }
 
 .final-cta-section__button-secondary {
-  --corner-width: var(--header-button-v1-corner-width);
-  --corner-height: var(--header-button-v1-corner-height);
-  --corner-inset: var(--header-button-v1-corner-inset);
-  --header-button-v1-corner-br-default: url("../assets/sections/hero/cta-corner-br.svg");
-  --header-button-v1-corner-bl-default: url("../assets/sections/hero/cta-corner-bl.svg");
-  --header-button-v1-corner-tr-default: url("../assets/sections/hero/cta-corner-tr.svg");
-  --header-button-v1-corner-tl-default: url("../assets/sections/hero/cta-corner-tl.svg");
   --control-height: 44px;
   --control-padding-inline: 20px;
   --control-gap: 4px;
@@ -4093,51 +4086,13 @@ a {
   --control-line-height: 26px;
   --control-letter-spacing: 1px;
   --control-font-weight: 400;
-  --control-color: var(--figma-color-extras-2);
+  --control-color: var(--color-accent-alert);
   --header-button-v2-bg: transparent;
-  --header-button-v2-hover-color: var(--figma-color-extras-2);
+  --header-button-v2-hover-color: var(--color-accent-alert);
   --header-button-v2-icon-size: 9.8995px;
   --header-button-v2-icon-shift-hover: var(--space-8);
   position: relative;
   text-transform: uppercase;
-}
-
-.final-cta-section__button-secondary::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-repeat: no-repeat;
-  background-size:
-    var(--corner-width) var(--corner-height),
-    var(--corner-width) var(--corner-height),
-    var(--corner-width) var(--corner-height),
-    var(--corner-width) var(--corner-height);
-  background-position:
-    right bottom,
-    left bottom,
-    right top,
-    left top;
-  background-image:
-    var(--header-button-v1-corner-br-default),
-    var(--header-button-v1-corner-bl-default),
-    var(--header-button-v1-corner-tr-default),
-    var(--header-button-v1-corner-tl-default);
-  opacity: 1;
-  transition:
-    opacity var(--motion-duration-control-emphasis) var(--motion-ease-emphasized),
-    background-position var(--motion-duration-control-emphasis) var(--motion-ease-emphasized);
-}
-
-.final-cta-section__button-secondary:hover::before,
-.final-cta-section__button-secondary.is-hover::before,
-.final-cta-section__button-secondary[aria-current="page"]::before {
-  opacity: 0;
-  background-position:
-    right var(--corner-inset) bottom var(--corner-inset),
-    left var(--corner-inset) bottom var(--corner-inset),
-    right var(--corner-inset) top var(--corner-inset),
-    left var(--corner-inset) top var(--corner-inset);
 }
 
 .final-cta-section__button-secondary .site-header-button-v2__icon-wrap {
