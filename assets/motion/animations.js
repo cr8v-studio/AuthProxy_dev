@@ -2771,7 +2771,6 @@ async function initMotionSystem() {
   initHowSystemNodeEllipsesFlow();
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
-  registerMotionCleanup(initDevelopersGridLaserHover());
   registerMotionCleanup(initPricingGridLaserHover());
   registerMotionCleanup(initDevelopersPerspectiveBeams());
   registerMotionCleanup(initDevelopersIntroDissolveBurst());
