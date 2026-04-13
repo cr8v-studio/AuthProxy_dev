@@ -1637,6 +1637,196 @@ function initPricingGridLaserHover() {
   });
 }
 
+// Solution cards border laser: Hero-like motion constrained to card boundaries.
+function initSolutionCardsBorderLaserHover() {
+  const panel = document.querySelector('.solution-section__cards');
+  if (!panel || prefersReducedMotion || hasCoarsePointer) {
+    return () => {};
+  }
+  if (panel.dataset.motionLaserSolutionBound === '1') {
+    return () => {};
+  }
+  panel.dataset.motionLaserSolutionBound = '1';
+
+  let overlay = panel.querySelector('.hero-section__grid-laser');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'hero-section__grid-laser';
+    const vMain = document.createElement('span');
+    vMain.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--v';
+    const hMain = document.createElement('span');
+    hMain.className = 'hero-section__grid-laser-line hero-section__grid-laser-line--h';
+    const vGhost = document.createElement('span');
+    vGhost.className =
+      'hero-section__grid-laser-line hero-section__grid-laser-line--v hero-section__grid-laser-line--ghost';
+    const hGhost = document.createElement('span');
+    hGhost.className =
+      'hero-section__grid-laser-line hero-section__grid-laser-line--h hero-section__grid-laser-line--ghost';
+    const dot = document.createElement('span');
+    dot.className = 'hero-section__grid-laser-dot';
+    overlay.append(vGhost, hGhost, vMain, hMain, dot);
+    panel.append(overlay);
+  }
+
+  const vMain = overlay.querySelector(
+    '.hero-section__grid-laser-line--v:not(.hero-section__grid-laser-line--ghost)'
+  );
+  const hMain = overlay.querySelector(
+    '.hero-section__grid-laser-line--h:not(.hero-section__grid-laser-line--ghost)'
+  );
+  const vGhost = overlay.querySelector('.hero-section__grid-laser-line--v.hero-section__grid-laser-line--ghost');
+  const hGhost = overlay.querySelector('.hero-section__grid-laser-line--h.hero-section__grid-laser-line--ghost');
+  const dot = overlay.querySelector('.hero-section__grid-laser-dot');
+  if (!vMain || !hMain || !vGhost || !hGhost || !dot) {
+    delete panel.dataset.motionLaserSolutionBound;
+    return () => {};
+  }
+
+  let xGuides = [];
+  let yGuides = [];
+  let prevX = null;
+  let prevY = null;
+
+  const toLocalX = (clientX, rect) => gsap.utils.clamp(0, rect.width, clientX - rect.left);
+  const toLocalY = (clientY, rect) => gsap.utils.clamp(0, rect.height, clientY - rect.top);
+
+  const nearestGuide = (value, guides) => {
+    let nearest = guides[0] ?? value;
+    let minDistance = Infinity;
+    for (let i = 0; i < guides.length; i += 1) {
+      const distance = Math.abs(guides[i] - value);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearest = guides[i];
+      }
+    }
+    return nearest;
+  };
+
+  const dedupeSorted = (values) => {
+    const sorted = values.slice().sort((a, b) => a - b);
+    return sorted.filter((value, i) => i === 0 || Math.abs(value - sorted[i - 1]) > 1);
+  };
+
+  const recomputeGuides = () => {
+    const rect = panel.getBoundingClientRect();
+    const cards = Array.from(panel.querySelectorAll('.solution-card'));
+    const xs = [0, rect.width];
+    const ys = [0, rect.height];
+
+    cards.forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+      xs.push(cardRect.left - rect.left, cardRect.right - rect.left);
+      ys.push(cardRect.top - rect.top, cardRect.bottom - rect.top);
+    });
+
+    xGuides = dedupeSorted(xs.map((value) => Math.round(value)));
+    yGuides = dedupeSorted(ys.map((value) => Math.round(value)));
+  };
+
+  const hideLaser = () => {
+    gsap.to([vMain, hMain, vGhost, hGhost, dot], {
+      opacity: 0,
+      duration: 0.24,
+      ease: 'power2.out',
+      overwrite: true
+    });
+    prevX = null;
+    prevY = null;
+  };
+
+  const setLaser = (lineX, lineY, rect) => {
+    if (!Number.isFinite(lineX) || !Number.isFinite(lineY)) {
+      return;
+    }
+
+    if (prevX == null) {
+      prevX = lineX;
+      prevY = lineY;
+      gsap.set(vGhost, { opacity: 0 });
+      gsap.set(hGhost, { opacity: 0 });
+    } else {
+      gsap.set(vGhost, { left: prevX, top: 0, height: rect.height, opacity: 0.2 });
+      gsap.set(hGhost, { left: 0, top: prevY, width: rect.width, opacity: 0.2 });
+    }
+
+    gsap.to(vMain, {
+      left: lineX,
+      top: 0,
+      height: rect.height,
+      opacity: 0.9,
+      duration: 0.22,
+      ease: 'power2.out',
+      overwrite: true
+    });
+    gsap.to(hMain, {
+      left: 0,
+      top: lineY,
+      width: rect.width,
+      opacity: 0.9,
+      duration: 0.22,
+      ease: 'power2.out',
+      overwrite: true
+    });
+    gsap.to(dot, {
+      left: lineX,
+      top: lineY,
+      opacity: 0.95,
+      duration: 0.18,
+      ease: 'power2.out',
+      overwrite: true
+    });
+    gsap.to([vGhost, hGhost], {
+      opacity: 0,
+      duration: 0.38,
+      ease: 'power3.out',
+      overwrite: true
+    });
+
+    prevX = lineX;
+    prevY = lineY;
+  };
+
+  const onPointerMove = (event) => {
+    const rect = panel.getBoundingClientRect();
+    if (!xGuides.length || !yGuides.length) {
+      recomputeGuides();
+    }
+    const localX = toLocalX(event.clientX, rect);
+    const localY = toLocalY(event.clientY, rect);
+    const snappedX = nearestGuide(localX, xGuides);
+    const snappedY = nearestGuide(localY, yGuides);
+    setLaser(snappedX, snappedY, rect);
+  };
+
+  const onPointerEnter = (event) => {
+    recomputeGuides();
+    onPointerMove(event);
+  };
+
+  const onResize = () => {
+    recomputeGuides();
+    hideLaser();
+  };
+
+  panel.addEventListener('pointerenter', onPointerEnter, { passive: true });
+  panel.addEventListener('pointermove', onPointerMove, { passive: true });
+  panel.addEventListener('pointerleave', hideLaser, { passive: true });
+  window.addEventListener('resize', onResize);
+
+  return () => {
+    panel.removeEventListener('pointerenter', onPointerEnter);
+    panel.removeEventListener('pointermove', onPointerMove);
+    panel.removeEventListener('pointerleave', hideLaser);
+    window.removeEventListener('resize', onResize);
+    hideLaser();
+    if (overlay.parentNode === panel) {
+      overlay.remove();
+    }
+    delete panel.dataset.motionLaserSolutionBound;
+  };
+}
+
 // Perspective data-beams over Developers center grid: exact SVG tracks, one-way to center.
 function initDevelopersPerspectiveBeams() {
   const center = document.querySelector('.developers-highlights__center');
@@ -2771,6 +2961,7 @@ async function initMotionSystem() {
   initHowSystemNodeEllipsesFlow();
   registerMotionCleanup(initHeroGridLaserHover());
   registerMotionCleanup(initHowV2GridLaserHover());
+  registerMotionCleanup(initSolutionCardsBorderLaserHover());
   registerMotionCleanup(initPricingGridLaserHover());
   registerMotionCleanup(initDevelopersPerspectiveBeams());
   registerMotionCleanup(initDevelopersIntroDissolveBurst());
