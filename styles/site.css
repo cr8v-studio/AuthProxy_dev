@@ -2631,29 +2631,6 @@ a {
   overflow: hidden;
 }
 
-.developers-section__dissolve-core {
-  position: absolute;
-  width: 380px;
-  height: 220px;
-  border-radius: 56% 44% 48% 52% / 54% 42% 58% 46%;
-  background:
-    radial-gradient(circle at 40% 50%, rgb(31 31 31 / 0.06) 0%, rgb(31 31 31 / 0) 62%),
-    radial-gradient(circle at 68% 48%, rgb(237 88 90 / 0.18) 0%, rgb(237 88 90 / 0) 68%);
-  filter: blur(6px);
-  opacity: 0;
-  transform: translate(-50%, -50%);
-}
-
-.developers-section__dissolve-strip {
-  position: absolute;
-  left: 0;
-  height: 3px;
-  width: 148px;
-  background: linear-gradient(90deg, rgb(237 88 90 / 0), rgb(237 88 90 / 0.95) 42%, rgb(31 31 31 / 0.24) 76%, rgb(31 31 31 / 0));
-  opacity: 0;
-  transform: translate3d(0, 0, 0);
-}
-
 .developers-section__dissolve-glyph {
   position: absolute;
   left: 0;
