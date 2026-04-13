@@ -4108,6 +4108,8 @@ a {
 .solution-section__cards {
   width: min(1200px, calc(100% - (var(--page-inline) * 2)));
   margin-inline: auto;
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border: 1px solid var(--site-section-border);
