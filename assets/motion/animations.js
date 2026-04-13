@@ -1898,7 +1898,7 @@ function initDevelopersHighlightDotsBlink() {
   };
 }
 
-// Developers intro: lightweight dissolve burst inside the white frame.
+// Developers intro: pointer-driven dissolve burst inside the white frame.
 function initDevelopersIntroDissolveBurst() {
   const frame = document.querySelector('.developers-section__intro-inner');
   if (!frame || prefersReducedMotion || frame.dataset.motionDissolveBound === '1') {
@@ -1920,129 +1920,165 @@ function initDevelopersIntroDissolveBurst() {
 
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
   let ticker = 0;
-  let activeTl = null;
+  let isInViewport = false;
+  let lastBurstAt = 0;
 
-  const burst = () => {
-    activeTl?.kill();
+  const clearParticles = () => {
     layer.querySelectorAll('.developers-section__dissolve-strip, .developers-section__dissolve-glyph').forEach((node) => node.remove());
+    gsap.set(core, { opacity: 0 });
+  };
 
+  const burstAt = (x, y) => {
     const rect = frame.getBoundingClientRect();
-    const cx = rect.width * 0.56;
-    const cy = rect.height * 0.52;
-    const stripCount = 10;
-    const glyphCount = 26;
+    const cx = gsap.utils.clamp(64, rect.width - 64, x);
+    const cy = gsap.utils.clamp(64, rect.height - 64, y);
+    const stripCount = 14;
+    const glyphCount = 34;
 
-    gsap.set(core, { x: cx, y: cy, scale: 0.35, rotation: -4, opacity: 0 });
+    gsap.killTweensOf(core);
+    gsap.set(core, { x: cx, y: cy, scale: 0.25, rotation: -6, opacity: 0 });
 
     const strips = Array.from({ length: stripCount }, (_, i) => {
       const strip = document.createElement('span');
       strip.className = 'developers-section__dissolve-strip';
-      strip.style.top = `${Math.round(cy - 70 + (i / (stripCount - 1)) * 140)}px`;
+      strip.style.top = `${Math.round(cy - 86 + (i / (stripCount - 1)) * 172)}px`;
       layer.append(strip);
-      gsap.set(strip, { x: cx - 80 + (Math.random() * 24 - 12), scaleX: 0.3, opacity: 0 });
+      gsap.set(strip, {
+        x: cx - 82 + (Math.random() * 28 - 14),
+        scaleX: 0.25,
+        opacity: 0
+      });
       return strip;
     });
 
     const glyphs = Array.from({ length: glyphCount }, (_, i) => {
       const glyph = document.createElement('span');
-      glyph.className = `developers-section__dissolve-glyph${i % 4 === 0 ? ' is-accent' : ''}`;
+      glyph.className = `developers-section__dissolve-glyph${i % 3 === 0 ? ' is-accent' : ''}`;
       glyph.textContent = glyphChars[(i + ticker) % glyphChars.length];
       layer.append(glyph);
       gsap.set(glyph, {
-        x: cx - 24 + Math.random() * 48,
-        y: cy - 56 + Math.random() * 112,
+        x: cx - 34 + Math.random() * 68,
+        y: cy - 74 + Math.random() * 148,
         opacity: 0
       });
       return glyph;
     });
-
     ticker += 1;
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({
+      onComplete: () => {
+        strips.forEach((item) => item.remove());
+        glyphs.forEach((item) => item.remove());
+      }
+    });
+
     tl.to(core, {
-      opacity: 0.95,
+      opacity: 1,
       scale: 1,
       rotation: 0,
-      duration: 0.22,
+      duration: 0.2,
       ease: 'power2.out'
     });
     tl.to(core, {
-      x: cx + 64,
+      x: cx + 88,
       opacity: 0,
-      scale: 1.12,
-      duration: 0.64,
+      scale: 1.2,
+      duration: 0.72,
       ease: 'power3.out'
-    }, '<+0.08');
+    }, '<+0.06');
 
     tl.to(strips, {
-      opacity: (i) => 0.34 + (i % 3) * 0.16,
+      opacity: () => 0.45 + Math.random() * 0.35,
       scaleX: 1,
-      x: (_, target) => Number.parseFloat(target.style.left || '0') + cx + 28 + Math.random() * 24,
-      duration: 0.24,
-      stagger: 0.018,
+      x: () => cx + 28 + Math.random() * 36,
+      duration: 0.18,
+      stagger: 0.012,
       ease: 'power2.out'
     }, '<');
     tl.to(strips, {
       opacity: 0,
-      x: `+=${92}`,
-      duration: 0.62,
-      stagger: 0.012,
+      x: () => `+=${86 + Math.random() * 30}`,
+      duration: 0.68,
+      stagger: 0.01,
       ease: 'power3.out'
     }, '<+0.08');
 
     tl.to(glyphs, {
-      opacity: (_, el) => el.classList.contains('is-accent') ? 0.9 : 0.58,
-      x: `+=${36}`,
-      duration: 0.24,
-      stagger: 0.01,
+      opacity: (_, el) => el.classList.contains('is-accent') ? 0.98 : 0.68,
+      x: `+=${44}`,
+      duration: 0.22,
+      stagger: 0.006,
       ease: 'power2.out'
     }, '<');
     tl.to(glyphs, {
       opacity: 0,
-      x: `+=${108}`,
-      y: () => `+=${Math.round((Math.random() - 0.5) * 42)}`,
-      duration: 0.74,
-      stagger: 0.012,
+      x: () => `+=${114 + Math.random() * 36}`,
+      y: () => `+=${Math.round((Math.random() - 0.5) * 56)}`,
+      duration: 0.72,
+      stagger: 0.008,
       ease: 'power3.out'
-    }, '<+0.12');
-
-    activeTl = tl;
+    }, '<+0.08');
   };
 
-  let intervalId = 0;
-  const startLoop = () => {
-    burst();
-    if (intervalId) {
-      clearInterval(intervalId);
+  const triggerBurstFromEvent = (event, force = false) => {
+    if (!isInViewport) {
+      return;
     }
-    intervalId = window.setInterval(burst, 2600);
+    const now = performance.now();
+    const minInterval = isMobileViewport() ? 180 : 110;
+    if (!force && now - lastBurstAt < minInterval) {
+      return;
+    }
+    lastBurstAt = now;
+    const rect = frame.getBoundingClientRect();
+    burstAt(event.clientX - rect.left, event.clientY - rect.top);
   };
-  const stopLoop = () => {
-    if (intervalId) {
-      clearInterval(intervalId);
-      intervalId = 0;
-    }
-    activeTl?.kill();
-    layer.querySelectorAll('.developers-section__dissolve-strip, .developers-section__dissolve-glyph').forEach((node) => node.remove());
-    gsap.set(core, { opacity: 0 });
+
+  const onPointerEnter = (event) => {
+    triggerBurstFromEvent(event, true);
+  };
+  const onPointerMove = (event) => {
+    triggerBurstFromEvent(event, false);
+  };
+
+  const onPointerLeave = () => {
+    gsap.to(core, { opacity: 0, duration: 0.24, ease: 'power2.out' });
   };
 
   const trigger = ScrollTrigger.create({
     trigger: frame,
     start: 'top 85%',
     end: 'bottom 20%',
-    onEnter: startLoop,
-    onEnterBack: startLoop,
-    onLeave: stopLoop,
-    onLeaveBack: stopLoop
+    onEnter: () => {
+      isInViewport = true;
+      const rect = frame.getBoundingClientRect();
+      burstAt(rect.width * 0.52, rect.height * 0.52);
+    },
+    onEnterBack: () => {
+      isInViewport = true;
+      const rect = frame.getBoundingClientRect();
+      burstAt(rect.width * 0.52, rect.height * 0.52);
+    },
+    onLeave: () => {
+      isInViewport = false;
+      clearParticles();
+    },
+    onLeaveBack: () => {
+      isInViewport = false;
+      clearParticles();
+    }
   });
 
-  frame.addEventListener('pointerenter', burst, { passive: true });
+  frame.addEventListener('pointerenter', onPointerEnter, { passive: true });
+  frame.addEventListener('pointermove', onPointerMove, { passive: true });
+  frame.addEventListener('pointerleave', onPointerLeave, { passive: true });
 
   return () => {
     trigger.kill();
-    stopLoop();
-    frame.removeEventListener('pointerenter', burst);
+    frame.removeEventListener('pointerenter', onPointerEnter);
+    frame.removeEventListener('pointermove', onPointerMove);
+    frame.removeEventListener('pointerleave', onPointerLeave);
+    clearParticles();
     layer?.remove();
     delete frame.dataset.motionDissolveBound;
   };
