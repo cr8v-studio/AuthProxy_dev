@@ -1898,6 +1898,156 @@ function initDevelopersHighlightDotsBlink() {
   };
 }
 
+// Developers intro: lightweight dissolve burst inside the white frame.
+function initDevelopersIntroDissolveBurst() {
+  const frame = document.querySelector('.developers-section__intro-inner');
+  if (!frame || prefersReducedMotion || frame.dataset.motionDissolveBound === '1') {
+    return () => {};
+  }
+  frame.dataset.motionDissolveBound = '1';
+
+  let layer = frame.querySelector('.developers-section__dissolve-layer');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.className = 'developers-section__dissolve-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    frame.append(layer);
+  }
+
+  const core = document.createElement('span');
+  core.className = 'developers-section__dissolve-core';
+  layer.append(core);
+
+  const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
+  let ticker = 0;
+  let activeTl = null;
+
+  const burst = () => {
+    activeTl?.kill();
+    layer.querySelectorAll('.developers-section__dissolve-strip, .developers-section__dissolve-glyph').forEach((node) => node.remove());
+
+    const rect = frame.getBoundingClientRect();
+    const cx = rect.width * 0.56;
+    const cy = rect.height * 0.52;
+    const stripCount = 10;
+    const glyphCount = 26;
+
+    gsap.set(core, { x: cx, y: cy, scale: 0.35, rotation: -4, opacity: 0 });
+
+    const strips = Array.from({ length: stripCount }, (_, i) => {
+      const strip = document.createElement('span');
+      strip.className = 'developers-section__dissolve-strip';
+      strip.style.top = `${Math.round(cy - 70 + (i / (stripCount - 1)) * 140)}px`;
+      layer.append(strip);
+      gsap.set(strip, { x: cx - 80 + (Math.random() * 24 - 12), scaleX: 0.3, opacity: 0 });
+      return strip;
+    });
+
+    const glyphs = Array.from({ length: glyphCount }, (_, i) => {
+      const glyph = document.createElement('span');
+      glyph.className = `developers-section__dissolve-glyph${i % 4 === 0 ? ' is-accent' : ''}`;
+      glyph.textContent = glyphChars[(i + ticker) % glyphChars.length];
+      layer.append(glyph);
+      gsap.set(glyph, {
+        x: cx - 24 + Math.random() * 48,
+        y: cy - 56 + Math.random() * 112,
+        opacity: 0
+      });
+      return glyph;
+    });
+
+    ticker += 1;
+
+    const tl = gsap.timeline();
+    tl.to(core, {
+      opacity: 0.95,
+      scale: 1,
+      rotation: 0,
+      duration: 0.22,
+      ease: 'power2.out'
+    });
+    tl.to(core, {
+      x: cx + 64,
+      opacity: 0,
+      scale: 1.12,
+      duration: 0.64,
+      ease: 'power3.out'
+    }, '<+0.08');
+
+    tl.to(strips, {
+      opacity: (i) => 0.34 + (i % 3) * 0.16,
+      scaleX: 1,
+      x: (_, target) => Number.parseFloat(target.style.left || '0') + cx + 28 + Math.random() * 24,
+      duration: 0.24,
+      stagger: 0.018,
+      ease: 'power2.out'
+    }, '<');
+    tl.to(strips, {
+      opacity: 0,
+      x: `+=${92}`,
+      duration: 0.62,
+      stagger: 0.012,
+      ease: 'power3.out'
+    }, '<+0.08');
+
+    tl.to(glyphs, {
+      opacity: (_, el) => el.classList.contains('is-accent') ? 0.9 : 0.58,
+      x: `+=${36}`,
+      duration: 0.24,
+      stagger: 0.01,
+      ease: 'power2.out'
+    }, '<');
+    tl.to(glyphs, {
+      opacity: 0,
+      x: `+=${108}`,
+      y: () => `+=${Math.round((Math.random() - 0.5) * 42)}`,
+      duration: 0.74,
+      stagger: 0.012,
+      ease: 'power3.out'
+    }, '<+0.12');
+
+    activeTl = tl;
+  };
+
+  let intervalId = 0;
+  const startLoop = () => {
+    burst();
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+    intervalId = window.setInterval(burst, 2600);
+  };
+  const stopLoop = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = 0;
+    }
+    activeTl?.kill();
+    layer.querySelectorAll('.developers-section__dissolve-strip, .developers-section__dissolve-glyph').forEach((node) => node.remove());
+    gsap.set(core, { opacity: 0 });
+  };
+
+  const trigger = ScrollTrigger.create({
+    trigger: frame,
+    start: 'top 85%',
+    end: 'bottom 20%',
+    onEnter: startLoop,
+    onEnterBack: startLoop,
+    onLeave: stopLoop,
+    onLeaveBack: stopLoop
+  });
+
+  frame.addEventListener('pointerenter', burst, { passive: true });
+
+  return () => {
+    trigger.kill();
+    stopLoop();
+    frame.removeEventListener('pointerenter', burst);
+    layer?.remove();
+    delete frame.dataset.motionDissolveBound;
+  };
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -2618,6 +2768,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initDevelopersGridLaserHover());
   registerMotionCleanup(initPricingGridLaserHover());
   registerMotionCleanup(initDevelopersPerspectiveBeams());
+  registerMotionCleanup(initDevelopersIntroDissolveBurst());
   // Developers side red dots should stay static (no pulse animation).
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
