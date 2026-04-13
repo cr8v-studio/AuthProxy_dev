@@ -1914,42 +1914,20 @@ function initDevelopersIntroDissolveBurst() {
     frame.append(layer);
   }
 
-  const core = document.createElement('span');
-  core.className = 'developers-section__dissolve-core';
-  layer.append(core);
-
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
   let ticker = 0;
   let isInViewport = false;
   let lastBurstAt = 0;
 
   const clearParticles = () => {
-    layer.querySelectorAll('.developers-section__dissolve-strip, .developers-section__dissolve-glyph').forEach((node) => node.remove());
-    gsap.set(core, { opacity: 0 });
+    layer.querySelectorAll('.developers-section__dissolve-glyph').forEach((node) => node.remove());
   };
 
   const burstAt = (x, y) => {
     const rect = frame.getBoundingClientRect();
     const cx = gsap.utils.clamp(64, rect.width - 64, x);
     const cy = gsap.utils.clamp(64, rect.height - 64, y);
-    const stripCount = 14;
     const glyphCount = 34;
-
-    gsap.killTweensOf(core);
-    gsap.set(core, { x: cx, y: cy, scale: 0.25, rotation: -6, opacity: 0 });
-
-    const strips = Array.from({ length: stripCount }, (_, i) => {
-      const strip = document.createElement('span');
-      strip.className = 'developers-section__dissolve-strip';
-      strip.style.top = `${Math.round(cy - 86 + (i / (stripCount - 1)) * 172)}px`;
-      layer.append(strip);
-      gsap.set(strip, {
-        x: cx - 82 + (Math.random() * 28 - 14),
-        scaleX: 0.25,
-        opacity: 0
-      });
-      return strip;
-    });
 
     const glyphs = Array.from({ length: glyphCount }, (_, i) => {
       const glyph = document.createElement('span');
@@ -1967,41 +1945,9 @@ function initDevelopersIntroDissolveBurst() {
 
     const tl = gsap.timeline({
       onComplete: () => {
-        strips.forEach((item) => item.remove());
         glyphs.forEach((item) => item.remove());
       }
     });
-
-    tl.to(core, {
-      opacity: 1,
-      scale: 1,
-      rotation: 0,
-      duration: 0.2,
-      ease: 'power2.out'
-    });
-    tl.to(core, {
-      x: cx + 88,
-      opacity: 0,
-      scale: 1.2,
-      duration: 0.72,
-      ease: 'power3.out'
-    }, '<+0.06');
-
-    tl.to(strips, {
-      opacity: () => 0.45 + Math.random() * 0.35,
-      scaleX: 1,
-      x: () => cx + 28 + Math.random() * 36,
-      duration: 0.18,
-      stagger: 0.012,
-      ease: 'power2.out'
-    }, '<');
-    tl.to(strips, {
-      opacity: 0,
-      x: () => `+=${86 + Math.random() * 30}`,
-      duration: 0.68,
-      stagger: 0.01,
-      ease: 'power3.out'
-    }, '<+0.08');
 
     tl.to(glyphs, {
       opacity: (_, el) => el.classList.contains('is-accent') ? 0.98 : 0.68,
@@ -2042,7 +1988,7 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const onPointerLeave = () => {
-    gsap.to(core, { opacity: 0, duration: 0.24, ease: 'power2.out' });
+    clearParticles();
   };
 
   const trigger = ScrollTrigger.create({
