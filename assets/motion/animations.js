@@ -1915,20 +1915,84 @@ function initDevelopersIntroDissolveBurst() {
   }
 
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
+  const gridStep = 100;
+  const gridOffset = 50;
   let ticker = 0;
   let isInViewport = false;
   let lastBurstAt = 0;
   let lastBurstX = Number.NaN;
   let lastBurstY = Number.NaN;
+  let gridCells = [];
 
   const clearParticles = () => {
-    layer.querySelectorAll('.developers-section__dissolve-glyph').forEach((node) => node.remove());
+    layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
+  };
+
+  const clearGrid = () => {
+    gridCells.forEach((cell) => cell.node.remove());
+    gridCells = [];
+  };
+
+  const clampToGrid = (value, max) => {
+    const clamped = gsap.utils.clamp(gridOffset, Math.max(gridOffset, max - gridOffset), value);
+    const snapped = gridOffset + Math.round((clamped - gridOffset) / gridStep) * gridStep;
+    return gsap.utils.clamp(gridOffset, Math.max(gridOffset, max - gridOffset), snapped);
+  };
+
+  const buildGrid = () => {
+    clearGrid();
+    const rect = frame.getBoundingClientRect();
+    let index = 0;
+    for (let y = gridOffset; y <= rect.height - gridOffset + 0.5; y += gridStep) {
+      for (let x = gridOffset; x <= rect.width - gridOffset + 0.5; x += gridStep) {
+        const node = document.createElement('span');
+        node.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--base${index % 7 === 0 ? ' is-accent' : ''}`;
+        node.textContent = glyphChars[(index + ticker) % glyphChars.length];
+        layer.append(node);
+        gsap.set(node, {
+          x,
+          y,
+          opacity: 0
+        });
+        gridCells.push({ x, y, node });
+        index += 1;
+      }
+    }
+    ticker += 1;
+  };
+
+  const updateGridFocus = (cx, cy) => {
+    if (!gridCells.length) {
+      return;
+    }
+    const focusRadius = 155;
+    const innerRadius = 72;
+    gsap.to(gridCells.map((cell) => cell.node), {
+      opacity: (i) => {
+        const cell = gridCells[i];
+        const distance = Math.hypot(cell.x - cx, cell.y - cy);
+        if (distance <= innerRadius) {
+          return cell.node.classList.contains('is-accent') ? 0.42 : 0.24;
+        }
+        if (distance <= focusRadius) {
+          return cell.node.classList.contains('is-accent') ? 0.28 : 0.15;
+        }
+        return 0;
+      },
+      duration: 0.24,
+      stagger: {
+        each: 0.004,
+        from: 'center'
+      },
+      ease: 'power2.out',
+      overwrite: true
+    });
   };
 
   const burstAt = (x, y) => {
     const rect = frame.getBoundingClientRect();
-    const cx = gsap.utils.clamp(64, rect.width - 64, x);
-    const cy = gsap.utils.clamp(64, rect.height - 64, y);
+    const cx = gsap.utils.clamp(gridOffset, rect.width - gridOffset, x);
+    const cy = gsap.utils.clamp(gridOffset, rect.height - gridOffset, y);
     const glyphCount = 18;
 
     const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
@@ -1942,7 +2006,7 @@ function initDevelopersIntroDissolveBurst() {
       const endX = cx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 20;
       const endY = cy + Math.sin(angle) * farRadius + (Math.random() - 0.5) * 20;
       const glyph = document.createElement('span');
-      glyph.className = `developers-section__dissolve-glyph${i % 3 === 0 ? ' is-accent' : ''}`;
+      glyph.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--burst${i % 3 === 0 ? ' is-accent' : ''}`;
       glyph.textContent = glyphChars[(i + ticker) % glyphChars.length];
       layer.append(glyph);
       gsap.set(glyph, {
@@ -1991,16 +2055,30 @@ function initDevelopersIntroDissolveBurst() {
     const rect = frame.getBoundingClientRect();
     const px = event.clientX - rect.left;
     const py = event.clientY - rect.top;
+    const snappedX = clampToGrid(px, rect.width);
+    const snappedY = clampToGrid(py, rect.height);
+    updateGridFocus(snappedX, snappedY);
     if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
       const minDistance = isMobileViewport() ? 62 : 46;
       if (Math.hypot(px - lastBurstX, py - lastBurstY) < minDistance) {
         return;
       }
     }
+    let burstX = snappedX;
+    let burstY = snappedY;
+    if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
+      const dx = px - lastBurstX;
+      const dy = py - lastBurstY;
+      if (Math.abs(dx) >= Math.abs(dy)) {
+        burstX = clampToGrid(snappedX + (dx >= 0 ? gridStep : -gridStep), rect.width);
+      } else {
+        burstY = clampToGrid(snappedY + (dy >= 0 ? gridStep : -gridStep), rect.height);
+      }
+    }
     lastBurstAt = now;
     lastBurstX = px;
     lastBurstY = py;
-    burstAt(px, py);
+    burstAt(burstX, burstY);
   };
 
   const onPointerEnter = (event) => {
@@ -2013,6 +2091,19 @@ function initDevelopersIntroDissolveBurst() {
   const onPointerLeave = () => {
     lastBurstX = Number.NaN;
     lastBurstY = Number.NaN;
+    gsap.to(gridCells.map((cell) => cell.node), {
+      opacity: 0,
+      duration: 0.24,
+      ease: 'power2.out',
+      overwrite: true
+    });
+  };
+
+  const onResize = () => {
+    if (!isInViewport) {
+      return;
+    }
+    buildGrid();
   };
 
   const trigger = ScrollTrigger.create({
@@ -2021,34 +2112,41 @@ function initDevelopersIntroDissolveBurst() {
     end: 'bottom 20%',
     onEnter: () => {
       isInViewport = true;
+      buildGrid();
       const rect = frame.getBoundingClientRect();
-      burstAt(rect.width * 0.52, rect.height * 0.52);
+      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onEnterBack: () => {
       isInViewport = true;
+      buildGrid();
       const rect = frame.getBoundingClientRect();
-      burstAt(rect.width * 0.52, rect.height * 0.52);
+      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onLeave: () => {
       isInViewport = false;
       clearParticles();
+      clearGrid();
     },
     onLeaveBack: () => {
       isInViewport = false;
       clearParticles();
+      clearGrid();
     }
   });
 
   frame.addEventListener('pointerenter', onPointerEnter, { passive: true });
   frame.addEventListener('pointermove', onPointerMove, { passive: true });
   frame.addEventListener('pointerleave', onPointerLeave, { passive: true });
+  window.addEventListener('resize', onResize);
 
   return () => {
     trigger.kill();
     frame.removeEventListener('pointerenter', onPointerEnter);
     frame.removeEventListener('pointermove', onPointerMove);
     frame.removeEventListener('pointerleave', onPointerLeave);
+    window.removeEventListener('resize', onResize);
     clearParticles();
+    clearGrid();
     layer?.remove();
     delete frame.dataset.motionDissolveBound;
   };
