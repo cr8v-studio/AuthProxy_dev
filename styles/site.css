@@ -3888,25 +3888,34 @@ a {
 
 .final-cta-section__mockups {
   position: absolute;
-  left: 40px;
-  right: 40px;
+  left: 50%;
+  width: 918px;
   top: 141px;
+  transform: translateX(-50%);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 37px;
+  gap: 18px;
 }
 
 .final-cta-screen {
   flex: 0 0 294px;
   width: 294px;
   min-width: 0;
-  height: 637px;
   border: 1px solid var(--figma-color-dark-tint-4);
   border-radius: 33px;
   background: var(--figma-color-off-white-base);
   padding: 26px 18px;
   color: var(--figma-color-dark-base);
+}
+
+.final-cta-screen--signin {
+  height: 637px;
+}
+
+.final-cta-screen--access,
+.final-cta-screen--keys {
+  height: 631px;
 }
 
 .final-cta-screen__clock {
