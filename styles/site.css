@@ -4075,6 +4075,11 @@ a {
   --header-button-v1-bg: transparent;
   --header-button-v1-color: var(--figma-color-extras-2);
   --header-button-v1-hover-color: var(--figma-color-extras-2);
+  --header-button-v1-corner-br-default: url("../assets/sections/hero/cta-corner-br.svg");
+  --header-button-v1-corner-bl-default: url("../assets/sections/hero/cta-corner-bl.svg");
+  --header-button-v1-corner-tr-default: url("../assets/sections/hero/cta-corner-tr.svg");
+  --header-button-v1-corner-tl-default: url("../assets/sections/hero/cta-corner-tl.svg");
+  --corner-inset: 5px;
   text-transform: uppercase;
 }
 
