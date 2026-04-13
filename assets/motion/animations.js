@@ -1915,42 +1915,130 @@ function initDevelopersIntroDissolveBurst() {
   }
 
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
+  const gridStep = 100;
+  const gridOffset = 50;
   let ticker = 0;
   let isInViewport = false;
   let lastBurstAt = 0;
   let lastBurstX = Number.NaN;
   let lastBurstY = Number.NaN;
+  let gridGlyphs = [];
+  let gridGlyphMap = new Map();
 
   const clearParticles = () => {
-    layer.querySelectorAll('.developers-section__dissolve-glyph').forEach((node) => node.remove());
+    layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
+  };
+
+  const clearGridGlyphs = () => {
+    gridGlyphs.forEach((node) => node.remove());
+    gridGlyphs = [];
+    gridGlyphMap.clear();
+  };
+
+  const buildGridGlyphs = () => {
+    const rect = frame.getBoundingClientRect();
+    clearGridGlyphs();
+
+    const cols = Math.max(2, Math.floor((rect.width - (gridOffset * 2)) / gridStep) + 1);
+    const rows = Math.max(2, Math.floor((rect.height - (gridOffset * 2)) / gridStep) + 1);
+    const glyphs = [];
+    let index = 0;
+
+    for (let row = 0; row < rows; row += 1) {
+      for (let col = 0; col < cols; col += 1) {
+        const x = gridOffset + (col * gridStep);
+        const y = gridOffset + (row * gridStep);
+        if (x > rect.width - gridOffset + 0.5 || y > rect.height - gridOffset + 0.5) {
+          continue;
+        }
+        const glyph = document.createElement('span');
+        glyph.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--base${index % 7 === 0 ? ' is-accent' : ''}`;
+        glyph.textContent = glyphChars[(index + ticker) % glyphChars.length];
+        layer.append(glyph);
+        gsap.set(glyph, {
+          x,
+          y,
+          opacity: 0
+        });
+        glyphs.push(glyph);
+        gridGlyphMap.set(`${Math.round(x)}:${Math.round(y)}`, glyph);
+        index += 1;
+      }
+    }
+
+    ticker += 1;
+    gridGlyphs = glyphs;
+
+    gsap.to(glyphs, {
+      opacity: (_, el) => el.classList.contains('is-accent') ? 0.3 : 0.18,
+      duration: 0.64,
+      stagger: {
+        each: 0.006,
+        from: 'random'
+      },
+      ease: 'power2.out',
+      overwrite: true
+    });
   };
 
   const burstAt = (x, y) => {
     const rect = frame.getBoundingClientRect();
-    const cx = gsap.utils.clamp(64, rect.width - 64, x);
-    const cy = gsap.utils.clamp(64, rect.height - 64, y);
-    const glyphCount = 18;
+    const cx = gsap.utils.clamp(gridOffset, rect.width - gridOffset, x);
+    const cy = gsap.utils.clamp(gridOffset, rect.height - gridOffset, y);
+    const snappedX = gridOffset + Math.round((cx - gridOffset) / gridStep) * gridStep;
+    const snappedY = gridOffset + Math.round((cy - gridOffset) / gridStep) * gridStep;
 
-    const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
-      const angle = Math.random() * Math.PI * 2;
-      const nearRadius = 46 + Math.random() * 40;
-      const farRadius = 140 + Math.random() * 130;
-      const startX = cx + Math.cos(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
-      const startY = cy + Math.sin(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
-      const midX = cx + Math.cos(angle) * nearRadius;
-      const midY = cy + Math.sin(angle) * nearRadius;
-      const endX = cx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 20;
-      const endY = cy + Math.sin(angle) * farRadius + (Math.random() - 0.5) * 20;
+    const offsets = [
+      [0, 0], [1, 0], [-1, 0], [0, 1], [0, -1],
+      [1, 1], [-1, -1], [1, -1], [-1, 1],
+      [2, 0], [-2, 0], [0, 2], [0, -2]
+    ];
+
+    const entries = offsets
+      .map(([ox, oy], i) => {
+        const gx = snappedX + (ox * gridStep);
+        const gy = snappedY + (oy * gridStep);
+        if (gx < gridOffset || gx > rect.width - gridOffset || gy < gridOffset || gy > rect.height - gridOffset) {
+          return null;
+        }
+        const dx = gx - cx;
+        const dy = gy - cy;
+        const distance = Math.hypot(dx, dy);
+        const angle = distance < 8 ? Math.random() * Math.PI * 2 : Math.atan2(dy, dx);
+        const nearRadius = 22 + Math.random() * 24;
+        const farRadius = 90 + Math.random() * 116;
+        const midX = gx + Math.cos(angle) * nearRadius;
+        const midY = gy + Math.sin(angle) * nearRadius;
+        const endX = gx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 16;
+        const endY = gy + Math.sin(angle) * farRadius + (Math.random() - 0.5) * 16;
+
+        const sourceGlyph = gridGlyphMap.get(`${Math.round(gx)}:${Math.round(gy)}`);
+        if (sourceGlyph) {
+          gsap.to(sourceGlyph, {
+            opacity: sourceGlyph.classList.contains('is-accent') ? 0.08 : 0.05,
+            duration: 0.2,
+            yoyo: true,
+            repeat: 1,
+            ease: 'power2.out',
+            overwrite: true
+          });
+        }
+
+        return { gx, gy, midX, midY, endX, endY, i };
+      })
+      .filter(Boolean);
+
+    const glyphEntries = entries.map((entry) => {
       const glyph = document.createElement('span');
-      glyph.className = `developers-section__dissolve-glyph${i % 3 === 0 ? ' is-accent' : ''}`;
-      glyph.textContent = glyphChars[(i + ticker) % glyphChars.length];
+      glyph.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--burst${entry.i % 3 === 0 ? ' is-accent' : ''}`;
+      glyph.textContent = glyphChars[(entry.i + ticker) % glyphChars.length];
       layer.append(glyph);
       gsap.set(glyph, {
-        x: startX,
-        y: startY,
+        x: entry.gx + (Math.random() - 0.5) * 4,
+        y: entry.gy + (Math.random() - 0.5) * 4,
         opacity: 0
       });
-      return { glyph, midX, midY, endX, endY };
+      return { ...entry, glyph };
     });
     const glyphs = glyphEntries.map((entry) => entry.glyph);
     ticker += 1;
@@ -1965,18 +2053,18 @@ function initDevelopersIntroDissolveBurst() {
       opacity: (_, el) => el.classList.contains('is-accent') ? 0.86 : 0.56,
       x: (i) => glyphEntries[i].midX,
       y: (i) => glyphEntries[i].midY,
-      duration: 0.46,
-      stagger: 0.018,
+      duration: 0.42,
+      stagger: 0.016,
       ease: 'power1.out'
     }, '<');
     tl.to(glyphs, {
       opacity: 0,
       x: (i) => glyphEntries[i].endX,
       y: (i) => glyphEntries[i].endY,
-      duration: 1.45,
-      stagger: 0.02,
+      duration: 1.2,
+      stagger: 0.018,
       ease: 'sine.out'
-    }, '<+0.22');
+    }, '<+0.18');
   };
 
   const triggerBurstFromEvent = (event, force = false) => {
@@ -2015,40 +2103,51 @@ function initDevelopersIntroDissolveBurst() {
     lastBurstY = Number.NaN;
   };
 
+  const onResize = () => {
+    if (isInViewport) {
+      buildGridGlyphs();
+    } else {
+      clearGridGlyphs();
+    }
+  };
+
   const trigger = ScrollTrigger.create({
     trigger: frame,
     start: 'top 85%',
     end: 'bottom 20%',
     onEnter: () => {
       isInViewport = true;
-      const rect = frame.getBoundingClientRect();
-      burstAt(rect.width * 0.52, rect.height * 0.52);
+      buildGridGlyphs();
     },
     onEnterBack: () => {
       isInViewport = true;
-      const rect = frame.getBoundingClientRect();
-      burstAt(rect.width * 0.52, rect.height * 0.52);
+      buildGridGlyphs();
     },
     onLeave: () => {
       isInViewport = false;
       clearParticles();
+      clearGridGlyphs();
     },
     onLeaveBack: () => {
       isInViewport = false;
       clearParticles();
+      clearGridGlyphs();
     }
   });
 
   frame.addEventListener('pointerenter', onPointerEnter, { passive: true });
   frame.addEventListener('pointermove', onPointerMove, { passive: true });
   frame.addEventListener('pointerleave', onPointerLeave, { passive: true });
+  window.addEventListener('resize', onResize);
 
   return () => {
     trigger.kill();
     frame.removeEventListener('pointerenter', onPointerEnter);
     frame.removeEventListener('pointermove', onPointerMove);
     frame.removeEventListener('pointerleave', onPointerLeave);
+    window.removeEventListener('resize', onResize);
     clearParticles();
+    clearGridGlyphs();
     layer?.remove();
     delete frame.dataset.motionDissolveBound;
   };
