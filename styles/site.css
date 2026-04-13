@@ -6272,12 +6272,12 @@ a {
   }
 
   .faq-section__docs-corner--tr {
-    top: 12px;
-    right: 12px;
+    top: 24px;
+    right: 24px;
   }
 
   .faq-section__docs-corner--br {
-    right: 12px;
-    bottom: 12px;
+    right: 24px;
+    bottom: 24px;
   }
 }
