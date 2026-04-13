@@ -3909,6 +3909,21 @@ a {
   color: var(--figma-color-dark-base);
 }
 
+.final-cta-screen--asset {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  overflow: hidden;
+}
+
+.final-cta-screen__asset {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .final-cta-screen--signin {
   height: 637px;
 }
@@ -5870,6 +5885,13 @@ a {
     border-radius: 24px;
   }
 
+  .final-cta-screen--asset {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+  }
+
   .final-cta-screen__title {
     font-size: 32px;
     line-height: 32px;
@@ -6072,6 +6094,14 @@ a {
     min-height: 0;
     border-radius: 18px;
     padding: 20px 16px;
+  }
+
+  .final-cta-screen--asset {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    height: auto;
   }
 
   .final-cta-screen__clock {
