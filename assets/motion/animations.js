@@ -1923,7 +1923,6 @@ function initDevelopersIntroDissolveBurst() {
   let lastBurstX = Number.NaN;
   let lastBurstY = Number.NaN;
   let gridCells = [];
-  let gridIdleTimer = null;
 
   const clearParticles = () => {
     layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
@@ -1932,28 +1931,6 @@ function initDevelopersIntroDissolveBurst() {
   const clearGrid = () => {
     gridCells.forEach((cell) => cell.node.remove());
     gridCells = [];
-  };
-
-  const hideGridFocus = () => {
-    if (!gridCells.length) {
-      return;
-    }
-    gsap.to(gridCells.map((cell) => cell.node), {
-      opacity: 0,
-      duration: 0.22,
-      ease: 'power2.out',
-      overwrite: true
-    });
-  };
-
-  const scheduleGridIdleHide = () => {
-    if (gridIdleTimer) {
-      window.clearTimeout(gridIdleTimer);
-    }
-    gridIdleTimer = window.setTimeout(() => {
-      hideGridFocus();
-      gridIdleTimer = null;
-    }, 160);
   };
 
   const clampToGrid = (value, max) => {
@@ -1984,32 +1961,29 @@ function initDevelopersIntroDissolveBurst() {
     ticker += 1;
   };
 
-  const getFocusCellCoords = (px, py, rect) => {
-    const lowerX = clampToGrid(px - (gridStep * 0.5), rect.width);
-    const upperX = clampToGrid(px + (gridStep * 0.5), rect.width);
-    const lowerY = clampToGrid(py - (gridStep * 0.5), rect.height);
-    const upperY = clampToGrid(py + (gridStep * 0.5), rect.height);
-    return [
-      [lowerX, lowerY],
-      [upperX, lowerY],
-      [lowerX, upperY],
-      [upperX, upperY]
-    ];
-  };
-
-  const updateGridFocus = (cells) => {
+  const updateGridFocus = (cx, cy) => {
     if (!gridCells.length) {
       return;
     }
-    const keys = new Set(cells.map(([x, y]) => `${Math.round(x)}:${Math.round(y)}`));
+    const focusRadius = 155;
+    const innerRadius = 72;
     gsap.to(gridCells.map((cell) => cell.node), {
       opacity: (i) => {
         const cell = gridCells[i];
-        return keys.has(`${Math.round(cell.x)}:${Math.round(cell.y)}`)
-          ? (cell.node.classList.contains('is-accent') ? 0.42 : 0.26)
-          : 0;
+        const distance = Math.hypot(cell.x - cx, cell.y - cy);
+        if (distance <= innerRadius) {
+          return cell.node.classList.contains('is-accent') ? 0.42 : 0.24;
+        }
+        if (distance <= focusRadius) {
+          return cell.node.classList.contains('is-accent') ? 0.28 : 0.15;
+        }
+        return 0;
       },
-      duration: 0.18,
+      duration: 0.24,
+      stagger: {
+        each: 0.004,
+        from: 'center'
+      },
       ease: 'power2.out',
       overwrite: true
     });
@@ -2073,39 +2047,32 @@ function initDevelopersIntroDissolveBurst() {
     if (!isInViewport) {
       return;
     }
+    const now = performance.now();
+    const minInterval = isMobileViewport() ? 340 : 260;
+    if (!force && now - lastBurstAt < minInterval) {
+      return;
+    }
     const rect = frame.getBoundingClientRect();
     const px = event.clientX - rect.left;
     const py = event.clientY - rect.top;
-    const focusCells = getFocusCellCoords(px, py, rect);
-    updateGridFocus(focusCells);
-    scheduleGridIdleHide();
-
-    const now = performance.now();
-    const minInterval = isMobileViewport() ? 320 : 240;
-    if (!force && now - lastBurstAt < minInterval) {
-      lastBurstX = px;
-      lastBurstY = py;
-      return;
-    }
+    const snappedX = clampToGrid(px, rect.width);
+    const snappedY = clampToGrid(py, rect.height);
+    updateGridFocus(snappedX, snappedY);
     if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
       const minDistance = isMobileViewport() ? 62 : 46;
       if (Math.hypot(px - lastBurstX, py - lastBurstY) < minDistance) {
-        lastBurstX = px;
-        lastBurstY = py;
         return;
       }
     }
-    let burstX = focusCells[3][0];
-    let burstY = focusCells[3][1];
+    let burstX = snappedX;
+    let burstY = snappedY;
     if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
       const dx = px - lastBurstX;
       const dy = py - lastBurstY;
       if (Math.abs(dx) >= Math.abs(dy)) {
-        burstX = dx >= 0 ? Math.max(focusCells[1][0], focusCells[3][0]) : Math.min(focusCells[0][0], focusCells[2][0]);
-        burstY = Math.abs(py - focusCells[0][1]) <= Math.abs(py - focusCells[2][1]) ? focusCells[0][1] : focusCells[2][1];
+        burstX = clampToGrid(snappedX + (dx >= 0 ? gridStep : -gridStep), rect.width);
       } else {
-        burstY = dy >= 0 ? Math.max(focusCells[2][1], focusCells[3][1]) : Math.min(focusCells[0][1], focusCells[1][1]);
-        burstX = Math.abs(px - focusCells[0][0]) <= Math.abs(px - focusCells[1][0]) ? focusCells[0][0] : focusCells[1][0];
+        burstY = clampToGrid(snappedY + (dy >= 0 ? gridStep : -gridStep), rect.height);
       }
     }
     lastBurstAt = now;
@@ -2115,24 +2082,21 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const onPointerEnter = (event) => {
-    const rect = frame.getBoundingClientRect();
-    lastBurstX = event.clientX - rect.left;
-    lastBurstY = event.clientY - rect.top;
-    hideGridFocus();
+    triggerBurstFromEvent(event, true);
   };
   const onPointerMove = (event) => {
     triggerBurstFromEvent(event, false);
   };
 
   const onPointerLeave = () => {
-    if (gridIdleTimer) {
-      window.clearTimeout(gridIdleTimer);
-      gridIdleTimer = null;
-    }
     lastBurstX = Number.NaN;
     lastBurstY = Number.NaN;
-    hideGridFocus();
-    clearParticles();
+    gsap.to(gridCells.map((cell) => cell.node), {
+      opacity: 0,
+      duration: 0.24,
+      ease: 'power2.out',
+      overwrite: true
+    });
   };
 
   const onResize = () => {
@@ -2149,12 +2113,14 @@ function initDevelopersIntroDissolveBurst() {
     onEnter: () => {
       isInViewport = true;
       buildGrid();
-      hideGridFocus();
+      const rect = frame.getBoundingClientRect();
+      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onEnterBack: () => {
       isInViewport = true;
       buildGrid();
-      hideGridFocus();
+      const rect = frame.getBoundingClientRect();
+      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onLeave: () => {
       isInViewport = false;
@@ -2179,10 +2145,6 @@ function initDevelopersIntroDissolveBurst() {
     frame.removeEventListener('pointermove', onPointerMove);
     frame.removeEventListener('pointerleave', onPointerLeave);
     window.removeEventListener('resize', onResize);
-    if (gridIdleTimer) {
-      window.clearTimeout(gridIdleTimer);
-      gridIdleTimer = null;
-    }
     clearParticles();
     clearGrid();
     layer?.remove();
