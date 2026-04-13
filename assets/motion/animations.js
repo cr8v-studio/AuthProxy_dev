@@ -1929,14 +1929,14 @@ function initDevelopersIntroDissolveBurst() {
     const rect = frame.getBoundingClientRect();
     const cx = gsap.utils.clamp(64, rect.width - 64, x);
     const cy = gsap.utils.clamp(64, rect.height - 64, y);
-    const glyphCount = 22;
+    const glyphCount = 18;
 
     const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
       const angle = Math.random() * Math.PI * 2;
-      const nearRadius = 34 + Math.random() * 28;
-      const farRadius = 110 + Math.random() * 108;
-      const startX = cx + Math.cos(angle) * (18 + Math.random() * 16) + (Math.random() - 0.5) * 6;
-      const startY = cy + Math.sin(angle) * (18 + Math.random() * 16) + (Math.random() - 0.5) * 6;
+      const nearRadius = 46 + Math.random() * 40;
+      const farRadius = 140 + Math.random() * 130;
+      const startX = cx + Math.cos(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
+      const startY = cy + Math.sin(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
       const midX = cx + Math.cos(angle) * nearRadius;
       const midY = cy + Math.sin(angle) * nearRadius;
       const endX = cx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 20;
@@ -1962,21 +1962,21 @@ function initDevelopersIntroDissolveBurst() {
     });
 
     tl.to(glyphs, {
-      opacity: (_, el) => el.classList.contains('is-accent') ? 0.98 : 0.68,
+      opacity: (_, el) => el.classList.contains('is-accent') ? 0.86 : 0.56,
       x: (i) => glyphEntries[i].midX,
       y: (i) => glyphEntries[i].midY,
-      duration: 0.32,
-      stagger: 0.012,
-      ease: 'power2.out'
+      duration: 0.46,
+      stagger: 0.018,
+      ease: 'power1.out'
     }, '<');
     tl.to(glyphs, {
       opacity: 0,
       x: (i) => glyphEntries[i].endX,
       y: (i) => glyphEntries[i].endY,
-      duration: 1.04,
-      stagger: 0.014,
-      ease: 'power3.out'
-    }, '<+0.16');
+      duration: 1.45,
+      stagger: 0.02,
+      ease: 'sine.out'
+    }, '<+0.22');
   };
 
   const triggerBurstFromEvent = (event, force = false) => {
@@ -1984,7 +1984,7 @@ function initDevelopersIntroDissolveBurst() {
       return;
     }
     const now = performance.now();
-    const minInterval = isMobileViewport() ? 260 : 180;
+    const minInterval = isMobileViewport() ? 340 : 260;
     if (!force && now - lastBurstAt < minInterval) {
       return;
     }
@@ -1992,7 +1992,7 @@ function initDevelopersIntroDissolveBurst() {
     const px = event.clientX - rect.left;
     const py = event.clientY - rect.top;
     if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
-      const minDistance = isMobileViewport() ? 44 : 32;
+      const minDistance = isMobileViewport() ? 62 : 46;
       if (Math.hypot(px - lastBurstX, py - lastBurstY) < minDistance) {
         return;
       }
@@ -2013,7 +2013,6 @@ function initDevelopersIntroDissolveBurst() {
   const onPointerLeave = () => {
     lastBurstX = Number.NaN;
     lastBurstY = Number.NaN;
-    clearParticles();
   };
 
   const trigger = ScrollTrigger.create({
