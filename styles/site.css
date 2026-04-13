@@ -2646,14 +2646,6 @@ a {
   white-space: pre;
 }
 
-.developers-section__dissolve-glyph--base {
-  pointer-events: none;
-}
-
-.developers-section__dissolve-glyph--burst {
-  color: rgb(31 31 31 / 0.72);
-}
-
 .developers-section__dissolve-glyph.is-accent {
   color: rgb(237 88 90 / 0.98);
 }
