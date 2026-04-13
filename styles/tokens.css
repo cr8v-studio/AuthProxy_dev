@@ -235,7 +235,7 @@
   --color-control-dark-fg-strong: var(--figma-color-off-white-base);
 
   /* Component tokens: header logo */
-  --header-logo-width: 127px;
+  --header-logo-width: 127.476px;
   --header-logo-height: var(--size-control-lg);
   --header-nav-gap: var(--space-12);
 
