@@ -2618,6 +2618,61 @@ a {
   background: #ffffff;
 }
 
+.developers-section__intro-inner > * {
+  position: relative;
+  z-index: 2;
+}
+
+.developers-section__dissolve-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.developers-section__dissolve-core {
+  position: absolute;
+  width: 320px;
+  height: 180px;
+  border-radius: 56% 44% 48% 52% / 54% 42% 58% 46%;
+  background:
+    radial-gradient(circle at 40% 50%, rgb(31 31 31 / 0.06) 0%, rgb(31 31 31 / 0) 62%),
+    radial-gradient(circle at 68% 48%, rgb(237 88 90 / 0.18) 0%, rgb(237 88 90 / 0) 68%);
+  filter: blur(4px);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.developers-section__dissolve-strip {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  width: 110px;
+  background: linear-gradient(90deg, rgb(237 88 90 / 0), rgb(237 88 90 / 0.9) 45%, rgb(31 31 31 / 0.16) 78%, rgb(31 31 31 / 0));
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.developers-section__dissolve-glyph {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: "IBM Plex Mono", "Roboto Mono", monospace;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgb(31 31 31 / 0.56);
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  white-space: pre;
+}
+
+.developers-section__dissolve-glyph.is-accent {
+  color: rgb(237 88 90 / 0.92);
+}
+
 .developers-section__title {
   margin: 0;
   width: min(100%, 580px);
