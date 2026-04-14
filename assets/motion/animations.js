@@ -1774,7 +1774,6 @@ function initDevelopersPerspectiveBeams() {
 
   let tracks = buildBeams();
   startAnimation(tracks);
-  gsap.set(layer, { autoAlpha: 0.74 });
   let lastCenterWidth = center.clientWidth;
   let lastCenterHeight = center.clientHeight;
 
@@ -1812,32 +1811,10 @@ function initDevelopersPerspectiveBeams() {
     trigger: center,
     start: 'top 85%',
     end: 'bottom 20%',
-    onEnter: () => {
-      beamTweens.forEach((tween) => tween.play());
-      gsap.to(layer, { autoAlpha: 1, duration: 0.34, ease: 'sine.out', overwrite: true });
-    },
-    onEnterBack: () => {
-      beamTweens.forEach((tween) => tween.play());
-      gsap.to(layer, { autoAlpha: 1, duration: 0.34, ease: 'sine.out', overwrite: true });
-    },
-    onLeave: () => {
-      gsap.to(layer, {
-        autoAlpha: 0.68,
-        duration: 0.28,
-        ease: 'sine.out',
-        overwrite: true,
-        onComplete: () => beamTweens.forEach((tween) => tween.pause())
-      });
-    },
-    onLeaveBack: () => {
-      gsap.to(layer, {
-        autoAlpha: 0.68,
-        duration: 0.28,
-        ease: 'sine.out',
-        overwrite: true,
-        onComplete: () => beamTweens.forEach((tween) => tween.pause())
-      });
-    }
+    onEnter: () => beamTweens.forEach((tween) => tween.play()),
+    onEnterBack: () => beamTweens.forEach((tween) => tween.play()),
+    onLeave: () => beamTweens.forEach((tween) => tween.pause()),
+    onLeaveBack: () => beamTweens.forEach((tween) => tween.pause())
   });
 
   if (!trigger.isActive) {
@@ -1941,11 +1918,7 @@ function initDevelopersIntroDissolveBurst() {
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
   const gridStep = 100;
   const gridOffset = 50;
-  const switchHysteresis = isMobileViewport() ? 10 : 8;
-  const revealDuration = isMobileViewport() ? 0.6 : 0.56;
-  const revealStagger = isMobileViewport() ? 0.054 : 0.05;
-  const dissolveDuration = isMobileViewport() ? 0.68 : 0.62;
-  const dissolveStagger = isMobileViewport() ? 0.024 : 0.022;
+  const switchHysteresis = isMobileViewport() ? 8 : 6;
   const glyphLocalLayout = (() => {
     const cols = 5;
     const rows = 4;
@@ -2135,7 +2108,7 @@ function initDevelopersIntroDissolveBurst() {
     const dirY = dirLen > 0.001 ? dy / dirLen : -1;
     const perpX = -dirY;
     const perpY = dirX;
-    const glyphCount = 14;
+    const glyphCount = 16;
 
     const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
       const sourceIndex = Math.floor(
@@ -2143,7 +2116,7 @@ function initDevelopersIntroDissolveBurst() {
       );
       const source = cell.glyphPositions[sourceIndex];
       const directionJitter = pseudo(cell.seed * 0.41 + i * 1.63 + ticker * 0.53) - 0.5;
-      const sideOffset = (pseudo(cell.seed * 0.89 + i * 0.77 + ticker * 0.39) - 0.5) * 34;
+      const sideOffset = (pseudo(cell.seed * 0.89 + i * 0.77 + ticker * 0.39) - 0.5) * 48;
       const nearDistance = 36 + pseudo(cell.seed * 0.52 + i * 0.93 + ticker * 0.45) * 28;
       const farDistance = 88 + pseudo(cell.seed * 0.73 + i * 1.29 + ticker * 0.59) * 74;
       const adjustedDirX = dirX + directionJitter * 0.24;
@@ -2175,10 +2148,10 @@ function initDevelopersIntroDissolveBurst() {
     });
 
     tl.to(glyphs, {
-      opacity: (_, el) => el.classList.contains('is-accent') ? 0.78 : 0.48,
+      opacity: (_, el) => el.classList.contains('is-accent') ? 0.86 : 0.56,
       x: (i) => glyphEntries[i].midX,
       y: (i) => glyphEntries[i].midY,
-      duration: 0.58,
+      duration: 0.52,
       stagger: 0.022,
       ease: 'sine.out'
     }, '<');
@@ -2186,8 +2159,8 @@ function initDevelopersIntroDissolveBurst() {
       opacity: 0,
       x: (i) => glyphEntries[i].endX,
       y: (i) => glyphEntries[i].endY,
-      duration: 1.08,
-      stagger: 0.024,
+      duration: 0.98,
+      stagger: 0.022,
       ease: 'sine.inOut'
     }, '<+0.22');
   };
@@ -2235,8 +2208,8 @@ function initDevelopersIntroDissolveBurst() {
     gsap.to(orderedGlyphs, {
       opacity: 0,
       y: (index) => cell.glyphPositions[dissolveOrder[index]].y + 1.5,
-      duration: dissolveDuration,
-      stagger: dissolveStagger,
+      duration: 0.56,
+      stagger: 0.02,
       ease: 'sine.inOut',
       overwrite: true
     });
@@ -2252,7 +2225,7 @@ function initDevelopersIntroDissolveBurst() {
       return;
     }
 
-    const lerpFactor = isMobileViewport() ? 0.17 : 0.2;
+    const lerpFactor = isMobileViewport() ? 0.2 : 0.24;
     if (!Number.isFinite(pointerSmoothX) || !Number.isFinite(pointerSmoothY)) {
       pointerSmoothX = pointerTargetX;
       pointerSmoothY = pointerTargetY;
@@ -2281,8 +2254,8 @@ function initDevelopersIntroDissolveBurst() {
     activeRevealTimeline.to(orderedGlyphs, {
       opacity: (_, element) => element.classList.contains('is-accent') ? 0.88 : 0.62,
       y: (index) => cell.glyphPositions[revealOrder[index]].y,
-      duration: revealDuration,
-      stagger: revealStagger,
+      duration: 0.62,
+      stagger: 0.06,
       ease: 'power3.out'
     });
     cell.isActivated = true;
