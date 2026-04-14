@@ -1919,19 +1919,9 @@ function initDevelopersIntroDissolveBurst() {
   const gridOffset = 50;
   let ticker = 0;
   let isInViewport = false;
-  let lastBurstAt = 0;
-  let lastBurstX = Number.NaN;
-  let lastBurstY = Number.NaN;
-  let gridCells = [];
-
-  const clearParticles = () => {
-    layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
-  };
-
-  const clearGrid = () => {
-    gridCells.forEach((cell) => cell.node.remove());
-    gridCells = [];
-  };
+  let activeCluster = null;
+  let rafId = 0;
+  let pointerSample = null;
 
   const clampToGrid = (value, max) => {
     const clamped = gsap.utils.clamp(gridOffset, Math.max(gridOffset, max - gridOffset), value);
@@ -1939,171 +1929,181 @@ function initDevelopersIntroDissolveBurst() {
     return gsap.utils.clamp(gridOffset, Math.max(gridOffset, max - gridOffset), snapped);
   };
 
-  const buildGrid = () => {
-    clearGrid();
-    const rect = frame.getBoundingClientRect();
-    let index = 0;
-    for (let y = gridOffset; y <= rect.height - gridOffset + 0.5; y += gridStep) {
-      for (let x = gridOffset; x <= rect.width - gridOffset + 0.5; x += gridStep) {
-        const node = document.createElement('span');
-        node.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--base${index % 7 === 0 ? ' is-accent' : ''}`;
-        node.textContent = glyphChars[(index + ticker) % glyphChars.length];
-        layer.append(node);
-        gsap.set(node, {
-          x,
-          y,
-          opacity: 0
-        });
-        gridCells.push({ x, y, node });
-        index += 1;
-      }
-    }
-    ticker += 1;
+  const makeSeeded = (seed) => {
+    let state = seed >>> 0;
+    return () => {
+      state += 0x6d2b79f5;
+      let t = state;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
   };
 
-  const updateGridFocus = (cx, cy) => {
-    if (!gridCells.length) {
-      return;
+  const removeNodes = (nodes) => {
+    nodes.forEach((node) => node.remove());
+  };
+
+  const createCluster = (cellX, cellY) => {
+    const isMobile = isMobileViewport();
+    const glyphCount = isMobile ? 7 : 10;
+    const seed = ((Math.round(cellX) * 73856093) ^ (Math.round(cellY) * 19349663) ^ ticker) >>> 0;
+    const random = makeSeeded(seed);
+    const nodes = [];
+    const points = [];
+
+    for (let i = 0; i < glyphCount; i += 1) {
+      const angle = random() * Math.PI * 2;
+      const radius = (isMobile ? 14 : 16) + random() * (isMobile ? 16 : 22);
+      const jitterX = (random() - 0.5) * (isMobile ? 6 : 8);
+      const jitterY = (random() - 0.5) * (isMobile ? 6 : 8);
+      const x = cellX + Math.cos(angle) * radius + jitterX;
+      const y = cellY + Math.sin(angle) * radius + jitterY;
+      const node = document.createElement('span');
+      const isAccent = random() < 0.22;
+      node.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--base${isAccent ? ' is-accent' : ''}`;
+      node.textContent = glyphChars[Math.floor(random() * glyphChars.length)];
+      layer.append(node);
+      gsap.set(node, {
+        x,
+        y,
+        opacity: 0,
+        scale: 0.94
+      });
+      nodes.push(node);
+      points.push({ x, y, isAccent });
     }
-    const focusRadius = 155;
-    const innerRadius = 72;
-    gsap.to(gridCells.map((cell) => cell.node), {
-      opacity: (i) => {
-        const cell = gridCells[i];
-        const distance = Math.hypot(cell.x - cx, cell.y - cy);
-        if (distance <= innerRadius) {
-          return cell.node.classList.contains('is-accent') ? 0.42 : 0.24;
-        }
-        if (distance <= focusRadius) {
-          return cell.node.classList.contains('is-accent') ? 0.28 : 0.15;
-        }
-        return 0;
-      },
-      duration: 0.24,
-      stagger: {
-        each: 0.004,
-        from: 'center'
-      },
+
+    ticker += 1;
+    const cluster = {
+      key: `${Math.round(cellX)}:${Math.round(cellY)}`,
+      x: cellX,
+      y: cellY,
+      nodes,
+      points,
+      shown: false
+    };
+    return cluster;
+  };
+
+  const showCluster = (cluster) => {
+    cluster.shown = true;
+    gsap.to(cluster.nodes, {
+      opacity: (_, target) => target.classList.contains('is-accent') ? 0.8 : 0.52,
+      scale: 1,
+      duration: isMobileViewport() ? 0.34 : 0.38,
+      stagger: 0.016,
       ease: 'power2.out',
       overwrite: true
     });
   };
 
-  const burstAt = (x, y) => {
-    const rect = frame.getBoundingClientRect();
-    const cx = gsap.utils.clamp(gridOffset, rect.width - gridOffset, x);
-    const cy = gsap.utils.clamp(gridOffset, rect.height - gridOffset, y);
-    const glyphCount = 18;
+  const dissolveCluster = (cluster, vectorX, vectorY) => {
+    if (!cluster?.nodes?.length) {
+      return;
+    }
 
-    const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
-      const angle = Math.random() * Math.PI * 2;
-      const nearRadius = 46 + Math.random() * 40;
-      const farRadius = 140 + Math.random() * 130;
-      const startX = cx + Math.cos(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
-      const startY = cy + Math.sin(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
-      const midX = cx + Math.cos(angle) * nearRadius;
-      const midY = cy + Math.sin(angle) * nearRadius;
-      const endX = cx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 20;
-      const endY = cy + Math.sin(angle) * farRadius + (Math.random() - 0.5) * 20;
-      const glyph = document.createElement('span');
-      glyph.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--burst${i % 3 === 0 ? ' is-accent' : ''}`;
-      glyph.textContent = glyphChars[(i + ticker) % glyphChars.length];
-      layer.append(glyph);
-      gsap.set(glyph, {
-        x: startX,
-        y: startY,
-        opacity: 0
-      });
-      return { glyph, midX, midY, endX, endY };
-    });
-    const glyphs = glyphEntries.map((entry) => entry.glyph);
-    ticker += 1;
+    const vectorLength = Math.hypot(vectorX, vectorY) || 1;
+    const ux = vectorX / vectorLength;
+    const uy = vectorY / vectorLength;
+    const speedScale = gsap.utils.clamp(1, 1.7, vectorLength / 100);
+    const nodes = cluster.nodes.slice();
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        glyphs.forEach((item) => item.remove());
-      }
-    });
-
-    tl.to(glyphs, {
-      opacity: (_, el) => el.classList.contains('is-accent') ? 0.86 : 0.56,
-      x: (i) => glyphEntries[i].midX,
-      y: (i) => glyphEntries[i].midY,
-      duration: 0.46,
-      stagger: 0.018,
-      ease: 'power1.out'
-    }, '<');
-    tl.to(glyphs, {
+    gsap.to(nodes, {
       opacity: 0,
-      x: (i) => glyphEntries[i].endX,
-      y: (i) => glyphEntries[i].endY,
-      duration: 1.45,
-      stagger: 0.02,
-      ease: 'sine.out'
-    }, '<+0.22');
+      x: (i) => {
+        const perp = (Math.random() - 0.5) * 20;
+        const distance = (52 + Math.random() * 42) * speedScale;
+        return cluster.points[i].x + ux * distance - uy * perp;
+      },
+      y: (i) => {
+        const perp = (Math.random() - 0.5) * 20;
+        const distance = (52 + Math.random() * 42) * speedScale;
+        return cluster.points[i].y + uy * distance + ux * perp;
+      },
+      scale: 0.9,
+      duration: isMobileViewport() ? 0.46 : 0.56,
+      stagger: 0.015,
+      ease: 'power3.out',
+      overwrite: true,
+      onComplete: () => removeNodes(nodes)
+    });
   };
 
-  const triggerBurstFromEvent = (event, force = false) => {
-    if (!isInViewport) {
+  const hideActiveCluster = () => {
+    if (!activeCluster?.nodes?.length) {
       return;
     }
-    const now = performance.now();
-    const minInterval = isMobileViewport() ? 340 : 260;
-    if (!force && now - lastBurstAt < minInterval) {
+    const nodes = activeCluster.nodes.slice();
+    gsap.to(nodes, {
+      opacity: 0,
+      duration: 0.26,
+      stagger: 0.01,
+      ease: 'power2.out',
+      overwrite: true,
+      onComplete: () => removeNodes(nodes)
+    });
+    activeCluster = null;
+  };
+
+  const processPointer = () => {
+    rafId = 0;
+    if (!isInViewport || !pointerSample) {
       return;
     }
+
     const rect = frame.getBoundingClientRect();
-    const px = event.clientX - rect.left;
-    const py = event.clientY - rect.top;
+    const px = pointerSample.clientX - rect.left;
+    const py = pointerSample.clientY - rect.top;
     const snappedX = clampToGrid(px, rect.width);
     const snappedY = clampToGrid(py, rect.height);
-    updateGridFocus(snappedX, snappedY);
-    if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
-      const minDistance = isMobileViewport() ? 62 : 46;
-      if (Math.hypot(px - lastBurstX, py - lastBurstY) < minDistance) {
-        return;
-      }
+    const nextKey = `${Math.round(snappedX)}:${Math.round(snappedY)}`;
+
+    if (!activeCluster) {
+      activeCluster = createCluster(snappedX, snappedY);
+      showCluster(activeCluster);
+      return;
     }
-    let burstX = snappedX;
-    let burstY = snappedY;
-    if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
-      const dx = px - lastBurstX;
-      const dy = py - lastBurstY;
-      if (Math.abs(dx) >= Math.abs(dy)) {
-        burstX = clampToGrid(snappedX + (dx >= 0 ? gridStep : -gridStep), rect.width);
-      } else {
-        burstY = clampToGrid(snappedY + (dy >= 0 ? gridStep : -gridStep), rect.height);
-      }
+
+    if (activeCluster.key === nextKey) {
+      return;
     }
-    lastBurstAt = now;
-    lastBurstX = px;
-    lastBurstY = py;
-    burstAt(burstX, burstY);
+
+    const prevCluster = activeCluster;
+    const dx = snappedX - prevCluster.x;
+    const dy = snappedY - prevCluster.y;
+    dissolveCluster(prevCluster, dx, dy);
+
+    activeCluster = createCluster(snappedX, snappedY);
+    showCluster(activeCluster);
+  };
+
+  const queuePointer = (event) => {
+    pointerSample = { clientX: event.clientX, clientY: event.clientY };
+    if (rafId) {
+      return;
+    }
+    rafId = requestAnimationFrame(processPointer);
   };
 
   const onPointerEnter = (event) => {
-    triggerBurstFromEvent(event, true);
+    queuePointer(event);
   };
+
   const onPointerMove = (event) => {
-    triggerBurstFromEvent(event, false);
+    queuePointer(event);
   };
 
   const onPointerLeave = () => {
-    lastBurstX = Number.NaN;
-    lastBurstY = Number.NaN;
-    gsap.to(gridCells.map((cell) => cell.node), {
-      opacity: 0,
-      duration: 0.24,
-      ease: 'power2.out',
-      overwrite: true
-    });
+    pointerSample = null;
+    hideActiveCluster();
   };
 
   const onResize = () => {
-    if (!isInViewport) {
+    if (!isInViewport || !activeCluster) {
       return;
     }
-    buildGrid();
+    hideActiveCluster();
   };
 
   const trigger = ScrollTrigger.create({
@@ -2112,25 +2112,17 @@ function initDevelopersIntroDissolveBurst() {
     end: 'bottom 20%',
     onEnter: () => {
       isInViewport = true;
-      buildGrid();
-      const rect = frame.getBoundingClientRect();
-      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onEnterBack: () => {
       isInViewport = true;
-      buildGrid();
-      const rect = frame.getBoundingClientRect();
-      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onLeave: () => {
       isInViewport = false;
-      clearParticles();
-      clearGrid();
+      hideActiveCluster();
     },
     onLeaveBack: () => {
       isInViewport = false;
-      clearParticles();
-      clearGrid();
+      hideActiveCluster();
     }
   });
 
@@ -2141,12 +2133,15 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
     frame.removeEventListener('pointerenter', onPointerEnter);
     frame.removeEventListener('pointermove', onPointerMove);
     frame.removeEventListener('pointerleave', onPointerLeave);
     window.removeEventListener('resize', onResize);
-    clearParticles();
-    clearGrid();
+    hideActiveCluster();
     layer?.remove();
     delete frame.dataset.motionDissolveBound;
   };
