@@ -2758,19 +2758,6 @@ a {
   opacity: 0.46;
 }
 
-.developers-highlights__center::after {
-  content: '';
-  position: absolute;
-  inset: 15px 0;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 399 369' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-0.05 18.45 -25.111 -0.068053 199.5 184.5)'><stop stop-color='rgba(244,244,244,0)' offset='0'/><stop stop-color='rgba(244,244,244,1)' offset='0.88942'/></radialGradient></defs></svg>");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  opacity: 0.68;
-  pointer-events: none;
-  z-index: 2;
-}
-
 .developers-highlights__node {
   position: absolute;
   left: 50%;
