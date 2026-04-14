@@ -1917,19 +1917,23 @@ function initDevelopersIntroDissolveBurst() {
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
   const gridStep = 100;
   const gridOffset = 50;
-  const glyphLocalLayout = [
-    { x: 16, y: 28 },
-    { x: 32, y: 28 },
-    { x: 48, y: 28 },
-    { x: 64, y: 28 },
-    { x: 80, y: 28 },
-    { x: 16, y: 62 },
-    { x: 32, y: 62 },
-    { x: 48, y: 62 },
-    { x: 64, y: 62 },
-    { x: 80, y: 62 }
-  ];
-  const glyphAccentIndexes = new Set([1, 4, 6, 9]);
+  const glyphLocalLayout = (() => {
+    const cols = 5;
+    const rows = 4;
+    const xStart = 14;
+    const xStep = 18;
+    const yStart = 20;
+    const yStep = 20;
+    return Array.from({ length: rows * cols }, (_, index) => {
+      const row = Math.floor(index / cols);
+      const col = index % cols;
+      return {
+        x: xStart + col * xStep,
+        y: yStart + row * yStep
+      };
+    });
+  })();
+  const glyphAccentIndexes = new Set([1, 4, 8, 12, 16, 19]);
   let ticker = 0;
   let isInViewport = false;
   let activeCellKey = '';
@@ -1950,12 +1954,6 @@ function initDevelopersIntroDissolveBurst() {
     activeCellKey = '';
     activeRevealTimeline?.kill();
     activeRevealTimeline = null;
-  };
-
-  const clampToGrid = (value, max) => {
-    const clamped = gsap.utils.clamp(gridOffset, Math.max(gridOffset, max - gridOffset), value);
-    const snapped = gridOffset + Math.round((clamped - gridOffset) / gridStep) * gridStep;
-    return gsap.utils.clamp(gridOffset, Math.max(gridOffset, max - gridOffset), snapped);
   };
 
   const buildCellKey = (x, y) => `${Math.round(x)}:${Math.round(y)}`;
@@ -2121,7 +2119,7 @@ function initDevelopersIntroDissolveBurst() {
       glyph.textContent = glyphChars[(ticker + index) % glyphChars.length];
       gsap.set(glyph, {
         x: cell.glyphPositions[index].x,
-        y: cell.glyphPositions[index].y,
+        y: cell.glyphPositions[index].y + 2,
         opacity: 0
       });
     });
@@ -2158,9 +2156,10 @@ function initDevelopersIntroDissolveBurst() {
     activeRevealTimeline = gsap.timeline();
     activeRevealTimeline.to(orderedGlyphs, {
       opacity: (_, element) => element.classList.contains('is-accent') ? 0.88 : 0.62,
-      duration: 0.34,
-      stagger: 0.042,
-      ease: 'power2.out'
+      y: (index) => cell.glyphPositions[revealOrder[index]].y,
+      duration: 0.48,
+      stagger: 0.052,
+      ease: 'power3.out'
     });
   };
 
@@ -2171,9 +2170,7 @@ function initDevelopersIntroDissolveBurst() {
     const rect = frame.getBoundingClientRect();
     const px = event.clientX - rect.left;
     const py = event.clientY - rect.top;
-    const snappedX = clampToGrid(px, rect.width);
-    const snappedY = clampToGrid(py, rect.height);
-    const nextCell = getNearestCell(snappedX, snappedY);
+    const nextCell = getNearestCell(px, py);
     if (!nextCell) {
       return;
     }
