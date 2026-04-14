@@ -3857,7 +3857,7 @@ a {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.12;
+  opacity: 0.09;
   mix-blend-mode: multiply;
   background: url("../assets/sections/final-cta/dialog-bg-tile.png") lightgray 0% 0% / 100px 100px repeat;
 }
