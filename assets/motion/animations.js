@@ -1900,9 +1900,8 @@ function initDevelopersHighlightDotsBlink() {
 
 // Developers intro: cursor-driven glyph propagation on a 100x100 cell grid.
 function initDevelopersIntroDissolveBurst() {
-  // Use the full Developers intro panel as the interactive region,
-  // so glyph motion is available across the entire inner grid area.
-  const frame = document.querySelector('.developers-section__intro');
+  // Interactive region must stay inside the white inner frame only.
+  const frame = document.querySelector('.developers-section__intro-inner');
   if (!frame || prefersReducedMotion || frame.dataset.motionDissolveBound === '1') {
     return () => {};
   }
@@ -1966,6 +1965,21 @@ function initDevelopersIntroDissolveBurst() {
 
   const buildCellKey = (x, y) => `${Math.round(x)}:${Math.round(y)}`;
 
+  const createAxisPositions = (limit) => {
+    const maxCenter = Math.max(gridOffset, limit - gridOffset);
+    const positions = [];
+    for (let value = gridOffset; value <= maxCenter + 0.5; value += gridStep) {
+      positions.push(gsap.utils.clamp(gridOffset, maxCenter, value));
+    }
+
+    const last = positions[positions.length - 1];
+    if (!Number.isFinite(last) || Math.abs(last - maxCenter) > 0.5) {
+      positions.push(maxCenter);
+    }
+
+    return Array.from(new Set(positions.map((position) => Number(position.toFixed(3)))));
+  };
+
   const getNearestCell = (x, y) => {
     if (!gridCells.length) {
       return null;
@@ -2025,13 +2039,11 @@ function initDevelopersIntroDissolveBurst() {
   const buildGrid = () => {
     clearGrid();
     const rect = frame.getBoundingClientRect();
-    const maxX = Math.max(gridOffset, rect.width - gridOffset);
-    const maxY = Math.max(gridOffset, rect.height - gridOffset);
+    const xPositions = createAxisPositions(rect.width);
+    const yPositions = createAxisPositions(rect.height);
 
-    for (let y = gridOffset; y <= rect.height - gridOffset + 0.5; y += gridStep) {
-      for (let x = gridOffset; x <= rect.width - gridOffset + 0.5; x += gridStep) {
-        const cx = gsap.utils.clamp(gridOffset, maxX, x);
-        const cy = gsap.utils.clamp(gridOffset, maxY, y);
+    for (const cy of yPositions) {
+      for (const cx of xPositions) {
         const key = buildCellKey(cx, cy);
 
         const glyphNodes = glyphLocalLayout.map((position, glyphIndex) => {
