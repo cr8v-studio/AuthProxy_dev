@@ -1918,9 +1918,8 @@ function initDevelopersIntroDissolveBurst() {
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
   const gridStep = 100;
   const gridOffset = 50;
-  const switchHysteresis = isMobileViewport() ? 26 : 22;
-  const revealDelay = isMobileViewport() ? 0.07 : 0.05;
-  const dissolveHold = isMobileViewport() ? 0.12 : 0.09;
+  const switchHysteresis = isMobileViewport() ? 8 : 6;
+  const dissolveHold = isMobileViewport() ? 0.08 : 0.06;
   const glyphLocalLayout = (() => {
     const cols = 5;
     const rows = 4;
@@ -2237,7 +2236,7 @@ function initDevelopersIntroDissolveBurst() {
       return;
     }
 
-    const lerpFactor = isMobileViewport() ? 0.13 : 0.15;
+    const lerpFactor = isMobileViewport() ? 0.2 : 0.24;
     if (!Number.isFinite(pointerSmoothX) || !Number.isFinite(pointerSmoothY)) {
       pointerSmoothX = pointerTargetX;
       pointerSmoothY = pointerTargetY;
@@ -2294,7 +2293,7 @@ function initDevelopersIntroDissolveBurst() {
     if (previousCell) {
       const activeDistance = Math.hypot(previousCell.x - px, previousCell.y - py);
       const nextDistance = Math.hypot(nextCell.x - px, nextCell.y - py);
-      if (activeDistance - nextDistance < switchHysteresis) {
+      if (activeDistance <= nextDistance + switchHysteresis) {
         lastPointerX = px;
         lastPointerY = py;
         return;
@@ -2318,16 +2317,7 @@ function initDevelopersIntroDissolveBurst() {
     }
 
     activeCellKey = nextKey;
-    const revealCall = gsap.delayedCall(revealDelay, () => {
-      if (currentTransitionVersion !== transitionVersion) {
-        return;
-      }
-      revealCell(nextCell, dx, dy);
-    });
-    delayedCalls.add(revealCall);
-    revealCall.eventCallback('onComplete', () => {
-      delayedCalls.delete(revealCall);
-    });
+    revealCell(nextCell, dx, dy);
     lastPointerX = px;
     lastPointerY = py;
   };
