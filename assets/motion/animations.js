@@ -1900,7 +1900,9 @@ function initDevelopersHighlightDotsBlink() {
 
 // Developers intro: cursor-driven glyph propagation on a 100x100 cell grid.
 function initDevelopersIntroDissolveBurst() {
-  const frame = document.querySelector('.developers-section__intro-inner');
+  // Use the full Developers intro panel as the interactive region,
+  // so glyph motion is available across the entire inner grid area.
+  const frame = document.querySelector('.developers-section__intro');
   if (!frame || prefersReducedMotion || frame.dataset.motionDissolveBound === '1') {
     return () => {};
   }
