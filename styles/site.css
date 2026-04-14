@@ -2746,6 +2746,27 @@ a {
   will-change: opacity;
 }
 
+.developers-highlights__center::after {
+  content: '';
+  position: absolute;
+  inset: 15px 0;
+  pointer-events: none;
+  z-index: 3;
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(244 244 244 / 1) 0%,
+      rgb(244 244 244 / 0) 20%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(244 244 244 / 0) 0%,
+      rgb(244 244 244 / 0) 64%,
+      rgb(244 244 244 / 1) 100%
+    ),
+    radial-gradient(circle at 50% 50%, rgb(244 244 244 / 0) 26%, rgb(244 244 244 / 0.94) 100%);
+}
+
 .developers-highlights__beam-path {
   fill: none;
   stroke: #ed585a;
@@ -2766,7 +2787,7 @@ a {
   height: 174px;
   transform: translate(-50%, -50%);
   display: block;
-  z-index: 3;
+  z-index: 4;
   will-change: transform;
 }
 
