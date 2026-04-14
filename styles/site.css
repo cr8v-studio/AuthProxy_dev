@@ -3918,10 +3918,11 @@ a {
 
 .final-cta-section__mockups {
   position: absolute;
-  left: 50%;
-  width: 918px;
+  left: 40px;
+  right: 40px;
+  width: auto;
   top: 141px;
-  transform: translateX(-50%);
+  transform: none;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
