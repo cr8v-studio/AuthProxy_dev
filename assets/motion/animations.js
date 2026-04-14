@@ -1937,7 +1937,6 @@ function initDevelopersIntroDissolveBurst() {
   let lastPointerX = Number.NaN;
   let lastPointerY = Number.NaN;
   let gridCells = [];
-  let gridCellMap = new Map();
 
   const clearParticles = () => {
     layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
@@ -1948,7 +1947,6 @@ function initDevelopersIntroDissolveBurst() {
       cell.glyphNodes.forEach((glyph) => glyph.remove());
     });
     gridCells = [];
-    gridCellMap = new Map();
     activeCellKey = '';
     activeRevealTimeline?.kill();
     activeRevealTimeline = null;
@@ -1961,6 +1959,23 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const buildCellKey = (x, y) => `${Math.round(x)}:${Math.round(y)}`;
+
+  const getNearestCell = (x, y) => {
+    if (!gridCells.length) {
+      return null;
+    }
+    let nearest = gridCells[0];
+    let minDistance = Math.hypot(nearest.x - x, nearest.y - y);
+    for (let index = 1; index < gridCells.length; index += 1) {
+      const cell = gridCells[index];
+      const distance = Math.hypot(cell.x - x, cell.y - y);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearest = cell;
+      }
+    }
+    return nearest;
+  };
 
   const resolveRevealOrder = (dx, dy) => {
     const indexes = glyphLocalLayout.map((_, i) => i);
@@ -2038,7 +2053,6 @@ function initDevelopersIntroDissolveBurst() {
         };
 
         gridCells.push(cell);
-        gridCellMap.set(key, cell);
       }
     }
     ticker += 1;
@@ -2122,12 +2136,12 @@ function initDevelopersIntroDissolveBurst() {
     burstAt(cell.x, cell.y);
     gsap.to(cell.glyphNodes, {
       opacity: 0,
-      duration: 0.3,
+      duration: 0.42,
       stagger: {
-        each: 0.014,
+        each: 0.016,
         from: 'random'
       },
-      ease: 'power2.out',
+      ease: 'sine.out',
       overwrite: true
     });
   };
@@ -2145,7 +2159,7 @@ function initDevelopersIntroDissolveBurst() {
     activeRevealTimeline.to(orderedGlyphs, {
       opacity: (_, element) => element.classList.contains('is-accent') ? 0.88 : 0.62,
       duration: 0.34,
-      stagger: 0.028,
+      stagger: 0.042,
       ease: 'power2.out'
     });
   };
@@ -2159,7 +2173,11 @@ function initDevelopersIntroDissolveBurst() {
     const py = event.clientY - rect.top;
     const snappedX = clampToGrid(px, rect.width);
     const snappedY = clampToGrid(py, rect.height);
-    const nextKey = buildCellKey(snappedX, snappedY);
+    const nextCell = getNearestCell(snappedX, snappedY);
+    if (!nextCell) {
+      return;
+    }
+    const nextKey = nextCell.key;
     if (nextKey === activeCellKey) {
       lastPointerX = px;
       lastPointerY = py;
@@ -2168,11 +2186,7 @@ function initDevelopersIntroDissolveBurst() {
 
     const dx = Number.isFinite(lastPointerX) ? px - lastPointerX : 0;
     const dy = Number.isFinite(lastPointerY) ? py - lastPointerY : 0;
-    const previousCell = activeCellKey ? gridCellMap.get(activeCellKey) : null;
-    const nextCell = gridCellMap.get(nextKey);
-    if (!nextCell) {
-      return;
-    }
+    const previousCell = activeCellKey ? gridCells.find((cell) => cell.key === activeCellKey) : null;
 
     if (previousCell) {
       dissolveCell(previousCell);
@@ -2192,7 +2206,7 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const onPointerLeave = () => {
-    const previousCell = activeCellKey ? gridCellMap.get(activeCellKey) : null;
+    const previousCell = activeCellKey ? gridCells.find((cell) => cell.key === activeCellKey) : null;
     if (previousCell) {
       dissolveCell(previousCell);
     }
