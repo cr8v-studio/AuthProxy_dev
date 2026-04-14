@@ -4092,7 +4092,7 @@ a {
 
 .final-cta-section__summary {
   position: relative;
-  margin-top: -1px;
+  margin-top: 0;
   min-height: 218px;
   padding: 48px;
   border-top: 1px solid var(--site-section-border);
