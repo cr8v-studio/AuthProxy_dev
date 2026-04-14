@@ -1919,7 +1919,6 @@ function initDevelopersIntroDissolveBurst() {
   const gridStep = 100;
   const gridOffset = 50;
   const switchHysteresis = isMobileViewport() ? 8 : 6;
-  const dissolveHold = isMobileViewport() ? 0.08 : 0.06;
   const glyphLocalLayout = (() => {
     const cols = 5;
     const rows = 4;
@@ -1949,9 +1948,7 @@ function initDevelopersIntroDissolveBurst() {
   let pointerSmoothY = Number.NaN;
   let pointerIsInside = false;
   let pointerRafId = 0;
-  let transitionVersion = 0;
   let gridCells = [];
-  const delayedCalls = new Set();
 
   const pseudo = (value) => {
     const raw = Math.sin(value * 12.9898) * 43758.5453123;
@@ -1971,19 +1968,11 @@ function initDevelopersIntroDissolveBurst() {
     layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
   };
 
-  const clearDelayedCalls = () => {
-    delayedCalls.forEach((call) => {
-      call.kill();
-    });
-    delayedCalls.clear();
-  };
-
   const clearGrid = () => {
     gridCells.forEach((cell) => {
       cell.glyphNodes.forEach((glyph) => glyph.remove());
     });
     gridCells = [];
-    clearDelayedCalls();
     activeCellKey = '';
     activeRevealTimeline?.kill();
     activeRevealTimeline = null;
@@ -2300,20 +2289,8 @@ function initDevelopersIntroDissolveBurst() {
       }
     }
 
-    const currentTransitionVersion = transitionVersion + 1;
-    transitionVersion = currentTransitionVersion;
-
     if (previousCell) {
-      const dissolveCall = gsap.delayedCall(dissolveHold, () => {
-        if (currentTransitionVersion !== transitionVersion) {
-          return;
-        }
-        dissolveCell(previousCell, dx, dy);
-      });
-      delayedCalls.add(dissolveCall);
-      dissolveCall.eventCallback('onComplete', () => {
-        delayedCalls.delete(dissolveCall);
-      });
+      dissolveCell(previousCell, dx, dy);
     }
 
     activeCellKey = nextKey;
@@ -2344,8 +2321,6 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const onPointerLeave = () => {
-    transitionVersion += 1;
-    clearDelayedCalls();
     pointerIsInside = false;
     if (pointerRafId) {
       cancelAnimationFrame(pointerRafId);
@@ -2368,8 +2343,6 @@ function initDevelopersIntroDissolveBurst() {
     if (!isInViewport || !gridCells.length) {
       return;
     }
-    transitionVersion += 1;
-    clearDelayedCalls();
     activeCellKey = '';
     lastPointerX = Number.NaN;
     lastPointerY = Number.NaN;
@@ -2391,8 +2364,6 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeave: () => {
       isInViewport = false;
-      transitionVersion += 1;
-      clearDelayedCalls();
       pointerIsInside = false;
       if (pointerRafId) {
         cancelAnimationFrame(pointerRafId);
@@ -2404,8 +2375,6 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeaveBack: () => {
       isInViewport = false;
-      transitionVersion += 1;
-      clearDelayedCalls();
       pointerIsInside = false;
       if (pointerRafId) {
         cancelAnimationFrame(pointerRafId);
@@ -2424,8 +2393,6 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
-    transitionVersion += 1;
-    clearDelayedCalls();
     pointerIsInside = false;
     if (pointerRafId) {
       cancelAnimationFrame(pointerRafId);
