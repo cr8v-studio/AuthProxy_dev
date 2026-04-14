@@ -1940,6 +1940,12 @@ function initDevelopersIntroDissolveBurst() {
   let activeRevealTimeline = null;
   let lastPointerX = Number.NaN;
   let lastPointerY = Number.NaN;
+  let pointerTargetX = Number.NaN;
+  let pointerTargetY = Number.NaN;
+  let pointerSmoothX = Number.NaN;
+  let pointerSmoothY = Number.NaN;
+  let pointerIsInside = false;
+  let pointerRafId = 0;
   let gridCells = [];
 
   const clearParticles = () => {
@@ -2144,6 +2150,29 @@ function initDevelopersIntroDissolveBurst() {
     });
   };
 
+  const runPointerLoop = () => {
+    if (!pointerIsInside || !isInViewport || !gridCells.length) {
+      pointerRafId = 0;
+      return;
+    }
+    if (!Number.isFinite(pointerTargetX) || !Number.isFinite(pointerTargetY)) {
+      pointerRafId = requestAnimationFrame(runPointerLoop);
+      return;
+    }
+
+    const lerpFactor = isMobileViewport() ? 0.18 : 0.2;
+    if (!Number.isFinite(pointerSmoothX) || !Number.isFinite(pointerSmoothY)) {
+      pointerSmoothX = pointerTargetX;
+      pointerSmoothY = pointerTargetY;
+    } else {
+      pointerSmoothX += (pointerTargetX - pointerSmoothX) * lerpFactor;
+      pointerSmoothY += (pointerTargetY - pointerSmoothY) * lerpFactor;
+    }
+
+    activateCellFromPoint(pointerSmoothX, pointerSmoothY);
+    pointerRafId = requestAnimationFrame(runPointerLoop);
+  };
+
   const revealCell = (cell, dx, dy) => {
     if (!cell) {
       return;
@@ -2163,13 +2192,10 @@ function initDevelopersIntroDissolveBurst() {
     });
   };
 
-  const activateCellFromPointer = (event) => {
+  const activateCellFromPoint = (px, py) => {
     if (!isInViewport || !gridCells.length) {
       return;
     }
-    const rect = frame.getBoundingClientRect();
-    const px = event.clientX - rect.left;
-    const py = event.clientY - rect.top;
     const nextCell = getNearestCell(px, py);
     if (!nextCell) {
       return;
@@ -2196,13 +2222,32 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const onPointerEnter = (event) => {
-    activateCellFromPointer(event);
+    const rect = frame.getBoundingClientRect();
+    pointerIsInside = true;
+    pointerTargetX = event.clientX - rect.left;
+    pointerTargetY = event.clientY - rect.top;
+    pointerSmoothX = pointerTargetX;
+    pointerSmoothY = pointerTargetY;
+    activateCellFromPoint(pointerTargetX, pointerTargetY);
+    if (!pointerRafId) {
+      pointerRafId = requestAnimationFrame(runPointerLoop);
+    }
   };
   const onPointerMove = (event) => {
-    activateCellFromPointer(event);
+    const rect = frame.getBoundingClientRect();
+    pointerTargetX = event.clientX - rect.left;
+    pointerTargetY = event.clientY - rect.top;
+    if (!pointerRafId && pointerIsInside) {
+      pointerRafId = requestAnimationFrame(runPointerLoop);
+    }
   };
 
   const onPointerLeave = () => {
+    pointerIsInside = false;
+    if (pointerRafId) {
+      cancelAnimationFrame(pointerRafId);
+      pointerRafId = 0;
+    }
     const previousCell = activeCellKey ? gridCells.find((cell) => cell.key === activeCellKey) : null;
     if (previousCell) {
       dissolveCell(previousCell);
@@ -2210,6 +2255,10 @@ function initDevelopersIntroDissolveBurst() {
     activeCellKey = '';
     lastPointerX = Number.NaN;
     lastPointerY = Number.NaN;
+    pointerTargetX = Number.NaN;
+    pointerTargetY = Number.NaN;
+    pointerSmoothX = Number.NaN;
+    pointerSmoothY = Number.NaN;
   };
 
   const onResize = () => {
@@ -2217,6 +2266,8 @@ function initDevelopersIntroDissolveBurst() {
       return;
     }
     activeCellKey = '';
+    lastPointerX = Number.NaN;
+    lastPointerY = Number.NaN;
     clearParticles();
     buildGrid();
   };
@@ -2235,12 +2286,22 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeave: () => {
       isInViewport = false;
+      pointerIsInside = false;
+      if (pointerRafId) {
+        cancelAnimationFrame(pointerRafId);
+        pointerRafId = 0;
+      }
       activeCellKey = '';
       clearParticles();
       clearGrid();
     },
     onLeaveBack: () => {
       isInViewport = false;
+      pointerIsInside = false;
+      if (pointerRafId) {
+        cancelAnimationFrame(pointerRafId);
+        pointerRafId = 0;
+      }
       activeCellKey = '';
       clearParticles();
       clearGrid();
@@ -2254,6 +2315,11 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
+    pointerIsInside = false;
+    if (pointerRafId) {
+      cancelAnimationFrame(pointerRafId);
+      pointerRafId = 0;
+    }
     frame.removeEventListener('pointerenter', onPointerEnter);
     frame.removeEventListener('pointermove', onPointerMove);
     frame.removeEventListener('pointerleave', onPointerLeave);
