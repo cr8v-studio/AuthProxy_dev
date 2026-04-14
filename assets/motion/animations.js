@@ -1918,6 +1918,9 @@ function initDevelopersIntroDissolveBurst() {
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
   const gridStep = 100;
   const gridOffset = 50;
+  const switchHysteresis = isMobileViewport() ? 26 : 22;
+  const revealDelay = isMobileViewport() ? 0.07 : 0.05;
+  const dissolveHold = isMobileViewport() ? 0.12 : 0.09;
   const glyphLocalLayout = (() => {
     const cols = 5;
     const rows = 4;
@@ -1947,10 +1950,33 @@ function initDevelopersIntroDissolveBurst() {
   let pointerSmoothY = Number.NaN;
   let pointerIsInside = false;
   let pointerRafId = 0;
+  let transitionVersion = 0;
   let gridCells = [];
+  const delayedCalls = new Set();
+
+  const pseudo = (value) => {
+    const raw = Math.sin(value * 12.9898) * 43758.5453123;
+    return raw - Math.floor(raw);
+  };
+
+  const hashKey = (text) => {
+    let hash = 0;
+    for (let index = 0; index < text.length; index += 1) {
+      hash = (hash << 5) - hash + text.charCodeAt(index);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  };
 
   const clearParticles = () => {
     layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
+  };
+
+  const clearDelayedCalls = () => {
+    delayedCalls.forEach((call) => {
+      call.kill();
+    });
+    delayedCalls.clear();
   };
 
   const clearGrid = () => {
@@ -1958,6 +1984,7 @@ function initDevelopersIntroDissolveBurst() {
       cell.glyphNodes.forEach((glyph) => glyph.remove());
     });
     gridCells = [];
+    clearDelayedCalls();
     activeCellKey = '';
     activeRevealTimeline?.kill();
     activeRevealTimeline = null;
@@ -2061,8 +2088,13 @@ function initDevelopersIntroDissolveBurst() {
 
         const cell = {
           key,
+          seed: hashKey(key),
           x: cx,
           y: cy,
+          isActivated: false,
+          charIndexes: glyphLocalLayout.map((_, glyphIndex) =>
+            (hashKey(`${key}:${glyphIndex}`) + glyphIndex * 3) % glyphChars.length
+          ),
           glyphNodes,
           glyphPositions: glyphLocalLayout.map((position) => ({
             x: cx - 50 + position.x,
@@ -2070,28 +2102,43 @@ function initDevelopersIntroDissolveBurst() {
           }))
         };
 
+        cell.glyphNodes.forEach((glyph, glyphIndex) => {
+          glyph.textContent = glyphChars[cell.charIndexes[glyphIndex]];
+        });
         gridCells.push(cell);
       }
     }
     ticker += 1;
   };
 
-  const burstAt = (x, y) => {
-    const rect = frame.getBoundingClientRect();
-    const cx = gsap.utils.clamp(gridOffset, rect.width - gridOffset, x);
-    const cy = gsap.utils.clamp(gridOffset, rect.height - gridOffset, y);
+  const burstAtCell = (cell, dx, dy) => {
+    if (!cell) {
+      return;
+    }
+    const dirLen = Math.hypot(dx, dy);
+    const dirX = dirLen > 0.001 ? dx / dirLen : 0;
+    const dirY = dirLen > 0.001 ? dy / dirLen : -1;
+    const perpX = -dirY;
+    const perpY = dirX;
     const glyphCount = 16;
 
     const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
-      const angle = Math.random() * Math.PI * 2;
-      const nearRadius = 42 + Math.random() * 34;
-      const farRadius = 120 + Math.random() * 108;
-      const startX = cx + (Math.random() - 0.5) * 38;
-      const startY = cy + (Math.random() - 0.5) * 38;
-      const midX = cx + Math.cos(angle) * nearRadius;
-      const midY = cy + Math.sin(angle) * nearRadius;
-      const endX = cx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 20;
-      const endY = cy + Math.sin(angle) * farRadius + (Math.random() - 0.5) * 20;
+      const sourceIndex = Math.floor(
+        pseudo(cell.seed * 0.31 + ticker * 0.47 + i * 1.11) * cell.glyphPositions.length
+      );
+      const source = cell.glyphPositions[sourceIndex];
+      const directionJitter = pseudo(cell.seed * 0.41 + i * 1.63 + ticker * 0.53) - 0.5;
+      const sideOffset = (pseudo(cell.seed * 0.89 + i * 0.77 + ticker * 0.39) - 0.5) * 48;
+      const nearDistance = 36 + pseudo(cell.seed * 0.52 + i * 0.93 + ticker * 0.45) * 28;
+      const farDistance = 88 + pseudo(cell.seed * 0.73 + i * 1.29 + ticker * 0.59) * 74;
+      const adjustedDirX = dirX + directionJitter * 0.24;
+      const adjustedDirY = dirY + directionJitter * 0.24;
+      const startX = source.x + (pseudo(cell.seed * 1.07 + i * 0.69 + ticker * 0.27) - 0.5) * 8;
+      const startY = source.y + (pseudo(cell.seed * 0.97 + i * 0.57 + ticker * 0.33) - 0.5) * 8;
+      const midX = startX + adjustedDirX * nearDistance + perpX * sideOffset * 0.35;
+      const midY = startY + adjustedDirY * nearDistance + perpY * sideOffset * 0.35;
+      const endX = startX + adjustedDirX * farDistance + perpX * sideOffset;
+      const endY = startY + adjustedDirY * farDistance + perpY * sideOffset;
       const glyph = document.createElement('span');
       glyph.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--burst${i % 3 === 0 ? ' is-accent' : ''}`;
       glyph.textContent = glyphChars[(i + ticker) % glyphChars.length];
@@ -2116,18 +2163,35 @@ function initDevelopersIntroDissolveBurst() {
       opacity: (_, el) => el.classList.contains('is-accent') ? 0.86 : 0.56,
       x: (i) => glyphEntries[i].midX,
       y: (i) => glyphEntries[i].midY,
-      duration: 0.44,
-      stagger: 0.016,
-      ease: 'power1.out'
+      duration: 0.52,
+      stagger: 0.022,
+      ease: 'sine.out'
     }, '<');
     tl.to(glyphs, {
       opacity: 0,
       x: (i) => glyphEntries[i].endX,
       y: (i) => glyphEntries[i].endY,
-      duration: 1.18,
-      stagger: 0.018,
-      ease: 'sine.out'
+      duration: 0.98,
+      stagger: 0.022,
+      ease: 'sine.inOut'
     }, '<+0.22');
+  };
+
+  const evolveCellChars = (cell, mutationRatio = 0.26) => {
+    if (!cell) {
+      return;
+    }
+    const nextTicker = ticker + 1;
+    cell.charIndexes = cell.charIndexes.map((currentIndex, glyphIndex) => {
+      const mutateScore = pseudo(cell.seed * 0.67 + nextTicker * 0.49 + glyphIndex * 1.37);
+      if (mutateScore > mutationRatio) {
+        return currentIndex;
+      }
+      const nextIndex = Math.floor(
+        pseudo(cell.seed * 1.21 + nextTicker * 0.83 + glyphIndex * 2.17) * glyphChars.length
+      );
+      return nextIndex;
+    });
   };
 
   const resetCellGlyphState = (cell) => {
@@ -2136,7 +2200,7 @@ function initDevelopersIntroDissolveBurst() {
     }
     gsap.killTweensOf(cell.glyphNodes);
     cell.glyphNodes.forEach((glyph, index) => {
-      glyph.textContent = glyphChars[(ticker + index) % glyphChars.length];
+      glyph.textContent = glyphChars[cell.charIndexes[index]];
       gsap.set(glyph, {
         x: cell.glyphPositions[index].x,
         y: cell.glyphPositions[index].y + 2,
@@ -2146,20 +2210,19 @@ function initDevelopersIntroDissolveBurst() {
     ticker += 1;
   };
 
-  const dissolveCell = (cell) => {
+  const dissolveCell = (cell, dx, dy) => {
     if (!cell) {
       return;
     }
-
-    burstAt(cell.x, cell.y);
-    gsap.to(cell.glyphNodes, {
+    burstAtCell(cell, dx, dy);
+    const dissolveOrder = resolveRevealOrder(dx, dy).slice().reverse();
+    const orderedGlyphs = dissolveOrder.map((index) => cell.glyphNodes[index]);
+    gsap.to(orderedGlyphs, {
       opacity: 0,
-      duration: 0.42,
-      stagger: {
-        each: 0.016,
-        from: 'random'
-      },
-      ease: 'sine.out',
+      y: (index) => cell.glyphPositions[dissolveOrder[index]].y + 1.5,
+      duration: 0.56,
+      stagger: 0.02,
+      ease: 'sine.inOut',
       overwrite: true
     });
   };
@@ -2174,7 +2237,7 @@ function initDevelopersIntroDissolveBurst() {
       return;
     }
 
-    const lerpFactor = isMobileViewport() ? 0.18 : 0.2;
+    const lerpFactor = isMobileViewport() ? 0.13 : 0.15;
     if (!Number.isFinite(pointerSmoothX) || !Number.isFinite(pointerSmoothY)) {
       pointerSmoothX = pointerTargetX;
       pointerSmoothY = pointerTargetY;
@@ -2191,6 +2254,9 @@ function initDevelopersIntroDissolveBurst() {
     if (!cell) {
       return;
     }
+    if (cell.isActivated) {
+      evolveCellChars(cell, 0.28);
+    }
     resetCellGlyphState(cell);
     activeRevealTimeline?.kill();
 
@@ -2200,10 +2266,11 @@ function initDevelopersIntroDissolveBurst() {
     activeRevealTimeline.to(orderedGlyphs, {
       opacity: (_, element) => element.classList.contains('is-accent') ? 0.88 : 0.62,
       y: (index) => cell.glyphPositions[revealOrder[index]].y,
-      duration: 0.48,
-      stagger: 0.052,
+      duration: 0.62,
+      stagger: 0.06,
       ease: 'power3.out'
     });
+    cell.isActivated = true;
   };
 
   const activateCellFromPoint = (px, py) => {
@@ -2224,13 +2291,43 @@ function initDevelopersIntroDissolveBurst() {
     const dx = Number.isFinite(lastPointerX) ? px - lastPointerX : 0;
     const dy = Number.isFinite(lastPointerY) ? py - lastPointerY : 0;
     const previousCell = activeCellKey ? gridCells.find((cell) => cell.key === activeCellKey) : null;
+    if (previousCell) {
+      const activeDistance = Math.hypot(previousCell.x - px, previousCell.y - py);
+      const nextDistance = Math.hypot(nextCell.x - px, nextCell.y - py);
+      if (activeDistance - nextDistance < switchHysteresis) {
+        lastPointerX = px;
+        lastPointerY = py;
+        return;
+      }
+    }
+
+    const currentTransitionVersion = transitionVersion + 1;
+    transitionVersion = currentTransitionVersion;
 
     if (previousCell) {
-      dissolveCell(previousCell);
+      const dissolveCall = gsap.delayedCall(dissolveHold, () => {
+        if (currentTransitionVersion !== transitionVersion) {
+          return;
+        }
+        dissolveCell(previousCell, dx, dy);
+      });
+      delayedCalls.add(dissolveCall);
+      dissolveCall.eventCallback('onComplete', () => {
+        delayedCalls.delete(dissolveCall);
+      });
     }
 
     activeCellKey = nextKey;
-    revealCell(nextCell, dx, dy);
+    const revealCall = gsap.delayedCall(revealDelay, () => {
+      if (currentTransitionVersion !== transitionVersion) {
+        return;
+      }
+      revealCell(nextCell, dx, dy);
+    });
+    delayedCalls.add(revealCall);
+    revealCall.eventCallback('onComplete', () => {
+      delayedCalls.delete(revealCall);
+    });
     lastPointerX = px;
     lastPointerY = py;
   };
@@ -2257,6 +2354,8 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const onPointerLeave = () => {
+    transitionVersion += 1;
+    clearDelayedCalls();
     pointerIsInside = false;
     if (pointerRafId) {
       cancelAnimationFrame(pointerRafId);
@@ -2264,7 +2363,7 @@ function initDevelopersIntroDissolveBurst() {
     }
     const previousCell = activeCellKey ? gridCells.find((cell) => cell.key === activeCellKey) : null;
     if (previousCell) {
-      dissolveCell(previousCell);
+      dissolveCell(previousCell, lastPointerX - previousCell.x, lastPointerY - previousCell.y);
     }
     activeCellKey = '';
     lastPointerX = Number.NaN;
@@ -2279,6 +2378,8 @@ function initDevelopersIntroDissolveBurst() {
     if (!isInViewport || !gridCells.length) {
       return;
     }
+    transitionVersion += 1;
+    clearDelayedCalls();
     activeCellKey = '';
     lastPointerX = Number.NaN;
     lastPointerY = Number.NaN;
@@ -2300,6 +2401,8 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeave: () => {
       isInViewport = false;
+      transitionVersion += 1;
+      clearDelayedCalls();
       pointerIsInside = false;
       if (pointerRafId) {
         cancelAnimationFrame(pointerRafId);
@@ -2311,6 +2414,8 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeaveBack: () => {
       isInViewport = false;
+      transitionVersion += 1;
+      clearDelayedCalls();
       pointerIsInside = false;
       if (pointerRafId) {
         cancelAnimationFrame(pointerRafId);
@@ -2329,6 +2434,8 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
+    transitionVersion += 1;
+    clearDelayedCalls();
     pointerIsInside = false;
     if (pointerRafId) {
       cancelAnimationFrame(pointerRafId);
