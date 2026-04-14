@@ -3858,21 +3858,7 @@ a {
   z-index: 0;
   pointer-events: none;
   opacity: 0.03;
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 99px,
-      var(--site-section-border) 99px,
-      var(--site-section-border) 100px
-    ),
-    repeating-linear-gradient(
-      180deg,
-      transparent 0,
-      transparent 99px,
-      var(--site-section-border) 99px,
-      var(--site-section-border) 100px
-    );
+  background: url("../assets/sections/final-cta/dialog-bg-tile.png") lightgray 0% 0% / 100px 100px repeat;
 }
 
 .final-cta-section__dialog-container::after {
@@ -3882,12 +3868,11 @@ a {
   z-index: 0;
   pointer-events: none;
   background: radial-gradient(
-    75.056px 53.908px at 50% 50%,
+    78.1% 104.47% at 50% 50%,
     rgb(255 255 255 / 0) 0%,
-    rgb(215 215 215 / 0.54) 50%,
-    rgb(215 215 215 / 1) 100%
+    rgb(215 215 215 / 0.27) 50%,
+    rgb(215 215 215 / 0.5) 100%
   );
-  opacity: 0.5;
 }
 
 .final-cta-section__dialog-container > * {
