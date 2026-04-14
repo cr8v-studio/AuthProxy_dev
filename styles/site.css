@@ -3847,8 +3847,52 @@ a {
   position: relative;
   width: 100%;
   height: 100%;
-  background: var(--figma-color-off-white-base);
+  background: var(--figma-color-white-base);
   overflow: hidden;
+}
+
+.final-cta-section__dialog-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 99px,
+      var(--site-section-border) 99px,
+      var(--site-section-border) 100px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 99px,
+      var(--site-section-border) 99px,
+      var(--site-section-border) 100px
+    );
+}
+
+.final-cta-section__dialog-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    75.056px 53.908px at 50% 50%,
+    rgb(255 255 255 / 0) 0%,
+    rgb(215 215 215 / 0.54) 50%,
+    rgb(215 215 215 / 1) 100%
+  );
+  opacity: 0.5;
+}
+
+.final-cta-section__dialog-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .final-cta-section__headline-row {
