@@ -4054,7 +4054,7 @@ a {
   width: 7px;
   height: 7px;
   transform: translateX(-50%);
-  background: var(--figma-color-extras-2);
+  background: var(--figma-color-extra-2);
   border-radius: 50%;
   z-index: 5;
 }
