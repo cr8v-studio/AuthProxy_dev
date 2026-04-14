@@ -1898,7 +1898,7 @@ function initDevelopersHighlightDotsBlink() {
   };
 }
 
-// Developers intro: pointer-driven dissolve burst inside the white frame.
+// Developers intro: cursor-driven glyph propagation on a 100x100 cell grid.
 function initDevelopersIntroDissolveBurst() {
   const frame = document.querySelector('.developers-section__intro-inner');
   if (!frame || prefersReducedMotion || frame.dataset.motionDissolveBound === '1') {
@@ -1917,20 +1917,41 @@ function initDevelopersIntroDissolveBurst() {
   const glyphChars = ['0', '1', '<', '>', '=', '-', '/'];
   const gridStep = 100;
   const gridOffset = 50;
+  const glyphLocalLayout = [
+    { x: 16, y: 28 },
+    { x: 32, y: 28 },
+    { x: 48, y: 28 },
+    { x: 64, y: 28 },
+    { x: 80, y: 28 },
+    { x: 16, y: 62 },
+    { x: 32, y: 62 },
+    { x: 48, y: 62 },
+    { x: 64, y: 62 },
+    { x: 80, y: 62 }
+  ];
+  const glyphAccentIndexes = new Set([1, 4, 6, 9]);
   let ticker = 0;
   let isInViewport = false;
-  let lastBurstAt = 0;
-  let lastBurstX = Number.NaN;
-  let lastBurstY = Number.NaN;
+  let activeCellKey = '';
+  let activeRevealTimeline = null;
+  let lastPointerX = Number.NaN;
+  let lastPointerY = Number.NaN;
   let gridCells = [];
+  let gridCellMap = new Map();
 
   const clearParticles = () => {
     layer.querySelectorAll('.developers-section__dissolve-glyph--burst').forEach((node) => node.remove());
   };
 
   const clearGrid = () => {
-    gridCells.forEach((cell) => cell.node.remove());
+    gridCells.forEach((cell) => {
+      cell.glyphNodes.forEach((glyph) => glyph.remove());
+    });
     gridCells = [];
+    gridCellMap = new Map();
+    activeCellKey = '';
+    activeRevealTimeline?.kill();
+    activeRevealTimeline = null;
   };
 
   const clampToGrid = (value, max) => {
@@ -1939,68 +1960,102 @@ function initDevelopersIntroDissolveBurst() {
     return gsap.utils.clamp(gridOffset, Math.max(gridOffset, max - gridOffset), snapped);
   };
 
+  const buildCellKey = (x, y) => `${Math.round(x)}:${Math.round(y)}`;
+
+  const resolveRevealOrder = (dx, dy) => {
+    const indexes = glyphLocalLayout.map((_, i) => i);
+    if (!Number.isFinite(dx) || !Number.isFinite(dy) || (dx === 0 && dy === 0)) {
+      return indexes;
+    }
+
+    const byRowThenCol = (a, b) => {
+      const ay = glyphLocalLayout[a].y;
+      const by = glyphLocalLayout[b].y;
+      if (ay !== by) {
+        return ay - by;
+      }
+      return glyphLocalLayout[a].x - glyphLocalLayout[b].x;
+    };
+
+    const byColThenRow = (a, b) => {
+      const ax = glyphLocalLayout[a].x;
+      const bx = glyphLocalLayout[b].x;
+      if (ax !== bx) {
+        return ax - bx;
+      }
+      return glyphLocalLayout[a].y - glyphLocalLayout[b].y;
+    };
+
+    if (Math.abs(dx) >= Math.abs(dy)) {
+      indexes.sort(byColThenRow);
+      if (dx < 0) {
+        indexes.reverse();
+      }
+      return indexes;
+    }
+
+    indexes.sort(byRowThenCol);
+    if (dy < 0) {
+      indexes.reverse();
+    }
+    return indexes;
+  };
+
   const buildGrid = () => {
     clearGrid();
     const rect = frame.getBoundingClientRect();
-    let index = 0;
+    const maxX = Math.max(gridOffset, rect.width - gridOffset);
+    const maxY = Math.max(gridOffset, rect.height - gridOffset);
+
     for (let y = gridOffset; y <= rect.height - gridOffset + 0.5; y += gridStep) {
       for (let x = gridOffset; x <= rect.width - gridOffset + 0.5; x += gridStep) {
-        const node = document.createElement('span');
-        node.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--base${index % 7 === 0 ? ' is-accent' : ''}`;
-        node.textContent = glyphChars[(index + ticker) % glyphChars.length];
-        layer.append(node);
-        gsap.set(node, {
-          x,
-          y,
-          opacity: 0
+        const cx = gsap.utils.clamp(gridOffset, maxX, x);
+        const cy = gsap.utils.clamp(gridOffset, maxY, y);
+        const key = buildCellKey(cx, cy);
+
+        const glyphNodes = glyphLocalLayout.map((position, glyphIndex) => {
+          const node = document.createElement('span');
+          node.className = `developers-section__dissolve-glyph developers-section__dissolve-glyph--base${glyphAccentIndexes.has(glyphIndex) ? ' is-accent' : ''}`;
+          node.textContent = glyphChars[(ticker + glyphIndex) % glyphChars.length];
+          layer.append(node);
+          gsap.set(node, {
+            x: cx - 50 + position.x,
+            y: cy - 50 + position.y,
+            opacity: 0
+          });
+          return node;
         });
-        gridCells.push({ x, y, node });
-        index += 1;
+
+        const cell = {
+          key,
+          x: cx,
+          y: cy,
+          glyphNodes,
+          glyphPositions: glyphLocalLayout.map((position) => ({
+            x: cx - 50 + position.x,
+            y: cy - 50 + position.y
+          }))
+        };
+
+        gridCells.push(cell);
+        gridCellMap.set(key, cell);
       }
     }
     ticker += 1;
-  };
-
-  const updateGridFocus = (cx, cy) => {
-    if (!gridCells.length) {
-      return;
-    }
-    const focusRadius = 155;
-    const innerRadius = 72;
-    gsap.to(gridCells.map((cell) => cell.node), {
-      opacity: (i) => {
-        const cell = gridCells[i];
-        const distance = Math.hypot(cell.x - cx, cell.y - cy);
-        if (distance <= innerRadius) {
-          return cell.node.classList.contains('is-accent') ? 0.42 : 0.24;
-        }
-        if (distance <= focusRadius) {
-          return cell.node.classList.contains('is-accent') ? 0.28 : 0.15;
-        }
-        return 0;
-      },
-      duration: 0.24,
-      stagger: {
-        each: 0.004,
-        from: 'center'
-      },
-      ease: 'power2.out',
-      overwrite: true
-    });
   };
 
   const burstAt = (x, y) => {
     const rect = frame.getBoundingClientRect();
     const cx = gsap.utils.clamp(gridOffset, rect.width - gridOffset, x);
     const cy = gsap.utils.clamp(gridOffset, rect.height - gridOffset, y);
-    const glyphCount = 18;
+    const glyphCount = 16;
 
     const glyphEntries = Array.from({ length: glyphCount }, (_, i) => {
       const angle = Math.random() * Math.PI * 2;
-      const nearRadius = 46 + Math.random() * 40;
-      const farRadius = 140 + Math.random() * 130;
-      const startX = cx + Math.cos(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
-      const startY = cy + Math.sin(angle) * (28 + Math.random() * 20) + (Math.random() - 0.5) * 6;
+      const nearRadius = 42 + Math.random() * 34;
+      const farRadius = 120 + Math.random() * 108;
+      const startX = cx + (Math.random() - 0.5) * 38;
+      const startY = cy + (Math.random() - 0.5) * 38;
       const midX = cx + Math.cos(angle) * nearRadius;
       const midY = cy + Math.sin(angle) * nearRadius;
       const endX = cx + Math.cos(angle) * farRadius + (Math.random() - 0.5) * 20;
@@ -2029,27 +2084,74 @@ function initDevelopersIntroDissolveBurst() {
       opacity: (_, el) => el.classList.contains('is-accent') ? 0.86 : 0.56,
       x: (i) => glyphEntries[i].midX,
       y: (i) => glyphEntries[i].midY,
-      duration: 0.46,
-      stagger: 0.018,
+      duration: 0.44,
+      stagger: 0.016,
       ease: 'power1.out'
     }, '<');
     tl.to(glyphs, {
       opacity: 0,
       x: (i) => glyphEntries[i].endX,
       y: (i) => glyphEntries[i].endY,
-      duration: 1.45,
-      stagger: 0.02,
+      duration: 1.18,
+      stagger: 0.018,
       ease: 'sine.out'
     }, '<+0.22');
   };
 
-  const triggerBurstFromEvent = (event, force = false) => {
-    if (!isInViewport) {
+  const resetCellGlyphState = (cell) => {
+    if (!cell) {
       return;
     }
-    const now = performance.now();
-    const minInterval = isMobileViewport() ? 340 : 260;
-    if (!force && now - lastBurstAt < minInterval) {
+    gsap.killTweensOf(cell.glyphNodes);
+    cell.glyphNodes.forEach((glyph, index) => {
+      glyph.textContent = glyphChars[(ticker + index) % glyphChars.length];
+      gsap.set(glyph, {
+        x: cell.glyphPositions[index].x,
+        y: cell.glyphPositions[index].y,
+        opacity: 0
+      });
+    });
+    ticker += 1;
+  };
+
+  const dissolveCell = (cell) => {
+    if (!cell) {
+      return;
+    }
+
+    burstAt(cell.x, cell.y);
+    gsap.to(cell.glyphNodes, {
+      opacity: 0,
+      duration: 0.3,
+      stagger: {
+        each: 0.014,
+        from: 'random'
+      },
+      ease: 'power2.out',
+      overwrite: true
+    });
+  };
+
+  const revealCell = (cell, dx, dy) => {
+    if (!cell) {
+      return;
+    }
+    resetCellGlyphState(cell);
+    activeRevealTimeline?.kill();
+
+    const revealOrder = resolveRevealOrder(dx, dy);
+    const orderedGlyphs = revealOrder.map((index) => cell.glyphNodes[index]);
+    activeRevealTimeline = gsap.timeline();
+    activeRevealTimeline.to(orderedGlyphs, {
+      opacity: (_, element) => element.classList.contains('is-accent') ? 0.88 : 0.62,
+      duration: 0.34,
+      stagger: 0.028,
+      ease: 'power2.out'
+    });
+  };
+
+  const activateCellFromPointer = (event) => {
+    if (!isInViewport || !gridCells.length) {
       return;
     }
     const rect = frame.getBoundingClientRect();
@@ -2057,52 +2159,54 @@ function initDevelopersIntroDissolveBurst() {
     const py = event.clientY - rect.top;
     const snappedX = clampToGrid(px, rect.width);
     const snappedY = clampToGrid(py, rect.height);
-    updateGridFocus(snappedX, snappedY);
-    if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
-      const minDistance = isMobileViewport() ? 62 : 46;
-      if (Math.hypot(px - lastBurstX, py - lastBurstY) < minDistance) {
-        return;
-      }
+    const nextKey = buildCellKey(snappedX, snappedY);
+    if (nextKey === activeCellKey) {
+      lastPointerX = px;
+      lastPointerY = py;
+      return;
     }
-    let burstX = snappedX;
-    let burstY = snappedY;
-    if (!force && Number.isFinite(lastBurstX) && Number.isFinite(lastBurstY)) {
-      const dx = px - lastBurstX;
-      const dy = py - lastBurstY;
-      if (Math.abs(dx) >= Math.abs(dy)) {
-        burstX = clampToGrid(snappedX + (dx >= 0 ? gridStep : -gridStep), rect.width);
-      } else {
-        burstY = clampToGrid(snappedY + (dy >= 0 ? gridStep : -gridStep), rect.height);
-      }
+
+    const dx = Number.isFinite(lastPointerX) ? px - lastPointerX : 0;
+    const dy = Number.isFinite(lastPointerY) ? py - lastPointerY : 0;
+    const previousCell = activeCellKey ? gridCellMap.get(activeCellKey) : null;
+    const nextCell = gridCellMap.get(nextKey);
+    if (!nextCell) {
+      return;
     }
-    lastBurstAt = now;
-    lastBurstX = px;
-    lastBurstY = py;
-    burstAt(burstX, burstY);
+
+    if (previousCell) {
+      dissolveCell(previousCell);
+    }
+
+    activeCellKey = nextKey;
+    revealCell(nextCell, dx, dy);
+    lastPointerX = px;
+    lastPointerY = py;
   };
 
   const onPointerEnter = (event) => {
-    triggerBurstFromEvent(event, true);
+    activateCellFromPointer(event);
   };
   const onPointerMove = (event) => {
-    triggerBurstFromEvent(event, false);
+    activateCellFromPointer(event);
   };
 
   const onPointerLeave = () => {
-    lastBurstX = Number.NaN;
-    lastBurstY = Number.NaN;
-    gsap.to(gridCells.map((cell) => cell.node), {
-      opacity: 0,
-      duration: 0.24,
-      ease: 'power2.out',
-      overwrite: true
-    });
+    const previousCell = activeCellKey ? gridCellMap.get(activeCellKey) : null;
+    if (previousCell) {
+      dissolveCell(previousCell);
+    }
+    activeCellKey = '';
+    lastPointerX = Number.NaN;
+    lastPointerY = Number.NaN;
   };
 
   const onResize = () => {
-    if (!isInViewport) {
+    if (!isInViewport || !gridCells.length) {
       return;
     }
+    activeCellKey = '';
+    clearParticles();
     buildGrid();
   };
 
@@ -2113,22 +2217,20 @@ function initDevelopersIntroDissolveBurst() {
     onEnter: () => {
       isInViewport = true;
       buildGrid();
-      const rect = frame.getBoundingClientRect();
-      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onEnterBack: () => {
       isInViewport = true;
       buildGrid();
-      const rect = frame.getBoundingClientRect();
-      updateGridFocus(clampToGrid(rect.width * 0.52, rect.width), clampToGrid(rect.height * 0.52, rect.height));
     },
     onLeave: () => {
       isInViewport = false;
+      activeCellKey = '';
       clearParticles();
       clearGrid();
     },
     onLeaveBack: () => {
       isInViewport = false;
+      activeCellKey = '';
       clearParticles();
       clearGrid();
     }
