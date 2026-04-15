@@ -1051,6 +1051,7 @@ a {
 }
 
 .hero-metric {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1059,6 +1060,35 @@ a {
   padding: var(--space-48);
   border-right: 1px solid var(--site-section-border);
   background: var(--figma-color-white-base);
+  overflow: hidden;
+}
+
+.hero-metric::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  height: 116px;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to top,
+      rgba(244, 244, 244, 0) 0%,
+      rgba(244, 244, 244, 0.76) 54%,
+      rgba(244, 244, 244, 1) 100%
+    ),
+    radial-gradient(130% 110% at 50% 100%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%),
+    linear-gradient(to right, transparent 49.85%, rgba(237, 88, 90, 0.18) 50%, transparent 50.15%),
+    linear-gradient(26deg, transparent 38%, rgba(237, 88, 90, 0.16) 50%, transparent 62%),
+    linear-gradient(-26deg, transparent 38%, rgba(237, 88, 90, 0.16) 50%, transparent 62%),
+    repeating-linear-gradient(to bottom, rgba(237, 88, 90, 0.16) 0 1px, transparent 1px 16px);
+  opacity: 0.95;
+}
+
+.hero-metric > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-metric:last-child {
@@ -1084,13 +1114,21 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-8);
-  color: var(--figma-color-dark-base);
-  font-size: 18px;
-  line-height: 26px;
-  letter-spacing: 1px;
+  gap: var(--space-12);
+  padding-inline: var(--space-4);
+  background: var(--figma-color-dark-base);
+  color: var(--figma-color-white-base);
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 2px;
+  font-weight: var(--font-weight-regular);
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+.hero-metric__line span {
+  display: inline-block;
+  line-height: 17px;
 }
 
 .how-section {
