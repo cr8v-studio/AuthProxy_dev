@@ -1074,8 +1074,9 @@ a {
 
 .hero-metric__icon {
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
 
 .hero-metric__line {
