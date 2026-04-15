@@ -1121,12 +1121,12 @@ a {
   background-image: url("../assets/sections/hero/cta-corner-bl.svg");
 }
 
-.hero-metric__line-value {
-  color: var(--figma-color-extras-2);
+.hero-metric__line > .hero-metric__line-value {
+  color: var(--figma-color-extras-2, #ed585a);
 }
 
-.hero-metric__line-label {
-  color: var(--figma-color-dark-base);
+.hero-metric__line > .hero-metric__line-label {
+  color: var(--figma-color-dark-base, #1f1f1f);
 }
 
 .how-section {
