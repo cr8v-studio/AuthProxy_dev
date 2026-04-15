@@ -1081,16 +1081,52 @@ a {
 
 .hero-metric__line {
   margin: 0;
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-8);
+  width: min(264px, 100%);
+  height: 44px;
+  padding: var(--space-8) var(--space-20);
   color: var(--figma-color-dark-base);
   font-size: 18px;
   line-height: 26px;
   letter-spacing: 1px;
+  font-weight: var(--font-weight-regular);
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+.hero-metric__line::before,
+.hero-metric__line::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.hero-metric__line::before {
+  top: 0;
+  right: 0;
+  background-image: url("../assets/sections/hero/cta-corner-tr.svg");
+}
+
+.hero-metric__line::after {
+  left: 0;
+  bottom: 0;
+  background-image: url("../assets/sections/hero/cta-corner-bl.svg");
+}
+
+.hero-metric__line-value {
+  color: var(--figma-color-extras-2);
+}
+
+.hero-metric__line-label {
+  color: var(--figma-color-dark-base);
 }
 
 .how-section {
