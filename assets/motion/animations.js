@@ -2301,6 +2301,7 @@ function initDevelopersIntroDissolveBurst() {
 
   const onPointerEnter = (event) => {
     const rect = frame.getBoundingClientRect();
+    document.body.classList.add('is-hero-laser-cursor');
     pointerIsInside = true;
     pointerTargetX = event.clientX - rect.left;
     pointerTargetY = event.clientY - rect.top;
@@ -2321,6 +2322,7 @@ function initDevelopersIntroDissolveBurst() {
   };
 
   const onPointerLeave = () => {
+    document.body.classList.remove('is-hero-laser-cursor');
     pointerIsInside = false;
     if (pointerRafId) {
       cancelAnimationFrame(pointerRafId);
@@ -2364,6 +2366,7 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeave: () => {
       isInViewport = false;
+      document.body.classList.remove('is-hero-laser-cursor');
       pointerIsInside = false;
       if (pointerRafId) {
         cancelAnimationFrame(pointerRafId);
@@ -2375,6 +2378,7 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeaveBack: () => {
       isInViewport = false;
+      document.body.classList.remove('is-hero-laser-cursor');
       pointerIsInside = false;
       if (pointerRafId) {
         cancelAnimationFrame(pointerRafId);
@@ -2393,6 +2397,7 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
+    document.body.classList.remove('is-hero-laser-cursor');
     pointerIsInside = false;
     if (pointerRafId) {
       cancelAnimationFrame(pointerRafId);
