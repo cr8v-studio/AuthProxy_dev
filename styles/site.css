@@ -1129,6 +1129,10 @@ a {
   color: var(--figma-color-dark-base, #1f1f1f);
 }
 
+.hero-section__metrics .hero-metric__line > .hero-metric__line-value {
+  color: var(--figma-color-extras-2, #ed585a);
+}
+
 .how-section {
   border-top: 1px solid var(--site-section-border);
 }
