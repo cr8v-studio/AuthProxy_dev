@@ -2520,6 +2520,247 @@ function initDevelopersIntroDissolveBurst() {
   };
 }
 
+function initFaqAccordionMotion() {
+  const accordion = document.querySelector('.faq-section__accordion');
+  const items = Array.from(accordion?.querySelectorAll('.faq-item') ?? []);
+  if (!accordion || items.length === 0) {
+    return () => {};
+  }
+
+  const itemState = new WeakMap();
+  const listeners = [];
+  let activeItem = items.find((item) => item.classList.contains('faq-item--open')) ?? items[0];
+
+  const getOpenSrc = (src = '') => src.replace('closed', 'open');
+  const getClosedSrc = (src = '') => src.replace('open', 'closed');
+
+  const setItemVisualState = (item, isOpen) => {
+    const state = itemState.get(item);
+    if (!state) {
+      return;
+    }
+    item.classList.toggle('faq-item--open', isOpen);
+    state.row.setAttribute('aria-expanded', String(isOpen));
+    state.answer.hidden = !isOpen;
+
+    if (state.toggle) {
+      state.toggle.setAttribute('src', isOpen ? state.openSrc : state.closedSrc);
+    }
+  };
+
+  const closeItem = (item, { immediate = false } = {}) => {
+    const state = itemState.get(item);
+    if (!state || !state.isOpen) {
+      return null;
+    }
+    state.timeline?.kill();
+    state.isOpen = false;
+    setItemVisualState(item, false);
+
+    if (immediate || prefersReducedMotion) {
+      gsap.set(state.wrap, { height: 0 });
+      gsap.set(state.answer, { autoAlpha: 0, y: -6 });
+      gsap.set(state.toggle, { rotate: 0 });
+      return null;
+    }
+
+    const currentHeight = state.wrap.getBoundingClientRect().height;
+    const timeline = gsap.timeline({
+      defaults: { overwrite: 'auto' }
+    });
+    timeline.set(state.wrap, { height: currentHeight });
+    timeline.to(state.answer, {
+      autoAlpha: 0,
+      y: -6,
+      duration: 0.38,
+      ease: 'power2.inOut'
+    }, 0);
+    timeline.to(state.wrap, {
+      height: 0,
+      duration: 0.5,
+      ease: 'power3.out'
+    }, 0);
+    timeline.to(state.toggle, {
+      rotate: 0,
+      duration: 0.42,
+      ease: 'power3.out'
+    }, 0);
+    state.timeline = timeline;
+    return timeline;
+  };
+
+  const openItem = (item, { immediate = false } = {}) => {
+    const state = itemState.get(item);
+    if (!state || state.isOpen) {
+      return null;
+    }
+    state.timeline?.kill();
+    state.isOpen = true;
+    setItemVisualState(item, true);
+    const targetHeight = state.answer.scrollHeight;
+
+    if (immediate || prefersReducedMotion) {
+      gsap.set(state.wrap, { height: 'auto' });
+      gsap.set(state.answer, { autoAlpha: 1, y: 0 });
+      gsap.set(state.toggle, { rotate: 180 });
+      return null;
+    }
+
+    const timeline = gsap.timeline({
+      defaults: { overwrite: 'auto' },
+      onComplete: () => {
+        gsap.set(state.wrap, { height: 'auto' });
+      }
+    });
+    timeline.set(state.wrap, { height: 0 });
+    timeline.set(state.answer, { autoAlpha: 0, y: 8 });
+    timeline.to(state.wrap, {
+      height: targetHeight,
+      duration: 0.62,
+      ease: 'power3.out'
+    }, 0);
+    timeline.to(state.answer, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.52,
+      ease: 'power3.out'
+    }, 0.08);
+    timeline.to(state.toggle, {
+      rotate: 180,
+      duration: 0.48,
+      ease: 'power3.out'
+    }, 0.04);
+    state.timeline = timeline;
+    return timeline;
+  };
+
+  const activateItem = (nextItem) => {
+    if (!nextItem || nextItem === activeItem) {
+      return;
+    }
+    const previousItem = activeItem;
+    activeItem = nextItem;
+
+    if (previousItem) {
+      closeItem(previousItem);
+    }
+    openItem(nextItem);
+  };
+
+  items.forEach((item, index) => {
+    const row = item.querySelector('.faq-item__question-row');
+    const answer = item.querySelector('.faq-item__answer');
+    const toggle = item.querySelector('.faq-item__toggle');
+    if (!row || !answer) {
+      return;
+    }
+
+    let wrap = item.querySelector('.faq-item__answer-wrap');
+    if (!wrap) {
+      wrap = document.createElement('div');
+      wrap.className = 'faq-item__answer-wrap';
+      answer.parentNode?.insertBefore(wrap, answer);
+      wrap.append(answer);
+    }
+
+    const panelId = answer.id || `faq-answer-${index + 1}`;
+    answer.id = panelId;
+    row.setAttribute('role', 'button');
+    row.setAttribute('tabindex', '0');
+    row.setAttribute('aria-controls', panelId);
+
+    const rawSrc = toggle?.getAttribute('src') ?? '';
+    const openSrc = rawSrc.includes('open') ? rawSrc : getOpenSrc(rawSrc);
+    const closedSrc = rawSrc.includes('closed') ? rawSrc : getClosedSrc(rawSrc);
+    const isOpen = item === activeItem;
+
+    itemState.set(item, {
+      item,
+      row,
+      wrap,
+      answer,
+      toggle,
+      timeline: null,
+      isOpen,
+      openSrc,
+      closedSrc
+    });
+
+    setItemVisualState(item, isOpen);
+    if (isOpen) {
+      gsap.set(wrap, { height: 'auto' });
+      gsap.set(answer, { autoAlpha: 1, y: 0 });
+      gsap.set(toggle, { rotate: 180 });
+    } else {
+      gsap.set(wrap, { height: 0 });
+      gsap.set(answer, { autoAlpha: 0, y: -6 });
+      gsap.set(toggle, { rotate: 0 });
+    }
+
+    const onClick = () => activateItem(item);
+    const onKeyDown = (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activateItem(item);
+        return;
+      }
+
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        const direction = event.key === 'ArrowDown' ? 1 : -1;
+        const nextIndex = (index + direction + items.length) % items.length;
+        itemState.get(items[nextIndex])?.row.focus();
+        return;
+      }
+
+      if (event.key === 'Home') {
+        event.preventDefault();
+        itemState.get(items[0])?.row.focus();
+        return;
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault();
+        itemState.get(items[items.length - 1])?.row.focus();
+      }
+    };
+
+    row.addEventListener('click', onClick);
+    row.addEventListener('keydown', onKeyDown);
+    listeners.push(() => {
+      row.removeEventListener('click', onClick);
+      row.removeEventListener('keydown', onKeyDown);
+    });
+  });
+
+  const onResize = () => {
+    const state = itemState.get(activeItem);
+    if (!state) {
+      return;
+    }
+    gsap.set(state.wrap, { height: 'auto' });
+  };
+  window.addEventListener('resize', onResize);
+
+  return () => {
+    listeners.forEach((dispose) => dispose());
+    window.removeEventListener('resize', onResize);
+    items.forEach((item) => {
+      const state = itemState.get(item);
+      state?.timeline?.kill();
+      if (!state) {
+        return;
+      }
+      state.answer.hidden = false;
+      gsap.set([state.wrap, state.answer, state.toggle], { clearProps: 'all' });
+      state.row.removeAttribute('role');
+      state.row.removeAttribute('tabindex');
+      state.row.removeAttribute('aria-controls');
+      state.row.removeAttribute('aria-expanded');
+    });
+  };
+}
+
 function prepareHeroIntroState() {
   if (!heroSection || heroSection.dataset.motionHeroPrepared === 'true') {
     return;
@@ -3205,6 +3446,7 @@ async function initMotionSystem() {
     mapRevealUtilities();
     setReducedMotionState();
     registerMotionCleanup(initNavbarMotion(null));
+    registerMotionCleanup(initFaqAccordionMotion());
     initHowLayerStackReveal({ reduced: true });
     return;
   }
@@ -3240,6 +3482,7 @@ async function initMotionSystem() {
   registerMotionCleanup(initPricingGridLaserHover());
   registerMotionCleanup(initDevelopersPerspectiveBeams());
   registerMotionCleanup(initDevelopersIntroDissolveBurst());
+  registerMotionCleanup(initFaqAccordionMotion());
   // Developers side red dots should stay static (no pulse animation).
   registerMotionCleanup(initInteractiveHoverStates());
   registerMotionCleanup(initCustomCursor());
