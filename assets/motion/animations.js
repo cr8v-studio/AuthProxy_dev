@@ -2099,6 +2099,22 @@ function initDevelopersIntroDissolveBurst() {
     ticker += 1;
   };
 
+  const hideGridGlyphs = () => {
+    if (!gridCells.length) {
+      return;
+    }
+    gridCells.forEach((cell) => {
+      gsap.killTweensOf(cell.glyphNodes);
+      cell.glyphNodes.forEach((glyph, index) => {
+        gsap.set(glyph, {
+          x: cell.glyphPositions[index].x,
+          y: cell.glyphPositions[index].y + 2,
+          opacity: 0
+        });
+      });
+    });
+  };
+
   const burstAtCell = (cell, dx, dy) => {
     if (!cell) {
       return;
@@ -2301,6 +2317,9 @@ function initDevelopersIntroDissolveBurst() {
 
   const onPointerEnter = (event) => {
     const rect = frame.getBoundingClientRect();
+    if (!gridCells.length) {
+      buildGrid();
+    }
     document.body.classList.add('is-hero-laser-cursor');
     pointerIsInside = true;
     pointerTargetX = event.clientX - rect.left;
@@ -2358,11 +2377,9 @@ function initDevelopersIntroDissolveBurst() {
     end: 'bottom 20%',
     onEnter: () => {
       isInViewport = true;
-      buildGrid();
     },
     onEnterBack: () => {
       isInViewport = true;
-      buildGrid();
     },
     onLeave: () => {
       isInViewport = false;
@@ -2374,7 +2391,7 @@ function initDevelopersIntroDissolveBurst() {
       }
       activeCellKey = '';
       clearParticles();
-      clearGrid();
+      hideGridGlyphs();
     },
     onLeaveBack: () => {
       isInViewport = false;
@@ -2386,7 +2403,7 @@ function initDevelopersIntroDissolveBurst() {
       }
       activeCellKey = '';
       clearParticles();
-      clearGrid();
+      hideGridGlyphs();
     }
   });
 
