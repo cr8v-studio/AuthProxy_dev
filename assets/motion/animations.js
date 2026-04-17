@@ -1948,6 +1948,10 @@ function initDevelopersIntroDissolveBurst() {
   let pointerSmoothY = Number.NaN;
   let pointerIsInside = false;
   let pointerRafId = 0;
+  let prewarmTimeoutId = 0;
+  let prewarmIdleId = 0;
+  let prewarmRafId = 0;
+  let prewarmScheduled = false;
   let gridCells = [];
 
   const pseudo = (value) => {
@@ -2097,6 +2101,64 @@ function initDevelopersIntroDissolveBurst() {
       }
     }
     ticker += 1;
+  };
+
+  const clearPrewarmSchedule = () => {
+    prewarmScheduled = false;
+    if (prewarmTimeoutId) {
+      window.clearTimeout(prewarmTimeoutId);
+      prewarmTimeoutId = 0;
+    }
+    if (prewarmRafId) {
+      cancelAnimationFrame(prewarmRafId);
+      prewarmRafId = 0;
+    }
+    if (prewarmIdleId && typeof window.cancelIdleCallback === 'function') {
+      window.cancelIdleCallback(prewarmIdleId);
+      prewarmIdleId = 0;
+    }
+  };
+
+  const runGridPrewarm = () => {
+    prewarmScheduled = false;
+    prewarmTimeoutId = 0;
+    prewarmRafId = 0;
+    prewarmIdleId = 0;
+
+    if (!isInViewport || pointerIsInside || gridCells.length) {
+      return;
+    }
+    buildGrid();
+  };
+
+  const scheduleGridPrewarm = () => {
+    if (!isInViewport || pointerIsInside || gridCells.length || prewarmScheduled) {
+      return;
+    }
+    prewarmScheduled = true;
+    prewarmTimeoutId = window.setTimeout(() => {
+      prewarmTimeoutId = 0;
+      if (!isInViewport || pointerIsInside || gridCells.length) {
+        prewarmScheduled = false;
+        return;
+      }
+
+      const kickoff = () => {
+        prewarmRafId = requestAnimationFrame(() => {
+          prewarmRafId = 0;
+          runGridPrewarm();
+        });
+      };
+
+      if (typeof window.requestIdleCallback === 'function') {
+        prewarmIdleId = window.requestIdleCallback(() => {
+          prewarmIdleId = 0;
+          kickoff();
+        }, { timeout: 320 });
+      } else {
+        kickoff();
+      }
+    }, 90);
   };
 
   const hideGridGlyphs = () => {
@@ -2358,6 +2420,7 @@ function initDevelopersIntroDissolveBurst() {
     pointerTargetY = Number.NaN;
     pointerSmoothX = Number.NaN;
     pointerSmoothY = Number.NaN;
+    scheduleGridPrewarm();
   };
 
   const onResize = () => {
@@ -2377,12 +2440,15 @@ function initDevelopersIntroDissolveBurst() {
     end: 'bottom 20%',
     onEnter: () => {
       isInViewport = true;
+      scheduleGridPrewarm();
     },
     onEnterBack: () => {
       isInViewport = true;
+      scheduleGridPrewarm();
     },
     onLeave: () => {
       isInViewport = false;
+      clearPrewarmSchedule();
       document.body.classList.remove('is-hero-laser-cursor');
       pointerIsInside = false;
       if (pointerRafId) {
@@ -2395,6 +2461,7 @@ function initDevelopersIntroDissolveBurst() {
     },
     onLeaveBack: () => {
       isInViewport = false;
+      clearPrewarmSchedule();
       document.body.classList.remove('is-hero-laser-cursor');
       pointerIsInside = false;
       if (pointerRafId) {
@@ -2414,6 +2481,7 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
+    clearPrewarmSchedule();
     document.body.classList.remove('is-hero-laser-cursor');
     pointerIsInside = false;
     if (pointerRafId) {
