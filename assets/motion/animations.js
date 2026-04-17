@@ -1952,6 +1952,8 @@ function initDevelopersIntroDissolveBurst() {
   let prewarmIdleId = 0;
   let prewarmRafId = 0;
   let prewarmScheduled = false;
+  let prewarmUnlocked = false;
+  let prewarmObserver = null;
   let gridCells = [];
 
   const pseudo = (value) => {
@@ -2125,20 +2127,20 @@ function initDevelopersIntroDissolveBurst() {
     prewarmRafId = 0;
     prewarmIdleId = 0;
 
-    if (!isInViewport || pointerIsInside || gridCells.length) {
+    if ((!isInViewport && !prewarmUnlocked) || pointerIsInside || gridCells.length) {
       return;
     }
     buildGrid();
   };
 
   const scheduleGridPrewarm = () => {
-    if (!isInViewport || pointerIsInside || gridCells.length || prewarmScheduled) {
+    if ((!isInViewport && !prewarmUnlocked) || pointerIsInside || gridCells.length || prewarmScheduled) {
       return;
     }
     prewarmScheduled = true;
     prewarmTimeoutId = window.setTimeout(() => {
       prewarmTimeoutId = 0;
-      if (!isInViewport || pointerIsInside || gridCells.length) {
+      if ((!isInViewport && !prewarmUnlocked) || pointerIsInside || gridCells.length) {
         prewarmScheduled = false;
         return;
       }
@@ -2160,6 +2162,25 @@ function initDevelopersIntroDissolveBurst() {
       }
     }, 90);
   };
+
+  if ('IntersectionObserver' in window) {
+    prewarmObserver = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (!entry || !entry.isIntersecting) {
+        return;
+      }
+      prewarmUnlocked = true;
+      scheduleGridPrewarm();
+      prewarmObserver?.disconnect();
+      prewarmObserver = null;
+    }, {
+      rootMargin: '800px 0px 800px 0px',
+      threshold: 0
+    });
+    prewarmObserver.observe(frame);
+  } else {
+    prewarmUnlocked = true;
+  }
 
   const hideGridGlyphs = () => {
     if (!gridCells.length) {
@@ -2481,6 +2502,8 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
+    prewarmObserver?.disconnect();
+    prewarmObserver = null;
     clearPrewarmSchedule();
     document.body.classList.remove('is-hero-laser-cursor');
     pointerIsInside = false;
