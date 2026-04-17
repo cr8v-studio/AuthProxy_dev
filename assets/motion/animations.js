@@ -1689,38 +1689,7 @@ function initDevelopersPerspectiveBeams() {
   const centerY = 199.625;
 
   let beamTweens = [];
-  let inView = false;
-  let scrolling = false;
   let rebuildRaf = 0;
-  const setBeamPlayback = () => {
-    if (!beamTweens.length) {
-      return;
-    }
-    if (!inView) {
-      beamTweens.forEach((tween) => tween.pause());
-      return;
-    }
-
-    if (scrolling) {
-      // During active scroll we keep beams extremely slow to reduce paint pressure.
-      gsap.to(beamTweens, {
-        timeScale: 0.08,
-        duration: 0.16,
-        ease: 'power2.out',
-        overwrite: true
-      });
-      return;
-    }
-
-    beamTweens.forEach((tween) => tween.play());
-    gsap.to(beamTweens, {
-      timeScale: 1,
-      duration: 0.35,
-      ease: 'power2.out',
-      overwrite: true
-    });
-  };
-
   const buildBeams = () => {
     svg.setAttribute('viewBox', `0 0 ${viewBoxWidth} ${viewBoxHeight}`);
     svg.textContent = '';
@@ -1781,7 +1750,7 @@ function initDevelopersPerspectiveBeams() {
       mainPath.setAttribute('stroke-dashoffset', `${startOffset}`);
       ghostPath.setAttribute('stroke-dashoffset', `${startOffset + 12}`);
 
-      const duration = isMobileViewport() ? 2.6 : 2.25;
+      const duration = isMobileViewport() ? 2.35 : 2.0;
       const baseDelay = index * 0.05;
 
       return [
@@ -1801,7 +1770,6 @@ function initDevelopersPerspectiveBeams() {
         })
       ];
     });
-    setBeamPlayback();
   };
 
   let tracks = buildBeams();
@@ -1838,48 +1806,25 @@ function initDevelopersPerspectiveBeams() {
     scheduleRebuild();
   };
   ScrollTrigger.addEventListener('refresh', onRefresh);
-  const onScrollStart = () => {
-    scrolling = true;
-    setBeamPlayback();
-  };
-  const onScrollEnd = () => {
-    scrolling = false;
-    setBeamPlayback();
-  };
-  ScrollTrigger.addEventListener('scrollStart', onScrollStart);
-  ScrollTrigger.addEventListener('scrollEnd', onScrollEnd);
 
   const trigger = ScrollTrigger.create({
     trigger: center,
     start: 'top 85%',
     end: 'bottom 20%',
-    onEnter: () => {
-      inView = true;
-      setBeamPlayback();
-    },
-    onEnterBack: () => {
-      inView = true;
-      setBeamPlayback();
-    },
-    onLeave: () => {
-      inView = false;
-      setBeamPlayback();
-    },
-    onLeaveBack: () => {
-      inView = false;
-      setBeamPlayback();
-    }
+    onEnter: () => beamTweens.forEach((tween) => tween.play()),
+    onEnterBack: () => beamTweens.forEach((tween) => tween.play()),
+    onLeave: () => beamTweens.forEach((tween) => tween.pause()),
+    onLeaveBack: () => beamTweens.forEach((tween) => tween.pause())
   });
 
-  inView = trigger.isActive;
-  setBeamPlayback();
+  if (!trigger.isActive) {
+    beamTweens.forEach((tween) => tween.pause());
+  }
 
   return () => {
     trigger.kill();
     resizeObserver.disconnect();
     ScrollTrigger.removeEventListener('refresh', onRefresh);
-    ScrollTrigger.removeEventListener('scrollStart', onScrollStart);
-    ScrollTrigger.removeEventListener('scrollEnd', onScrollEnd);
     if (rebuildRaf) {
       cancelAnimationFrame(rebuildRaf);
       rebuildRaf = 0;
