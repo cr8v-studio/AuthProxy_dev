@@ -1953,7 +1953,7 @@ function initDevelopersIntroDissolveBurst() {
   let prewarmRafId = 0;
   let prewarmScheduled = false;
   let prewarmUnlocked = false;
-  let prewarmObserver = null;
+  let prewarmLoadHandler = null;
   let gridCells = [];
 
   const pseudo = (value) => {
@@ -2163,23 +2163,19 @@ function initDevelopersIntroDissolveBurst() {
     }, 90);
   };
 
-  if ('IntersectionObserver' in window) {
-    prewarmObserver = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (!entry || !entry.isIntersecting) {
-        return;
-      }
-      prewarmUnlocked = true;
-      scheduleGridPrewarm();
-      prewarmObserver?.disconnect();
-      prewarmObserver = null;
-    }, {
-      rootMargin: '800px 0px 800px 0px',
-      threshold: 0
-    });
-    prewarmObserver.observe(frame);
-  } else {
+  const unlockAndPrewarm = () => {
     prewarmUnlocked = true;
+    scheduleGridPrewarm();
+  };
+
+  if (document.readyState === 'complete') {
+    unlockAndPrewarm();
+  } else {
+    prewarmLoadHandler = () => {
+      prewarmLoadHandler = null;
+      unlockAndPrewarm();
+    };
+    window.addEventListener('load', prewarmLoadHandler, { once: true });
   }
 
   const hideGridGlyphs = () => {
@@ -2502,8 +2498,10 @@ function initDevelopersIntroDissolveBurst() {
 
   return () => {
     trigger.kill();
-    prewarmObserver?.disconnect();
-    prewarmObserver = null;
+    if (prewarmLoadHandler) {
+      window.removeEventListener('load', prewarmLoadHandler);
+      prewarmLoadHandler = null;
+    }
     clearPrewarmSchedule();
     document.body.classList.remove('is-hero-laser-cursor');
     pointerIsInside = false;
