@@ -1056,7 +1056,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: var(--space-20);
-  padding: var(--space-48);
+  padding: var(--hero-metric-padding-y) var(--space-48);
   border-right: 1px solid var(--site-section-border);
   background: var(--figma-color-white-base);
 }
