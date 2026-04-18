@@ -40,29 +40,17 @@ body.site-page {
   color: #ffffff;
 }
 
-/* Keep text selection visible on dark cards/chips via explicit selectors (Safari-safe). */
-.solution-card--lead::selection,
-.solution-card--lead *::selection,
-.how-section__headline span::selection,
-.how-step-card__tag::selection,
-.solution-section__label-chip::selection,
-.solution-capability-item__tag::selection,
-.text-highlight::selection,
-.text-highlight *::selection {
+/* Keep text selection visible on dark surfaces via one shared marker. */
+[data-surface="dark"]::selection,
+[data-surface="dark"] *::selection {
   background: #f4f4f4 !important;
   color: #1f1f1f !important;
   text-shadow: none;
   -webkit-text-fill-color: #1f1f1f;
 }
 
-.solution-card--lead::-moz-selection,
-.solution-card--lead *::-moz-selection,
-.how-section__headline span::-moz-selection,
-.how-step-card__tag::-moz-selection,
-.solution-section__label-chip::-moz-selection,
-.solution-capability-item__tag::-moz-selection,
-.text-highlight::-moz-selection,
-.text-highlight *::-moz-selection {
+[data-surface="dark"]::-moz-selection,
+[data-surface="dark"] *::-moz-selection {
   background: #f4f4f4 !important;
   color: #1f1f1f !important;
   text-shadow: none;
@@ -4724,8 +4712,8 @@ a {
 
 /* Safari-specific fallback for dark-card selection rendering. */
 @supports (-webkit-touch-callout: none) {
-  .solution-card--lead::selection,
-  .solution-card--lead *::selection,
+  [data-surface="dark"]::selection,
+  [data-surface="dark"] *::selection,
   .solution-card__lead-copy::selection,
   .solution-card__lead-copy *::selection {
     background: #f4f4f4 !important;
@@ -4734,8 +4722,8 @@ a {
     text-shadow: none !important;
   }
 
-  .solution-card--lead::-moz-selection,
-  .solution-card--lead *::-moz-selection,
+  [data-surface="dark"]::-moz-selection,
+  [data-surface="dark"] *::-moz-selection,
   .solution-card__lead-copy::-moz-selection,
   .solution-card__lead-copy *::-moz-selection {
     background: #f4f4f4 !important;
