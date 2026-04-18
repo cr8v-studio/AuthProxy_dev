@@ -2551,7 +2551,7 @@ function initFaqAccordionMotion() {
 
     if (immediate || prefersReducedMotion) {
       gsap.set(state.wrap, { height: 0 });
-      gsap.set(state.answer, { autoAlpha: 0, y: -8 });
+      gsap.set(state.answer, { autoAlpha: 0 });
       state.answer.hidden = true;
       gsap.set(state.toggle, { autoAlpha: 1, rotate: 180 });
       return null;
@@ -2566,16 +2566,15 @@ function initFaqAccordionMotion() {
       }
     });
     timeline.set(state.wrap, { height: currentHeight });
-    timeline.set(state.answer, { autoAlpha: 1, y: 0 });
+    timeline.set(state.answer, { autoAlpha: 1 });
     timeline.to(state.answer, {
       autoAlpha: 0,
-      y: -4,
-      duration: 0.42,
-      ease: 'power2.out'
+      duration: 0.5,
+      ease: 'power2.inOut'
     }, 0);
     timeline.to(state.wrap, {
       height: 0,
-      duration: 0.56,
+      duration: 0.6,
       ease: 'power3.inOut'
     }, 0);
     timeline.fromTo(state.toggle, {
@@ -2606,7 +2605,7 @@ function initFaqAccordionMotion() {
 
     if (immediate || prefersReducedMotion) {
       gsap.set(state.wrap, { height: 'auto' });
-      gsap.set(state.answer, { autoAlpha: 1, y: 0 });
+      gsap.set(state.answer, { autoAlpha: 1 });
       state.answer.hidden = false;
       gsap.set(state.toggle, { autoAlpha: 1, rotate: 0 });
       return null;
@@ -2620,18 +2619,17 @@ function initFaqAccordionMotion() {
       }
     });
     timeline.set(state.wrap, { height: 0 });
-    timeline.set(state.answer, { autoAlpha: 0, y: 6 });
+    timeline.set(state.answer, { autoAlpha: 0 });
     timeline.to(state.wrap, {
       height: targetHeight,
-      duration: 0.64,
+      duration: 0.62,
       ease: 'power3.out'
     }, 0);
     timeline.to(state.answer, {
       autoAlpha: 1,
-      y: 0,
-      duration: 0.6,
-      ease: 'power3.out'
-    }, 0);
+      duration: 0.52,
+      ease: 'power2.out'
+    }, 0.04);
     timeline.fromTo(state.toggle, {
       autoAlpha: 0.64
     }, {
@@ -2699,11 +2697,11 @@ function initFaqAccordionMotion() {
     gsap.set(toggle, { xPercent: -50, yPercent: -50, autoAlpha: 1, rotate: isOpen ? 0 : 180 });
     if (isOpen) {
       gsap.set(wrap, { height: 'auto' });
-      gsap.set(answer, { autoAlpha: 1, y: 0 });
+      gsap.set(answer, { autoAlpha: 1 });
       answer.hidden = false;
     } else {
       gsap.set(wrap, { height: 0 });
-      gsap.set(answer, { autoAlpha: 0, y: -8 });
+      gsap.set(answer, { autoAlpha: 0 });
       answer.hidden = true;
     }
 
