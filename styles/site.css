@@ -3729,10 +3729,29 @@ a {
   letter-spacing: 0;
 }
 
-.faq-item__toggle {
+.faq-item__toggle-wrap {
+  position: relative;
   width: 64px;
   height: 44px;
   flex: 0 0 auto;
+  pointer-events: none;
+}
+
+.faq-item__toggle-corners {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.faq-item__toggle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 17px;
+  transform: translate(-50%, -50%);
   transform-origin: 50% 50%;
   will-change: transform, opacity;
 }
@@ -6378,6 +6397,11 @@ a {
   }
 
   .faq-item__toggle {
+    width: 22px;
+    height: 15px;
+  }
+
+  .faq-item__toggle-wrap {
     width: 52px;
     height: 36px;
   }

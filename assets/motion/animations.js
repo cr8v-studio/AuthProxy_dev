@@ -2531,9 +2531,6 @@ function initFaqAccordionMotion() {
   const listeners = [];
   let activeItem = items.find((item) => item.classList.contains('faq-item--open')) ?? items[0];
 
-  const getOpenSrc = (src = '') => src.replace('closed', 'open');
-  const getClosedSrc = (src = '') => src.replace('open', 'closed');
-
   const setItemVisualState = (item, isOpen) => {
     const state = itemState.get(item);
     if (!state) {
@@ -2542,10 +2539,6 @@ function initFaqAccordionMotion() {
     item.classList.toggle('faq-item--open', isOpen);
     state.row.setAttribute('aria-expanded', String(isOpen));
     state.answer.hidden = !isOpen;
-
-    if (state.toggle) {
-      state.toggle.setAttribute('src', isOpen ? state.openSrc : state.closedSrc);
-    }
   };
 
   const closeItem = (item, { immediate = false } = {}) => {
@@ -2560,7 +2553,7 @@ function initFaqAccordionMotion() {
     if (immediate || prefersReducedMotion) {
       gsap.set(state.wrap, { height: 0 });
       gsap.set(state.answer, { autoAlpha: 0, y: -6 });
-      gsap.set(state.toggle, { rotate: 0 });
+      gsap.set(state.toggle, { autoAlpha: 1, rotate: 0 });
       return null;
     }
 
@@ -2580,10 +2573,17 @@ function initFaqAccordionMotion() {
       duration: 0.5,
       ease: 'power3.out'
     }, 0);
+    timeline.fromTo(state.toggle, {
+      autoAlpha: 0.64
+    }, {
+      autoAlpha: 1,
+      duration: 0.3,
+      ease: 'power2.out'
+    }, 0.06);
     timeline.to(state.toggle, {
       rotate: 0,
       duration: 0.42,
-      ease: 'power3.out'
+      ease: 'power2.out'
     }, 0);
     state.timeline = timeline;
     return timeline;
@@ -2602,7 +2602,7 @@ function initFaqAccordionMotion() {
     if (immediate || prefersReducedMotion) {
       gsap.set(state.wrap, { height: 'auto' });
       gsap.set(state.answer, { autoAlpha: 1, y: 0 });
-      gsap.set(state.toggle, { rotate: 180 });
+      gsap.set(state.toggle, { autoAlpha: 1, rotate: 180 });
       return null;
     }
 
@@ -2625,11 +2625,18 @@ function initFaqAccordionMotion() {
       duration: 0.52,
       ease: 'power3.out'
     }, 0.08);
+    timeline.fromTo(state.toggle, {
+      autoAlpha: 0.64
+    }, {
+      autoAlpha: 1,
+      duration: 0.32,
+      ease: 'power2.out'
+    }, 0.08);
     timeline.to(state.toggle, {
       rotate: 180,
-      duration: 0.48,
+      duration: 0.46,
       ease: 'power3.out'
-    }, 0.04);
+    }, 0.02);
     state.timeline = timeline;
     return timeline;
   };
@@ -2651,7 +2658,7 @@ function initFaqAccordionMotion() {
     const row = item.querySelector('.faq-item__question-row');
     const answer = item.querySelector('.faq-item__answer');
     const toggle = item.querySelector('.faq-item__toggle');
-    if (!row || !answer) {
+    if (!row || !answer || !toggle) {
       return;
     }
 
@@ -2669,9 +2676,6 @@ function initFaqAccordionMotion() {
     row.setAttribute('tabindex', '0');
     row.setAttribute('aria-controls', panelId);
 
-    const rawSrc = toggle?.getAttribute('src') ?? '';
-    const openSrc = rawSrc.includes('open') ? rawSrc : getOpenSrc(rawSrc);
-    const closedSrc = rawSrc.includes('closed') ? rawSrc : getClosedSrc(rawSrc);
     const isOpen = item === activeItem;
 
     itemState.set(item, {
@@ -2681,20 +2685,17 @@ function initFaqAccordionMotion() {
       answer,
       toggle,
       timeline: null,
-      isOpen,
-      openSrc,
-      closedSrc
+      isOpen
     });
 
     setItemVisualState(item, isOpen);
+    gsap.set(toggle, { xPercent: -50, yPercent: -50, autoAlpha: 1, rotate: isOpen ? 180 : 0 });
     if (isOpen) {
       gsap.set(wrap, { height: 'auto' });
       gsap.set(answer, { autoAlpha: 1, y: 0 });
-      gsap.set(toggle, { rotate: 180 });
     } else {
       gsap.set(wrap, { height: 0 });
       gsap.set(answer, { autoAlpha: 0, y: -6 });
-      gsap.set(toggle, { rotate: 0 });
     }
 
     const onClick = () => activateItem(item);
