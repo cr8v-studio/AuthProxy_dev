@@ -2622,14 +2622,14 @@ function initFaqAccordionMotion() {
     timeline.set(state.answer, { autoAlpha: 0 });
     timeline.to(state.wrap, {
       height: targetHeight,
-      duration: 0.62,
-      ease: 'power3.out'
+      duration: 0.78,
+      ease: 'power2.inOut'
     }, 0);
     timeline.to(state.answer, {
       autoAlpha: 1,
-      duration: 0.52,
+      duration: 0.56,
       ease: 'power2.out'
-    }, 0.04);
+    }, 0.12);
     timeline.fromTo(state.toggle, {
       autoAlpha: 0.64
     }, {
@@ -2639,8 +2639,8 @@ function initFaqAccordionMotion() {
     }, 0.08);
     timeline.to(state.toggle, {
       rotate: 0,
-      duration: 0.46,
-      ease: 'power3.out'
+      duration: 0.52,
+      ease: 'power2.inOut'
     }, 0.02);
     state.timeline = timeline;
     return timeline;
