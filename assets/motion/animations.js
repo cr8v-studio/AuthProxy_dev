@@ -2569,13 +2569,13 @@ function initFaqAccordionMotion() {
     timeline.set(state.answer, { autoAlpha: 1, y: 0 });
     timeline.to(state.answer, {
       autoAlpha: 0,
-      y: -8,
-      duration: 0.34,
-      ease: 'power2.inOut'
+      y: -4,
+      duration: 0.42,
+      ease: 'power2.out'
     }, 0);
     timeline.to(state.wrap, {
       height: 0,
-      duration: 0.58,
+      duration: 0.56,
       ease: 'power3.inOut'
     }, 0);
     timeline.fromTo(state.toggle, {
@@ -2620,18 +2620,18 @@ function initFaqAccordionMotion() {
       }
     });
     timeline.set(state.wrap, { height: 0 });
-    timeline.set(state.answer, { autoAlpha: 0, y: 12 });
+    timeline.set(state.answer, { autoAlpha: 0, y: 6 });
     timeline.to(state.wrap, {
       height: targetHeight,
-      duration: 0.66,
+      duration: 0.64,
       ease: 'power3.out'
     }, 0);
     timeline.to(state.answer, {
       autoAlpha: 1,
       y: 0,
-      duration: 0.46,
-      ease: 'power2.out'
-    }, 0.1);
+      duration: 0.6,
+      ease: 'power3.out'
+    }, 0);
     timeline.fromTo(state.toggle, {
       autoAlpha: 0.64
     }, {
