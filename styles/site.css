@@ -3756,13 +3756,13 @@ a {
   bottom: 0;
 }
 
-.faq-item__question-row:hover .faq-item__toggle-corner--tr,
-.faq-item__question-row:focus-visible .faq-item__toggle-corner--tr {
+.faq-item:not(.faq-item--open) .faq-item__question-row:hover .faq-item__toggle-corner--tr,
+.faq-item:not(.faq-item--open) .faq-item__question-row:focus-visible .faq-item__toggle-corner--tr {
   transform: translate3d(3px, -3px, 0);
 }
 
-.faq-item__question-row:hover .faq-item__toggle-corner--bl,
-.faq-item__question-row:focus-visible .faq-item__toggle-corner--bl {
+.faq-item:not(.faq-item--open) .faq-item__question-row:hover .faq-item__toggle-corner--bl,
+.faq-item:not(.faq-item--open) .faq-item__question-row:focus-visible .faq-item__toggle-corner--bl {
   transform: translate3d(-3px, 3px, 0);
 }
 
