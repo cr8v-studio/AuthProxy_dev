@@ -3737,12 +3737,33 @@ a {
   pointer-events: none;
 }
 
-.faq-item__toggle-corners {
+.faq-item__toggle-corner {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 15px;
+  height: 12px;
   display: block;
+  will-change: transform;
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-item__toggle-corner--tr {
+  top: 0;
+  right: 0;
+}
+
+.faq-item__toggle-corner--bl {
+  left: 0;
+  bottom: 0;
+}
+
+.faq-item__question-row:hover .faq-item__toggle-corner--tr,
+.faq-item__question-row:focus-visible .faq-item__toggle-corner--tr {
+  transform: translate3d(3px, -3px, 0);
+}
+
+.faq-item__question-row:hover .faq-item__toggle-corner--bl,
+.faq-item__question-row:focus-visible .faq-item__toggle-corner--bl {
+  transform: translate3d(-3px, 3px, 0);
 }
 
 .faq-item__toggle {
