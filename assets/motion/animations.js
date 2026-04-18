@@ -2601,17 +2601,16 @@ function initFaqAccordionMotion() {
     state.timeline?.kill();
     state.isOpen = true;
     setItemVisualState(item, true);
+    state.answer.hidden = false;
     const targetHeight = state.answer.scrollHeight;
 
     if (immediate || prefersReducedMotion) {
       gsap.set(state.wrap, { height: 'auto' });
       gsap.set(state.answer, { autoAlpha: 1 });
-      state.answer.hidden = false;
       gsap.set(state.toggle, { autoAlpha: 1, rotate: 0 });
       return null;
     }
 
-    state.answer.hidden = false;
     const timeline = gsap.timeline({
       defaults: { overwrite: 'auto' },
       onComplete: () => {
