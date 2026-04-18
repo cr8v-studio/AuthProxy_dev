@@ -2538,7 +2538,6 @@ function initFaqAccordionMotion() {
     }
     item.classList.toggle('faq-item--open', isOpen);
     state.row.setAttribute('aria-expanded', String(isOpen));
-    state.answer.hidden = !isOpen;
   };
 
   const closeItem = (item, { immediate = false } = {}) => {
@@ -2552,26 +2551,32 @@ function initFaqAccordionMotion() {
 
     if (immediate || prefersReducedMotion) {
       gsap.set(state.wrap, { height: 0 });
-      gsap.set(state.answer, { autoAlpha: 0, y: -6 });
+      gsap.set(state.answer, { autoAlpha: 0, y: -8 });
+      state.answer.hidden = true;
       gsap.set(state.toggle, { autoAlpha: 1, rotate: 180 });
       return null;
     }
 
+    state.answer.hidden = false;
     const currentHeight = state.wrap.getBoundingClientRect().height;
     const timeline = gsap.timeline({
-      defaults: { overwrite: 'auto' }
+      defaults: { overwrite: 'auto' },
+      onComplete: () => {
+        state.answer.hidden = true;
+      }
     });
     timeline.set(state.wrap, { height: currentHeight });
+    timeline.set(state.answer, { autoAlpha: 1, y: 0 });
     timeline.to(state.answer, {
       autoAlpha: 0,
-      y: -6,
-      duration: 0.38,
+      y: -8,
+      duration: 0.34,
       ease: 'power2.inOut'
     }, 0);
     timeline.to(state.wrap, {
       height: 0,
-      duration: 0.5,
-      ease: 'power3.out'
+      duration: 0.58,
+      ease: 'power3.inOut'
     }, 0);
     timeline.fromTo(state.toggle, {
       autoAlpha: 0.64
@@ -2602,10 +2607,12 @@ function initFaqAccordionMotion() {
     if (immediate || prefersReducedMotion) {
       gsap.set(state.wrap, { height: 'auto' });
       gsap.set(state.answer, { autoAlpha: 1, y: 0 });
+      state.answer.hidden = false;
       gsap.set(state.toggle, { autoAlpha: 1, rotate: 0 });
       return null;
     }
 
+    state.answer.hidden = false;
     const timeline = gsap.timeline({
       defaults: { overwrite: 'auto' },
       onComplete: () => {
@@ -2613,18 +2620,18 @@ function initFaqAccordionMotion() {
       }
     });
     timeline.set(state.wrap, { height: 0 });
-    timeline.set(state.answer, { autoAlpha: 0, y: 8 });
+    timeline.set(state.answer, { autoAlpha: 0, y: 12 });
     timeline.to(state.wrap, {
       height: targetHeight,
-      duration: 0.62,
+      duration: 0.66,
       ease: 'power3.out'
     }, 0);
     timeline.to(state.answer, {
       autoAlpha: 1,
       y: 0,
-      duration: 0.52,
-      ease: 'power3.out'
-    }, 0.08);
+      duration: 0.46,
+      ease: 'power2.out'
+    }, 0.1);
     timeline.fromTo(state.toggle, {
       autoAlpha: 0.64
     }, {
@@ -2693,9 +2700,11 @@ function initFaqAccordionMotion() {
     if (isOpen) {
       gsap.set(wrap, { height: 'auto' });
       gsap.set(answer, { autoAlpha: 1, y: 0 });
+      answer.hidden = false;
     } else {
       gsap.set(wrap, { height: 0 });
-      gsap.set(answer, { autoAlpha: 0, y: -6 });
+      gsap.set(answer, { autoAlpha: 0, y: -8 });
+      answer.hidden = true;
     }
 
     const onClick = () => activateItem(item);
