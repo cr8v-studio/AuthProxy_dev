@@ -3727,6 +3727,13 @@ a {
   line-height: 31px;
   font-weight: 400;
   letter-spacing: 0;
+  transition: color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-item:not(.faq-item--open) .faq-item__question-row:hover .faq-item__question,
+.faq-item:not(.faq-item--open) .faq-item__question-row:focus-visible .faq-item__question,
+.faq-item.faq-item--open .faq-item__question {
+  color: var(--color-accent-alert);
 }
 
 .faq-item__toggle-wrap {
