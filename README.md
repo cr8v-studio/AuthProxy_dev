@@ -41,13 +41,7 @@
 
 ### История изменений
 
-| Коммит | Содержание |
-| --- | --- |
-| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Основная адаптация, исправление ссылок, футер |
-| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Запуск анимаций и прокрутка при открытии глубоких ссылок |
-| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Исправление предупреждений GSAP |
-| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Кнопки в ряд, бегущая строка, уголки карточек, иллюстрация стека |
-| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Удаление Pricing и оставшихся лишних мобильных уголков |
+Сохранена в [коммитах main](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/). После очистки приватных данных 27 сентября 2026 идентификаторы коммитов изменились; ссылки на прежние версии удалены.
 
 ### Что проверено
 
@@ -108,6 +102,7 @@ python3 -m http.server 8080 --bind 127.0.0.1
 node --check scripts/site.js
 node --check assets/motion/animations.js
 python3 scripts/motion_smoke_check.py
+python3 scripts/privacy_check.py
 git diff --check
 ```
 
@@ -117,12 +112,28 @@ Smoke-check проверяет наличие селекторов и иници
 
 В `Settings → Pages → Build and deployment` уже выбран источник **GitHub Actions**. Push в `main` запускает [deploy-pages.yml](./.github/workflows/deploy-pages.yml); доступен и ручной запуск через `workflow_dispatch`.
 
-Workflow публикует статические файлы из корня репозитория, без сборки. Автоматического запуска проверок выше в workflow пока нет — выполняйте их до push. После публикации дождитесь успешного Actions run и проверьте [живой сайт](https://cr8v-studio.github.io/AuthProxy_dev/).
+Workflow проверяет всю Git-историю на приватные email, локальные пути, ссылки на временные ассеты и приватные ключи, затем публикует только `index.html`, `assets/`, `styles/` и `scripts/site.js`. Документация и служебные скрипты не входят в Pages-артефакт. Остальные проверки выполняйте до push. После публикации дождитесь успешного Actions run и проверьте [живой сайт](https://cr8v-studio.github.io/AuthProxy_dev/).
 
 ## Возможные следующие улучшения
 
 Не входят в завершённые правки и не блокируют передачу:
 
-- Добавить в CI проверку внутренних ссылок и smoke-check до публикации.
+- Дополнить существующую проверку приватности в CI проверками внутренних ссылок и motion smoke-check.
 - Добавить браузерные регрессионные проверки ключевых ширин, меню и глубоких ссылок.
 - Измерить Lighthouse / Core Web Vitals на мобильном устройстве и по результатам оптимизировать загрузку изображений, шрифтов и анимаций.
+
+## Приватность коммитов
+
+История очищена от личных email, локальных путей пользователя и временных ссылок на ассеты. Публичные контакты продукта в футере сохранены.
+
+После переписывания истории разработчикам нужно заново клонировать репозиторий. Не сливайте старые ветки с новой `main`: это вернёт удалённые данные. Непубликованные изменения переносите проверенными патчами без старых коммитов.
+
+Перед работой задайте **свой** GitHub noreply-адрес из Settings → Emails и подключите локальную проверку:
+
+```bash
+git config --local user.email YOUR_NOREPLY_ADDRESS
+git config --local user.useConfigOnly true
+git config --local core.hooksPath .githooks
+```
+
+В GitHub включите **Keep my email addresses private**, чтобы веб-коммиты и приложения не использовали личный email. Локальный hook проверяет staged-файлы и автора до коммита; CI дополнительно проверяет всю историю перед деплоем. Эти проверки не заменяют полноценный поиск секретов.
