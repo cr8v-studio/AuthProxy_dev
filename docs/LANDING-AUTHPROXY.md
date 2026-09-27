@@ -37,7 +37,7 @@ Why AuthProxy · How It Works · Capabilities · Security · Developers · Opera
 ## GLOBAL CTA
 
 **Primary CTA Label:** Start Building  
-**Primary CTA Link:** https://docs.authproxy.tech/docs/intro
+**Primary CTA Link:** https://docs.authproxy.tech/docs/getting-started/quick-start
 
 **Secondary CTA Label:** View Docs  
 **Secondary CTA Link:** https://docs.authproxy.tech/docs/intro
@@ -364,7 +364,7 @@ AuthProxy gives you one gateway for authentication, routing, file handling, noti
 **Primary CTA:** Start Building  
 **Secondary CTA:** View Docs
 
-**Primary CTA Link:** https://docs.authproxy.tech/docs/intro  
+**Primary CTA Link:** https://docs.authproxy.tech/docs/getting-started/quick-start
 **Secondary CTA Link:** https://docs.authproxy.tech/docs/intro
 
 ---
@@ -372,27 +372,53 @@ AuthProxy gives you one gateway for authentication, routing, file handling, noti
 ## FOOTER
 
 **Column: Product**
-- Features
-- Security
-- Deployment
+- Features → #capabilities
+- Security → #security
+- Deployment → #operations
+- Pricing → #pricing
 
 **Column: Developers**
-- Docs
-- Quick Start
-- API Reference
+- Docs → https://docs.authproxy.tech/docs/intro
+- Quick Start → https://docs.authproxy.tech/docs/getting-started/quick-start
+- API Reference → https://docs.authproxy.tech/docs/api-reference/authentication-api
 
 **Column: Resources**
-- Changelog
-- MCP Protocol
-- Webhooks
+- Changelog → https://docs.authproxy.tech/docs/releases
+- MCP Protocol → https://docs.authproxy.tech/docs/integration/mcp-protocol
+- Webhooks → https://docs.authproxy.tech/docs/integration/webhooks
 
 **Column: Company**
-- Contact
-- License
-- Privacy
+- Contact → mailto:apg@itbuildgroup.com
+- Telegram → https://t.me/ibgadmin
+- License → https://docs.itbuild.app/docs/legal/license-agreement
+- Data & Privacy → https://docs.itbuild.app/docs/legal/license-agreement#6-data-and-privacy
 
 **Footer Note:**  
 AuthProxy — self-hosted gateway for secure, scalable application delivery.
+
+**Footer bottom:** © current year IT Build Group LTD · Back to top → #page-top
+
+**Verified link routing (2026-09-27):**
+- Start Building / Start for free → Quick Start above.
+- Upgrade to Business / Contact sales → mailto:apg@itbuildgroup.com with the relevant subject.
+- Header Telegram uses the contact published on https://authproxy.tech/: https://t.me/ibgadmin.
+- How it Works / Architecture → https://docs.authproxy.tech/docs/overview/architecture.
+- Authentication → https://docs.authproxy.tech/docs/overview/key-features#authentication--security.
+- Reverse Proxy → https://docs.authproxy.tech/docs/api-gateway/reverse-proxy.
+- File Service → https://docs.authproxy.tech/docs/api-gateway/file-service.
+- Notifications → https://docs.authproxy.tech/docs/integration/browser-push-notifications.
+- Admin Panel → https://docs.authproxy.tech/docs/admin-panel/dashboard-overview.
+- Security cards, in order: encryption#authentication-security; authentication/session-management; security/rate-limiting; security/user-scopes; overview/architecture (all under https://docs.authproxy.tech/docs/).
+- Internal capability links retain their fragments and resolve to real, focusable navigation items.
+- Footer contacts are sourced from the public product site; Data & Privacy links to the existing license section, not a newly authored privacy policy.
+
+**Mobile composition:**
+- Keep existing visual direction and section order. Use the collapsed menu below 1200px.
+- Hero height follows content; display all four metrics in a static 2×2 grid below 1200px.
+- Stack the request diagram vertically on phones, with downward arrows and timings below it.
+- Keep every capability and security card reachable; use five security positions on mobile and four on desktop.
+- Present the three final product previews in a horizontally scrollable gallery on phones, with the CTA directly below it.
+- Footer columns become a 2×2 grid on phones, with contact text allowed to wrap.
 
 ---
 

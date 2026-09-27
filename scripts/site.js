@@ -3,27 +3,6 @@ const navToggle = document.querySelector('.site-header__toggle');
 const navMenu = document.querySelector('.site-header__menu');
 const dropdownGroups = Array.from(document.querySelectorAll('[data-dropdown]'));
 
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
-}
-
-const navigationEntry = performance.getEntriesByType('navigation')[0];
-const isReloadNavigation = navigationEntry?.type === 'reload';
-
-if (isReloadNavigation) {
-  if (window.location.hash) {
-    history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
-  }
-  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  window.addEventListener(
-    'load',
-    () => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    },
-    { once: true }
-  );
-}
-
 function closeMenu() {
   if (!rootHeader || !navToggle) {
     return;
@@ -31,6 +10,7 @@ function closeMenu() {
 
   rootHeader.classList.remove('is-open');
   navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.querySelector('.sr-only').textContent = 'Open navigation';
 }
 
 function toggleDropdown(group, forceOpen) {
@@ -51,7 +31,8 @@ function toggleDropdown(group, forceOpen) {
 if (navToggle && navMenu && rootHeader) {
   navToggle.addEventListener('click', () => {
     const isOpen = rootHeader.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    navToggle.querySelector('.sr-only').textContent = isOpen ? 'Close navigation' : 'Open navigation';
   });
 
   navMenu.querySelectorAll('a').forEach((link) => {
@@ -80,9 +61,12 @@ document.addEventListener('click', (event) => {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     dropdownGroups.forEach((group) => toggleDropdown(group, false));
+    if (rootHeader?.classList.contains('is-open')) navToggle?.focus();
     closeMenu();
   }
 });
+
+window.matchMedia('(max-width: 1199px)').addEventListener('change', closeMenu);
 
 const capabilitiesPanel = document.querySelector('.capabilities-section__panel');
 
@@ -108,7 +92,7 @@ if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
         'Docs available for deeper implementation details'
       ],
       ctaLabel: 'Explore Authentication',
-      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#authentication',
+      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#authentication--security',
       markIcon: './assets/sections/capabilities/cap-icon-12.svg'
     },
     'reverse-proxy': {
@@ -122,7 +106,7 @@ if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
         'Route-level security flags'
       ],
       ctaLabel: 'Explore Reverse Proxy',
-      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#reverse-proxy',
+      ctaHref: 'https://docs.authproxy.tech/docs/api-gateway/reverse-proxy',
       markIcon: './assets/sections/capabilities/cap-icon-7.svg'
     },
     'file-service': {
@@ -136,7 +120,7 @@ if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
         'Optimized asset delivery'
       ],
       ctaLabel: 'Explore File Service',
-      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#file-service',
+      ctaHref: 'https://docs.authproxy.tech/docs/api-gateway/file-service',
       markIcon: './assets/sections/capabilities/cap-icon-file.svg'
     },
     notifications: {
@@ -145,7 +129,7 @@ if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
         'Deliver real-time updates across browser, mobile, and external systems from one event architecture.',
       bullets: ['Server-Sent Events', 'Webhooks', 'Push Notifications', 'Unified Event Distribution'],
       ctaLabel: 'Explore Notifications',
-      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#notifications',
+      ctaHref: 'https://docs.authproxy.tech/docs/integration/browser-push-notifications',
       markIcon: './assets/sections/capabilities/cap-icon-notifications.svg'
     },
     'admin-panel': {
@@ -153,7 +137,7 @@ if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
       description: 'Operate users, sessions, routes, and event visibility from one operational interface.',
       bullets: ['User and session control', 'Route management', 'Event monitoring', 'Operational visibility'],
       ctaLabel: 'Explore Admin Panel',
-      ctaHref: 'https://docs.authproxy.tech/docs/overview/key-features#admin-panel',
+      ctaHref: 'https://docs.authproxy.tech/docs/admin-panel/dashboard-overview',
       markIcon: './assets/sections/capabilities/cap-icon-admin.svg'
     }
   };
@@ -176,7 +160,11 @@ if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
   };
 
   const setActiveTab = (tab) => {
-    tabs.forEach((item) => item.classList.toggle('is-active', item === tab));
+    tabs.forEach((item) => {
+      item.classList.toggle('is-active', item === tab);
+      if (item === tab) item.setAttribute('aria-current', 'true');
+      else item.removeAttribute('aria-current');
+    });
   };
 
   tabs.forEach((tab) => {
@@ -201,6 +189,14 @@ if (capabilitiesPanel && capabilitiesPanel.dataset.tabsBound !== '1') {
   const activeHash = activeTab?.getAttribute('href')?.replace('#', '') || 'authentication';
   setActiveTab(activeTab);
   applyTabProfile(tabProfiles[activeHash] ?? tabProfiles.authentication);
+
+  window.addEventListener('hashchange', () => {
+    const tab = tabs.find((item) => item.hash === window.location.hash);
+    if (tab) {
+      setActiveTab(tab);
+      applyTabProfile(tabProfiles[tab.hash.slice(1)]);
+    }
+  });
 }
 
 const securitySlider = document.querySelector('[data-security-slider]');
@@ -231,6 +227,9 @@ if (securitySlider && securitySlider.dataset.sliderBound !== '1') {
     const trailingVisibleIndex = Math.min(current + visible - 1, slides.length - 1);
     slides.forEach((slide, index) => {
       slide.classList.toggle('is-trailing-visible', index === trailingVisibleIndex);
+      const isVisible = index >= current && index <= trailingVisibleIndex;
+      slide.inert = !isVisible;
+      slide.setAttribute('aria-hidden', String(!isVisible));
     });
 
     const slideWidth = slides[0].getBoundingClientRect().width;
@@ -238,7 +237,11 @@ if (securitySlider && securitySlider.dataset.sliderBound !== '1') {
     track.style.transform = `translate3d(${offset}px, 0, 0)`;
 
     const activeDotIndex = Math.min(current, Math.max(0, dots.length - 1));
-    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === activeDotIndex));
+    dots.forEach((dot, index) => {
+      dot.hidden = index > maxIndex;
+      dot.classList.toggle('is-active', index === activeDotIndex);
+      dot.setAttribute('aria-current', String(index === activeDotIndex));
+    });
 
     if (prevBtn) {
       prevBtn.disabled = current <= 0;
@@ -327,3 +330,6 @@ if (securitySlider && securitySlider.dataset.sliderBound !== '1') {
   window.addEventListener('resize', update, { passive: true });
   update();
 }
+
+const footerYear = document.querySelector('[data-footer-year]');
+if (footerYear) footerYear.textContent = String(new Date().getFullYear());

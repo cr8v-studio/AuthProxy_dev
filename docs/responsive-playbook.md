@@ -39,3 +39,15 @@ When adding a new section:
 - Use `:root` token overrides in breakpoint scopes.
 - Keep section-specific media blocks local to the section.
 - Do not change global breakpoints unless design system changes in Figma.
+
+## Verified corrections (2026-09-27)
+
+- Navigation collapses below 1200px; the open menu scrolls within the available viewport height. Compact desktop navigation uses reduced spacing at 1200–1439px.
+- Hero height follows content below 1200px; four metrics use a static 2×2 grid. The desktop marquee is created/destroyed when crossing the 1200px breakpoint.
+- At 320–809px, the How pipeline is in normal document flow with downward arrows; timings sit below the illustration.
+- Operations artwork scales with its container; the docs CTA remains outside the decorative hidden subtree.
+- Capability fragments resolve to real navigation elements. Reloading a shared capability URL preserves the selected capability.
+- Security has five single-card positions below 1200px and four two-card positions on desktop. Pagination controls have 44px targets and hidden slides are inert.
+- The final product previews form a native horizontally scrollable gallery on phones.
+- Footer navigation uses four desktop columns and two phone columns, with 44px link targets.
+- Browser layout checks: 320, 375, 390, 768, 810, 1024, 1199, 1200 and 1440px. Check menu/logo overlap separately from document overflow.

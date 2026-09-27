@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
 let prefersReducedMotion = reducedMotionMedia.matches;
-const mobileViewport = window.matchMedia('(max-width: 767px)');
+const mobileViewport = window.matchMedia('(max-width: 809px)');
 const isMobileViewport = () => mobileViewport.matches;
 const MOTION_BOOT_FLAG = '__apMotionBooted';
 const MOTION_HOVER_BIND_FLAG = '__apMotionHoverBound';
@@ -259,6 +259,7 @@ function initLenis() {
 
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
+      if (event.defaultPrevented || link.classList.contains('capabilities-section__nav-item')) return;
       const targetId = link.getAttribute('href');
 
       if (!targetId || targetId === '#') {
@@ -274,7 +275,7 @@ function initLenis() {
       }
 
       event.preventDefault();
-      const isHeaderLogo = link.classList.contains('site-header-logo');
+      const isHeaderLogo = targetId === '#page-top';
       const scrollTarget = isHeaderLogo ? 0 : resolveAnchorTarget(target);
       const scrollDuration = isHeaderLogo
         ? (isMobileViewport() ? 1.15 : 1.45)
@@ -291,6 +292,8 @@ function initLenis() {
 
       if (isHeaderLogo && window.location.hash) {
         history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+      } else if (window.location.hash !== targetId) {
+        history.pushState(null, '', targetId);
       }
     });
   });
@@ -2796,7 +2799,7 @@ function prepareHeroIntroState() {
       if (rawLines.length > 1) {
         title.innerHTML = rawLines
           .map((line) => `<span class="hero-section__title-line">${line}</span>`)
-          .join('');
+          .join(' ');
       }
 
       title.dataset.motionLinesReady = 'true';
@@ -2965,7 +2968,23 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   // Mockup parallax disabled by request.
 }
 
+// Keep the four metrics readable and still on phones/tablets, including after resize.
 function initHeroMetricsCarousel() {
+  const desktop = window.matchMedia('(min-width: 1200px)');
+  let destroyCarousel = () => {};
+  const sync = () => {
+    destroyCarousel();
+    destroyCarousel = desktop.matches ? createHeroMetricsCarousel() : () => {};
+  };
+  sync();
+  desktop.addEventListener('change', sync);
+  return () => {
+    desktop.removeEventListener('change', sync);
+    destroyCarousel();
+  };
+}
+
+function createHeroMetricsCarousel() {
   const metricsWrap = heroSection?.querySelector('.hero-section__metrics-wrap');
   const sourceTrack = metricsWrap?.querySelector('.hero-section__metrics');
 
@@ -3118,6 +3137,8 @@ function initHeroMetricsCarousel() {
     metricsWrap.removeEventListener('mouseleave', handleMouseLeave);
     tween?.kill();
     gsap.killTweensOf(playbackState);
+    metricsTrack.replaceWith(sourceTrack);
+    metricsWrap.classList.remove('is-carousel');
   };
 }
 

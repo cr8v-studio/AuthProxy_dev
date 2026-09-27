@@ -16,7 +16,7 @@
     />
     <link rel="icon" type="image/svg+xml" href="./assets/brand/favicon-figma.svg?v=20260413-78111242-fix1" />
     <link rel="stylesheet" href="./styles/main.css?v=20260321-0004" />
-    <link rel="stylesheet" href="./styles/site.css?v=20260413-1642" />
+    <link rel="stylesheet" href="./styles/site.css?v=20260927-01" />
   </head>
   <body class="site-page">
     <div class="site-grid-overlay" aria-hidden="true"></div>
@@ -78,7 +78,7 @@
           </nav>
 
           <div class="site-header__controls">
-            <a class="site-header-link site-header-social" href="https://t.me/authproxy" aria-label="AuthProxy Telegram">
+            <a class="site-header-link site-header-social" href="https://t.me/ibgadmin" aria-label="AuthProxy Telegram">
               <img
                 src="./assets/ui/icons/icon-social.svg"
                 alt=""
@@ -115,7 +115,7 @@
                   </p>
                 </div>
                 <div class="hero-section__cta-row" id="hero-cta">
-                  <a class="site-header-button-v1" href="#solution">
+                  <a class="site-header-button-v1" href="https://docs.authproxy.tech/docs/getting-started/quick-start">
                     <span class="site-header-button-v1__label">Start Building</span>
                   </a>
                   <a class="site-header-button-v2 hero-section__docs-link" href="https://docs.authproxy.tech/docs/intro">
@@ -517,7 +517,7 @@
             <div class="how-v2__learn">
               <div class="how-v2__learn-content">
                 <h4 class="how-v2__learn-title">Learn more</h4>
-                <a class="how-v2__learn-link" href="https://docs.authproxy.tech/docs/intro">
+                <a class="how-v2__learn-link" href="https://docs.authproxy.tech/docs/overview/architecture">
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                   <span class="how-v2__learn-link-text">Architecture</span>
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -573,29 +573,29 @@
 
         <div class="site-container capabilities-section__panel">
           <nav class="capabilities-section__nav" aria-label="Capabilities navigation">
-            <a class="capabilities-section__nav-item is-active" href="#authentication">
+            <a class="capabilities-section__nav-item is-active" id="authentication" href="#authentication" aria-controls="capability-detail">
               <span>Authentication</span>
               <img src="./assets/sections/capabilities/cap-arrow-dark.svg" alt="" aria-hidden="true" width="9.8995" height="16.9706" />
             </a>
-            <a class="capabilities-section__nav-item" href="#reverse-proxy">
+            <a class="capabilities-section__nav-item" id="reverse-proxy" href="#reverse-proxy" aria-controls="capability-detail">
               <span>Reverse Proxy</span>
               <img src="./assets/sections/capabilities/cap-arrow-dark.svg" alt="" aria-hidden="true" width="9.8995" height="16.9706" />
             </a>
-            <a class="capabilities-section__nav-item" href="#file-service">
+            <a class="capabilities-section__nav-item" id="file-service" href="#file-service" aria-controls="capability-detail">
               <span>File Service</span>
               <img src="./assets/sections/capabilities/cap-arrow-dark.svg" alt="" aria-hidden="true" width="9.8995" height="16.9706" />
             </a>
-            <a class="capabilities-section__nav-item" href="#notifications">
+            <a class="capabilities-section__nav-item" id="notifications" href="#notifications" aria-controls="capability-detail">
               <span>Notifications</span>
               <img src="./assets/sections/capabilities/cap-arrow-dark.svg" alt="" aria-hidden="true" width="9.8995" height="16.9706" />
             </a>
-            <a class="capabilities-section__nav-item" href="#admin-panel">
+            <a class="capabilities-section__nav-item" id="admin-panel" href="#admin-panel" aria-controls="capability-detail">
               <span>Admin Panel</span>
               <img src="./assets/sections/capabilities/cap-arrow-dark.svg" alt="" aria-hidden="true" width="9.8995" height="16.9706" />
             </a>
           </nav>
 
-          <article class="capabilities-section__detail">
+          <article class="capabilities-section__detail" id="capability-detail">
             <img
               class="capabilities-section__detail-mark"
               src="./assets/sections/capabilities/cap-icon-12.svg"
@@ -631,7 +631,7 @@
               </li>
             </ul>
 
-            <a class="site-header-button-v2 capabilities-section__link" href="https://docs.authproxy.tech/docs/intro">
+            <a class="site-header-button-v2 capabilities-section__link" href="https://docs.authproxy.tech/docs/overview/key-features#authentication--security">
               <span class="site-header-button-v2__label">Explore Authentication</span>
               <span class="site-header-button-v2__icon-wrap">
                 <img
@@ -702,7 +702,7 @@
           </article>
         </div>
 
-        <div class="site-container security-slider" data-security-slider>
+        <div class="site-container security-slider" data-security-slider role="region" aria-label="Security features" aria-roledescription="carousel">
           <div class="security-slider__viewport">
             <div class="security-slider__track" data-security-slider-track>
               <article class="security-slide">
@@ -711,7 +711,7 @@
                   <img class="security-slide__icon" src="./assets/sections/security-slider/sec-slide-icon-1.svg" alt="" aria-hidden="true" width="52" height="52" />
                   <p class="security-slide__text">Challenge-response authentication with no password storage.</p>
                 </div>
-                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/encryption#challenge-response-authentication">
+                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/encryption#authentication-security">
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                   <span class="how-v2__learn-link-text">Read more</span>
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -724,7 +724,7 @@
                   <img class="security-slide__icon" src="./assets/sections/security-slider/sec-slide-icon-2.svg" alt="" aria-hidden="true" width="52" height="52" />
                   <p class="security-slide__text">In-memory sessions with instant revocation.</p>
                 </div>
-                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/encryption#in-memory-sessions">
+                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/authentication/session-management">
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                   <span class="how-v2__learn-link-text">Read more</span>
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -737,7 +737,7 @@
                   <img class="security-slide__icon" src="./assets/sections/security-slider/sec-slide-icon-3.svg" alt="" aria-hidden="true" width="52" height="52" />
                   <p class="security-slide__text">Built-in rate limiting and request controls.</p>
                 </div>
-                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/encryption#rate-limiting">
+                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/rate-limiting">
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                   <span class="how-v2__learn-link-text">Read more</span>
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -750,7 +750,7 @@
                   <img class="security-slide__icon" src="./assets/sections/security-slider/sec-slide-icon-4.svg" alt="" aria-hidden="true" width="52" height="52" />
                   <p class="security-slide__text">Scope-based route access control.</p>
                 </div>
-                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/encryption#scope-based-access-control">
+                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/user-scopes">
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                   <span class="how-v2__learn-link-text">Read more</span>
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -763,7 +763,7 @@
                   <img class="security-slide__icon" src="./assets/sections/security-slider/sec-slide-icon-5.svg" alt="" aria-hidden="true" width="52" height="52" />
                   <p class="security-slide__text">No direct exposure of backend services.</p>
                 </div>
-                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/security/encryption#backend-isolation">
+                <a class="security-slide__read how-v2__learn-link" href="https://docs.authproxy.tech/docs/overview/architecture">
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                   <span class="how-v2__learn-link-text">Read more</span>
                   <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -778,6 +778,7 @@
               <button type="button" class="security-slider__dot" aria-label="Slide 2" data-security-dot="1"></button>
               <button type="button" class="security-slider__dot" aria-label="Slide 3" data-security-dot="2"></button>
               <button type="button" class="security-slider__dot" aria-label="Slide 4" data-security-dot="3"></button>
+              <button type="button" class="security-slider__dot" aria-label="Slide 5" data-security-dot="4" hidden></button>
             </div>
 
             <div class="security-slider__nav">
@@ -867,7 +868,7 @@
             <p class="developers-section__ship-title">Ship faster with less code, fewer dependencies, and a clearer operational model.</p>
           </div>
           <div class="developers-section__ship-cta">
-            <a class="site-header-button-v1 developers-section__ship-button" href="#solution">
+            <a class="site-header-button-v1 developers-section__ship-button" href="https://docs.authproxy.tech/docs/getting-started/quick-start">
               <span class="site-header-button-v1__label">Start Building</span>
             </a>
           </div>
@@ -896,8 +897,8 @@
 
         <div class="site-container operations-section__panel fade-up" aria-label="Operations workflow">
           <div class="operations-section__visual">
-            <div class="operations-visual__canvas" aria-hidden="true">
-              <div class="operations-visual__scene">
+            <div class="operations-visual__canvas">
+              <div class="operations-visual__scene" aria-hidden="true">
                 <div class="operations-visual__grid"></div>
 
                 <img
@@ -1103,7 +1104,7 @@
               <p class="pricing-plan-card__desc">Full module, all auth methods, community support.</p>
             </div>
             <div class="pricing-plan-card__button-frame">
-              <a class="site-header-button-v1 pricing-plan-card__button" href="#hero-cta">
+              <a class="site-header-button-v1 pricing-plan-card__button" href="https://docs.authproxy.tech/docs/getting-started/quick-start">
                 <span class="site-header-button-v1__label">Start for free</span>
               </a>
             </div>
@@ -1120,7 +1121,7 @@
               <p class="pricing-plan-card__desc">Priority support, included hosting.</p>
             </div>
             <div class="pricing-plan-card__button-frame pricing-plan-card__button-frame--popular">
-              <a class="site-header-button-v1 pricing-plan-card__button" href="#hero-cta">
+              <a class="site-header-button-v1 pricing-plan-card__button" href="mailto:apg@itbuildgroup.com?subject=AuthProxy%20Business">
                 <span class="site-header-button-v1__label">Upgrade to Business</span>
               </a>
             </div>
@@ -1133,7 +1134,7 @@
               <p class="pricing-plan-card__desc">Dedicated engineer, SLA, custom features.</p>
             </div>
             <div class="pricing-plan-card__button-frame">
-              <a class="site-header-button-v1 pricing-plan-card__button" href="#hero-cta">
+              <a class="site-header-button-v1 pricing-plan-card__button" href="mailto:apg@itbuildgroup.com?subject=AuthProxy%20Enterprise">
                 <span class="site-header-button-v1__label">Contact sales</span>
               </a>
             </div>
@@ -1324,13 +1325,13 @@
             <div class="faq-section__docs-shortcuts">
               <h3 class="faq-section__docs-title">Docs shortcuts</h3>
 
-              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/quick-start">
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/getting-started/quick-start">
                 <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                 <span class="how-v2__learn-link-text">Quick Start</span>
                 <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
               </a>
 
-              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/architecture">
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/overview/architecture">
                 <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                 <span class="how-v2__learn-link-text">Architecture</span>
                 <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -1348,7 +1349,7 @@
                 <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
               </a>
 
-              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/mcp">
+              <a class="how-v2__learn-link faq-docs-link faq-docs-link--light" href="https://docs.authproxy.tech/docs/integration/mcp-protocol">
                 <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--left" aria-hidden="true"></span>
                 <span class="how-v2__learn-link-text">MCP Protocol</span>
                 <span class="how-v2__learn-link-arrow how-v2__learn-link-arrow--right" aria-hidden="true"></span>
@@ -1398,17 +1399,17 @@
                     </h2>
                   </div>
 
-                  <div class="final-cta-section__mockups" aria-hidden="true">
+                  <div class="final-cta-section__mockups" role="group" aria-label="AuthProxy product previews — scroll to explore" tabindex="0">
                     <article class="final-cta-screen final-cta-screen--asset final-cta-screen--signin">
-                      <img class="final-cta-screen__asset" src="./assets/sections/final-cta/desktop-1.svg" alt="" />
+                      <img class="final-cta-screen__asset" src="./assets/sections/final-cta/desktop-1.svg" alt="AuthProxy sign-in screen" loading="lazy" />
                     </article>
 
                     <article class="final-cta-screen final-cta-screen--asset final-cta-screen--access">
-                      <img class="final-cta-screen__asset" src="./assets/sections/final-cta/desktop-2.svg" alt="" />
+                      <img class="final-cta-screen__asset" src="./assets/sections/final-cta/desktop-2.svg" alt="AuthProxy application access screen" loading="lazy" />
                     </article>
 
                     <article class="final-cta-screen final-cta-screen--asset final-cta-screen--keys">
-                      <img class="final-cta-screen__asset" src="./assets/sections/final-cta/desktop-3.svg" alt="" />
+                      <img class="final-cta-screen__asset" src="./assets/sections/final-cta/desktop-3.svg" alt="AuthProxy security keys screen" loading="lazy" />
                     </article>
                   </div>
                 </div>
@@ -1422,7 +1423,7 @@
               AuthProxy gives you one gateway for authentication, routing, file handling, notifications, and operational control so your team can focus on product delivery.
             </p>
             <div class="final-cta-section__actions">
-              <a class="site-header-button-v1 final-cta-section__button-primary" href="https://docs.authproxy.tech/docs/intro">
+              <a class="site-header-button-v1 final-cta-section__button-primary" href="https://docs.authproxy.tech/docs/getting-started/quick-start">
                 <span class="site-header-button-v1__label">Start Building</span>
               </a>
               <a class="site-header-button-v2 final-cta-section__button-secondary" href="https://docs.authproxy.tech/docs/intro">
@@ -1449,7 +1450,58 @@
 
     </main>
 
-    <script type="module" src="./scripts/site.js?v=20260408-0012"></script>
-    <script type="module" src="./assets/motion/animations.js?v=20260413-1642"></script>
+    <footer class="site-footer" id="footer" data-surface="dark">
+      <div class="site-footer__inner">
+        <div class="site-footer__intro">
+          <a class="site-footer__brand" href="#page-top" aria-label="AuthProxy — back to top">
+            <img src="./assets/brand/logo-authproxy-dark.svg" alt="AuthProxy" width="121.708" height="48" loading="lazy" />
+          </a>
+          <p>Self-hosted gateway for secure, scalable application delivery.</p>
+        </div>
+        <nav class="site-footer__nav" aria-label="Footer">
+          <div class="site-footer__column">
+            <h2>Product</h2>
+            <ul>
+              <li><a href="#capabilities">Features</a></li>
+              <li><a href="#security">Security</a></li>
+              <li><a href="#operations">Deployment</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+            </ul>
+          </div>
+          <div class="site-footer__column">
+            <h2>Developers</h2>
+            <ul>
+              <li><a href="https://docs.authproxy.tech/docs/intro">Documentation</a></li>
+              <li><a href="https://docs.authproxy.tech/docs/getting-started/quick-start">Quick Start</a></li>
+              <li><a href="https://docs.authproxy.tech/docs/api-reference/authentication-api">API Reference</a></li>
+            </ul>
+          </div>
+          <div class="site-footer__column">
+            <h2>Resources</h2>
+            <ul>
+              <li><a href="https://docs.authproxy.tech/docs/releases">Changelog</a></li>
+              <li><a href="https://docs.authproxy.tech/docs/integration/mcp-protocol">MCP Protocol</a></li>
+              <li><a href="https://docs.authproxy.tech/docs/integration/webhooks">Webhooks</a></li>
+            </ul>
+          </div>
+          <div class="site-footer__column">
+            <h2>Company</h2>
+            <ul>
+              <li><a href="mailto:apg@itbuildgroup.com">Contact</a></li>
+              <li><a href="https://t.me/ibgadmin">Telegram</a></li>
+              <li><a href="https://docs.itbuild.app/docs/legal/license-agreement">License</a></li>
+              <li><a href="https://docs.itbuild.app/docs/legal/license-agreement#6-data-and-privacy">Data &amp; Privacy</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="site-footer__bottom">
+          <p>© <span data-footer-year>2026</span> IT Build Group LTD</p>
+          <a href="#page-top">Back to top <span aria-hidden="true">↑</span></a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="./scripts/site.js?v=20260927-01"></script>
+    <script type="module" src="./assets/motion/animations.js?v=20260927-01"></script>
   </body>
 </html>
