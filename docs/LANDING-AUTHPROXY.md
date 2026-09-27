@@ -414,7 +414,11 @@ AuthProxy — self-hosted gateway for secure, scalable application delivery.
 
 **Mobile composition:**
 - Keep existing visual direction and section order. Use the collapsed menu below 1200px.
-- Hero height follows content; display all four metrics in a static 2×2 grid below 1200px.
+- Hero height follows content. Keep Start Building on the left and Explore Docs on the right, side by side on phones, both in the hero and final CTA. Use matching 44px minimum touch targets and fluid label sizing down to 320px.
+- Show hero metrics as the same continuous marquee on every breakpoint: two card widths below 1200px and four on desktop. Preserve current phone card dimensions. Pause on hover, keyboard focus or touch; reduced-motion users get a native horizontally scrollable row.
+- Hide decorative corner marks on all Solution problem cards below 810px, including the dark introductory card; keep the grid dividers.
+- In the stacked Solution layout below 1200px, reserve the full height of the expanded gateway illustration so the APG node, orbit and Admin Panel base are not clipped.
+- Hide only the lower-left decorative corner on all Security slides below 810px so it does not overlap Read more.
 - Stack the request diagram vertically on phones, with downward arrows and timings below it.
 - Keep every capability and security card reachable; use five security positions on mobile and four on desktop.
 - Present the three final product previews in a horizontally scrollable gallery on phones, with the CTA directly below it.

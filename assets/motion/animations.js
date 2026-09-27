@@ -2968,23 +2968,8 @@ function initHeroTimeline({ skipIntro = false } = {}) {
   // Mockup parallax disabled by request.
 }
 
-// Keep the four metrics readable and still on phones/tablets, including after resize.
+// Share the same marquee across breakpoints, keeping two full card widths on mobile.
 function initHeroMetricsCarousel() {
-  const desktop = window.matchMedia('(min-width: 1200px)');
-  let destroyCarousel = () => {};
-  const sync = () => {
-    destroyCarousel();
-    destroyCarousel = desktop.matches ? createHeroMetricsCarousel() : () => {};
-  };
-  sync();
-  desktop.addEventListener('change', sync);
-  return () => {
-    desktop.removeEventListener('change', sync);
-    destroyCarousel();
-  };
-}
-
-function createHeroMetricsCarousel() {
   const metricsWrap = heroSection?.querySelector('.hero-section__metrics-wrap');
   const sourceTrack = metricsWrap?.querySelector('.hero-section__metrics');
 
@@ -3035,8 +3020,14 @@ function createHeroMetricsCarousel() {
   let resizeFrame = 0;
   let resizeTimeout = 0;
   let resizeObserver = null;
+  let visibilityObserver = null;
   let isHovered = false;
+  let isFocused = metricsWrap.contains(document.activeElement);
+  let isPressed = false;
+  let isInViewport = true;
   let destroyed = false;
+  const desktop = window.matchMedia('(min-width: 1200px)');
+  const shouldPause = () => isHovered || isFocused || isPressed || !isInViewport || document.hidden;
   const playbackState = { value: 1 };
   const setPlayback = gsap.quickTo(playbackState, 'value', {
     duration: 1.2,
@@ -3056,7 +3047,7 @@ function createHeroMetricsCarousel() {
     if (destroyed) {
       return;
     }
-    const visibleCards = 4;
+    const visibleCards = desktop.matches ? 4 : 2;
     const cardWidth = metricsWrap.clientWidth / visibleCards;
     const groups = Array.from(metricsTrack.querySelectorAll('.hero-section__metrics-group'));
     const allCards = Array.from(metricsTrack.querySelectorAll('.hero-metric'));
@@ -3080,26 +3071,50 @@ function createHeroMetricsCarousel() {
       repeat: -1
     });
 
-    playbackState.value = isHovered ? 0 : 1;
+    playbackState.value = shouldPause() ? 0 : 1;
     tween.timeScale(playbackState.value);
   };
 
   applyMarqueeLayout();
 
-  const handleMouseEnter = () => {
-    if (destroyed) {
+  const syncPlayback = () => {
+    if (!destroyed) {
+      setPlayback(shouldPause() ? 0 : 1);
+    }
+  };
+
+  const handlePointerEnter = (event) => {
+    if (event.pointerType !== 'mouse') {
       return;
     }
     isHovered = true;
-    setPlayback(0);
+    syncPlayback();
   };
 
-  const handleMouseLeave = () => {
-    if (destroyed) {
-      return;
-    }
+  const handlePointerLeave = () => {
     isHovered = false;
-    setPlayback(1);
+    isPressed = false;
+    syncPlayback();
+  };
+
+  const handlePointerDown = () => {
+    isPressed = true;
+    syncPlayback();
+  };
+
+  const handlePointerUp = () => {
+    isPressed = false;
+    syncPlayback();
+  };
+
+  const handleFocusIn = () => {
+    isFocused = true;
+    syncPlayback();
+  };
+
+  const handleFocusOut = (event) => {
+    isFocused = metricsWrap.contains(event.relatedTarget);
+    syncPlayback();
   };
 
   const handleResize = () => {
@@ -3113,8 +3128,14 @@ function createHeroMetricsCarousel() {
     }, 96);
   };
 
-  metricsWrap.addEventListener('mouseenter', handleMouseEnter);
-  metricsWrap.addEventListener('mouseleave', handleMouseLeave);
+  metricsWrap.addEventListener('pointerenter', handlePointerEnter);
+  metricsWrap.addEventListener('pointerleave', handlePointerLeave);
+  metricsWrap.addEventListener('pointerdown', handlePointerDown, { passive: true });
+  metricsWrap.addEventListener('pointerup', handlePointerUp, { passive: true });
+  metricsWrap.addEventListener('pointercancel', handlePointerUp, { passive: true });
+  metricsWrap.addEventListener('focusin', handleFocusIn);
+  metricsWrap.addEventListener('focusout', handleFocusOut);
+  document.addEventListener('visibilitychange', syncPlayback);
   window.addEventListener('resize', handleResize, { passive: true });
 
   if (typeof window.ResizeObserver === 'function') {
@@ -3122,6 +3143,14 @@ function createHeroMetricsCarousel() {
       handleResize();
     });
     resizeObserver.observe(metricsWrap);
+  }
+
+  if (typeof window.IntersectionObserver === 'function') {
+    visibilityObserver = new IntersectionObserver(([entry]) => {
+      isInViewport = entry.isIntersecting;
+      syncPlayback();
+    });
+    visibilityObserver.observe(metricsWrap);
   }
 
   return () => {
@@ -3132,9 +3161,16 @@ function createHeroMetricsCarousel() {
     window.clearTimeout(resizeTimeout);
     cancelAnimationFrame(resizeFrame);
     resizeObserver?.disconnect();
+    visibilityObserver?.disconnect();
     window.removeEventListener('resize', handleResize);
-    metricsWrap.removeEventListener('mouseenter', handleMouseEnter);
-    metricsWrap.removeEventListener('mouseleave', handleMouseLeave);
+    metricsWrap.removeEventListener('pointerenter', handlePointerEnter);
+    metricsWrap.removeEventListener('pointerleave', handlePointerLeave);
+    metricsWrap.removeEventListener('pointerdown', handlePointerDown);
+    metricsWrap.removeEventListener('pointerup', handlePointerUp);
+    metricsWrap.removeEventListener('pointercancel', handlePointerUp);
+    metricsWrap.removeEventListener('focusin', handleFocusIn);
+    metricsWrap.removeEventListener('focusout', handleFocusOut);
+    document.removeEventListener('visibilitychange', syncPlayback);
     tween?.kill();
     gsap.killTweensOf(playbackState);
     metricsTrack.replaceWith(sourceTrack);
@@ -3271,10 +3307,17 @@ function initInteractiveHoverStates() {
     });
 
     if (scrambleTarget) {
-      // Keep a stable button footprint so scramble glyph widths don't shift nearby controls.
-      const stableWidth = Math.ceil(element.getBoundingClientRect().width);
-      element.style.width = `${stableWidth}px`;
-      element.style.minWidth = `${stableWidth}px`;
+      if (element.closest('.hero-section__cta-row, .final-cta-section__actions')) {
+        // Stabilize the label in ems so the responsive grid can size the button.
+        const fontSize = Number.parseFloat(getComputedStyle(scrambleTarget).fontSize);
+        const labelWidth = scrambleTarget.getBoundingClientRect().width;
+        scrambleTarget.style.width = `${labelWidth / fontSize}em`;
+      } else {
+        // Keep scramble glyph widths from shifting other controls.
+        const stableWidth = Math.ceil(element.getBoundingClientRect().width);
+        element.style.width = `${stableWidth}px`;
+        element.style.minWidth = `${stableWidth}px`;
+      }
     }
 
     const pointerEnter = () => {
