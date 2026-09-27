@@ -3247,10 +3247,19 @@ function initInteractiveHoverStates() {
     const scrambleTarget = isBuildButton ? buildLabel : buttonV1Label;
     const originalScrambleText = scrambleTarget ? (scrambleTarget.textContent || '').trim() : '';
     const motion = getMotion();
-    const scaleTo = gsap.quickTo(element, 'scale', {
+    // quickTo needs individual transform properties, not the compound scale alias.
+    const scaleXTo = gsap.quickTo(element, 'scaleX', {
       duration: motion.hoverDuration ?? 0.5,
       ease: motion.ease
     });
+    const scaleYTo = gsap.quickTo(element, 'scaleY', {
+      duration: motion.hoverDuration ?? 0.5,
+      ease: motion.ease
+    });
+    const scaleTo = (value) => {
+      scaleXTo(value);
+      scaleYTo(value);
+    };
     const yTo = gsap.quickTo(element, 'y', {
       duration: motion.hoverDuration ?? 0.5,
       ease: motion.ease
