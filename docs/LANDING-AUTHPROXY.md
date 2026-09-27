@@ -30,7 +30,7 @@ Stop assembling infrastructure from multiple services. Run authentication, routi
 
 ## TOP NAVIGATION
 
-Why AuthProxy · How It Works · Capabilities · Security · Developers · Operations · Pricing · FAQ
+Why AuthProxy · How It Works · Capabilities · Security · Developers · Operations · FAQ
 
 ---
 
@@ -289,29 +289,7 @@ Deploy AuthProxy with a predictable operational model and maintain visibility ac
 
 ---
 
-## SECTION 08 — PRICING
-
-**Purpose:**  
-Provide clear commercial framing before final conversion CTA.
-
-**Headline:**  
-Choose the Plan That Fits Your Stage
-
-**Body:**  
-Start with free access, then scale to business tiers with expanded operational and support capabilities.
-
-**Pricing Cards:**
-- Free version — 0$
-- Business subscribe — 54$/month
-- Business version — 3000$/month
-- Business version+ — 10000$/month
-
-**Pricing Note:**  
-Pricing values follow the current public site presentation and should be validated before production launch.
-
----
-
-## SECTION 09 — FAQ + DOCS
+## SECTION 08 — FAQ + DOCS
 
 **Purpose:**  
 Resolve key objections and provide a direct path to implementation details.
@@ -350,7 +328,7 @@ Most teams can launch with Docker in under an hour. Start with quick start, then
 
 ---
 
-## SECTION 10 — FINAL CTA
+## SECTION 09 — FINAL CTA
 
 **Purpose:**  
 Close with a focused conversion block.
@@ -375,7 +353,6 @@ AuthProxy gives you one gateway for authentication, routing, file handling, noti
 - Features → #capabilities
 - Security → #security
 - Deployment → #operations
-- Pricing → #pricing
 
 **Column: Developers**
 - Docs → https://docs.authproxy.tech/docs/intro
@@ -399,8 +376,7 @@ AuthProxy — self-hosted gateway for secure, scalable application delivery.
 **Footer bottom:** © current year IT Build Group LTD · Back to top → #page-top
 
 **Verified link routing (2026-09-27):**
-- Start Building / Start for free → Quick Start above.
-- Upgrade to Business / Contact sales → mailto:apg@itbuildgroup.com with the relevant subject.
+- Start Building → Quick Start above.
 - Header Telegram uses the contact published on https://authproxy.tech/: https://t.me/ibgadmin.
 - How it Works / Architecture → https://docs.authproxy.tech/docs/overview/architecture.
 - Authentication → https://docs.authproxy.tech/docs/overview/key-features#authentication--security.
@@ -412,10 +388,15 @@ AuthProxy — self-hosted gateway for secure, scalable application delivery.
 - Internal capability links retain their fragments and resolve to real, focusable navigation items.
 - Footer contacts are sourced from the public product site; Data & Privacy links to the existing license section, not a newly authored privacy policy.
 
+**Section scope (2026-09-27):**
+- Pricing, including plans and “What’s free forever”, is removed from the landing page and all navigation at the owner’s request. Operations is followed by FAQ.
+
 **Mobile composition:**
 - Keep existing visual direction and section order. Use the collapsed menu below 1200px.
 - Hero height follows content. Keep Start Building on the left and Explore Docs on the right, side by side on phones, both in the hero and final CTA. Use matching 44px minimum touch targets and fluid label sizing down to 320px.
 - Show hero metrics as the same continuous marquee on every breakpoint: two card widths below 1200px and four on desktop. Preserve current phone card dimensions. Pause on hover, keyboard focus or touch; reduced-motion users get a native horizontally scrollable row.
+- Hide both decorative corner marks inside each hero metric below 810px.
+- Hide the four outer corners on the final CTA summary below 810px; preserve the Start Building button corners.
 - Hide decorative corner marks on all Solution problem cards below 810px, including the dark introductory card; keep the grid dividers.
 - In the stacked Solution layout below 1200px, reserve the full height of the expanded gateway illustration so the APG node, orbit and Admin Panel base are not clipped.
 - Hide only the lower-left decorative corner on all Security slides below 810px so it does not overlap Read more.

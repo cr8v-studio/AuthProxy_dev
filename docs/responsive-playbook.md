@@ -45,6 +45,9 @@ When adding a new section:
 - Navigation collapses below 1200px; the open menu scrolls within the available viewport height. Compact desktop navigation uses reduced spacing at 1200–1439px.
 - Hero height follows content below 1200px. Both hero and final phone CTAs share one row, with Start Building on the left, Explore Docs on the right, fluid 12–16px labels and 44px minimum touch targets.
 - Hero metrics use one continuous marquee at every breakpoint, showing two card widths below 1200px and four on desktop. Hover, focus and touch pause it; reduced motion falls back to a native horizontal scroller. Hidden/offscreen marquees pause, and resizing recalculates card widths.
+- Hero metrics hide their two decorative corner marks below 810px; the metric dividers remain.
+- The final CTA summary hides its four outer corners below 810px, preserving the button corners.
+- Pricing and its free-benefits grid are removed at every breakpoint, along with all header and footer links.
 - Solution problem cards hide their decorative corners below 810px so the marks never overlap body copy or provider names.
 - The stacked Solution illustration has a 512px inner canvas plus 24px outer padding, containing its 497px expanded artwork below 1200px.
 - Security slides hide the lower-left decorative corner below 810px; the upper-right corner and navigation stay visible.

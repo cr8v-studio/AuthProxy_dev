@@ -6668,6 +6668,11 @@ section[id],
     letter-spacing: 0.5px;
   }
 
+  .hero-metric__line::before,
+  .hero-metric__line::after {
+    content: none;
+  }
+
   .hero-metric__line-value {
     font-size: 22px;
     line-height: 28px;
@@ -6912,6 +6917,10 @@ section[id],
 
   .final-cta-screen__asset { height: auto; }
   .final-cta-section__summary { padding: 24px 16px; }
+
+  .final-cta-section__corner {
+    display: none;
+  }
   .final-cta-section__actions .site-header-button-v1,
   .final-cta-section__actions .site-header-button-v2 { justify-content: center; }
 }
