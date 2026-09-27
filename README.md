@@ -1,101 +1,128 @@
 # AuthProxy_dev
 
-Статический одностраничный сайт AuthProxy на HTML, CSS и JavaScript, готовый к публикации на GitHub Pages.
+Статический лендинг AuthProxy на HTML, CSS и JavaScript. Этот репозиторий содержит сайт продукта, а не серверную часть AuthProxy.
 
-## Source of truth
+- **Сайт:** [cr8v-studio.github.io/AuthProxy_dev](https://cr8v-studio.github.io/AuthProxy_dev/)
+- **Репозиторий:** [cr8v-studio/AuthProxy_dev](https://github.com/cr8v-studio/AuthProxy_dev)
+- **Деплой:** [GitHub Actions](https://github.com/cr8v-studio/AuthProxy_dev/actions/workflows/deploy-pages.yml), автоматически из `main` в GitHub Pages.
 
-- Контент-истина: [`docs/LANDING-AUTHPROXY.md`](./docs/LANDING-AUTHPROXY.md)
-- Любые изменения текстов и иерархии секций сначала вносятся в `LANDING-AUTHPROXY.md`, затем в `index.html`.
+## Передача разработчикам — 27 сентября 2026
 
-## Project structure
+Завершены адаптация мобильной версии, исправление навигации, добавление футера и согласованные визуальные правки. Сохранены существующие стек, визуальный стиль, компоненты и анимации.
 
-- `index.html` — главная страница
-- `styles/` — токены, типографика, компоненты и page-level стили
-- `scripts/` — базовая интерактивность страницы
-- `assets/` — визуальные ассеты и motion runtime
-  - `assets/brand/` — логотипы и favicon
-  - `assets/ui/header/` — corner-ассеты header controls
-  - `assets/ui/icons/` — системные UI-иконки
-  - `assets/sections/` — ассеты, привязанные к секциям (`hero`, `solution`, `how`, `capabilities`, `security`, `developers`)
-  - `assets/illustrations/system/` — иллюстрации system nodes
-  - `assets/motion/animations.js` — scroll/motion слой
-- `docs/` — рабочая документация для handoff
-  - `LANDING-AUTHPROXY.md` — canonical content/spec
-  - `AUTHPROXY-SKILL.md` — project execution standard (design-to-code/motion/safe-batches)
-  - `component-inventory.md` — active/reserve policy и инвентарь
-  - `motion-smoke-check.md` — post-preloader motion-checklist
-  - `BASELINE-VISUAL-2026-04-08.md` — baseline freeze/check matrix for Capabilities/Security/Developers
-  - `responsive-playbook.md` — адаптивные правила
-  - `archive/` — исторические документы (не runtime-истина)
-- `.github/workflows/deploy-pages.yml` — автодеплой в GitHub Pages
+### Что изменено
 
-## Runtime navigation
+**Адаптивность и мобильная версия**
 
-- Главная навигация содержит:
-  - `Solution`
-  - `How it Works`
-  - `Capabilities`
-  - `Security`
-  - `Developers`
-  - `Operations`
-  - `Pricing`
-  - `FAQ`
+- Меню сворачивается при ширине менее 1200 px; открытое меню прокручивается в пределах экрана. На компактном десктопе скорректированы интервалы навигации.
+- Высота первого экрана зависит от содержимого. Исправлены переполнения и переносы текста на узких экранах.
+- `Start Building` и `Explore Docs` стоят в один ряд в первом и последнем блоках, включая ширину 320 px. Минимальная высота кнопок — 44 px.
+- Метрики `12 / 13 / 221 / 3KB` показываются непрерывной бегущей строкой: две ширины карточки ниже 1200 px, четыре — на десктопе. Движение приостанавливается при наведении, фокусе, касании, уходе блока за экран и скрытии вкладки. При `prefers-reduced-motion` доступна обычная горизонтальная прокрутка.
+- На телефонах убраны декоративные уголки метрик и карточек Solution, нижний левый уголок слайдов Security и четыре внешних уголка последнего CTA. Уголки кнопки `Start Building` сохранены.
+- Иллюстрация стека Solution полностью помещается в свой блок: верхний APG с орбитой и нижний Admin Panel больше не обрезаются.
+- Схема How It Works на телефонах выстраивается вертикально; иллюстрация Operations масштабируется по контейнеру.
+- Слайдер Security имеет пять позиций с одной карточкой ниже 1200 px и четыре позиции с двумя карточками на десктопе. Скрытые слайды исключены из взаимодействия через `inert`, навигационные кнопки имеют область нажатия 44 px.
+- Превью интерфейсов в финальном блоке можно горизонтально прокручивать на телефоне.
+
+**Навигация, ссылки и футер**
+
+- Исправлены три ссылки документации с ответом 404 и девять неверных якорей в документации.
+- Ссылки на возможности продукта переключают соответствующий пункт Capabilities; выбор сохраняется при загрузке страницы по прямой ссылке с фрагментом.
+- Исправлен запуск анимаций при открытии глубоких ссылок и восстановлении позиции прокрутки.
+- Добавлен адаптивный футер: Product, Developers, Resources, Company, публичные контакты, юридические ссылки, текущий год и возврат наверх. На телефонах колонки располагаются сеткой 2×2.
+- По решению владельца полностью удалён раздел **Pricing**, включая тарифы, `What’s free forever` и ссылки в меню и футере. После Operations идёт FAQ. Отдельная правка разделителей бесплатных возможностей отменена вместе с удалением раздела.
+
+**Анимации и публикация**
+
+- Устранены предупреждения GSAP при масштабировании hover-элементов: используются отдельные `scaleX` и `scaleY`.
+- Удалена инициализация анимации отсутствующего Pricing.
+- Обновлены версии CSS и motion JS в URL подключения, чтобы браузеры загружали новые файлы.
+- Настроена публикация через GitHub Actions → GitHub Pages; опубликованные HTML, CSS и motion JS сверены с локальной версией.
+
+### История изменений
+
+| Коммит | Содержание |
+| --- | --- |
+| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Основная адаптация, исправление ссылок, футер |
+| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Запуск анимаций и прокрутка при открытии глубоких ссылок |
+| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Исправление предупреждений GSAP |
+| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Кнопки в ряд, бегущая строка, уголки карточек, иллюстрация стека |
+| [Commit history](https://github.com/cr8v-studio/AuthProxy_dev/commits/main/) | Удаление Pricing и оставшихся лишних мобильных уголков |
+
+### Что проверено
+
+На дату передачи:
+
+- Адаптивная компоновка проверена в браузере на ширинах от 320 до 1440 px. Последняя проверка: 320, 390, 768, 809, 810, 1200 и 1440 px — горизонтальное переполнение отсутствует, обе пары CTA стоят в ряд.
+- Проверены мобильное меню, переход к FAQ, глубокие ссылки Capabilities, все пять слайдов Security, движение и паузы метрик, прокрутка метрик при отключённой анимации.
+- После удаления Pricing проверены все 18 внутренних ссылок и 110 локальных подключений через `src`; отсутствующих целей и файлов нет, ID уникальны. Внешние адреса и фрагменты документации проверены в рамках первоначального аудита.
+- Проверки синтаксиса обоих JS-файлов, статический motion smoke-check и `git diff --check` прошли.
+- На опубликованной версии отсутствуют Pricing и ошибки/предупреждения в консоли. [GitHub Actions](https://github.com/cr8v-studio/AuthProxy_dev/actions) завершился успешно.
+
+Это проверки браузерных размеров окна, а не сертификация на всех физических устройствах. Перед следующими релизами желательно отдельно проходить iOS Safari и Android Chrome.
 
 ## Локальный запуск
 
-### Вариант 1: открыть напрямую
-Откройте `index.html` в браузере.
+Сборка и установка npm-пакетов не нужны. Из корня репозитория запустите HTTP-сервер:
 
-### Вариант 2: через локальный сервер
 ```bash
-python3 -m http.server 8080
+python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
-Откройте: `http://localhost:8080`
+Откройте [http://127.0.0.1:8080](http://127.0.0.1:8080). Для проверки модулей и анимаций используйте HTTP, а не открытие `index.html` через `file://`.
 
-## Публикация на GitHub
+Сайт загружает Google Fonts, GSAP 3.12.7 / ScrollTrigger и Lenis 1.3.11 с CDN. Для их работы требуется доступ к интернету; отсутствие этапа сборки не означает отсутствие внешних runtime-зависимостей.
 
-Репозиторий уже подключён:
+## Структура и точки входа
+
+| Путь | Назначение |
+| --- | --- |
+| `index.html` | Разметка всех секций, навигация, футер, URL подключений CSS/JS |
+| `styles/site.css` | Компоновка секций и основные адаптивные правила |
+| `styles/main.css`, `tokens.css`, `typography.css`, `components.css`, `icons.css` | Импорты, токены, типографика, общие компоненты и иконки |
+| `scripts/site.js` | Меню и базовая интерактивность страницы |
+| `assets/motion/animations.js` | GSAP/Lenis, прокрутка, карусели, эффекты и обработка reduced motion |
+| `assets/` | Логотипы, SVG, изображения и прочие визуальные ресурсы |
+| `scripts/motion_smoke_check.py` | Статическая проверка связности разметки и motion runtime |
+| `.github/workflows/deploy-pages.yml` | Публикация статических файлов на GitHub Pages |
+
+Навигация: **Solution → How It Works → Capabilities → Security → Developers → Operations → FAQ**. Затем идут финальный CTA и футер.
+
+## Правила дальнейших изменений
+
+- [LANDING-AUTHPROXY.md](./docs/LANDING-AUTHPROXY.md) — источник истины для структуры и текстов. Сначала обновляйте его, затем разметку.
+- [responsive-playbook.md](./docs/responsive-playbook.md) — адаптивные правила: телефон 320–809 px, планшет 810–1199 px, десктоп от 1200 px.
+- [AUTHPROXY-SKILL.md](./docs/AUTHPROXY-SKILL.md) — рабочий стандарт внесения изменений.
+- [component-inventory.md](./docs/component-inventory.md) — активные и резервные компоненты. Не удаляйте резервные стили и ассеты без проверки использования.
+- [motion-smoke-check.md](./docs/motion-smoke-check.md) — ручная проверка анимаций после загрузки.
+- [BASELINE-VISUAL-2026-04-08.md](./docs/BASELINE-VISUAL-2026-04-08.md) — историческая визуальная база отдельных секций; актуальные согласованные мобильные изменения описаны в responsive-playbook.
+- `docs/archive/` — исторические материалы, не актуальная спецификация сайта.
+
+Сохраняйте относительные пути `./…`: сайт размещается в подпути `/AuthProxy_dev/`. При обновлении CSS/JS повышайте соответствующий параметр `?v=` в `index.html`. Не возвращайте Pricing через старые документы или оставшиеся резервные стили/ассеты.
+
+### Проверки перед публикацией
+
+Для проверки синтаксиса нужен установленный Node.js, для smoke-check — Python 3:
 
 ```bash
-git remote -v
-```
-
-Push изменений:
-
-```bash
-git add .
-git commit -m "Update landing"
-git push origin main
-```
-
-## GitHub Pages
-
-1. Откройте репозиторий на GitHub.
-2. Перейдите в `Settings -> Pages`.
-3. В `Build and deployment` выберите `Source: GitHub Actions`.
-4. После push в `main` workflow `deploy-pages.yml` опубликует сайт автоматически.
-
-## Примечания
-
-- Проект без сборки и зависимостей.
-- Все runtime-ссылки на HTML/CSS/JS/asssets должны оставаться валидными после рефакторинга.
-- Сайт использует Google Fonts и ESM-зависимости с jsDelivr для анимаций.
-- Pipeline в секции How использует горизонтальный chevron-flow (GSAP), синхронизированный с current motion baseline.
-
-## Motion smoke-check
-
-Быстрая статическая проверка motion-связности:
-
-```bash
+node --check scripts/site.js
+node --check assets/motion/animations.js
 python3 scripts/motion_smoke_check.py
+git diff --check
 ```
 
-Ручной post-preloader checklist: `docs/motion-smoke-check.md`.
+Smoke-check проверяет наличие селекторов и инициализаторов; он не заменяет браузерную проверку. После изменений проверяйте меню, якоря, CTA, карусели, переполнение, консоль и режим уменьшенного движения, включая границы 809/810 и 1199/1200 px.
 
-## Safe-Only Refactor Guardrails
+## Публикация
 
-- Чистка по умолчанию выполняется только для `active runtime`.
-- Reserve-слои (типографика/токены/подготовленные utilities) не удаляются автоматически.
-- Перед удалением любого элемента выполняется референс-скан по `index + styles + scripts`.
-- Первая волна JS-cleanup должна сначала отключать мёртвые вызовы, а не переписывать motion-архитектуру целиком.
+В `Settings → Pages → Build and deployment` уже выбран источник **GitHub Actions**. Push в `main` запускает [deploy-pages.yml](./.github/workflows/deploy-pages.yml); доступен и ручной запуск через `workflow_dispatch`.
+
+Workflow публикует статические файлы из корня репозитория, без сборки. Автоматического запуска проверок выше в workflow пока нет — выполняйте их до push. После публикации дождитесь успешного Actions run и проверьте [живой сайт](https://cr8v-studio.github.io/AuthProxy_dev/).
+
+## Возможные следующие улучшения
+
+Не входят в завершённые правки и не блокируют передачу:
+
+- Добавить в CI проверку внутренних ссылок и smoke-check до публикации.
+- Добавить браузерные регрессионные проверки ключевых ширин, меню и глубоких ссылок.
+- Измерить Lighthouse / Core Web Vitals на мобильном устройстве и по результатам оптимизировать загрузку изображений, шрифтов и анимаций.
