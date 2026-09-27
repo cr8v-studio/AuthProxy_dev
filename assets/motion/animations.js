@@ -3483,11 +3483,20 @@ async function initMotionSystem() {
     ignoreMobileResize: true
   });
 
+  // Register every trigger at the top before restoring a deep link. Otherwise
+  // GSAP 3.12 can remove completed `once` triggers during another trigger's
+  // initial refresh, aborting the remaining interactive initializers.
+  const initialScrollY = window.scrollY;
+  const initialTarget = document.getElementById(window.location.hash.slice(1));
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   const lenisRuntime = initLenis();
   const lenis = lenisRuntime?.lenis ?? null;
   registerMotionCleanup(lenisRuntime?.destroy);
   prepareHeroIntroState();
   await runInitialPreloader(lenis);
+  // Browsers may apply fragment/scroll restoration while the preloader awaits.
+  lenis?.scrollTo(0, { immediate: true, force: true });
+  ScrollTrigger.update();
   initHeroTimeline();
   mapRevealUtilities();
   initSolutionHeadlineMotion();
@@ -3518,6 +3527,14 @@ async function initMotionSystem() {
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
   ScrollTrigger.refresh();
+
+  if (lenis) {
+    lenis.scrollTo(initialTarget || initialScrollY, {
+      offset: initialTarget ? -(header?.offsetHeight || 0) : 0,
+      immediate: true,
+      force: true
+    });
+  }
 }
 
 initMotionSystem();
